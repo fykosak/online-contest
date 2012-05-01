@@ -1,0 +1,60 @@
+ONLINE CONTEST
+==============
+
+Úloha
+- problém zadaný k řešení a ohodnocen nějakými body
+- odpovědí může být a testuje se:
+	- řetezec (přesná shoda)
+	- celé číslo (rovnost)
+	- interval na reálné ose (přítomnost v intervalu; interval je zadán středem a poloměrem)
+
+Skupina
+- úlohy jsou sdruženy do skupin
+- ve skupině je dáno pořadí úlohy
+- časy týkající se skupiny jsou:
+	- okamžik zveřejnění
+	- množina intervalů pro odevzdávání (odevzdávací období)
+- jsou skupiny dvojího typu
+	- množina - všechny úlohy ze skupiny zveřejněny najednou
+	- série - úlohy zveřejněny pro tým dle počtu vyřešených úloh
+		- pro každé odevzdávací období je dána _rezerva_ – počet úloh,
+		  jež má tým do zásoby
+		- počet zveřejněných úloh je 'cnt'
+		- na počátku je cnt null
+		- později platí: cnt = max(rezerva-pro-období + počet-vyřešených, cnt)
+
+Bodování
+- pro sérii je dáno, zda dovoluje nulové body u úloh
+	- pokud ano, je minimum za úlohu 0
+	- jinak je minimum za úlohu 1
+	- tato pravidla jsou silnější než níže uvedené hodnocení úloh
+- body týmu za jsou tří druhů:
+	- normální
+		- určí se dle bodového hodnocení úlohy a počtu pokusů na
+		  správnou odpověď
+		- pro maximum <= 3 se za každou špatnou odpověď strhne jeden bod
+		- pro maximum >= 4 platí dle počtu špatný odpovědí
+			0   : maximum
+			1   : ceil(maximum * 0.6)
+			2   : ceil(maximum * 0.4)
+			3   : ceil(maximum * 0.2)
+			>= 4: 0
+	- bonusové
+		- úlohy stejného pořadí vybrané množiny skupin tvoří "sady"
+		- za celou vyřešenou sadu získá tým bonus v hodnotě získaných
+		  bodů za úlohy dané sady 
+	- penalizace
+		- za každý (vědomě) přeskočený příklad má tým penalizaci ? bod
+
+Časování
+- nutnou podmínkou pro zveřejnění úloh je minutí okamžiku zveřejnění úloh dané
+  skupiny
+- odevzdávat úlohy dané skupiny lze jen v některém z jejích odevzdávacích
+  obdobích
+- za špatnou odpověď se blokuje možnost odpovídat na příklady dané skupiny po
+  dobu ?? sekund
+
+TODO
+- kolik bodů strhávat za přeskočení příkladu
+- kolik sekund dát na blokování (lze různě pro odevzdávací období)
+- umožnit přeskočení příkladu i po zadání špatných odpovědí?
