@@ -5,6 +5,7 @@ mail.info = "interlos@fi.muni.cz"
 main.name = "Interlos tým"
 cron.key = "nejakyklic"
 admin.key = "nejakyklic"
+tasks.mirrors[] = "http://example.com/set/"
 
 [common.set!]
 date.timezone = "Europe/Prague"

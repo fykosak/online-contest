@@ -8,6 +8,8 @@ class Frontend_GamePresenter extends Frontend_BasePresenter
 
 	public function renderDefault() {
 		$this->setPageTitle("Zadání");
+                $this->getTemplate()->tasks = Interlos::tasks()->findProblemAvailable(Interlos::getLoggedTeam()->id_team);
+                $this->getTemplate()->mirrors = (array)Environment::getConfig("tasks")->mirrors;
 	}
 
 	public function renderHistory() {

@@ -378,7 +378,7 @@ class File extends /*Nette\*/Object
 				$mimeType = mime_content_type($this->getPath());
 			}
 			else {
-				throw new IOException("There is a problem to get content type of the file. Class 'finfo' and function 'mime_content_type' are not avaiable.");
+				throw new IOException("There is a problem to get content type of the file. Class 'finfo' and function 'mime_content_type' are not available.");
 			}
 			$this->type = new FileType($mimeType);
 		}

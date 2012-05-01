@@ -53,7 +53,7 @@ class AnswerFormComponent extends BaseComponent
 
 		// Tasks
 		$tasks = array(NULL => " ---- Vybrat ---- ") + Interlos::tasks()
-			->findAllAvaiable(Interlos::getLoggedTeam()->id_team)
+			->findAllAvailable(Interlos::getLoggedTeam()->id_team)
 			->fetchPairs("id_task", "code_name");
 		$form->addSelect("task", "Úkol", $tasks )
 				->skipFirst()

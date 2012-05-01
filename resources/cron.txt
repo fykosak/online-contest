@@ -1,0 +1,1 @@
+http://olfyziklani.local/?admin-key=nejakyklic&cron-key=nejakyklic&update-database=true&action=database&key=nejakyklic&presenter=Cron

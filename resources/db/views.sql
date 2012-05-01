@@ -31,19 +31,50 @@ CREATE VIEW `view_task` AS
 	SELECT
 		`task`.*,
                 CONCAT(`group`.`code_name`, `task`.`number`) AS `code_name`,
-                `group`.`to_show` AS `group_to_show`
+                `group`.`to_show` AS `group_to_show`,
+                `group`.`type` AS `group_type`
 	FROM `task`
 	INNER JOIN `group` USING(`id_group`)
 	INNER JOIN `view_current_year` USING(`id_year`)
-	ORDER BY `task`.`id_group`, `task`.`id_task`;
+	ORDER BY `task`.`id_group`, `task`.`number`;
 
-DROP VIEW IF EXISTS `view_avaiable_task`;
-CREATE VIEW `view_avaiable_task` AS
+-- úlohy přístupné týmu jako zadání
+DROP VIEW IF EXISTS `view_available_task`;
+CREATE VIEW `view_available_task` AS
+	SELECT
+                `view_team`.`id_team`,
+		`view_task`.*
+	FROM (`view_task`, `view_team`)
+        LEFT JOIN `group_state` USING (`id_group`, `id_team`)
+	WHERE `group_to_show` <= NOW()
+              AND (
+                (`group_type` = 'serie' AND `view_task`.`number` <= `group_state`.`task_counter`)
+                OR (`group_type` = 'set')
+              )
+	ORDER BY `view_task`.`id_group`, `view_task`.`number`;
+
+-- úlohy přístupné týmu pro odeslání zadání
+DROP VIEW IF EXISTS `view_submit_available_task`;
+CREATE VIEW `view_submit_available_task` AS
+	SELECT
+		`view_task`.*
+	FROM `view_available_task` AS `view_task`
+        LEFT JOIN `task_state` USING (`id_task`, `id_team`)
+        RIGHT JOIN `period` ON
+            `period`.`id_group` = `view_task`.`id_group`
+            AND `period`.`begin` <= NOW()
+            AND `period`.`end` > NOW()
+        WHERE `task_state`.`skipped` != 1
+	ORDER BY `view_task`.`id_group`, `view_task`.`number`;
+
+-- úlohy potenciálně přístupné všem (pro účely statistik úkolů)
+DROP VIEW IF EXISTS `view_possibly_available_task`;
+CREATE VIEW `view_possibly_available_task` AS
 	SELECT
 		`view_task`.*
 	FROM `view_task`
 	WHERE `group_to_show` <= NOW()
-	ORDER BY `view_task`.`id_group`, `view_task`.`id_task`;
+	ORDER BY `view_task`.`id_group`, `view_task`.`number`;
 
 DROP VIEW IF EXISTS `view_answer`;
 CREATE VIEW `view_answer` AS
@@ -103,7 +134,7 @@ delimiter ;
  DROP VIEW IF EXISTS `view_task_result`;
  CREATE VIEW `view_task_result` AS
  	SELECT
- 		`team`.`id_team`,
+ 		`view_task`.`id_team`,
  		`view_task`.`id_task`,
  		`answer`.`inserted`,
  		(
@@ -115,12 +146,12 @@ delimiter ;
                                     `view_group`.`allow_zeroes`,
                                     (SELECT COUNT(1)
                                      FROM `view_incorrect_answer` AS `wrong`
-                                     WHERE `wrong`.`id_team` = `team`.`id_team` AND `wrong`.`id_task` = `view_task`.`id_task`
+                                     WHERE `wrong`.`id_team` = `view_task`.`id_team` AND `wrong`.`id_task` = `view_task`.`id_task`
                                     )
                                 )
  			)
  		) AS `score`
- 	FROM (`view_team` AS `team`, `view_avaiable_task` AS `view_task`)
+ 	FROM (`view_available_task` AS `view_task`)
  	LEFT JOIN `view_correct_answer` AS `answer` USING(`id_task`, `id_team`)
         LEFT JOIN `view_group` USING(`id_group`);
 
@@ -174,16 +205,16 @@ CREATE VIEW `view_bonus` AS
 DROP VIEW IF EXISTS `view_task_stat`;
 CREATE VIEW `view_task_stat` AS
 	SELECT
-		`view_avaiable_task`.*,
+		`view_possibly_available_task`.*,
 		MIN(`view_correct_answer`.`inserted`) AS `best_time`,
 		MAX(`view_correct_answer`.`inserted`) AS `worst_time`,
 		FROM_UNIXTIME(AVG(UNIX_TIMESTAMP(`view_correct_answer`.`inserted`))) AS `avg_time`,
 		COUNT(`view_correct_answer`.`id_answer`) AS `count_correct_answer`,
-		IFNULL((SELECT COUNT(`view_incorrect_answer`.`id_answer`) FROM `view_incorrect_answer` WHERE `view_incorrect_answer`.`id_task` = `view_avaiable_task`.`id_task` GROUP BY `view_incorrect_answer`.`id_task`),0) AS `count_incorrect_answer`
-	FROM `view_avaiable_task`
+		IFNULL((SELECT COUNT(`view_incorrect_answer`.`id_answer`) FROM `view_incorrect_answer` WHERE `view_incorrect_answer`.`id_task` = `view_possibly_available_task`.`id_task` GROUP BY `view_incorrect_answer`.`id_task`),0) AS `count_incorrect_answer`
+	FROM `view_possibly_available_task`
 	LEFT JOIN `view_correct_answer` USING(`id_task`)
-	GROUP BY `view_avaiable_task`.`id_task`
-	ORDER BY `view_avaiable_task`.`id_group`, `view_avaiable_task`.`id_task`;
+	GROUP BY `view_possibly_available_task`.`id_task`
+	ORDER BY `view_possibly_available_task`.`id_group`, `view_possibly_available_task`.`number`;
 
 DROP VIEW IF EXISTS `view_chat`;
 CREATE VIEW `view_chat` AS

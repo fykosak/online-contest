@@ -1,33 +1,18 @@
 {extends layout.phtml}
 
 {block #subcontent}
-<p>Zadání sad se v určený čas objeví na následujících adresách:</p>
+<p>K dispozici máte zadání úloh dle podmínek v zadání:</p>
 
 <ul>
-	<li>
-		1. sada (od 15:00)
-		<ul>
-			<li><a href="http://www.fi.muni.cz/~xpelanek/interlos2/sada1/">http://www.fi.muni.cz/~xpelanek/interlos2/sada1/</a></li>
-			<li><a href="http://anna.fi.muni.cz/~xpapous1/interlos/sada1/">http://anna.fi.muni.cz/~xpapous1/interlos/sada1/</a></li>
-			<li><a href="http://interlos.zimodej.cz/sada1">http://interlos.zimodej.cz/sada1</a></li>
-		</ul>
-	</li>
-	<li>
-		2. sada (od 16:30)
-		<ul>
-			<li><a href="http://www.fi.muni.cz/~xpelanek/interlos2/sada2/">http://www.fi.muni.cz/~xpelanek/interlos2/sada2/</a></li>
-			<li><a href="http://anna.fi.muni.cz/~xpapous1/interlos/sada2/">http://anna.fi.muni.cz/~xpapous1/interlos/sada2/</a></li>
-			<li><a href="http://interlos.zimodej.cz/sada2">http://interlos.zimodej.cz/sada2</a></li>
-		</ul>
-   </li>
-	<li>
-		3. sada (od 18:00)
-		<ul>
-			<li><a href="http://www.fi.muni.cz/~xpelanek/interlos2/sada3/">http://www.fi.muni.cz/~xpelanek/interlos2/sada3/</a></li>
-			<li><a href="http://anna.fi.muni.cz/~xpapous1/interlos/sada3/">http://anna.fi.muni.cz/~xpapous1/interlos/sada3/</a></li>
-			<li><a href="http://interlos.zimodej.cz/sada3">http://interlos.zimodej.cz/sada3</a></li>
-		</ul>
-   </li>
+    {foreach $tasks as $task}
+    <li><strong>{$task->code_name}</strong>&nbsp;{$task->name}
+        <ul>
+            {foreach $mirrors as $mirror}
+            <li><a href="{$mirror}{$task->filename}">{$mirror}{$task->filename}</a></li>
+            {/foreach}
+        </ul>
+    </li>
+    {/foreach}
 </ul>
 <p>
 	Kdykoliv je v zadání uvedeno více alternativních webových adres, obsahují všechny adresy stejnou informaci a jsou uvedeny pouze pro zálohu (nikdy tedy není žádná úmyslně skrytá informace v rozdílech mezi verzemi).
