@@ -1,3 +1,7 @@
+--
+-- V definicích pohledů view_bonus_help a view_bonus je třeba upravit série, které tvoří hurry up sérii
+--
+
 DROP VIEW IF EXISTS `view_current_year`;
 CREATE VIEW `view_current_year` AS
     SELECT *
@@ -12,10 +16,10 @@ CREATE VIEW `view_team` AS
     INNER JOIN `view_current_year` USING(`id_year`)
     ORDER BY `category`, `name`;
 
-DROP VIEW IF EXISTS `view_serie`;
-CREATE VIEW `view_serie` AS
-    SELECT `serie`.*
-    FROM `serie`
+DROP VIEW IF EXISTS `view_group`;
+CREATE VIEW `view_group` AS
+    SELECT `group`.*
+    FROM `group`
     INNER JOIN `view_current_year` USING(`id_year`);
 
 DROP VIEW IF EXISTS `view_competitor`;
@@ -26,31 +30,27 @@ DROP VIEW IF EXISTS `view_task`;
 CREATE VIEW `view_task` AS
 	SELECT
 		`task`.*,
-		CASE `task`.`type`
-			WHEN 'logical' THEN CONCAT('L',`task`.`number`)
-			WHEN 'programming' THEN CONCAT('P', `task`.`number`)
-			WHEN 'idea' THEN CONCAT('S', `task`.`number`)
-		END AS `code_name`,
-		`serie`.`to_show` AS `serie_to_show`
+                CONCAT(`group`.`code_name`, `task`.`number`) AS `code_name`,
+                `group`.`to_show` AS `group_to_show`
 	FROM `task`
-	INNER JOIN `serie` USING(`id_serie`)
+	INNER JOIN `group` USING(`id_group`)
 	INNER JOIN `view_current_year` USING(`id_year`)
-	ORDER BY `task`.`id_serie`, `task`.`id_task`;
+	ORDER BY `task`.`id_group`, `task`.`id_task`;
 
 DROP VIEW IF EXISTS `view_avaiable_task`;
 CREATE VIEW `view_avaiable_task` AS
 	SELECT
 		`view_task`.*
 	FROM `view_task`
-	WHERE `serie_to_show` <= NOW()
-	ORDER BY `view_task`.`id_serie`, `view_task`.`id_task`;
+	WHERE `group_to_show` <= NOW()
+	ORDER BY `view_task`.`id_group`, `view_task`.`id_task`;
 
 DROP VIEW IF EXISTS `view_answer`;
 CREATE VIEW `view_answer` AS
     SELECT `answer`.*
     FROM `answer`
     INNER JOIN `task` USING(`id_task`)
-    INNER JOIN `serie` USING(`id_serie`)
+    INNER JOIN `group` USING(`id_group`)
     INNER JOIN `view_current_year` USING(`id_year`);
 
 DROP VIEW IF EXISTS `view_correct_answer`;
@@ -59,7 +59,10 @@ CREATE VIEW `view_correct_answer` AS
 		`answer`.*
 	FROM `view_answer` AS `answer`
 	INNER JOIN `task` USING(`id_task`)
-	WHERE `answer`.`code` = `task`.`code`
+	WHERE 
+		(`task`.`answer_type` = 'str' AND `answer`.`answer_str` = `task`.`answer_str`)
+		OR (`task`.`answer_type` = 'int' AND `answer`.`answer_int` = `task`.`answer_int`)
+		OR (`task`.`answer_type` = 'real' AND ABS(`answer`.`answer_real` - `task`.`answer_real`) <= `task`.`real_tolerance`)
 	GROUP BY `id_answer`;
 
 DROP VIEW IF EXISTS `view_incorrect_answer`;
@@ -69,61 +72,105 @@ CREATE VIEW `view_incorrect_answer` AS
 	FROM `view_answer` AS `answer`
 	WHERE `answer`.`id_answer` NOT IN (SELECT `id_answer` FROM `view_correct_answer`);
 
+DROP FUNCTION IF EXISTS `task_points_with_discount`;
+delimiter //
+CREATE FUNCTION `task_points_with_discount`(maximum int(2), allow_zeroes tinyint(1), wrong_tries int(25))
+RETURNS int(2)
+DETERMINISTIC
+BEGIN
+DECLARE RetVal int(2);
+    IF maximum >= 4 THEN
+        SET RetVal =
+            CASE wrong_tries
+                WHEN 0 THEN maximum
+                WHEN 1 THEN CEILING(maximum * 0.6)
+                WHEN 2 THEN CEILING(maximum * 0.4)
+                WHEN 3 THEN CEILING(maximum * 0.2)
+                ELSE 0
+            END;
+    ELSE
+        SET RetVal = maximum - wrong_tries;
+    END IF;
+    RETURN CASE allow_zeroes
+        WHEN 1 THEN GREATEST(0, RetVal)
+        WHEN 0 THEN GREATEST(1, RetVal)
+    END;
+END//
+delimiter ;
+
+
+
+ DROP VIEW IF EXISTS `view_task_result`;
+ CREATE VIEW `view_task_result` AS
+ 	SELECT
+ 		`team`.`id_team`,
+ 		`view_task`.`id_task`,
+ 		`answer`.`inserted`,
+ 		(
+ 			IF(
+ 				`answer`.`inserted` IS NULL,
+ 				0,
+ 				task_points_with_discount(
+                                    `view_task`.`points`,
+                                    `view_group`.`allow_zeroes`,
+                                    (SELECT COUNT(1)
+                                     FROM `view_incorrect_answer` AS `wrong`
+                                     WHERE `wrong`.`id_team` = `team`.`id_team` AND `wrong`.`id_task` = `view_task`.`id_task`
+                                    )
+                                )
+ 			)
+ 		) AS `score`
+ 	FROM (`view_team` AS `team`, `view_avaiable_task` AS `view_task`)
+ 	LEFT JOIN `view_correct_answer` AS `answer` USING(`id_task`, `id_team`)
+        LEFT JOIN `view_group` USING(`id_group`);
+
 DROP VIEW IF EXISTS `view_bonus_help`;
 CREATE VIEW `view_bonus_help` AS
-	SELECT
-		`answer`.`id_team`,
-		COUNT(`answer`.`id_answer`) AS `count`
-	FROM `view_task` AS `task`
-	LEFT JOIN `view_correct_answer` AS `answer` USING(`id_task`)
-	WHERE `answer`.`id_team` IS NOT NULL
-	GROUP BY `answer`.`id_team`, `task`.`type`;
+    SELECT
+        `team`.`id_team`,
+        `view_task`.`number`,
+        COUNT(`view_correct_answer`.`id_task`) AS `complete`
+    FROM `view_team` AS `team`
+    LEFT JOIN `view_correct_answer` USING (`id_team`)
+    LEFT JOIN `view_task` USING (`id_task`)
+    WHERE `view_task`.`id_group` IN (2, 3, 4) -- vazba na data, skupiny ke kompletovani (hurry up)
+    GROUP BY `id_team`, `number`;
 
 DROP VIEW IF EXISTS `view_bonus`;
 CREATE VIEW `view_bonus` AS
-	SELECT
-		`id_team`,
-		IF (COUNT(*) = 3,MIN(`count`),0)*500 AS `score`
-	FROM `view_bonus_help`
-	GROUP BY `id_team`;
+    SELECT
+        `id_team`,
+        SUM(`view_task_result`.`score`) AS `score`
+    FROM `view_bonus_help`
+    LEFT JOIN `view_task_result` USING (`id_team`)
+    LEFT JOIN `view_task` ON `view_task`.`number` = `view_bonus_help`.`number`
+    WHERE `view_bonus_help`.`complete` = 3 AND `view_task`.`id_group` IN (2, 3, 4) -- vazba na data, skupiny ke kompletovani (hurry up) a jejich počet
+    GROUP BY `id_team`;
 
-DROP VIEW IF EXISTS `view_penality`;
-CREATE VIEW `view_penality` AS
-	SELECT
-		`team`.`id_team`,
-		10*COUNT(`view_incorrect_answer`.`id_answer`) AS `score`
-	FROM `view_team` AS `team`
-	LEFT JOIN `view_incorrect_answer` USING(`id_team`)
-	GROUP BY `id_team`;
 
-DROP VIEW IF EXISTS `view_task_result`;
-CREATE VIEW `view_task_result` AS
-	SELECT
-		`team`.`id_team`,
-		`view_task`.`id_task`,
-		`answer`.`inserted`,
-		(
-			IF(
-				`answer`.`inserted` IS NULL,
-				0,
-				1000-(SELECT COUNT(`help`.`id_answer`) FROM `view_correct_answer` AS `help` WHERE `help`.`inserted` < `answer`.`inserted` AND `help`.`id_task` = `view_task`.`id_task`)
-			)
-		) AS `score`
-	FROM (`view_team` AS `team`, `view_avaiable_task` AS `view_task`)
-	LEFT JOIN `view_correct_answer` AS `answer` USING(`id_task`, `id_team`);
+ DROP VIEW IF EXISTS `view_penality`;
+ CREATE VIEW `view_penality` AS
+ 	SELECT
+ 		`team`.`id_team`,
+ 		COUNT(`task_state`.`id_task`) AS `score` -- body dolů za přeskakování
+ 	FROM `view_team` AS `team`
+ 	LEFT JOIN `task_state` ON `task_state`.`id_team` = `team`.`id_team` AND `task_state`.`skipped` = 1
+ 	GROUP BY `id_team`;
 
-DROP VIEW IF EXISTS `view_total_result`;
-CREATE VIEW `view_total_result` AS
-	SELECT
-		`team`.*,
-		SUM(`view_task_result`.`score`) + IFNULL(`view_bonus`.`score`,0) - `view_penality`.`score` AS `score`
-	FROM `view_team` AS `team`
-	LEFT JOIN `view_task_result` USING(`id_team`)
-	LEFT JOIN `view_penality` USING(`id_team`)
-	LEFT JOIN `view_bonus` USING(`id_team`)
-	GROUP BY `id_team`
-	ORDER BY `score` DESC;
 
+ 
+ DROP VIEW IF EXISTS `view_total_result`;
+ CREATE VIEW `view_total_result` AS
+ 	SELECT
+ 		`team`.*,
+ 		SUM(`view_task_result`.`score`) + IFNULL(`view_bonus`.`score`,0) - `view_penality`.`score` AS `score`
+ 	FROM `view_team` AS `team`
+ 	LEFT JOIN `view_task_result` USING(`id_team`)
+ 	LEFT JOIN `view_penality` USING(`id_team`)
+ 	LEFT JOIN `view_bonus` USING(`id_team`)
+ 	GROUP BY `id_team`
+ 	ORDER BY `score` DESC;
+ 
 DROP VIEW IF EXISTS `view_task_stat`;
 CREATE VIEW `view_task_stat` AS
 	SELECT
@@ -136,7 +183,7 @@ CREATE VIEW `view_task_stat` AS
 	FROM `view_avaiable_task`
 	LEFT JOIN `view_correct_answer` USING(`id_task`)
 	GROUP BY `view_avaiable_task`.`id_task`
-	ORDER BY `view_avaiable_task`.`id_serie`, `view_avaiable_task`.`id_task`;
+	ORDER BY `view_avaiable_task`.`id_group`, `view_avaiable_task`.`id_task`;
 
 DROP VIEW IF EXISTS `view_chat`;
 CREATE VIEW `view_chat` AS
