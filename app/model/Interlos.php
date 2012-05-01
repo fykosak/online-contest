@@ -170,6 +170,10 @@ class Interlos {
         self::getConnection()->commit();
     }
 
+    /** @return GroupsModel */
+    public static function groups() {
+        return self::getModel("groups");
+    }
     /** @return PeriodModel */
     public static function period() {
         return self::getModel("period");

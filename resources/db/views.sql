@@ -1,5 +1,6 @@
 --
 -- V definicích pohledů view_bonus_help a view_bonus je třeba upravit série, které tvoří hurry up sérii
+-- TODO doimplementovat chování pro skupiny typu 'set' (skipped příznak etc.)
 --
 
 DROP VIEW IF EXISTS `view_current_year`;

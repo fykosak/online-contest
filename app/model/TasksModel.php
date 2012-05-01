@@ -73,6 +73,33 @@ class TasksModel extends AbstractModel {
         return $return;
     }
 
+    public function skip($team, $task) {
+        $this->checkEmptiness($team, "team");
+        $this->checkEmptiness($task, "task");
+
+        // Check that skip is allowed for task
+        $answers = Interlos::answers()->findAll()->where("[id_task] = %i", $task->id_task);
+        if ($answers->count() > 0) {
+            $this->log($team, "skip_tried", "The team tried to skip the task [$task->id_task].");
+            throw new InvalidStateException("Skipping not allowed for the task [$task->id_task].", AnswersModel::ERROR_SKIP_OF_ANSWERED);
+        }
+
+        // Check that skip is allowed in period
+        $skippableGroups = Interlos::groups()->findAllSkippable()->fetchPairs('id_group', 'id_group');
+        if (!array_key_exists($task["id_group"], $skippableGroups)) {
+            $this->log($team, "skip_tried", "The team tried to skip the task [$task->id_task].");
+            throw new InvalidStateException("Skipping not allowed during this period.", AnswersModel::ERROR_SKIP_OF_PERIOD);
+        }
+        // Insert a skip record
+        $return = $this->getConnection()->insert("task_state", array(
+                    "id_team" => $team,
+                    "id_task" => $task["id_task"],
+                    "skipped" => 1))->execute();
+        // Log the action
+        $this->log($team, "task_skipped", "The team successfuly skipped the task [$task->id_task].");
+        return $return;
+    }
+
     public static function checkAnswer($task, $solution) {
         switch ($task->answer_type) {
             case self::TYPE_STR:

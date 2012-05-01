@@ -3,6 +3,8 @@
 class AnswersModel extends AbstractModel {
     const ERROR_TIME_LIMIT = 10;
     const ERROR_OUT_OF_PERIOD = 20;
+    const ERROR_SKIP_OF_PERIOD = 30;
+    const ERROR_SKIP_OF_ANSWERED = 31;
 
     public function find($id) {
         $this->checkEmptiness($id, "id");

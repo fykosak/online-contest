@@ -90,7 +90,10 @@ class AnswerFormComponent extends BaseComponent {
 
 
 
-        $form->addSubmit("solution_submit", "Odeslat řešení");
+        $submit = $form->addSubmit("solution_submit", "Odeslat řešení");
+        if (count($options) == 0) {
+            $submit->setDisabled(true);
+        }
         $form->onSubmit[] = array($this, "formSubmitted");
 
         return $form;
