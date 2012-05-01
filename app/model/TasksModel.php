@@ -1,6 +1,9 @@
 <?php
 
 class TasksModel extends AbstractModel {
+    const TYPE_STR = 'str';
+    const TYPE_INT = 'int';
+    const TYPE_REAL = 'real';
 
     public function find($id) {
         $this->checkEmptiness($id, "id");
@@ -68,6 +71,20 @@ class TasksModel extends AbstractModel {
                 ))->execute();
         $this->log(NULL, "task_inserted", "The task [$name] has been inserted.");
         return $return;
+    }
+
+    public static function checkAnswer($task, $solution) {
+        switch ($task->answer_type) {
+            case self::TYPE_STR:
+                return $solution == $task->answer_str;
+                break;
+            case self::TYPE_INT:
+                return $solution == $task->answer_int;
+                break;
+            case self::TYPE_REAL:
+                return abs($solution - $task->answer_real) <= $task->real_tolerance;
+                break;
+        }
     }
 
 }
