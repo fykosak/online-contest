@@ -2,11 +2,9 @@
 class TeamsModel extends AbstractModel
 {
 
-    const COLLEGE	= 'college';
-
     const HIGH_SCHOOL	= 'high_school';
 
-    const OTHER		= 'other';
+    const OPEN		= 'open';
 
     public function find($id) {
 	$this->checkEmptiness($id, "id");

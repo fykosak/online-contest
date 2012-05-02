@@ -108,8 +108,7 @@ class TeamFormComponent extends BaseComponent {
 		// Category
 		$form->addSelect("category", "Kategorie", array(
 				TeamsModel::HIGH_SCHOOL	=> "Středoškoláci",
-				TeamsModel::COLLEGE	=> "Vysokoškoláci",
-				TeamsModel::OTHER	=> "Ostatní",
+				TeamsModel::OPEN	=> "Open",
 		));
 
 		// E-mails

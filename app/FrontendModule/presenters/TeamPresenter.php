@@ -13,8 +13,7 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter
 	);
 	$this->getTemplate()->categories = array(
 	    TeamsModel::HIGH_SCHOOL => "Středoškoláci",
-	    TeamsModel::COLLEGE	    => "Vysokoškoláci",
-	    TeamsModel::OTHER	    => "Ostatní",
+	    TeamsModel::OPEN	    => "Open",
 	);
     }
 

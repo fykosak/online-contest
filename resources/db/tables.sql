@@ -163,7 +163,7 @@ CREATE TABLE `team` (
   `id_year` int(25) unsigned NOT NULL,
   `name` varchar(150) COLLATE utf8_czech_ci NOT NULL COMMENT 'prihlasovaci jmeno',
   `password` varchar(160) COLLATE utf8_czech_ci NOT NULL COMMENT 'zahashovane heslo',
-  `category` enum('high_school','college','other') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
+  `category` enum('high_school','open') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
   `email` varchar(150) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'e-mailova adresa',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',

@@ -9,9 +9,8 @@ class TeamListComponent extends BaseListComponent {
 				->orderBy("name")
 				->fetchAssoc("id_team,id_competitor");
 		$this->getTemplate()->categories = array(
-				TeamsModel::COLLEGE	    => "Vysokoškoláci",
 				TeamsModel::HIGH_SCHOOL => "Středoškoláci",
-				TeamsModel::OTHER	    => "Ostatní",
+				TeamsModel::OPEN	    => "Open",
 		);
 	}
 
