@@ -78,7 +78,7 @@ class TasksModel extends AbstractModel {
         $this->checkEmptiness($task, "task");
 
         // Check that skip is allowed for task
-        $answers = Interlos::answers()->findAll()->where("[id_task] = %i", $task->id_task);
+        $answers = Interlos::answers()->findAllCorrect($team)->where("[id_task] = %i", $task->id_task);
         if ($answers->count() > 0) {
             $this->log($team, "skip_tried", "The team tried to skip the task [$task->id_task].");
             throw new InvalidStateException("Skipping not allowed for the task [$task->id_task].", AnswersModel::ERROR_SKIP_OF_ANSWERED);
@@ -95,6 +95,13 @@ class TasksModel extends AbstractModel {
                     "id_team" => $team,
                     "id_task" => $task["id_task"],
                     "skipped" => 1))->execute();
+        
+        // Increase counter
+        $sql = "INSERT INTO [group_state] ([id_group], [id_team], [task_counter])
+                    VALUES(%i, %i, 0)
+                ON DUPLICATE KEY UPDATE [task_counter] = [task_counter] + 1";
+        $this->getConnection()->query($sql, $task->id_group, $team);
+        
         // Log the action
         $this->log($team, "task_skipped", "The team successfuly skipped the task [$task->id_task].");
         return $return;

@@ -43,7 +43,7 @@ class SkipFormComponent extends BaseComponent {
                 ->findSubmitAvailable($team)
                 ->fetchAll();
         $skippableGroups = Interlos::groups()->findAllSkippable()->fetchPairs('id_group', 'id_group');
-        $answers = Interlos::answers()->findAll()->where("[id_team] = %i", $team)->fetchPairs('id_task', 'id_task');
+        $answers = Interlos::answers()->findAllCorrect($team)->fetchPairs('id_task', 'id_task');
         $options = array();
         foreach ($tasks as $task) {
             if (array_key_exists($task["id_group"], $skippableGroups) && !array_key_exists($task["id_task"], $answers)) {
