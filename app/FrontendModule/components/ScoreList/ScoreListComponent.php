@@ -9,8 +9,11 @@ class ScoreListComponent extends BaseComponent
 		$this->getTemplate()->score = Interlos::score()
 			->findAllTasks()
 			->fetchAssoc("id_team,id_task");
+                $this->getTemplate()->skips = Interlos::score()
+			->findAllSkips()
+			->fetchAssoc("id_team,id_task");
 		$this->getTemplate()->tasks = Interlos::tasks()
-			->findAllAvailable();
+			->findPossiblyAvailable();
 		$this->getTemplate()->bonus = Interlos::score()
 			->findAllBonus()
 			->fetchAssoc("id_team");

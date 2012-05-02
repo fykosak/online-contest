@@ -23,4 +23,9 @@ class ScoreModel extends AbstractModel {
 	public function findAllPenality() {
 		return $this->getConnection()->dataSource("SELECT * FROM [tmp_penality]");
 	}
+        
+        /** @return DibiDataSource */
+	public function findAllSkips() {
+		return $this->getConnection()->dataSource("SELECT * FROM [task_state] WHERE skipped = 1");
+	}
 }

@@ -8,6 +8,7 @@
 			<th>průměrný</th>
 			<th>správně</th>
 			<th>špatně</th>
+                        <th>přeskočeno</th>
 		</thead>
 		{foreach $tasks AS $task}
 			<tr{if $iterator->isEven()} class="even"{/if}>
@@ -18,6 +19,7 @@
 				<td>{$task->avg_time|timeOnly}</td>
 				<td>{$task->count_correct_answer}</td>
 				<td>{$task->count_incorrect_answer}</td>
+                                <td>{$task->count_skipped}</td>
 			</tr>
 		{/foreach}
 	</table>

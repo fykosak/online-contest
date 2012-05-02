@@ -143,6 +143,9 @@ table tr.even {
 	background-color: green;
 	color: white;
 }
+#score-stats td.skipped {
+	background-color: lightgray;
+}
 #score-stats tr.line td {
 	border-top: 1px dotted #dddddd;
 }

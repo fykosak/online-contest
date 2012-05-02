@@ -210,10 +210,12 @@ CREATE VIEW `view_task_stat` AS
 		MIN(`view_correct_answer`.`inserted`) AS `best_time`,
 		MAX(`view_correct_answer`.`inserted`) AS `worst_time`,
 		FROM_UNIXTIME(AVG(UNIX_TIMESTAMP(`view_correct_answer`.`inserted`))) AS `avg_time`,
-		COUNT(`view_correct_answer`.`id_answer`) AS `count_correct_answer`,
-		IFNULL((SELECT COUNT(`view_incorrect_answer`.`id_answer`) FROM `view_incorrect_answer` WHERE `view_incorrect_answer`.`id_task` = `view_possibly_available_task`.`id_task` GROUP BY `view_incorrect_answer`.`id_task`),0) AS `count_incorrect_answer`
+		COUNT(DISTINCT `view_correct_answer`.`id_answer`) AS `count_correct_answer`,
+		IFNULL((SELECT COUNT(`view_incorrect_answer`.`id_answer`) FROM `view_incorrect_answer` WHERE `view_incorrect_answer`.`id_task` = `view_possibly_available_task`.`id_task` GROUP BY `view_incorrect_answer`.`id_task`),0) AS `count_incorrect_answer`,
+                COUNT(DISTINCT `task_state`.`id_team`) AS `count_skipped`
 	FROM `view_possibly_available_task`
 	LEFT JOIN `view_correct_answer` USING(`id_task`)
+        LEFT JOIN `task_state` ON `task_state`.`id_task` = `view_possibly_available_task`.`id_task` AND `task_state`.`skipped` = 1
 	GROUP BY `view_possibly_available_task`.`id_task`
 	ORDER BY `view_possibly_available_task`.`id_group`, `view_possibly_available_task`.`number`;
 

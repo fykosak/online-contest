@@ -20,7 +20,7 @@ CREATE TABLE `answer` (
   KEY `id_task` (`id_task`),
   CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `answer_ibfk_2` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='pokusy uhadnout kod ukolu';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='pokusy uhadnout kod ukolu';
 
 
 DROP TABLE IF EXISTS `chat`;
@@ -49,7 +49,7 @@ CREATE TABLE `competitor` (
   KEY `id_school` (`id_school`),
   CONSTRAINT `competitor_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `competitor_ibfk_2` FOREIGN KEY (`id_school`) REFERENCES `school` (`id_school`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='informace o soutezicich';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='informace o soutezicich';
 
 
 DROP TABLE IF EXISTS `group`;
@@ -66,7 +66,7 @@ CREATE TABLE `group` (
   PRIMARY KEY (`id_group`),
   KEY `id_year` (`id_year`),
   CONSTRAINT `group_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='serie ukolu';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='serie ukolu';
 
 
 DROP TABLE IF EXISTS `group_state`;
@@ -74,6 +74,7 @@ CREATE TABLE `group_state` (
   `id_group` int(25) unsigned NOT NULL,
   `id_team` int(25) unsigned NOT NULL,
   `task_counter` int(4) DEFAULT NULL COMMENT 'počet vydaných úloh ze série',
+  PRIMARY KEY (`id_group`,`id_team`),
   KEY `id_group` (`id_group`),
   KEY `id_team` (`id_team`),
   CONSTRAINT `group_state_ibfk_1` FOREIGN KEY (`id_group`) REFERENCES `group` (`id_group`),
@@ -91,7 +92,7 @@ CREATE TABLE `log` (
   PRIMARY KEY (`id_log`),
   KEY `id_team` (`id_team`),
   CONSTRAINT `log_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='logovani akci tymu';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='logovani akci tymu';
 
 
 DROP TABLE IF EXISTS `period`;
@@ -106,7 +107,7 @@ CREATE TABLE `period` (
   PRIMARY KEY (`id_period`),
   KEY `id_group` (`id_group`),
   CONSTRAINT `period_ibfk_1` FOREIGN KEY (`id_group`) REFERENCES `group` (`id_group`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='období pro odevzdávání série úloh';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='období pro odevzdávání série úloh';
 
 
 DROP TABLE IF EXISTS `school`;
@@ -117,7 +118,7 @@ CREATE TABLE `school` (
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
   PRIMARY KEY (`id_school`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Skoly, ze kterych pochazi soutezici';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Skoly, ze kterych pochazi soutezici';
 
 
 DROP TABLE IF EXISTS `task`;
@@ -126,6 +127,7 @@ CREATE TABLE `task` (
   `id_group` int(25) unsigned NOT NULL COMMENT 'skupina, do ktere ukol patri',
   `number` int(2) unsigned NOT NULL COMMENT 'cislo ukolu v ramci serie',
   `name` varchar(250) COLLATE utf8_czech_ci NOT NULL COMMENT 'nazev ukolu',
+  `filename` varchar(250) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'neuhodnutelny nazev souboru se zadanim ukolu',
   `points` int(2) unsigned NOT NULL COMMENT 'plny pocet bodu za ulohu',
   `answer_type` enum('str','int','real') COLLATE utf8_czech_ci NOT NULL COMMENT 'datovy typ vysledku ukolu',
   `answer_str` varchar(250) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'sloupec pro retezcovou odpoved',
@@ -138,7 +140,7 @@ CREATE TABLE `task` (
   KEY `id_serie` (`id_group`),
   KEY `number` (`number`),
   CONSTRAINT `task_ibfk_1` FOREIGN KEY (`id_group`) REFERENCES `group` (`id_group`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='ukoly';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='ukoly';
 
 
 DROP TABLE IF EXISTS `task_state`;
@@ -147,6 +149,7 @@ CREATE TABLE `task_state` (
   `id_team` int(25) unsigned NOT NULL,
   `skipped` tinyint(1) NOT NULL COMMENT 'úloha byla přeskočena',
   `substitute` tinyint(1) NOT NULL COMMENT 'úloha vydána jako náhrada při přeskakování',
+  PRIMARY KEY (`id_task`,`id_team`),
   KEY `id_task` (`id_task`),
   KEY `id_team` (`id_team`),
   CONSTRAINT `task_state_ibfk_1` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`),
@@ -168,7 +171,7 @@ CREATE TABLE `team` (
   UNIQUE KEY `id_year` (`id_year`,`name`),
   UNIQUE KEY `id_year_2` (`id_year`,`email`),
   CONSTRAINT `team_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Soutezni tymy';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Soutezni tymy';
 
 
 DROP TABLE IF EXISTS `year`;
@@ -183,5 +186,5 @@ CREATE TABLE `year` (
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
   PRIMARY KEY (`id_year`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Rocniky';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Rocniky';
 
