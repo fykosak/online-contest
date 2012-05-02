@@ -1,11 +1,11 @@
 fieldset {
-    border: 1px #C1833E dashed;
+    border: 1px #549dcb dashed;
     margin-bottom: 10px;
 }
 fieldset legend {
     padding: 5px 10px;
     font-size: 1.5em;
-    color: #9a481c;
+    color: #094c77;
 }
 label {
     float: right;
