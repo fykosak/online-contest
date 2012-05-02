@@ -97,6 +97,14 @@ CREATE VIEW `view_correct_answer` AS
 		OR (`task`.`answer_type` = 'real' AND ABS(`answer`.`answer_real` - `task`.`answer_real`) <= `task`.`real_tolerance`)
 	GROUP BY `id_answer`;
 
+DROP VIEW IF EXISTS `view_last_correct_answer`;
+CREATE VIEW `view_last_correct_answer` AS
+	SELECT
+                `answer`.`id_team`,
+		MAX(`answer`.`inserted`) AS `last_time`
+	FROM `view_correct_answer` AS `answer`
+	GROUP BY `id_team`;
+
 DROP VIEW IF EXISTS `view_incorrect_answer`;
 CREATE VIEW `view_incorrect_answer` AS
 	SELECT
@@ -200,8 +208,9 @@ CREATE VIEW `view_bonus` AS
  	LEFT JOIN `view_task_result` USING(`id_team`)
  	LEFT JOIN `view_penality` USING(`id_team`)
  	LEFT JOIN `view_bonus` USING(`id_team`)
+        LEFT JOIN `view_last_correct_answer` USING(`id_team`)
  	GROUP BY `id_team`
- 	ORDER BY `score` DESC;
+ 	ORDER BY `score` DESC, `last_time` ASC;
  
 DROP VIEW IF EXISTS `view_task_stat`;
 CREATE VIEW `view_task_stat` AS

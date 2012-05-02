@@ -45,6 +45,8 @@ Bodování
 		  bodů za úlohy dané sady 
 	- penalizace
 		- za každý (vědomě) přeskočený příklad má tým penalizaci ? bod
+- pořadí týmů je primárně dáno bodovým ziskem, v případě rovnosti je lépe
+  hodnocen tým, který daný počet bodů získal v kratším čase
 
 Časování
 - nutnou podmínkou pro zveřejnění úloh je minutí okamžiku zveřejnění úloh dané
