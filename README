@@ -57,6 +57,8 @@ Bodování
   dobu ?? sekund
 
 TODO
-- kolik bodů strhávat za přeskočení příkladu
-- kolik sekund dát na blokování (lze různě pro odevzdávací období)
-- umožnit přeskočení příkladu i po zadání špatných odpovědí?
+- kolik bodů strhávat za přeskočení příkladu - vyřešeno: 1
+- kolik sekund dát na blokování (lze různě pro odevzdávací období) - vyřešeno 60
+- umožnit přeskočení příkladu i po zadání špatných odpovědí? - vyřešeno ano
+- loga na úvodní stránku
+- poděkování na úvodní stránku - KAM, tým Interlosu
