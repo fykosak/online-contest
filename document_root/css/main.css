@@ -9,31 +9,32 @@ body {
     margin: 0px auto;
 }
 #header {
-    background-color: #9a481c;
+    background-color: #448fda;
     padding: 5px 0;
 }
 #header .wrapper {
     height: 80px;
 }
 #header #logo {
-    background-image: url('../images/interlos-logo-final.png');
+    background-image: url('../images/fyziklani-online-maly.png');
     background-repeat: no-repeat;
     float: left;
     height: 73px;
-    width: 70px;
+    width: 110px;
+	margin-right: 5px;
 }
 #header h1 {
     margin: 0;
     margin-left: 100px;
     line-height: 80px;
     font-size: 3.5em;
-    color: #ffde9a;
+    color: #ececec;
     font-variant: small-caps;
 }
 #menu {
-    background: #F5D25A;
-    border-top: 2px solid #C1833E;
-    border-bottom: 1px solid #F1C11D;
+    background: #c1e2f8;
+    border-top: 2px solid #094c77;
+    border-bottom: 1px solid #2a6a93;
     font-size: 1em;
     line-height: 2em;
 }
@@ -47,16 +48,16 @@ body {
     display: inline;
 }
 #menu ul li a {
-    color: #865A2C;
+    color: #2a6a93;
     font-weight: bolder;
     text-decoration: none;
 }
 #menu ul li a:hover {
-    color: #4C3319;
+    color: #2e2e2e;
 }
 #menu #clock {
     float: right;
-    color: #865A2C;
+    color: #2e2e2e;
 }
 #menu #team-navigation {
     float: right;
@@ -76,7 +77,7 @@ body {
     list-style: none;
     padding-left: 10px;
     margin: 0;
-    border-left: 1px #9a481c solid;
+    border-left: 1px #094c77 solid;
     font-size: 1.2em;
 }
 #submenu ul ul {
@@ -88,13 +89,13 @@ body {
 #footer {
 	height: 47px;
 	clear: both;
-	background: #FDF7CD;
-	border-top: 2px solid #F9E7A2;
+	background: #c1e2f8;
+	border-top: 2px solid #6faad0;
 	margin-top: 20px;
 }
 /******************* BASIC ELEMENTS *******************************************/
 h1, h2, h3, h4, h5, h6, strong, a {
-    color: #9a481c;
+    color: #448fda;
 }
 a img {
     border: 0;
@@ -132,8 +133,8 @@ table tr.even {
 	text-align: center;
 }
 #score-stats th {
-	background: #F5D25A;
-	color: #865A2C;
+	background: #094c77;
+	color: #c1e2f8;
 	padding: 2px;
 }
 #score-stats td.team {
@@ -151,8 +152,8 @@ table tr.even {
 }
 /************************ ANSWER HISTORY **************************************/
 #answer-history th {
-	background: #F5D25A;
-	color: #865A2C;
+	background: #094c77;
+	color: #c1e2f8;
 	text-align: left;
 }
 #answer-history th, #answer-history td {
@@ -170,8 +171,8 @@ table tr.even {
 	width: 100%;
 }
 #task-stats th {
-	background: #F5D25A;
-	color: #865A2C;
+	background: #094c77;
+	color: #c1e2f8;
 	text-align: left;
 }
 #task-stats th, #task-stats td {
@@ -182,8 +183,8 @@ table tr.even {
 	width: 100%;
 }
 .results th {
-	background: #F5D25A;
-	color: #865A2C;
+	background: #094c77;
+	color: #c1e2f8;
 	text-align: left;
 }
 .results th, .results td {
