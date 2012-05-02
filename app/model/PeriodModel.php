@@ -16,5 +16,5 @@ class PeriodModel extends AbstractModel {
         $source->where("[begin] <= NOW() AND [end] > NOW()");
         return $source->fetch();
     }
-
+    
 }

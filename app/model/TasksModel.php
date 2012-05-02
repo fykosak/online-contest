@@ -100,6 +100,25 @@ class TasksModel extends AbstractModel {
         return $return;
     }
 
+    public function updateCounter($teamId) {
+        // Initialize with zeroes
+        $sql = "INSERT INTO [group_state] ([id_group], [id_team], [task_counter])
+                    SELECT [id_group], [id_team], 0
+                    FROM [view_group], [view_team]
+                ON DUPLICATE KEY UPDATE [task_counter] = [task_counter]";
+        $this->getConnection()->query($sql);
+
+
+        // Update according to current period
+        $sql = "UPDATE [group_state] AS gs
+                SET task_counter = 
+                    GREATEST(
+                        IFNULL((SELECT COUNT([id_answer]) FROM [view_correct_answer] AS ca WHERE ca.[id_team] = gs.[id_team])
+                        + (SELECT reserve_size FROM [period] AS p WHERE p.[id_group] = gs.[id_group] AND p.[begin] <= NOW() AND p.[end] > NOW()), 0),
+                    gs.task_counter)";
+        $this->getConnection()->query($sql);
+    }
+
     public static function checkAnswer($task, $solution) {
         switch ($task->answer_type) {
             case self::TYPE_STR:
