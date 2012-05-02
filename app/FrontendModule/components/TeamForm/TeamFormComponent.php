@@ -29,7 +29,8 @@ class TeamFormComponent extends BaseComponent {
 					$values["team_name"],
 					$values["email"],
 					$values["category"],
-					$values["password"]
+					$values["password"],
+                                        $values["address"]
 			);
 			// Send e-mail
 			$template = InterlosTemplate::loadTemplate(new Template());
@@ -45,7 +46,7 @@ class TeamFormComponent extends BaseComponent {
 			// Redirect
 			$this->insertCompetitorsFromValues($insertedTeam, $values);
 			$this->getPresenter()->flashMessage("Tým '".$values["team_name"]."' byl úspěšně zaregistrován.", "success");
-			$this->getPresenter()->redirect("this");
+			$this->getPresenter()->redirect("Default:login");
 		}
 		catch (DibiDriverException $e) {
 			$this->getPresenter()->flashMessage("Chyba při práci s databází.", "error");
@@ -62,7 +63,8 @@ class TeamFormComponent extends BaseComponent {
 			// Update the team
 			$changes = array(
 					"email"	    => $values["email"],
-					"category"  => $values["category"]
+					"category"  => $values["category"],
+                                        "address"   => $values["address"],
 			);
 			if (!empty($values["password"])) {
 				$changes["password"] = TeamAuthenticator::passwordHash($values["password"]);
@@ -111,8 +113,14 @@ class TeamFormComponent extends BaseComponent {
 				TeamsModel::OPEN	=> "Open",
 		));
 
-		// E-mails
-		$form->addText("email", "E-mail")->addRule(Form::EMAIL, "E-mail nemá správný formát.");
+		// Contatcs
+		$form->addText("email", "E-mail")
+                        ->addRule(Form::FILLED, "Zadejte prosím kontatní e-mail.")
+                        ->addRule(Form::EMAIL, "E-mail nemá správný formát.");
+                
+                $form->addTextArea("address", "Kontaktní adresa", 35, 4)
+                        ->addRule(Form::FILLED, "Zadejte prosím kontatní adresu.")
+                        ->setOption("description", "Pro zaslání případné odměny.");
 
 		$schools = Interlos::schools()->findAll()->orderBy("name")->fetchPairs("id_school", "name");
 		$schools = array(NULL => "Nevyplněno") + $schools + array("other" => "Jiná");

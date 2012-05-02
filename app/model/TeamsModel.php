@@ -22,7 +22,7 @@ class TeamsModel extends AbstractModel
 	return $this->getConnection()->dataSource("SELECT * FROM [tmp_total_result]");
     }
 
-    public function insert($name, $email, $category, $password) {
+    public function insert($name, $email, $category, $password, $address) {
 	$this->checkEmptiness($name, "name");
 	$this->checkEmptiness($email, "email");
 	$this->checkEmptiness($category, "category");
@@ -33,6 +33,7 @@ class TeamsModel extends AbstractModel
 	    "email"	=> $email,
 	    "category"	=> $category,
 	    "password"	=> $password,
+            "address"	=> $address,
 	    "inserted"	=> new DateTime(),
 	    "id_year"	=> Interlos::years()->findCurrent()->id_year
 	))->execute();
