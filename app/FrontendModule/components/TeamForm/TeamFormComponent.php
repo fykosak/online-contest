@@ -155,6 +155,7 @@ class TeamFormComponent extends BaseComponent {
 			$defaults += array(
 					"team_name"	=> $loggedTeam->name,
 					"email"	=> $loggedTeam->email,
+                                        "address" => $loggedTeam->address,
 					"category"	=> $loggedTeam->category,
 					"id_team"	=> $loggedTeam->id_team
 			);
