@@ -27,6 +27,7 @@ class TeamsModel extends AbstractModel
 	$this->checkEmptiness($email, "email");
 	$this->checkEmptiness($category, "category");
 	$this->checkEmptiness($password, "password");
+        $this->checkEmptiness($address, "address");
 	$password = TeamAuthenticator::passwordHash($password);
 	$this->getConnection()->insert("team", array(
 	    "name"	=> $name,

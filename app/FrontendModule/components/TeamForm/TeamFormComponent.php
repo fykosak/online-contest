@@ -198,7 +198,7 @@ class TeamFormComponent extends BaseComponent {
 	private function loadCompetitorsFromValues($values) {
 		$competitors = array();
 		$schoolsToInsert = array();
-		for($i=1; $i <= 5; $i++) {
+		for($i=1; $i <= self::NUMBER_OF_MEMBERS; $i++) {
 			if (!empty($values[$i."_competitor_name"])) {
 				$competitor = array();
 				$competitor["name"]		= $values[$i."_competitor_name"];
