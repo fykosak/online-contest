@@ -12,7 +12,7 @@ class Frontend_CronPresenter extends Frontend_BasePresenter {
 
     protected function startup() {
         parent::startup();
-        if ($this->getParam("key") != Environment::getConfig("cron")->key) {
+        if ($_GET["cron-key"] != Environment::getConfig("cron")->key) {
             die("PERMISSION DENIED");
         }
     }
