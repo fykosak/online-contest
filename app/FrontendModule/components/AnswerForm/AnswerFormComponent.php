@@ -17,6 +17,8 @@ class AnswerFormComponent extends BaseComponent {
             }
 
             Interlos::answers()->insert($team, $task, $solution, $period);
+            Environment::getCache()->clean(array(Cache::TAGS => array("problems/$team")));
+            
             if (TasksModel::checkAnswer($task, $solution)) {
                 $this->getPresenter()->flashMessage("Vaše odpověď je správně.", "success");
             } else {

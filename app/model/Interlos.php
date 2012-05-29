@@ -145,7 +145,7 @@ class Interlos {
     }
 
     public static function resetTemporaryTables() {
-        if ((!self::isCronAccess() && !self::isAdminAccess()) || !isset($_GET["update-database"])) {
+        if ((!self::isCronAccess() && !self::isAdminAccess())) {
             return;
         }
         self::getConnection()->begin();
