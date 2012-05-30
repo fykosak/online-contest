@@ -7,7 +7,7 @@ class Frontend_CronPresenter extends Frontend_BasePresenter {
     }
 
     public function renderCache($key) {
-        Environment::getCache()->clean("problems");
+        Environment::getCache()->clean(array(Cache::TAGS => array("problems")));
     }
 
     protected function startup() {
