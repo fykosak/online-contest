@@ -126,7 +126,7 @@ table tr.even {
 }
 /************************ SCORE STATS *****************************************/
 #score-stats-wrapper {
-	overflow: auto;
+	/*overflow: auto;*/
 }
 #score-stats td,#score-stats th {
 	min-width: 40px;
