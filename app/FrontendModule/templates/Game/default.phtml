@@ -3,7 +3,7 @@
 {block #subcontent}
 
 {cache "problems/$id_team", "problems"}
-{? Interlos::tasks()->updateCounter($id_team)}
+{*{? Interlos::tasks()->updateCounter($id_team)}*}
 
 <p>K dispozici máte zadání těchto úloh dle podmínek v zadání:</p>
 

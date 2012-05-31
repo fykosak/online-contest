@@ -21,6 +21,7 @@ class AnswerFormComponent extends BaseComponent {
             
             if (TasksModel::checkAnswer($task, $solution)) {
                 $this->getPresenter()->flashMessage("Vaše odpověď je správně.", "success");
+                Interlos::tasks()->updateCounter($team);
             } else {
                 $this->getPresenter()->flashMessage("Vaše odpověď je špatně.", "error");
             }
@@ -69,7 +70,7 @@ class AnswerFormComponent extends BaseComponent {
             TasksModel::TYPE_REAL => array(),
         );
         foreach ($tasks as $task) {
-            $options[$task["id_task"]] = $task["code_name"] . ' (' . $task["answer_type"] . ')';
+            $options[$task["id_task"]] = $task["code_name"] . ': '. $task["name"] . ' (' . $task["answer_type"] . ')';
             $rules[$task["answer_type"]][] = $task["id_task"];
         }
         $tasks = array(NULL => " ---- Vybrat ---- ") + $options;

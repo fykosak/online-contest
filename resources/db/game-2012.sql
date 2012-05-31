@@ -5,10 +5,10 @@ SET time_zone = 'SYSTEM';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 INSERT INTO `group` (`id_group`, `id_year`, `to_show`, `type`, `code_name`, `text`, `allow_zeroes`, `inserted`, `updated`) VALUES
-(1,	1,	'2012-05-31 17:00:00',	'serie',	'FYZ',	'Normální Fyziklání.',	0,	'2012-05-03 00:26:06',	'2012-05-03 00:26:06'),
-(2,	1,	'2012-05-31 18:30:00',	'serie',	'A',	'Téma z hurry up A.',	1,	'2012-05-03 00:26:46',	'2012-05-03 00:26:46'),
-(3,	1,	'2012-05-31 18:30:00',	'serie',	'B',	'Téma z hurry up B.',	1,	'2012-05-03 00:27:44',	'2012-05-03 00:27:44'),
-(4,	1,	'2012-05-31 18:30:00',	'serie',	'C',	'Téma z hurry up C.',	1,	'2012-05-03 00:27:44',	'2012-05-03 00:27:44');
+(1,	1,	'2012-05-31 17:00:00',	'serie',	'FoL',	'Normální Fyziklání.',	0,	'2012-05-03 00:26:06',	'2012-05-03 00:26:06'),
+(2,	1,	'2012-05-31 18:00:00',	'serie',	'M',	'Hurry-up mechanika.',	1,	'2012-05-03 00:26:46',	'2012-05-03 00:26:46'),
+(3,	1,	'2012-05-31 18:00:00',	'serie',	'E',	'Hurry-up elektřina.',	1,	'2012-05-03 00:27:44',	'2012-05-03 00:27:44'),
+(4,	1,	'2012-05-31 18:00:00',	'serie',	'X',	'Hurry-up ostatní',	1,	'2012-05-03 00:27:44',	'2012-05-03 00:27:44');
 
 INSERT INTO `period` (`id_period`, `id_group`, `begin`, `end`, `allow_skip`, `time_penalty`, `reserve_size`) VALUES
 (1,	1,	'2012-05-31 17:00:00',	'2012-05-31 18:29:59',	0,	60,	5),

@@ -5,7 +5,7 @@
 			<th>název</th>
 			<th>nejhorší</th>
 			<th>nejlepší</th>
-			<th>průměrný</th>
+			{*<th>průměrný</th>*}
 			<th>správně</th>
 			<th>špatně</th>
                         <th>přeskočeno</th>
@@ -16,7 +16,7 @@
 				<td>{$task->name}</td>
 				<td>{$task->worst_time|timeOnly}</td>
 				<td>{$task->best_time|timeOnly}</td>
-				<td>{$task->avg_time|timeOnly}</td>
+				{*<td>{$task->avg_time|timeOnly}</td>*}
 				<td>{$task->count_correct_answer}</td>
 				<td>{$task->count_incorrect_answer}</td>
                                 <td>{$task->count_skipped}</td>
