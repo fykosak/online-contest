@@ -10,9 +10,9 @@ abstract class AbstractModel implements InterlosModel {
 	// ----- PROTECTED METHODS
 
 	protected final function checkEmptiness($var, $name) {
-		if (empty($var)) {
-			throw new NullPointerException("The parameter [$name] is empty.");
-		}
+//		if (empty($var)) {
+//			throw new NullPointerException("The parameter [$name] is empty.");
+//		}
 	}
 
 	/** @return DibiConnection */
