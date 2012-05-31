@@ -12,7 +12,7 @@
 {else}
 <ul>
     {foreach $tasks as $task}
-    <li><strong>{$task->code_name}</strong>&nbsp;{$task->name}
+    <li><strong>{$task->code_name}</strong>&nbsp;{$task->name} ({$task->points} b.)
         <ul>
             {foreach $mirrors as $mirror}
             <li><a href="{$mirror}{$task->filename}">{$mirror}{$task->filename}</a></li>
@@ -32,7 +32,8 @@
 </p>*}
 
 <p>
-	Na této stránce se také případně objeví upřesnění k zadání / opravy chyb (opět doufáme a věříme, že ani jedno nebude potřeba). Oznámení tohoto typu se současně objeví také na chatu na stránkách hry.
+	Na této stránce se také případně objeví zmínka o upřesnění k zadání / opravy chyb.
+        Podrobnosti budou v diskusi.
 </p>
 <p>
 	A ještě několik rad:
