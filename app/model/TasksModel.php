@@ -117,15 +117,20 @@ class TasksModel extends AbstractModel {
 
 
         // Update according to current period
-        $sql = "UPDATE [group_state] AS gs
+        $sql = "UPDATE group_state AS gs
                 SET task_counter = 
                     GREATEST(
-                        IFNULL((SELECT COUNT([id_answer])
-                            FROM [view_correct_answer] AS ca
-                            LEFT JOIN [view_task] tsk USING ([id_task])
-                            WHERE ca.[id_team] = gs.[id_team] AND tsk.[id_group] = gs.[id_group])
-                        + (SELECT reserve_size FROM [period] AS p WHERE p.[id_group] = gs.[id_group] AND p.[begin] <= NOW() AND p.[end] > NOW()), 0),
+                        IFNULL((SELECT COUNT(id_answer)
+                            FROM view_correct_answer AS ca
+                            LEFT JOIN view_task tsk USING (id_task)
+                            WHERE ca.id_team = gs.id_team AND tsk.id_group = gs.id_group) +
+                           (SELECT COUNT(id_task)
+                            FROM task_state AS ts
+                            LEFT JOIN view_task tsk2 USING (id_task)
+                            WHERE ts.id_team = gs.id_team AND tsk2.id_group = gs.id_group AND skipped = 1)
+                        + (SELECT reserve_size FROM period AS p WHERE p.id_group = gs.id_group AND p.begin <= NOW() AND p.end > NOW()), 0),
                     gs.task_counter)";
+        
         $this->getConnection()->query($sql);
     }
 
