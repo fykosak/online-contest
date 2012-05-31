@@ -9,6 +9,7 @@ class AnswerFormComponent extends BaseComponent {
             $task = Interlos::tasks()->find($values["task"]);
             $period = Interlos::period()->findCurrent($task["id_group"]);
             $solution = trim($values["solution"], " ");
+            $solution = strtr($solution, ",", ".");
             $team = Interlos::getLoggedTeam()->id_team;
 
             if (!$period) {
@@ -88,9 +89,9 @@ class AnswerFormComponent extends BaseComponent {
         }
         if (count($rules[TasksModel::TYPE_REAL])) {
             $text->addConditionOn($select, Form::IS_IN, $rules[TasksModel::TYPE_REAL])
-                    ->addRule(Form::FLOAT, "Výsledek musí být reálné číslo.");            
+                    ->addRule(Form::REGEXP,"Výsledek musí být reálné číslo." , '/[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?/');
         }
-        $text->setOption("description", "Desetinná čísla zadávejte s desetinnou tečkou.");
+        $text->setOption("description", "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1.");
 
 
 
