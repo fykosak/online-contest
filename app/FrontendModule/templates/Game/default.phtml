@@ -2,8 +2,8 @@
 
 {block #subcontent}
 
-{cache "problems/$id_team", "problems"}
-{*{? Interlos::tasks()->updateCounter($id_team)}*}
+{*{cache "problems/$id_team", "problems"}*}
+{? Interlos::tasks()->updateCounter($id_team)}
 
 <p>K dispozici máte zadání těchto úloh dle podmínek v zadání:</p>
 
@@ -22,7 +22,7 @@
     {/foreach}
 </ul>
 {/if}
-{/cache}
+{*{/cache}*}
 <p>
 	Kdykoliv je v zadání uvedeno více alternativních webových adres, obsahují všechny adresy stejnou informaci a jsou uvedeny pouze pro zálohu (nikdy tedy není žádná úmyslně skrytá informace v rozdílech mezi verzemi).
 </p>
@@ -32,7 +32,7 @@
 </p>*}
 
 <p>
-	Na této stránce se také případně objeví zmínka o upřesnění k zadání / opravy chyb.
+	Na této stránce se také případně objeví zmínka o upřesnění k zadání/opravy chyb.
         Podrobnosti budou v diskusi.
 </p>
 <p>
