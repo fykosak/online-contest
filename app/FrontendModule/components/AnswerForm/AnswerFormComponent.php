@@ -88,8 +88,9 @@ class AnswerFormComponent extends BaseComponent {
         }
         if (count($rules[TasksModel::TYPE_REAL])) {
             $text->addConditionOn($select, Form::IS_IN, $rules[TasksModel::TYPE_REAL])
-                    ->addRule(Form::FLOAT, "Výsledek musí být reálné číslo.");
+                    ->addRule(Form::FLOAT, "Výsledek musí být reálné číslo.");            
         }
+        $text->setOption("description", "Desetinná čísla zadávejte s desetinnou tečkou.");
 
 
 
