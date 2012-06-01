@@ -124,6 +124,9 @@ h3.unpacked {
 table tr.even {
 	background: #FDF7CD;
 }
+table tr.inactive {
+	color: #888;
+}
 /************************ SCORE STATS *****************************************/
 #score-stats-wrapper {
 	/*overflow: auto;*/

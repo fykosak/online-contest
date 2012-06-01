@@ -203,14 +203,17 @@ CREATE VIEW `view_bonus` AS
  CREATE VIEW `view_total_result` AS
  	SELECT
  		`team`.*,
- 		SUM(`view_task_result`.`score`) + IFNULL(`view_bonus`.`score`,0) - `view_penality`.`score` AS `score`
+ 		SUM(`view_task_result`.`score`) + IFNULL(`view_bonus`.`score`,0) - `view_penality`.`score` AS `score`,
+                IF((SELECT COUNT(`id_task`) FROM `task_state` WHERE `id_team` = `team`.`id_team` AND `skipped` = 0)
+                + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `team`.`id_team`) > 0, 1, 0)
+                 AS `activity`
  	FROM `view_team` AS `team`
  	LEFT JOIN `view_task_result` USING(`id_team`)
  	LEFT JOIN `view_penality` USING(`id_team`)
  	LEFT JOIN `view_bonus` USING(`id_team`)
         LEFT JOIN `view_last_correct_answer` USING(`id_team`)
  	GROUP BY `id_team`
- 	ORDER BY `score` DESC, `last_time` ASC;
+ 	ORDER BY `activity` DESC, `score` DESC, `last_time` ASC;
  
 DROP VIEW IF EXISTS `view_task_stat`;
 CREATE VIEW `view_task_stat` AS

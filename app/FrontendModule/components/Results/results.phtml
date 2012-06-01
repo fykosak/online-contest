@@ -10,7 +10,7 @@
 		</thead>
 		{if isset($teams[$category])}
 			{foreach $teams[$category] AS $team}
-			<tr{if $iterator->isEven()} class="even"{/if}>
+			<tr class="{if $iterator->isEven()}even{/if} {if $team->activity == 0}inactive{/if}">
 				<td>{$iterator->getCounter()}</td>
 				<td>{$team->name}</td>
 				<td>
