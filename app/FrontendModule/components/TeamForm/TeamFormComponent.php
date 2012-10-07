@@ -6,6 +6,7 @@
  * @author Jan Papousek
  */
 class TeamFormComponent extends BaseComponent {
+
     const NUMBER_OF_MEMBERS = 5;
     const OTHER_SCHOOL = 'other';
 
@@ -118,25 +119,38 @@ class TeamFormComponent extends BaseComponent {
 
         $schools = Interlos::schools()->findAll()->orderBy("name")->fetchPairs("id_school", "name");
         $schools = array(NULL => "Nevyplněno") + $schools + array(self::OTHER_SCHOOL => "Jiná");
+        $study_years = array(
+            "1" => "1. ročník SŠ",
+            "2" => "2. ročník SŠ",
+            "3" => "3. ročník SŠ",
+            "4" => "4. ročník SŠ",
+            "6" => "ZŠ",
+            "7" => "ostatní"
+        );
 
         // Members
         for ($i = 1; $i <= self::NUMBER_OF_MEMBERS; $i++) {
             $form->addGroup("$i. člen");
-            $form->addText($i . "_competitor_name", "Jméno");
-            $form->addSelect($i . "_school", "Škola", $schools)
-                    ->addConditionOn($form[$i . "_competitor_name"], Form::FILLED)
+            $form->addText("competitor_name_" . $i, "Jméno");
+            $form->addSelect("school_" . $i, "Škola", $schools)
+                    ->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
                     ->addRule(~Form::EQUAL, "U $i. člena je vyplněno jméno, ale není u něj vyplněna škola.", NULL)
                     ->endCondition()
                     ->addCondition(Form::EQUAL, self::OTHER_SCHOOL)
-                    ->toggle("frm" . $name . "-" . $i . "_otherschool")
-                    ->toggle("frm" . $name . "-" . $i . "_otherschool-label");
-            $form->addText($i . "_otherschool", "Jiná škola")
-                    ->addConditionOn($form[$i . "_competitor_name"], Form::FILLED)
-                    ->addConditionOn($form[$i . "_school"], Form::EQUAL, self::OTHER_SCHOOL)
+                    ->toggle("frm" . $name . "-" . "otherschool_$i")
+                    ->toggle("frm" . $name . "-" . "otherschool_$i-label");
+            $form->addText("otherschool_" . $i, "Jiná škola")
+                    ->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
+                    ->addConditionOn($form["school_" . $i], Form::EQUAL, self::OTHER_SCHOOL)
                     ->addRule(Form::FILLED, "U $i. člena je vyplněno jméno, ale není u něj vyplněna škola.");
-            $form[$i . "_otherschool"]->getLabelPrototype()->id = "frm" . $name . "-" . $i . "_otherschool-label";
+            $form["otherschool_" . $i]->getLabelPrototype()->id = "frm" . $name . "-" . "otherschool_$i-label";
+            $form->addText("email_$i", "Email")
+                    ->addCondition(~Form::EQUAL, "")
+                    ->addRule(Form::EMAIL, "U $i. člena není platná e-mailová adresa.");
+            $form->addSelect("study_year_$i", "Školní ročník", $study_years)
+                    ->setOption("description", "Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ.");
             if ($i == 1) {
-                $form[$i . "_competitor_name"]->addRule(Form::FILLED, "Jméno prvního člena musí být vyplněno.");
+                $form["competitor_name_" . $i]->addRule(Form::FILLED, "Jméno prvního člena musí být vyplněno.");
             }
         }
 
@@ -157,8 +171,10 @@ class TeamFormComponent extends BaseComponent {
             $counter = 1;
             foreach ($competitors AS $competitor) {
                 $defaults += array(
-                    $counter . "_competitor_name" => $competitor->name,
-                    $counter . "_school" => $competitor->id_school
+                    "competitor_name_" . $counter => $competitor->name,
+                    "school_" . $counter => $competitor->id_school,
+                    "email_" . $counter => $competitor->email,
+                    "study_year_" . $counter => $competitor->study_year,
                 );
                 $counter++;
             }
@@ -190,7 +206,7 @@ class TeamFormComponent extends BaseComponent {
                     $insertedSchools[$competitor["otherschool"]] = $competitor['school']; // nevkládáme vícekrát
                 }
             }
-            Interlos::competitors()->insert($team, $competitor['school'], $competitor['name']);
+            Interlos::competitors()->insert($team, $competitor['school'], $competitor['name'], $competitor['email'], $competitor['study_year']);
         }
     }
 
@@ -198,12 +214,14 @@ class TeamFormComponent extends BaseComponent {
         $competitors = array();
         $schoolsToInsert = array();
         for ($i = 1; $i <= self::NUMBER_OF_MEMBERS; $i++) {
-            if (!empty($values[$i . "_competitor_name"])) {
+            if (!empty($values["competitor_name_" . $i])) {
                 $competitor = array();
-                $competitor["name"] = $values[$i . "_competitor_name"];
-                $competitor["school"] = $values[$i . "_school"];
-                $competitor["otherschool"] = $values[$i . "_otherschool"];
-                if ($values[$i . "_school"] == self::OTHER_SCHOOL && !empty($competitor["otherschool"])) {
+                $competitor["name"] = $values["competitor_name_" . $i];
+                $competitor["school"] = $values["school_" . $i];
+                $competitor["otherschool"] = $values["otherschool_" . $i];
+                $competitor["email"] = $values["email_" . $i];
+                $competitor["study_year"] = $values["study_year_" . $i];
+                if ($values["school_" . $i] == self::OTHER_SCHOOL && !empty($competitor["otherschool"])) {
                     $schoolsToInsert[$competitor["otherschool"]] = true; // unikátnost názvu nových škol
                 }
                 $competitors[] = $competitor;
