@@ -1,0 +1,3 @@
+[submodule "document_root/download"]
+	path = document_root/download
+	url = fksgit@org.fykos.cz:data/fol-data.git
