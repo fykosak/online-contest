@@ -11,7 +11,7 @@
         <script type="text/javascript" src="{$baseUri}js/jquery-ui-1.8.2.custom.min.js"></script>
 
 		<title>
-	    Fyziklání online - {$pageTitle}
+	    Fyziklání online{ifset $pageTite} - {$pageTitle}{/ifset}
 		</title>
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -63,8 +63,8 @@ s.parentNode.insertBefore(ga, s);
 				</ul>
 				<ul id="general-navigation">
 					<li><a href="{link Default:rules}" title="Pravidla">Pravidla</a></li>
-					{*<li><a href="{link Default:lastYears}" title="Minulé ročníky">Minulé ročníky</a></li>
-					<li><a href="{link Default:taskExamples}" title="Rozcvička">Rozcvička</a></li>*}
+					<li><a href="{link Default:lastYears}" title="Minulé ročníky">Minulé ročníky</a></li>
+					{*<li><a href="{link Default:taskExamples}" title="Rozcvička">Rozcvička</a></li>*}
 				{if Interlos::isRegistrationStarted()}
 					<li><a href="{link Default:chat}" title="Diskuse">Diskuse</a></li>
 					<li><a href="{link Team:list}" title="Týmy">Týmy</a></li>
@@ -80,7 +80,7 @@ s.parentNode.insertBefore(ga, s);
 		</div>
 		<div class="wrapper">
 			<!-- PAGE TITLE -->
-			<h1>{$pageTitle}</h1>
+			<h1 n:ifset="$pageTitle">{$pageTitle}</h1>
 			<!-- FLASH MESSAGES -->
             {widget flashMessages}
 			<!-- CONTENT -->

@@ -12,7 +12,7 @@ class Frontend_DefaultPresenter extends Frontend_BasePresenter {
 	}
 
 	public function renderDefault() {
-		$this->setPagetitle("Soutež ve fyzice");
+		$this->setPagetitle("Mezinárodní soutež ve fyzice");
 	}
 
 	public function renderLastYears() {
