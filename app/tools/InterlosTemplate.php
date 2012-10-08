@@ -10,7 +10,7 @@ final class InterlosTemplate
 	$template->registerHelper("time", Helpers::getHelper('time'));
 	$template->registerHelper("timeOnly", Helpers::getHelper('timeOnly'));
 	$template->registerHelper("texy", Helpers::getHelper('texy'));
-
+        
 	return $template;
     }
 }

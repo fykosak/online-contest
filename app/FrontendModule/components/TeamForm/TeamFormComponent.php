@@ -37,15 +37,18 @@ class TeamFormComponent extends BaseComponent {
             );
             // Send e-mail
             $template = InterlosTemplate::loadTemplate(new Template());
+            $template->registerFilter('LatteFilter');
             $template->setFile(FrontendModule::getModuleDir() . "/templates/mail/registration.phtml");
-            $template->team = $values["team_name"];
+            $template->team_name = $values["team_name"];
+            $template->password = $values["password"];
+            $template->category =  $names[$values["category"]];
             $mail = new Mail();
             $mail->setBody($template);
             $mail->addTo($values["email"]);
             $mail->setFrom(Environment::getConfig("mail")->info, Environment::getConfig("mail")->name);
-            $mail->setSubject("Interlos - registrace");
+            $mail->setSubject("FoL - registrace");
             // TODO: doresit odesilani e-mailu
-            //$mail->send();
+            $mail->send();
             // Redirect
             $this->insertCompetitorsFromValues($insertedTeam, $values);
             dibi::commit();
