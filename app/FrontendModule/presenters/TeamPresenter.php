@@ -18,10 +18,7 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
         $this->getComponent("teamList")->setSource(
                 Interlos::teams()->findAll()
         );
-        $this->getTemplate()->categories = array(
-            TeamsModel::HIGH_SCHOOL => "Středoškoláci",
-            TeamsModel::OPEN => "Open",
-        );
+        $this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
     }
 
     public function renderRegistration() {

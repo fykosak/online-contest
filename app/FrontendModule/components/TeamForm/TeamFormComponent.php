@@ -27,6 +27,10 @@ class TeamFormComponent extends BaseComponent {
         }
         try {
             dibi::begin();
+            // calculate category
+            $values["category"] = Interlos::teams()->getCategory($competitors);
+            $names  = Interlos::teams()->getCategoryNames();
+            $this->getPresenter()->flashMessage(sprintf("Přiřazena kategorie %s.", $names[$values["category"]]));
             // Insert team
             $insertedTeam = Interlos::teams()->insert(
                     $values["team_name"], $values["email"], $values["category"], $values["password"], $values["address"]
@@ -61,12 +65,20 @@ class TeamFormComponent extends BaseComponent {
             // Update the team
             $changes = array(
                 "email" => $values["email"],
-                "category" => $values["category"],
                 "address" => $values["address"],
             );
+            
+            if(Interlos::isRegistrationActive()){
+                $changes["category"] = Interlos::teams()->getCategory($this->loadCompetitorsFromValues($values));
+                $names  = Interlos::teams()->getCategoryNames();
+                $this->getPresenter()->flashMessage(sprintf("Přiřazena kategorie %s.", $names[$changes["category"]]));
+            }else{
+                $this->getPresenter()->flashMessage("Kategorie zůstala stejná jako v průbehu registrace.", "success");
+            }
+            
             if (!empty($values["password"])) {
                 $changes["password"] = TeamAuthenticator::passwordHash($values["password"]);
-            }
+            }            
             Interlos::teams()->update($changes)->where("[id_team] = %i", $values["id_team"])->execute();
             // Update competitors
             Interlos::competitors()->deleteByTeam($values["id_team"]);
@@ -102,12 +114,7 @@ class TeamFormComponent extends BaseComponent {
                 ->addConditionOn($form["password"], Form::FILLED)
                 ->addRule(Form::EQUAL, "Heslo a kontrola hesla se neshodují.", $form["password"]);
 
-        // Category
-        $form->addSelect("category", "Kategorie", array(
-            TeamsModel::HIGH_SCHOOL => "Středoškoláci",
-            TeamsModel::OPEN => "Open",
-        ));
-
+        
         // Contatcs
         $form->addText("email", "E-mail")
                 ->addRule(Form::FILLED, "Zadejte prosím kontatní e-mail.")
@@ -120,12 +127,17 @@ class TeamFormComponent extends BaseComponent {
         $schools = Interlos::schools()->findAll()->orderBy("name")->fetchPairs("id_school", "name");
         $schools = array(NULL => "Nevyplněno") + $schools + array(self::OTHER_SCHOOL => "Jiná");
         $study_years = array(
-            "1" => "1. ročník SŠ",
-            "2" => "2. ročník SŠ",
-            "3" => "3. ročník SŠ",
-            "4" => "4. ročník SŠ",
-            "6" => "ZŠ",
-            "7" => "ostatní"
+            "ČR/SR" => array(
+                "0" => "ZŠ",
+                "1" => "1. ročník SŠ",
+                "2" => "2. ročník SŠ",
+                "3" => "3. ročník SŠ",
+                "4" => "4. ročník SŠ",
+                "5" => "ostatní"),
+            "zahraničí" => array(
+                "10" => "střední škola",
+                "11" => "ostatní"
+            )
         );
 
         // Members
@@ -148,7 +160,8 @@ class TeamFormComponent extends BaseComponent {
                     ->addCondition(~Form::EQUAL, "")
                     ->addRule(Form::EMAIL, "U $i. člena není platná e-mailová adresa.");
             $form->addSelect("study_year_$i", "Školní ročník", $study_years)
-                    ->setOption("description", "Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ.");
+                    ->setOption("description", "Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ.")
+                    ->setDefaultValue("2");
             if ($i == 1) {
                 $form["competitor_name_" . $i]->addRule(Form::FILLED, "Jméno prvního člena musí být vyplněno.");
             }

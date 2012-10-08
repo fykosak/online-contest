@@ -8,10 +8,7 @@ class TeamListComponent extends BaseListComponent {
 				->where("[id_team] IN %l", $ids)
 				->orderBy("name")
 				->fetchAssoc("id_team,id_competitor");
-		$this->getTemplate()->categories = array(
-				TeamsModel::HIGH_SCHOOL => "Středoškoláci",
-				TeamsModel::OPEN	    => "Open",
-		);
+		$this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
 	}
 
 }
