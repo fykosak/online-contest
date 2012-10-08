@@ -3,17 +3,17 @@
 {block #content}
 <div id="submenu">
 	<ul>
-		<li><a href="{plink Game:default}" title="Zadání">Zadání</a></li>
+		<li><a href="{plink Game:default}" title="{_'Zadání'}">{_'Zadání'}</a></li>
 		{if  Interlos::isGameActive()}
-			<li><a href="{plink Game:answer}" title="Odevzdat řešení">Odevzdat řešení</a></li>
-                        <li><a href="{plink Game:skip}" title="Přeskočit úkol">Přeskočit úkol</a></li>
+			<li><a href="{plink Game:answer}" title="{_'Odevzdat řešení'}">{_'Odevzdat řešení'}</a></li>
+                        <li><a href="{plink Game:skip}" title="{_'Přeskočit úkol'}">{_'Přeskočit úkol'}</a></li>
 		{/if}
 		{if Interlos::isGameEnd()}
 			<li>
-				<a href="{$baseUri}ulohy/reseni.pdf">Řešení</a>
+				<a href="{$baseUri}ulohy/reseni.pdf">{_'Řešení'}</a>
 			</li>
 		{/if}
-		<li><a href="{plink Game:history}" title="Historie">Historie</a></li>
+		<li><a href="{plink Game:history}" title="Historie">{_'Historie'}</a></li>
 	</ul>
 </div>
 <div id="subcontent">

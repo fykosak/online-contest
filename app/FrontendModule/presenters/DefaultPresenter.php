@@ -8,27 +8,27 @@ class Frontend_DefaultPresenter extends Frontend_BasePresenter {
 
 	public function renderChat() {
 		$this->getComponent("chat")->setSource(Interlos::chat()->findAll());
-		$this->setPageTitle("Diskuse");
+		$this->setPageTitle(_("Diskuse"));
 	}
 
 	public function renderDefault() {
-		$this->setPagetitle("Mezinárodní soutež ve fyzice");
+		$this->setPagetitle(_("Mezinárodní soutež ve fyzice"));
 	}
 
 	public function renderLastYears() {
-		$this->setPagetitle("Minulé ročníky");
+		$this->setPagetitle(_("Minulé ročníky"));
 	}
 
 	public function renderLogin() {
-		$this->setPagetitle("Přihlásit se");
+		$this->setPagetitle(_("Přihlásit se"));
 	}
 
 	public function renderRules() {
-		$this->setPagetitle("Pravidla");
+		$this->setPagetitle(_("Pravidla"));
 	}
 
 	public function renderTaskExamples() {
-		$this->setPagetitle("Rozcvička");
+		$this->setPagetitle(_("Rozcvička"));
 	}
 
 	// ----- PROTECTED METHODS

@@ -2,6 +2,10 @@
 
 class Frontend_BasePresenter extends Presenter {
 
+    /** @persistent */
+    public $lang = 'cs';
+    
+
     public function setPageTitle($pageTitle) {
         $this->getTemplate()->pageTitle = $pageTitle;
     }
@@ -21,12 +25,24 @@ class Frontend_BasePresenter extends Presenter {
 
         $template = parent::createTemplate();
         $template->today = date("Y-m-d H:i:s");
+        $template->setTranslator(new GettextTranslator($this->lang));
 
         return InterlosTemplate::loadTemplate($template);
     }
 
     protected function startUp() {
         parent::startup();
+        $i18nConf = Environment::getConfig('i18n');
+        if (array_search($this->lang, GettextTranslator::$supportedLangs) === false) {
+            $this->lang = $i18nConf->defaultLang;
+        }
+        $locale = GettextTranslator::$locales[$this->lang];
+
+        setlocale(LC_MESSAGES, $locale);
+        bindtextdomain('messages', $i18nConf->dir);
+        bind_textdomain_codeset('messages', "utf-8");
+        textdomain('messages');
+
         Interlos::prepareAdminProperties();
         Interlos::createAdminMessages();
         $this->oldModuleMode = FALSE;

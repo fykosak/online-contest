@@ -7,10 +7,7 @@ class ResultsComponent extends BaseComponent
 			->findAllWithScore()
 			->fetchAssoc("category,id_team");
 
-		$this->getTemplate()->categories = array(
-				TeamsModel::HIGH_SCHOOL => "Středoškoláci",
-				TeamsModel::OPEN	    => "Open",
-		);
+		$this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
 
 		$this->getTemplate()->bonus = Interlos::score()
 			->findAllBonus()

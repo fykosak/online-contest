@@ -36,9 +36,9 @@
 </style>
 <div class="paginator">
 	{if $paginator->isFirst()}
-	<span class="button">« Předchozí</span>
+	<span class="button">{_'« Předchozí'}</span>
 	{else}
-	<a href="{link this, 'page' => $paginator->page - 1}">« Předchozí</a>
+	<a href="{link this, 'page' => $paginator->page - 1}">{_'« Předchozí'}</a>
 	{/if}
 
 	{foreach $steps as $step}
@@ -51,9 +51,9 @@
 	{/foreach}
 
 	{if $paginator->isLast()}
-	<span class="button">Následující »</span>
+	<span class="button">{_'Následující »'}</span>
 	{else}
-	<a href="{link this, 'page' => $paginator->page + 1}">Následující »</a>
+	<a href="{link this, 'page' => $paginator->page + 1}">{_'Následující »'}</a>
 	{/if}
 </div>
 {/if}

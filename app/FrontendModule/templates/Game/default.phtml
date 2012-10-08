@@ -5,10 +5,10 @@
 {*{cache "problems/$id_team", "problems"}*}
 {? Interlos::tasks()->updateCounter($id_team)}
 
-<p>K dispozici máte zadání těchto úloh dle podmínek v zadání:</p>
+<p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
 
 {if count($tasks) == 0}
-<p>Žádné úlohy.</p>
+<p>{_'Žádné úlohy.'}</p>
 {else}
 <ul>
     {foreach $tasks as $task}
@@ -24,13 +24,13 @@
 {/if}
 {*{/cache}*}
 <p>
-	Kdykoliv je v zadání uvedeno více alternativních webových adres, obsahují všechny adresy stejnou informaci a jsou uvedeny pouze pro zálohu (nikdy tedy není žádná úmyslně skrytá informace v rozdílech mezi verzemi).
+	{_'Kdykoliv je v zadání uvedeno více alternativních webových adres, obsahují všechny adresy stejnou informaci a jsou uvedeny pouze pro zálohu (nikdy tedy není žádná úmyslně skrytá informace v rozdílech mezi verzemi).'}
 </p>
 {*<p>
 	V případě výpadku serveru, na kterém běží systém hry (což se nám stalo loni, ovšem pevně věříme, že letos se to již nestane), budou vystaveny "krizové informace" na následující stránce:
 	<a href="http://www.fi.muni.cz/~xpelanek/interlos2/">http://www.fi.muni.cz/~xpelanek/interlos2/</a>
 </p>*}
-
+{!_'
 <p>
 	Na této stránce se také případně objeví zmínka o upřesnění k zadání/opravy chyb.
         Podrobnosti budou v diskusi.
@@ -41,9 +41,9 @@
 <ul>
 	<li>Přečtěte si před hrou ještě jednou pravidla, ať máte jasno v bodování.</li>
         <li>Věnujte pozornost sekci &bdquo;rady&ldquo; v pravidlech.</li>
-</ul>
-<p>
+</ul>'}
+{*<p>
     Budeme rádi, když nám po soutěži vyplníte <a href="https://docs.google.com/spreadsheet/viewform?pli=1&formkey=dFFzVWpLQ3pGdEFQczNZV1hKS2NwQWc6MQ#gid=0">anketu</a>.
-</p>
+</p>*}
 
 {/block}

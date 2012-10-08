@@ -16,13 +16,13 @@ class TeamFormComponent extends BaseComponent {
         $values = $form->getValues();
         $competitors = $this->loadCompetitorsFromValues($values);
         if (!$competitors) {
-            $this->getPresenter()->flashMessage("Pokoušíte se vložit školu, která již existuje.", "error");
+            $this->getPresenter()->flashMessage(_("Pokoušíte se vložit školu, která již existuje."), "error");
             return;
         }
         // Check team name and e-mail because the database consistency
         $teamExists = Interlos::teams()->findAll()->where("[name] = %s", $values["team_name"], " OR [email] = %s", $values["email"])->count();
         if ($teamExists != 0) {
-            $this->getPresenter()->flashMessage("Tým se stejným názvem nebo kontaktním e-mailem již existuje", "error");
+            $this->getPresenter()->flashMessage(_("Tým se stejným názvem nebo kontaktním e-mailem již existuje"), "error");
             return;
         }
         try {
@@ -30,7 +30,7 @@ class TeamFormComponent extends BaseComponent {
             // calculate category
             $values["category"] = Interlos::teams()->getCategory($competitors);
             $names  = Interlos::teams()->getCategoryNames();
-            $this->getPresenter()->flashMessage(sprintf("Přiřazena kategorie %s.", $names[$values["category"]]));
+            $this->getPresenter()->flashMessage(sprintf(_("Přiřazena kategorie %s."), $names[$values["category"]]));
             // Insert team
             $insertedTeam = Interlos::teams()->insert(
                     $values["team_name"], $values["email"], $values["category"], $values["password"], $values["address"]
@@ -46,16 +46,16 @@ class TeamFormComponent extends BaseComponent {
             $mail->setBody($template);
             $mail->addTo($values["email"]);
             $mail->setFrom(Environment::getConfig("mail")->info, Environment::getConfig("mail")->name);
-            $mail->setSubject("FoL - registrace");
+            $mail->setSubject(_("FoL registrace"));
             // TODO: doresit odesilani e-mailu
             $mail->send();
             // Redirect
             $this->insertCompetitorsFromValues($insertedTeam, $values);
             dibi::commit();
-            $this->getPresenter()->flashMessage("Tým '" . $values["team_name"] . "' byl úspěšně zaregistrován.", "success");
+            $this->getPresenter()->flashMessage(sprintf(_("Tým %s byl úspěšně zaregistrován.'") , $values["team_name"]), "success");
             $this->getPresenter()->redirect("Default:login");
         } catch (DibiDriverException $e) {
-            $this->getPresenter()->flashMessage("Chyba při práci s databází.", "error");
+            $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "error");
             Debug::processException($e);
             throw $e;
             return;
@@ -76,7 +76,7 @@ class TeamFormComponent extends BaseComponent {
                 $names  = Interlos::teams()->getCategoryNames();
                 $this->getPresenter()->flashMessage(sprintf("Přiřazena kategorie %s.", $names[$changes["category"]]));
             }else{
-                $this->getPresenter()->flashMessage("Kategorie zůstala stejná jako v průbehu registrace.", "success");
+                $this->getPresenter()->flashMessage(_("Kategorie zůstala stejná jako v průbehu registrace."), "success");
             }
             
             if (!empty($values["password"])) {
@@ -87,16 +87,16 @@ class TeamFormComponent extends BaseComponent {
             Interlos::competitors()->deleteByTeam($values["id_team"]);
             $this->insertCompetitorsFromValues($values["id_team"], $values);
             // Success
-            $this->getPresenter()->flashMessage("Tým byl úspěšně aktualizován.", "success");
+            $this->getPresenter()->flashMessage(_("Tým byl úspěšně aktualizován."), "success");
             $this->getPresenter()->redirect("this");
         } catch (InvalidArgumentException $e) {
-            $this->getPresenter()->flashMessage("Tým musí mít alespoň jednoho člena.", "error");
+            $this->getPresenter()->flashMessage(_("Tým musí mít alespoň jednoho člena."), "error");
             Debug::processException($e);
         } catch (DuplicityException $e) {
-            $this->getPresenter()->flashMessage("Daný tým již existuje.", "error");
+            $this->getPresenter()->flashMessage(_("Daný tým již existuje."), "error");
             Debug::processException($e);
         } catch (DibiDriveException $e) {
-            $this->getPresenter()->flashMessage("Chyba při práci s databází.", "error");
+            $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "error");
             Debug::processException($e);
         }
     }
@@ -130,26 +130,26 @@ class TeamFormComponent extends BaseComponent {
         $schools = Interlos::schools()->findAll()->orderBy("name")->fetchPairs("id_school", "name");
         $schools = array(NULL => "Nevyplněno") + $schools + array(self::OTHER_SCHOOL => "Jiná");
         $study_years = array(
-            "ČR/SR" => array(
-                "0" => "ZŠ",
-                "1" => "1. ročník SŠ",
-                "2" => "2. ročník SŠ",
-                "3" => "3. ročník SŠ",
-                "4" => "4. ročník SŠ",
-                "5" => "ostatní"),
-            "zahraničí" => array(
-                "10" => "střední škola",
-                "11" => "ostatní"
+            _("ČR/SR") => array(
+                "0" => _("ZŠ"),
+                "1" => _("1. ročník SŠ"),
+                "2" => _("2. ročník SŠ"),
+                "3" => _("3. ročník SŠ"),
+                "4" => _("4. ročník SŠ"),
+                "5" => _("ostatní")),
+            _("zahraničí") => array(
+                "10" => _("střední škola"),
+                "11" => _("ostatní")
             )
         );
 
         // Members
         for ($i = 1; $i <= self::NUMBER_OF_MEMBERS; $i++) {
-            $form->addGroup("$i. člen");
+            $form->addGroup(sprintf(_("%d. člen"), $i));
             $form->addText("competitor_name_" . $i, "Jméno");
             $form->addSelect("school_" . $i, "Škola", $schools)
                     ->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
-                    ->addRule(~Form::EQUAL, "U $i. člena je vyplněno jméno, ale není u něj vyplněna škola.", NULL)
+                    ->addRule(~Form::EQUAL, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."), $i), NULL)
                     ->endCondition()
                     ->addCondition(Form::EQUAL, self::OTHER_SCHOOL)
                     ->toggle("frm" . $name . "-" . "otherschool_$i")
@@ -157,13 +157,13 @@ class TeamFormComponent extends BaseComponent {
             $form->addText("otherschool_" . $i, "Jiná škola")
                     ->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
                     ->addConditionOn($form["school_" . $i], Form::EQUAL, self::OTHER_SCHOOL)
-                    ->addRule(Form::FILLED, "U $i. člena je vyplněno jméno, ale není u něj vyplněna škola.");
+                    ->addRule(Form::FILLED, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."), $i));
             $form["otherschool_" . $i]->getLabelPrototype()->id = "frm" . $name . "-" . "otherschool_$i-label";
             $form->addText("email_$i", "Email")
                     ->addCondition(~Form::EQUAL, "")
-                    ->addRule(Form::EMAIL, "U $i. člena není platná e-mailová adresa.");
+                    ->addRule(Form::EMAIL, sprintf(_("U %d. člena není platná e-mailová adresa."), $i));
             $form->addSelect("study_year_$i", "Školní ročník", $study_years)
-                    ->setOption("description", "Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ.")
+                    ->setOption("description", _("Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ."))
                     ->setDefaultValue("2");
             if ($i == 1) {
                 $form["competitor_name_" . $i]->addRule(Form::FILLED, "Jméno prvního člena musí být vyplněno.");

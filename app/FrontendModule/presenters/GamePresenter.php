@@ -3,15 +3,15 @@
 class Frontend_GamePresenter extends Frontend_BasePresenter {
 
     public function renderAnswer() {
-        $this->setPageTitle("Odevzdat řešení");
+        $this->setPageTitle(_("Odevzdat řešení"));
     }
 
     public function renderSkip() {
-        $this->setPageTitle("Přeskočit úkol");
+        $this->setPageTitle(_("Přeskočit úkol"));
     }
 
     public function renderDefault() {
-        $this->setPageTitle("Zadání");
+        $this->setPageTitle(_("Zadání"));
         $team = Interlos::getLoggedTeam()->id_team;
         $this->getTemplate()->id_team = $team;
         
@@ -20,7 +20,7 @@ class Frontend_GamePresenter extends Frontend_BasePresenter {
     }
 
     public function renderHistory() {
-        $this->setPageTitle("Historie odpovědí");
+        $this->setPageTitle(_("Historie odpovědí"));
         $this->getComponent("answerHistory")->setSource(
                 Interlos::answers()->findAll()
                         ->where("[id_team] = %i", Interlos::getLoggedTeam()->id_team)
@@ -32,7 +32,7 @@ class Frontend_GamePresenter extends Frontend_BasePresenter {
     protected function startUp() {
         parent::startUp();
         if (Interlos::getLoggedTeam() == null) {
-            $this->flashMessage("Do této sekce mají přístup pouze přihlášené týmy.", "error");
+            $this->flashMessage(_("Do této sekce mají přístup pouze přihlášené týmy."), "error");
             $this->redirect("Default:default");
         }
     }

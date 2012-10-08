@@ -55,7 +55,7 @@ class TeamsModel extends AbstractModel {
      *   Open (staří odkudkoliv - pokazí to i jeden člen týmu)
      *   Zahraniční
      *   ČR - A - (3,4]
-     *   ČR - B - (2,3] - max. 1 ze 4. ročníku
+     *   ČR - B - (2,3] - max. 2 ze 4. ročníku
      *   ČR - C - [0,2] - nikdo ze 4. ročníku, max. 2 z 3 ročníku
      */
     public function getCategory($competitors) {
@@ -100,7 +100,7 @@ class TeamsModel extends AbstractModel {
             $avg = $sum / $cnt;
             if ($avg <= 2 && $year[4] == 0 && $year[3] <= 2) {
                 return self::HIGH_SCHOOL_C;
-            } elseif ($avg <= 3 && $year[4] <= 1) {
+            } elseif ($avg <= 3 && $year[4] <= 2) {
                 return self::HIGH_SCHOOL_B;
             } else {
                 return self::HIGH_SCHOOL_A;
@@ -111,11 +111,11 @@ class TeamsModel extends AbstractModel {
     public function getCategoryNames() {
         return array(
             //self::HIGH_SCHOOL => "Středoškoláci",
-            self::HIGH_SCHOOL_A => "Středoškoláci A",
-            self::HIGH_SCHOOL_B => "Středoškoláci B",
-            self::HIGH_SCHOOL_C => "Středoškoláci C",
-            self::ABROAD => "Zahraniční SŠ",
-            self::OPEN => "Open",
+            self::HIGH_SCHOOL_A => _("Středoškoláci A"),
+            self::HIGH_SCHOOL_B => _("Středoškoláci B"),
+            self::HIGH_SCHOOL_C => _("Středoškoláci C"),
+            self::ABROAD => _("Zahraniční SŠ"),
+            self::OPEN => _("Open"),
         );
     }
 

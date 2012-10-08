@@ -1,9 +1,9 @@
 <table id="answer-history" cellspacing="0">
     <thead>
     <th>#</th>
-    <th>úkol</th>
-    <th>vloženo</th>
-    <th>odpověď</th>
+    <th>{_ 'úkol'}</th>
+    <th>{_ 'vloženo'}</th>
+    <th>{_ 'odpověď'}</th>
 </thead>
 	{foreach $history AS $answer}
 <tr{if isset($correct[$answer->id_answer])} class="correct"{/if}>
