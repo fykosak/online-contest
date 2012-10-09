@@ -29,7 +29,7 @@ class TeamFormComponent extends BaseComponent {
             dibi::begin();
             // calculate category
             $values["category"] = Interlos::teams()->getCategory($competitors);
-            $names  = Interlos::teams()->getCategoryNames();
+            $names = Interlos::teams()->getCategoryNames();
             $this->getPresenter()->flashMessage(sprintf(_("Přiřazena kategorie %s."), $names[$values["category"]]));
             // Insert team
             $insertedTeam = Interlos::teams()->insert(
@@ -38,10 +38,10 @@ class TeamFormComponent extends BaseComponent {
             // Send e-mail
             $template = InterlosTemplate::loadTemplate(new Template());
             $template->registerFilter(new LatteFilter());
-            $template->setFile(FrontendModule::getModuleDir() . "/templates/mail/registration.phtml");
+            $template->setFile(FrontendModule::getModuleDir() . "/templates/mail/registration." . $this->lang . ".phtml");
             $template->team_name = $values["team_name"];
             $template->password = $values["password"];
-            $template->category =  $names[$values["category"]];
+            $template->category = $names[$values["category"]];
             $mail = new Mail();
             $mail->setBody($template);
             $mail->addTo($values["email"]);
@@ -52,7 +52,7 @@ class TeamFormComponent extends BaseComponent {
             // Redirect
             $this->insertCompetitorsFromValues($insertedTeam, $values);
             dibi::commit();
-            $this->getPresenter()->flashMessage(sprintf(_("Tým %s byl úspěšně zaregistrován.'") , $values["team_name"]), "success");
+            $this->getPresenter()->flashMessage(sprintf(_("Tým %s byl úspěšně zaregistrován.'"), $values["team_name"]), "success");
             $this->getPresenter()->redirect("Default:login");
         } catch (DibiDriverException $e) {
             $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "error");
@@ -70,18 +70,18 @@ class TeamFormComponent extends BaseComponent {
                 "email" => $values["email"],
                 "address" => $values["address"],
             );
-            
-            if(Interlos::isRegistrationActive()){
+
+            if (Interlos::isRegistrationActive()) {
                 $changes["category"] = Interlos::teams()->getCategory($this->loadCompetitorsFromValues($values));
-                $names  = Interlos::teams()->getCategoryNames();
+                $names = Interlos::teams()->getCategoryNames();
                 $this->getPresenter()->flashMessage(sprintf("Přiřazena kategorie %s.", $names[$changes["category"]]));
-            }else{
+            } else {
                 $this->getPresenter()->flashMessage(_("Kategorie zůstala stejná jako v průbehu registrace."), "success");
             }
-            
+
             if (!empty($values["password"])) {
                 $changes["password"] = TeamAuthenticator::passwordHash($values["password"]);
-            }            
+            }
             Interlos::teams()->update($changes)->where("[id_team] = %i", $values["id_team"])->execute();
             // Update competitors
             Interlos::competitors()->deleteByTeam($values["id_team"]);
@@ -117,7 +117,7 @@ class TeamFormComponent extends BaseComponent {
                 ->addConditionOn($form["password"], Form::FILLED)
                 ->addRule(Form::EQUAL, "Heslo a kontrola hesla se neshodují.", $form["password"]);
 
-        
+
         // Contatcs
         $form->addText("email", "E-mail")
                 ->addRule(Form::FILLED, "Zadejte prosím kontatní e-mail.")
