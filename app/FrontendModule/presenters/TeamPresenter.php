@@ -4,7 +4,7 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
 
     public function actionRegistration() {
         if (!Interlos::isRegistrationActive()) {
-            $this->flashMessage("Registrace není aktivní.", "error");
+            $this->flashMessage(_("Registrace není aktivní."), "error");
             $this->redirect("Default:default");
         }
     }
@@ -14,18 +14,15 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
     }
 
     public function renderList() {
-        $this->setPageTitle("Seznam týmů");
+        $this->setPageTitle(_("Seznam týmů"));
         $this->getComponent("teamList")->setSource(
                 Interlos::teams()->findAll()
         );
-        $this->getTemplate()->categories = array(
-            TeamsModel::HIGH_SCHOOL => "Středoškoláci",
-            TeamsModel::OPEN => "Open",
-        );
+        $this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
     }
 
     public function renderRegistration() {
-        $this->setPageTitle("Registrace");
+        $this->setPageTitle(_("Registrace"));
     }
 
     // ---- PROTECTED METHODS

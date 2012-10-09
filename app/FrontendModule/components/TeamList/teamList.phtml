@@ -1,8 +1,9 @@
 <div id="teams" class="list">
-    {foreach $teams AS $category => $teamsInCategory}
-	<h2 id="{$category}">{$categories[$category]}</h2>
+    {foreach $categories AS $category => $categoryName}
+        {if isset($teams[$category])}
+	<h2 id="{$category}">{$categoryName}</h2>
 	<ol>
-	    {foreach $teamsInCategory AS $team}
+	    {foreach $teams[$category] AS $team}
 		<li>
 			<strong>{$team->name}</strong>:
 				{if isset($competitors[$team->id_team])}
@@ -10,10 +11,11 @@
 						{$competitor->name} {if $competitor->school_name != NULL}({$competitor->school_name}){/if}{if !$iterator->isLast()}, {/if}
 					{/foreach}
 				{else}
-				informace o členech týmu nejsou dostupné
+				{_'informace o členech týmu nejsou dostupné'}
 				{/if}
 		</li>
 	    {/foreach}
 	</ol>
+        {/if}
     {/foreach}
 </div>

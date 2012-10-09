@@ -19,37 +19,37 @@ class AnswerFormComponent extends BaseComponent {
 
             Interlos::answers()->insert($team, $task, $solution, $period);
             Environment::getCache()->clean(array(Cache::TAGS => array("problems/$team")));
-            
+
             if (TasksModel::checkAnswer($task, $solution)) {
-                $this->getPresenter()->flashMessage("Vaše odpověď je správně.", "success");
+                $this->getPresenter()->flashMessage(_("Vaše odpověď je správně."), "success");
                 Interlos::tasks()->updateCounter($team);
             } else {
-                $this->getPresenter()->flashMessage("Vaše odpověď je špatně.", "error");
+                $this->getPresenter()->flashMessage(_("Vaše odpověď je špatně."), "error");
             }
         } catch (InvalidStateException $e) {
             if ($e->getCode() == AnswersModel::ERROR_TIME_LIMIT) {
-                $this->getPresenter()->flashMessage("Od vaší poslední špatné odpovědi ještě neuplynulo " . $period["time_penalty"] . " sekund.", "error");
+                $this->getPresenter()->flashMessage(sprintf(_("Od vaší poslední špatné odpovědi ještě neuplynulo %d sekund."), $period["time_penalty"]), "error");
                 return;
             } else if ($e->getCode() == AnswersModel::ERROR_OUT_OF_PERIOD) {
-                $this->getPresenter()->flashMessage("Není aktuálí žádné odpovídací období.", "error");
+                $this->getPresenter()->flashMessage(_("Není aktuální žádné odpovídací období."), "error");
                 return;
             } else {
-                $this->getPresenter()->flashMessage("Stala se neočekávaná chyba.", "error");
+                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
                 Debug::processException($e, TRUE);
                 //error_log($e->getTraceAsString());
                 return;
             }
         } catch (DibiDriverException $e) {
             if ($e->getCode() == 1062) {
-                $this->getPresenter()->flashMessage("Na zadaný úkol jste již takto jednou odpovídali.", "error");
+                $this->getPresenter()->flashMessage(_("Na zadaný úkol jste již takto jednou odpovídali."), "error");
             } else {
-                $this->getPresenter()->flashMessage("Stala se neočekávaná chyba.", "error");
+                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
                 Debug::processException($e, TRUE);
                 //error_log($e->getTraceAsString());
             }
             return;
         } catch (Exception $e) {
-            $this->getPresenter()->flashMessage("Stala se neočekávaná chyba.", "error");
+            $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
             Debug::processException($e, TRUE);
             //error_log($e->getTraceAsString());
             return;
@@ -71,7 +71,7 @@ class AnswerFormComponent extends BaseComponent {
             TasksModel::TYPE_REAL => array(),
         );
         foreach ($tasks as $task) {
-            $options[$task["id_task"]] = $task["code_name"] . ': '. $task["name"] . ' (' . $task["answer_type"] . ')';
+            $options[$task["id_task"]] = $task["code_name"] . ': ' . $task["name"] . ' (' . $task["answer_type"] . ')';
             $rules[$task["answer_type"]][] = $task["id_task"];
         }
         $tasks = array(NULL => " ---- Vybrat ---- ") + $options;
@@ -89,9 +89,9 @@ class AnswerFormComponent extends BaseComponent {
         }
         if (count($rules[TasksModel::TYPE_REAL])) {
             $text->addConditionOn($select, Form::IS_IN, $rules[TasksModel::TYPE_REAL])
-                    ->addRule(Form::REGEXP,"Výsledek musí být reálné číslo." , '/[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?/');
+                    ->addRule(Form::REGEXP, "Výsledek musí být reálné číslo.", '/[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?/');
         }
-        $text->setOption("description", "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1.");
+        $text->setOption("description", _("Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."));
 
 
 
@@ -110,10 +110,10 @@ class AnswerFormComponent extends BaseComponent {
             throw new InvalidStateException("There is no logged team.");
         }
         if (Interlos::isGameEnd()) {
-            $this->flashMessage("Čas vypršel.", "error");
+            $this->flashMessage(_("Čas vypršel."), "error");
             $this->getTemplate()->valid = FALSE;
         } else if (!Interlos::isGameStarted()) {
-            $this->flashMessage("Hra ještě nezačala.", "error");
+            $this->flashMessage(_("Hra ještě nezačala."), "error");
             $this->getTemplate()->valid = FALSE;
         } else {
             $this->getTemplate()->valid = TRUE;

@@ -11,7 +11,7 @@
         <script type="text/javascript" src="{$baseUri}js/jquery-ui-1.8.2.custom.min.js"></script>
 
 		<title>
-	    Fyziklání online - {$pageTitle}
+	    {_'Fyziklání online'}{ifset $pageTite} - {$pageTitle}{/ifset}
 		</title>
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -33,10 +33,10 @@ s.parentNode.insertBefore(ga, s);
 		{block #body}
 		<!-- HEADER -->
 		<div id="header">
-			<a href="{link Default:default}" title="Fyziklání online">
+			<a href="{link Default:default}" title="{_'Fyziklání online'}">
 				<div class="wrapper">
 					<div id="logo"></div>
-					<h1>Fyziklání online</h1>
+					<h1>{_ 'Fyziklání online'}</h1>
 				</div>
 			</a>
 		</div>
@@ -49,30 +49,30 @@ s.parentNode.insertBefore(ga, s);
 				<ul id="team-navigation">
 			{if Interlos::isRegistrationActive()}
 			    {if !Environment::getUser()->isLoggedIn()}
-					<li><a href="{link Team:registration}">Registrace</a></li>
+					<li><a href="{link Team:registration}">{_ 'Registrace'}</a></li>
 			    {/if}
 			{/if}
 			{if Interlos::isRegistrationStarted()}
 			    {if !Environment::getUser()->isLoggedIn()}
-					<li><a href="{link Default:login}">Příhlásit se</a></li>
+					<li><a href="{link Default:login}">{_'Přihlásit se'}</a></li>
 			    {else}
-					<li><a href="{link Default:logout}" title="Odhlásit se">Odhlásit se</a></li>
+					<li><a href="{link Default:logout}" title="{_'Odhlásit se'}">{_'Odhlásit se'}</a></li>
 					<li><a href="{link Team:default}" title="{=Interlos::getLoggedTeam()->name}">{=String::truncate(Interlos::getLoggedTeam()->name, 15)}</a></li>
 			    {/if}
 			{/if}
 				</ul>
 				<ul id="general-navigation">
-					<li><a href="{link Default:rules}" title="Pravidla">Pravidla</a></li>
-					{*<li><a href="{link Default:lastYears}" title="Minulé ročníky">Minulé ročníky</a></li>
-					<li><a href="{link Default:taskExamples}" title="Rozcvička">Rozcvička</a></li>*}
+					<li><a href="{link Default:rules}" title="{_'Pravidla'}">{_'Pravidla'}</a></li>
+					<li><a href="{link Default:lastYears}" title="{_'Minulé ročníky'}">{_'Minulé ročníky'}</a></li>
+					{*<li><a href="{link Default:taskExamples}" title="{_'Rozcvička'}">{_'Rozcvička'}</a></li>*}
 				{if Interlos::isRegistrationStarted()}
-					<li><a href="{link Default:chat}" title="Diskuse">Diskuse</a></li>
-					<li><a href="{link Team:list}" title="Týmy">Týmy</a></li>
+					<li><a href="{link Default:chat}" title="{_'Diskuse'}">{_'Diskuse'}</a></li>
+					<li><a href="{link Team:list}" title="{_'Týmy'}">{_'Týmy'}</a></li>
 			    {if Interlos::isGameStarted()}
 					{if Environment::getUser()->isLoggedIn()}
-						<li><a href="{link Game:default}" title="Hra">Hra</a></li>
+						<li><a href="{link Game:default}" title="{_'Hra'}">{_'Hra'}</a></li>
 					{/if}
-					<li><a href="{link Stats:default}" title="Statistiky">Statistiky</a></li>
+					<li><a href="{link Stats:default}" title="{_'Statistiky'}">{_'Statistiky'}</a></li>
 			    {/if}
 			{/if}
 				</ul>
@@ -80,7 +80,7 @@ s.parentNode.insertBefore(ga, s);
 		</div>
 		<div class="wrapper">
 			<!-- PAGE TITLE -->
-			<h1>{$pageTitle}</h1>
+			<h1 n:ifset="$pageTitle">{$pageTitle}</h1>
 			<!-- FLASH MESSAGES -->
             {widget flashMessages}
 			<!-- CONTENT -->

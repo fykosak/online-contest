@@ -1,0 +1,6 @@
+[submodule "document_root/download"]
+	path = document_root/download
+	url = fksgit@org.fykos.cz:data/fol-data.git
+[submodule "libs/gettext-extractor"]
+	path = libs/gettext-extractor
+	url = git://github.com/karelklima/gettext-extractor.git

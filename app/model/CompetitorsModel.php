@@ -23,14 +23,16 @@ class CompetitorsModel extends AbstractModel {
 		return $this->findAll()->where("[id_team] = %i", $team);
 	}
 
-	public function insert($team, $school, $name) {
+	public function insert($team, $school, $name, $email, $study_year) {
 		$this->checkEmptiness($team, "team");
 		$this->checkEmptiness($school, "school");
 		$this->checkEmptiness($name, "name");
 		$return = $this->getConnection()->insert("competitor", array(
 				"id_team"	=> $team,
 				"id_school"	=> $school,
-				"name"	=> $name
+				"name"	=> $name,
+                                "email" => $email,
+                                "study_year" => $study_year,
 				))->execute();
 		$this->log($team, "competitor_inserted", "The new competitor [$name] has been inserted and joined to team.");
 		return $return;

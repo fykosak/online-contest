@@ -2,13 +2,13 @@
 	<table id="task-stats" cellspacing="0">
 		<thead>
 			<th>#</th>
-			<th>název</th>
-			<th>nejhorší</th>
-			<th>nejlepší</th>
+			<th>{_'název'}</th>
+			<th>{_'nejhorší'}</th>
+			<th>{_'nejlepší'}</th>
 			{*<th>průměrný</th>*}
-			<th>správně</th>
-			<th>špatně</th>
-                        <th>přeskočeno</th>
+			<th>{_'správně'}</th>
+			<th>{_'špatně'}</th>
+                        <th>{_'přeskočeno'}</th>
 		</thead>
 		{foreach $tasks AS $task}
 			<tr{if $iterator->isEven()} class="even"{/if}>

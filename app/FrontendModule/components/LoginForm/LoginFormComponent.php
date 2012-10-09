@@ -10,15 +10,15 @@ class LoginFormComponent extends BaseComponent
 	}
 	catch(AuthenticationException $e) {
 	    if ($e->getCode() == IAuthenticator::IDENTITY_NOT_FOUND) {
-		$this->getPresenter()->flashMessage("Daný tým neexistuje.", "error");
+		$this->getPresenter()->flashMessage(_("Daný tým neexistuje."), "error");
 	    }
 	    else {
-		$this->getPresenter()->flashMessage("Nesprávné heslo", "error");
+		$this->getPresenter()->flashMessage(_("Nesprávné heslo"), "error");
 	    }
 	    return;
 	}
 	catch(Exception $e) {
-	    $this->getPresenter()->flashMessage("Stala se neočekávaná chyba.", "error");
+	    $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
 	    Debug::processException($e);
 	    return;
 	}

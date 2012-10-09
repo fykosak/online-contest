@@ -11,11 +11,11 @@ class ChatListComponent extends BaseListComponent {
 					Environment::getUser()->getIdentity()->id_team,
 					$values["content"]
 			);
-			$this->getPresenter()->flashMessage("Příspěvek byl vložen.", "success");
+			$this->getPresenter()->flashMessage(_("Příspěvek byl vložen."), "success");
 			$this->getPresenter()->redirect("this");
 		}
 		catch (DibiException $e) {
-			$this->flashMessage("Chyba při práci s databází.", "error");
+			$this->flashMessage(_("Chyba při práci s databází."), "error");
 			error_log($e->getTraceAsString());
 		}
 	}
@@ -33,7 +33,7 @@ class ChatListComponent extends BaseListComponent {
 	protected function createComponentChatForm($name) {
 		$form = new BaseForm($this, $name);
 
-		$form->addTextArea("content","")
+		$form->addTextArea("content")
 				->addRule(Form::FILLED, "Obsah příspěvku není vyplněn.");
 
 		$form->addSubmit("chatSubmit","Přidat příspěvek");

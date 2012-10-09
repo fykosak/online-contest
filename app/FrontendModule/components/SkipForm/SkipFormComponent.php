@@ -13,23 +13,23 @@ class SkipFormComponent extends BaseComponent {
             Interlos::tasks()->skip($team, $task);
             Environment::getCache()->clean(array(Cache::TAGS => array("problems/$team")));
             
-            $this->getPresenter()->flashMessage("Úloha $task->code_name přeskočena.", "success");
+            $this->getPresenter()->flashMessage(sprintf(_("Úloha %s přeskočena."), $task->code_name), "success");
             Interlos::tasks()->updateCounter($team);
         } catch (InvalidStateException $e) {
             if ($e->getCode() == AnswersModel::ERROR_SKIP_OF_PERIOD) {
-                $this->getPresenter()->flashMessage("V tomto období není možno přeskakovat úlohy této série.", "error");
+                $this->getPresenter()->flashMessage(_("V tomto období není možno přeskakovat úlohy této série."), "error");
                 return;
             } else if ($e->getCode() == AnswersModel::ERROR_SKIP_OF_ANSWERED) {
-                $this->getPresenter()->flashMessage("Není možno přeskočit úlohu, na níž již bylo odpovídáno.", "error");
+                $this->getPresenter()->flashMessage(_("Není možno přeskočit úlohu, na níž již bylo odpovídáno."), "error");
                 return;
             } else {
-                $this->getPresenter()->flashMessage("Stala se neočekávaná chyba.", "error");
+                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
                 Debug::processException($e, TRUE);
                 //error_log($e->getTraceAsString());
                 return;
             }
         } catch (Exception $e) {
-            $this->getPresenter()->flashMessage("Stala se neočekávaná chyba.", "error");
+            $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
             Debug::processException($e, TRUE);
             //error_log($e->getTraceAsString());
             return;
@@ -53,7 +53,7 @@ class SkipFormComponent extends BaseComponent {
                 $options[$task["id_task"]] = $task["code_name"] . ' (' . $task["name"] . ')';
             }
         }
-        $tasks = array(NULL => " ---- Vybrat ---- ") + $options;
+        $tasks = array(NULL => _(" ---- Vybrat ---- ")) + $options;
         $select = $form->addSelect("task", "Úkol", $tasks)
                 ->skipFirst()
                 ->addRule(Form::FILLED, "Vyberte prosím úkol k přeskočení.");
@@ -75,10 +75,10 @@ class SkipFormComponent extends BaseComponent {
             throw new InvalidStateException("There is no logged team.");
         }
         if (Interlos::isGameEnd()) {
-            $this->flashMessage("Čas vypršel.", "error");
+            $this->flashMessage(_("Čas vypršel."), "error");
             $this->getTemplate()->valid = FALSE;
         } else if (!Interlos::isGameStarted()) {
-            $this->flashMessage("Hra ještě nezačala.", "error");
+            $this->flashMessage(_("Hra ještě nezačala."), "error");
             $this->getTemplate()->valid = FALSE;
         } else {
             $this->getTemplate()->valid = TRUE;

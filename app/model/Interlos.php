@@ -6,7 +6,8 @@ class Interlos {
     private static $connection;
     private static $currentYear;
     private static $loggedTeam;
-    private static $models = array();
+    private static $translator;
+    private static $models = array();    
 
     /** @return AnswersModel */
     public static function answers() {
@@ -76,6 +77,15 @@ class Interlos {
             }
         }
         return self::$loggedTeam;
+    }
+    
+    /** @return GettextTranslator */
+    public static function getTranslator() {
+        if (empty(self::$translator)) {
+            return new GettextTranslator();
+        } else {
+            return self::$translator;
+        }
     }
 
     public static function isAdminAccess() {
