@@ -28,6 +28,8 @@ if ($debug->enable) {
 	if ($debug->profiler) {
 		Debug::enableProfiler();
 	}
+}else{
+    Debug::enable(Debug::PRODUCTION, $debug->log, $debug->email);
 }
 
 // Step 4: Set up the sessions.
