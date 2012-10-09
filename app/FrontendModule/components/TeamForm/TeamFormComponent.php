@@ -37,7 +37,7 @@ class TeamFormComponent extends BaseComponent {
             );
             // Send e-mail
             $template = InterlosTemplate::loadTemplate(new Template());
-            $template->registerFilter('LatteFilter');
+            $template->registerFilter(new LatteFilter());
             $template->setFile(FrontendModule::getModuleDir() . "/templates/mail/registration.phtml");
             $template->team_name = $values["team_name"];
             $template->password = $values["password"];
