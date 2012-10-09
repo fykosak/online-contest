@@ -162,9 +162,13 @@ class TeamFormComponent extends BaseComponent {
             $form->addText("email_$i", "Email")
                     ->addCondition(~Form::EQUAL, "")
                     ->addRule(Form::EMAIL, sprintf(_("U %d. člena není platná e-mailová adresa."), $i));
-            $form->addSelect("study_year_$i", "Školní ročník", $study_years)
+            $schoolElement = $form->addSelect("study_year_$i", "Školní ročník", $study_years)
                     ->setOption("description", _("Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ."))
                     ->setDefaultValue("2");
+            if(!Interlos::isRegistrationActive()){
+                $schoolElement->setDisabled();
+                $form->addHidden("study_year_hid_$i");
+            }
             if ($i == 1) {
                 $form["competitor_name_" . $i]->addRule(Form::FILLED, "Jméno prvního člena musí být vyplněno.");
             }
@@ -236,7 +240,7 @@ class TeamFormComponent extends BaseComponent {
                 $competitor["school"] = $values["school_" . $i];
                 $competitor["otherschool"] = $values["otherschool_" . $i];
                 $competitor["email"] = $values["email_" . $i];
-                $competitor["study_year"] = $values["study_year_" . $i];
+                $competitor["study_year"] = isset($values["study_year_" . $i]) ? $values["study_year_" . $i] : $values["study_year_hid_" . $i];
                 if ($values["school_" . $i] == self::OTHER_SCHOOL && !empty($competitor["otherschool"])) {
                     $schoolsToInsert[$competitor["otherschool"]] = true; // unikátnost názvu nových škol
                 }
