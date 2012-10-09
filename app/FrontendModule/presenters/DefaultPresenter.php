@@ -13,6 +13,7 @@ class Frontend_DefaultPresenter extends Frontend_BasePresenter {
 
 	public function renderDefault() {
 		$this->setPagetitle(_("Mezinárodní soutež ve fyzice"));
+                $this->changeViewByLang();
 	}
 
 	public function renderLastYears() {
@@ -25,6 +26,7 @@ class Frontend_DefaultPresenter extends Frontend_BasePresenter {
 
 	public function renderRules() {
 		$this->setPagetitle(_("Pravidla"));
+                $this->changeViewByLang();                
 	}
 
 	public function renderTaskExamples() {
@@ -32,8 +34,8 @@ class Frontend_DefaultPresenter extends Frontend_BasePresenter {
 	}
 
 	// ----- PROTECTED METHODS
-
-	protected function createComponentChat($name) {
+        
+        protected function createComponentChat($name) {
 		$chat = new ChatListComponent($this, $name);
 		return $chat;
 	}

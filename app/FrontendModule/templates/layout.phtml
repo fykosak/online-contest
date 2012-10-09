@@ -60,6 +60,8 @@ s.parentNode.insertBefore(ga, s);
 					<li><a href="{link Team:default}" title="{=Interlos::getLoggedTeam()->name}">{=String::truncate(Interlos::getLoggedTeam()->name, 15)}</a></li>
 			    {/if}
 			{/if}
+                                    <li n:if="$control->lang == 'cs'"><a href="{link this, lang => 'en'}"><img src="{$baseUri}images/icons/us-icon.png" alt="English" title="Switch to English"/></a></li>
+                                    <li n:if="$control->lang == 'en'"><a href="{link this, lang => 'cs'}"><img src="{$baseUri}images/icons/cz-icon.png" alt="čeština" title="Přepnout do češtiny"/></a></li>                                    
 				</ul>
 				<ul id="general-navigation">
 					<li><a href="{link Default:rules}" title="{_'Pravidla'}">{_'Pravidla'}</a></li>

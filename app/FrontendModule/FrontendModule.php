@@ -10,10 +10,11 @@ class FrontendModule {
                     "presenter" => "Default",
                     "action" => "default",
                         ), Route::ONE_WAY);
-        $router[] = new Route("<presenter>/<action>", array(
+        $router[] = new Route("<lang>/<presenter>/<action>", array(
                     "module" => "Frontend",
                     "presenter" => "Default",
                     "action" => "default",
+                    "lang" => null,
                 ));
 
         return $router;
