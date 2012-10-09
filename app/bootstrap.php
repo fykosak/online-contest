@@ -31,9 +31,8 @@ if ($debug->enable) {
 }
 
 // Step 4: Set up the sessions.
-// FIXME
 Environment::getSession()->setExpiration(60*60*24*7);
-Environment::getUser()->setNamespace("interlos");
+Environment::getUser()->setNamespace("olfyziklani");
 
 // Step 5: Get the front controller
 $application = Environment::getApplication();
