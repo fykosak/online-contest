@@ -125,10 +125,10 @@ class TeamFormComponent extends BaseComponent {
 
         $form->addTextArea("address", "Kontaktní adresa", 35, 4)
                 ->addRule(Form::FILLED, "Zadejte prosím kontatní adresu.")
-                ->setOption("description", "Pro zaslání případné odměny.");
+                ->setOption("description", _("Pro zaslání případné odměny."));
 
         $schools = Interlos::schools()->findAll()->orderBy("name")->fetchPairs("id_school", "name");
-        $schools = array(NULL => "Nevyplněno") + $schools + array(self::OTHER_SCHOOL => "Jiná");
+        $schools = array(NULL => _("Nevyplněno")) + $schools + array(self::OTHER_SCHOOL => _("Jiná"));
         $study_years = array(
             _("ČR/SR") => array(
                 "0" => _("ZŠ"),

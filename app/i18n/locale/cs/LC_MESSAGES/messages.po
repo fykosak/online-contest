@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2012-10-09T01:30:49+02:00
+# Created: 2012-10-10T00:14:10+02:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,12 +43,18 @@ msgstr "Daný tým již existuje."
 msgid "Daný tým neexistuje."
 msgstr "Daný tým neexistuje."
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:40
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:40
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:40
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:40
-# layout.phtml:68
-# layout.phtml:68
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:44
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:44
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:44
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:44
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:44
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:44
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:40
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:40
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:44
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:44
+# layout.phtml:70
+# layout.phtml:70
 # DefaultPresenter.php:11
 msgid "Diskuse"
 msgstr "Diskuse"
@@ -75,14 +81,23 @@ msgstr "FoL registrace"
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:15
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:18
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:95
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:18
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:99
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:15
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:18
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:95
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:99
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:15
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:18
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:99
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:15
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:18
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:95
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:15
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:18
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:99
 # layout.phtml:13
 # layout.phtml:35
-# default.phtml:4
+# default.en.phtml:4
+# default.cs.phtml:4
 msgid "Fyziklání online"
 msgstr "Fyziklání online"
 
@@ -107,12 +122,18 @@ msgstr "Historie"
 msgid "Historie odpovědí"
 msgstr "Historie odpovědí"
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:43
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:43
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:43
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:43
-# layout.phtml:72
-# layout.phtml:72
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:47
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:47
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:47
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:47
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:47
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:47
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:43
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:43
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:47
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:47
+# layout.phtml:74
+# layout.phtml:74
 msgid "Hra"
 msgstr "Hra"
 
@@ -120,6 +141,10 @@ msgstr "Hra"
 # AnswerFormComponent.php:116
 msgid "Hra ještě nezačala."
 msgstr "Hra ještě nezačala."
+
+# TeamFormComponent.php:131
+msgid "Jiná"
+msgstr "Jiná"
 
 # TeamFormComponent.php:157
 msgid "Jiná škola"
@@ -157,13 +182,19 @@ msgstr "Kontrola hesla"
 msgid "Mezinárodní soutež ve fyzice"
 msgstr "Mezinárodní soutež ve fyzice"
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:38
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:38
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:38
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:38
-# layout.phtml:65
-# layout.phtml:65
-# DefaultPresenter.php:19
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:42
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:42
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:42
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:42
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:42
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:42
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:38
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:38
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:42
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:42
+# layout.phtml:67
+# layout.phtml:67
+# DefaultPresenter.php:20
 msgid "Minulé ročníky"
 msgstr "Minulé ročníky"
 
@@ -191,6 +222,12 @@ msgstr "Není vyplněno heslo týmu."
 msgid "Nesprávné heslo"
 msgstr "Nesprávné heslo"
 
+# TeamFormComponent.php:131
+msgid "Nevyplněno"
+msgstr "Nevyplněno"
+
+# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:55
+# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:57
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:55
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:57
 # visualPaginator.phtml:53
@@ -233,6 +270,12 @@ msgstr "Odevzdat řešení"
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:32
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:32
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:32
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:32
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:32
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:32
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:32
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:32
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:32
 # layout.phtml:58
 # layout.phtml:58
 msgid "Odhlásit se"
@@ -256,15 +299,25 @@ msgstr "Podrobné výsledky"
 msgid "Pokoušíte se vložit školu, která již existuje."
 msgstr "Pokoušíte se vložit školu, která již existuje."
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:37
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:37
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:37
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:37
-# layout.phtml:64
-# layout.phtml:64
-# DefaultPresenter.php:27
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:41
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:41
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:37
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:37
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:41
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:41
+# layout.phtml:66
+# layout.phtml:66
+# DefaultPresenter.php:28
 msgid "Pravidla"
 msgstr "Pravidla"
+
+# TeamFormComponent.php:128
+msgid "Pro zaslání případné odměny."
+msgstr "Pro zaslání případné odměny."
 
 # AnswerFormComponent.php:94
 msgid "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
@@ -283,9 +336,12 @@ msgstr "Přidat příspěvek"
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:30
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:30
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:30
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:30
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:30
 # layout.phtml:56
 # LoginFormComponent.php:39
-# DefaultPresenter.php:23
+# DefaultPresenter.php:24
 msgid "Přihlásit se"
 msgstr "Přihlásit se"
 
@@ -297,6 +353,8 @@ msgstr "Přiřazena kategorie %s."
 msgid "Příspěvek byl vložen."
 msgstr "Příspěvek byl vložen."
 
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:28
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:28
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:28
 # _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:28
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:28
@@ -312,9 +370,9 @@ msgstr "Registrace není aktivní."
 msgid "Registrovat"
 msgstr "Registrovat"
 
-# layout.phtml:66
-# layout.phtml:66
-# DefaultPresenter.php:31
+# layout.phtml:68
+# layout.phtml:68
+# DefaultPresenter.php:33
 msgid "Rozcvička"
 msgstr "Rozcvička"
 
@@ -335,12 +393,18 @@ msgstr "Stala se neočekávaná chyba."
 msgid "Statistika úkolů"
 msgstr "Statistika úkolů"
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
-# layout.phtml:74
-# layout.phtml:74
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:49
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:49
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:49
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:49
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:49
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:49
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:45
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:45
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:49
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:49
+# layout.phtml:76
+# layout.phtml:76
 msgid "Statistiky"
 msgstr "Statistiky"
 
@@ -385,12 +449,18 @@ msgstr "Tým musí mít alespoň jednoho člena."
 msgid "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 msgstr "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:41
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:41
-# layout.phtml:69
-# layout.phtml:69
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:41
+# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:41
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
+# layout.phtml:71
+# layout.phtml:71
 msgid "Týmy"
 msgstr "Týmy"
 
@@ -484,6 +554,7 @@ msgid "celkem bodů"
 msgstr "celkem bodů"
 
 # _3bd5acf9d8ef68099e271e95c13ef1e7.teamList.phtml.php:20
+# _3bd5acf9d8ef68099e271e95c13ef1e7.teamList.phtml.php:20
 # teamList.phtml:13
 msgid "informace o členech týmu nejsou dostupné"
 msgstr "informace o členech týmu nejsou dostupné"
@@ -529,6 +600,8 @@ msgstr "zahraničí"
 msgid "záporné body"
 msgstr "záporné body"
 
+# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:40
+# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:42
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:40
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:42
 # visualPaginator.phtml:38

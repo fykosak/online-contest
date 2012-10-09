@@ -13,6 +13,9 @@ class GettextTranslator implements ITranslator {
 
 
     public function translate($message, $count = NULL) {
+        if($message === "" || $message === null){
+            return "";
+        }
         if ($count !== null) {
             return ngettext($message, $message, (int)$count);
         } else {

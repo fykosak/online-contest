@@ -103,6 +103,11 @@ a img {
 ul li, ol li {
     margin-top: 5px;
 }
+blockquote{
+    border-left: 5px solid #c1e2f8;
+    font-style: italic;
+    padding: 10px;
+}
 /******************** CLASSES AND IDS *****************************************/
 #logos {
     padding: 10px;
