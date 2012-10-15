@@ -59,7 +59,8 @@ class Frontend_BasePresenter extends Presenter {
             } else {
                 $this->lang = $this->getHttpRequest()->detectLanguage(GettextTranslator::$supportedLangs);
             }
-        } else if (array_search($this->lang, GettextTranslator::$supportedLangs) === false) {
+        } 
+        if (array_search($this->lang, GettextTranslator::$supportedLangs) === false) {
             $this->lang = $i18nConf->defaultLang;
         }
     }
