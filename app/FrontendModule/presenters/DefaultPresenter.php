@@ -18,6 +18,7 @@ class Frontend_DefaultPresenter extends Frontend_BasePresenter {
 
 	public function renderLastYears() {
 		$this->setPagetitle(_("Minulé ročníky"));
+                $this->changeViewByLang();                
 	}
 
 	public function renderLogin() {
