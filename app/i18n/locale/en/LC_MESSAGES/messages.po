@@ -417,7 +417,7 @@ msgstr "Correct"
 
 # TeamFormComponent.php:166
 msgid "Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ."
-msgstr "Please enter what grade you attend (in high school). Elementary school is below high school. Everything else is above. "
+msgstr "For non-Czech, non-Slovak contestants: You can apply 'high school' category iff you are eligible for IPhO (International Physics Olympiads). Otherwise choose 'other'."
 
 # default.phtml:4
 msgid "V průběhu hry nejsou statistiky okamžité, údaje jsou řádově po minutách přepočítávány."
