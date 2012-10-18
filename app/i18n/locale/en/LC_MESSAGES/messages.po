@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2012-10-10T00:14:10+02:00
+# Created: 2012-10-09T01:30:49+02:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Michal Koutný <xm.koutny@gmail.com>\n"
+"Last-Translator: Jan Humplik <jan.humplik@seznam.cz>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,19 +23,19 @@ msgstr "Member %d"
 
 # TeamFormComponent.php:135
 msgid "1. ročník SŠ"
-msgstr "1. ročník SŠ"
+msgstr "1st year of high school"
 
 # TeamFormComponent.php:136
 msgid "2. ročník SŠ"
-msgstr "2. ročník SŠ"
+msgstr "2nd year of high school"
 
 # TeamFormComponent.php:137
 msgid "3. ročník SŠ"
-msgstr "3. ročník SŠ"
+msgstr "3rd year of high school"
 
 # TeamFormComponent.php:138
 msgid "4. ročník SŠ"
-msgstr "4. ročník SŠ"
+msgstr "4th year of high school"
 
 # TeamFormComponent.php:58
 # TeamFormComponent.php:99
@@ -49,27 +49,21 @@ msgstr "The team already exists."
 
 # LoginFormComponent.php:13
 msgid "Daný tým neexistuje."
-msgstr "The team doesn't exist."
+msgstr "The team does not exist."
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:44
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:44
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:44
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:44
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:44
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:44
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:40
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:40
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:44
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:44
-# layout.phtml:70
-# layout.phtml:70
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:40
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:40
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:40
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:40
+# layout.phtml:68
+# layout.phtml:68
 # DefaultPresenter.php:11
 msgid "Diskuse"
 msgstr "Forum"
 
 # GamePresenter.php:35
 msgid "Do této sekce mají přístup pouze přihlášené týmy."
-msgstr "Do této sekce mají přístup pouze přihlášené týmy."
+msgstr "Only registered teams can see the contents of this section."
 
 # TeamFormComponent.php:122
 msgid "E-mail"
@@ -77,7 +71,7 @@ msgstr "E-mail"
 
 # TeamFormComponent.php:124
 msgid "E-mail nemá správný formát."
-msgstr "E-mail nemá správný formát."
+msgstr "Entered e-mail does not have a correct format."
 
 # TeamFormComponent.php:162
 msgid "Email"
@@ -85,27 +79,18 @@ msgstr "Email"
 
 # TeamFormComponent.php:49
 msgid "FoL registrace"
-msgstr "OPB registration"
+msgstr "Online Physics Brawl registration"
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:15
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:18
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:99
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:15
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:18
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:99
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:15
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:18
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:99
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:15
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:95
 # _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:18
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:95
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:15
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:18
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:99
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:95
 # layout.phtml:13
 # layout.phtml:35
-# default.en.phtml:4
-# default.cs.phtml:4
+# default.phtml:4
 msgid "Fyziklání online"
 msgstr "Online Physics Brawl"
 
@@ -116,11 +101,11 @@ msgstr "Password"
 
 # TeamFormComponent.php:118
 msgid "Heslo a kontrola hesla se neshodují."
-msgstr "Heslo a kontrola hesla se neshodují."
+msgstr "Password and the password confirmation do not match."
 
 # LoginFormComponent.php:37
 msgid "Heslo musí být vyplněno."
-msgstr "Heslo musí být vyplněno."
+msgstr "You must choose a password."
 
 # layout.phtml:15
 msgid "Historie"
@@ -130,29 +115,19 @@ msgstr "History"
 msgid "Historie odpovědí"
 msgstr "Answer log"
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:47
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:47
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:47
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:47
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:47
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:47
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:43
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:43
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:47
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:47
-# layout.phtml:74
-# layout.phtml:74
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:43
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:43
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:43
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:43
+# layout.phtml:72
+# layout.phtml:72
 msgid "Hra"
-msgstr "Game"
+msgstr "Competition"
 
 # SkipFormComponent.php:81
 # AnswerFormComponent.php:116
 msgid "Hra ještě nezačala."
-msgstr "Hra ještě nezačala."
-
-# TeamFormComponent.php:131
-msgid "Jiná"
-msgstr "Jiná"
+msgstr "Competition has not started yet."
 
 # TeamFormComponent.php:157
 msgid "Jiná škola"
@@ -164,19 +139,19 @@ msgstr "Name"
 
 # TeamFormComponent.php:169
 msgid "Jméno prvního člena musí být vyplněno."
-msgstr "Jméno prvního člena musí být vyplněno."
+msgstr "You must enter the name of the first team member."
 
 # default.phtml:7
 msgid "K dispozici máte zadání těchto úloh dle podmínek v zadání:"
-msgstr "K dispozici máte zadání těchto úloh dle podmínek v zadání:"
+msgstr "In accordance with the rules, these are the problems you have at your disposal:"
 
 # TeamFormComponent.php:79
 msgid "Kategorie zůstala stejná jako v průbehu registrace."
-msgstr "Kategorie zůstala stejná jako v průbehu registrace."
+msgstr "Category is the same as it was during the registration."
 
 # default.phtml:26
 msgid "Kdykoliv je v zadání uvedeno více alternativních webových adres, obsahují všechny adresy stejnou informaci a jsou uvedeny pouze pro zálohu (nikdy tedy není žádná úmyslně skrytá informace v rozdílech mezi verzemi)."
-msgstr "Kdykoliv je v zadání uvedeno více alternativních webových adres, obsahují všechny adresy stejnou informaci a jsou uvedeny pouze pro zálohu (nikdy tedy není žádná úmyslně skrytá informace v rozdílech mezi verzemi)."
+msgstr "Every time a problem refers to more than one web address, all of them contain the exact same information (we show multiple addresses only for backup purposes). "
 
 # TeamFormComponent.php:126
 msgid "Kontaktní adresa"
@@ -184,64 +159,52 @@ msgstr "Contact address"
 
 # TeamFormComponent.php:116
 msgid "Kontrola hesla"
-msgstr "Password check"
+msgstr "Password confirmation"
 
 # DefaultPresenter.php:15
 msgid "Mezinárodní soutež ve fyzice"
-msgstr "International physics contest"
+msgstr "International physics competition"
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:42
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:42
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:42
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:42
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:42
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:42
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:38
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:38
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:42
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:42
-# layout.phtml:67
-# layout.phtml:67
-# DefaultPresenter.php:20
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:38
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:38
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:38
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:38
+# layout.phtml:65
+# layout.phtml:65
+# DefaultPresenter.php:19
 msgid "Minulé ročníky"
-msgstr "Previous years"
+msgstr "Last years"
 
 # skipForm.phtml:2
 msgid "Možností přeskakovat neplýtvejte, snadno se může stát, že vám pak dojdou příklady"
-msgstr "Možností přeskakovat neplýtvejte, snadno se může stát, že vám pak dojdou příklady"
+msgstr "Be careful with skipping the problems or you will run out of them"
 
 # AnswerFormComponent.php:44
 msgid "Na zadaný úkol jste již takto jednou odpovídali."
-msgstr "Na zadaný úkol jste již takto jednou odpovídali."
+msgstr "You have already tried this answer before."
 
 # AnswerFormComponent.php:34
 msgid "Není aktuální žádné odpovídací období."
-msgstr "Není aktuální žádné odpovídací období."
+msgstr "No answering period is active at this moment."
 
 # SkipFormComponent.php:23
 msgid "Není možno přeskočit úlohu, na níž již bylo odpovídáno."
-msgstr "Není možno přeskočit úlohu, na níž již bylo odpovídáno."
+msgstr "You can not skip a problem that you have already submitted an answer to."
 
 # TeamFormComponent.php:202
 msgid "Není vyplněno heslo týmu."
-msgstr "Není vyplněno heslo týmu."
+msgstr "Tem password was not entered."
 
 # LoginFormComponent.php:16
 msgid "Nesprávné heslo"
-msgstr "Wrong password."
+msgstr "Incorrect password"
 
-# TeamFormComponent.php:131
-msgid "Nevyplněno"
-msgstr "Nevyplněno"
-
-# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:55
-# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:57
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:55
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:57
 # visualPaginator.phtml:53
 # visualPaginator.phtml:55
 msgid "Následující »"
-msgstr "Následující »"
+msgstr "Next »"
 
 # LoginFormComponent.php:33
 # TeamFormComponent.php:112
@@ -250,38 +213,32 @@ msgstr "Team name"
 
 # TeamFormComponent.php:112
 msgid "Název týmu musí být vyplněn"
-msgstr "Název týmu musí být vyplněn"
+msgstr "You must enter a team name"
 
 # LoginFormComponent.php:34
 msgid "Název týmu musí být vyplněn."
-msgstr "Název týmu musí být vyplněn."
+msgstr "You must enter a team name."
 
 # ChatListComponent.php:37
 msgid "Obsah příspěvku není vyplněn."
-msgstr "Obsah příspěvku není vyplněn."
+msgstr "Your entry is empty."
 
 # AnswerFormComponent.php:31
 msgid "Od vaší poslední špatné odpovědi ještě neuplynulo %d sekund."
-msgstr "Od vaší poslední špatné odpovědi ještě neuplynulo %d sekund."
+msgstr "The time passed since your last incorrect answer has not reached %d seconds yet."
 
 # AnswerFormComponent.php:98
 msgid "Odeslat řešení"
-msgstr "Odeslat řešení"
+msgstr "Send the solution"
 
 # layout.phtml:7
 # layout.phtml:7
 # GamePresenter.php:6
 msgid "Odevzdat řešení"
-msgstr "Odevzdat řešení"
+msgstr "Submit the solution"
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:32
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:32
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:32
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:32
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:32
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:32
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:32
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:32
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:32
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:32
 # layout.phtml:58
@@ -291,7 +248,7 @@ msgstr "Log out"
 
 # AnswerFormComponent.php:83
 msgid "Odpověď"
-msgstr "Odpověď"
+msgstr "Answer"
 
 # TeamsModel.php:118
 msgid "Open"
@@ -301,11 +258,11 @@ msgstr "Open"
 # layout.phtml:13
 # StatsPresenter.php:16
 msgid "Podrobné výsledky"
-msgstr "Podrobné výsledky"
+msgstr "Detailed results"
 
 # TeamFormComponent.php:19
 msgid "Pokoušíte se vložit školu, která již existuje."
-msgstr "Pokoušíte se vložit školu, která již existuje."
+msgstr "You are trying to register a school that has already been registered."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:37
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:37
@@ -319,46 +276,41 @@ msgstr "Rules"
 
 # AnswerFormComponent.php:94
 msgid "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
-msgstr "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
+msgstr "Pi can be entered in any of the following forms: 3.14; 3,14; 314e-2 nebo 0.314e1."
 
 # layout.phtml:8
 # layout.phtml:8
 # SkipFormComponent.php:62
 # GamePresenter.php:10
 msgid "Přeskočit úkol"
-msgstr "Přeskočit úkol"
+msgstr "Skip this problem"
 
 # ChatListComponent.php:39
 msgid "Přidat příspěvek"
-msgstr "Přidat příspěvek"
+msgstr "Add a new entry"
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:30
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:30
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:30
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:30
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:30
 # layout.phtml:56
 # LoginFormComponent.php:39
-# DefaultPresenter.php:24
+# DefaultPresenter.php:23
 msgid "Přihlásit se"
 msgstr "Log in"
 
 # TeamFormComponent.php:33
 msgid "Přiřazena kategorie %s."
-msgstr "Přiřazena kategorie %s."
+msgstr "You have been assigned the %s category."
 
 # ChatListComponent.php:14
 msgid "Příspěvek byl vložen."
-msgstr "Příspěvek byl vložen."
+msgstr "Your entry has been submitted."
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:28
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:28
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:28
 # _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:28
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:28
 # TeamPresenter.php:25
 msgid "Registrace"
-msgstr "Register"
+msgstr "Registration"
 
 # TeamPresenter.php:7
 msgid "Registrace není aktivní."
@@ -368,15 +320,15 @@ msgstr "Registration is not active."
 msgid "Registrovat"
 msgstr "Register"
 
-# layout.phtml:68
-# layout.phtml:68
-# DefaultPresenter.php:33
+# layout.phtml:66
+# layout.phtml:66
+# DefaultPresenter.php:31
 msgid "Rozcvička"
-msgstr "Rozcvička"
+msgstr "Warm-up"
 
 # TeamPresenter.php:17
 msgid "Seznam týmů"
-msgstr "Team list"
+msgstr "List of registered teams"
 
 # SkipFormComponent.php:26
 # SkipFormComponent.php:32
@@ -385,47 +337,41 @@ msgstr "Team list"
 # AnswerFormComponent.php:46
 # AnswerFormComponent.php:52
 msgid "Stala se neočekávaná chyba."
-msgstr "Stala se neočekávaná chyba."
+msgstr "An unexpected error has occurred."
 
 # StatsPresenter.php:21
 msgid "Statistika úkolů"
-msgstr "Statistika úkolů"
+msgstr "Problem statistics"
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:49
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:49
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:49
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:49
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:49
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:49
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:45
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:45
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:49
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:49
-# layout.phtml:76
-# layout.phtml:76
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
+# layout.phtml:74
+# layout.phtml:74
 msgid "Statistiky"
-msgstr "Stats"
+msgstr "Statistics"
 
 # StatsPresenter.php:42
 msgid "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
-msgstr "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
+msgstr "Statistics are unavailable at this moment. Updating is probably underway."
 
 # layout.phtml:14
 # layout.phtml:14
 msgid "Statistiky úkolů"
-msgstr "Statistiky úkolů"
+msgstr "Problem statistics"
 
 # TeamsModel.php:114
 msgid "Středoškoláci A"
-msgstr "Středoškoláci A"
+msgstr "High school students A"
 
 # TeamsModel.php:115
 msgid "Středoškoláci B"
-msgstr "Středoškoláci B"
+msgstr "High school students B"
 
 # TeamsModel.php:116
 msgid "Středoškoláci C"
-msgstr "Středoškoláci C"
+msgstr "High school students C"
 
 # TeamFormComponent.php:109
 msgid "Tým"
@@ -433,129 +379,122 @@ msgstr "Team"
 
 # TeamFormComponent.php:55
 msgid "Tým %s byl úspěšně zaregistrován.'"
-msgstr "Tým %s byl úspěšně zaregistrován.'"
+msgstr "Team %s has been successfully registered."
 
 # TeamFormComponent.php:90
 msgid "Tým byl úspěšně aktualizován."
-msgstr "Tým byl úspěšně aktualizován."
+msgstr "Team has been updated successfully."
 
 # TeamFormComponent.php:93
 msgid "Tým musí mít alespoň jednoho člena."
-msgstr "Tým musí mít alespoň jednoho člena."
+msgstr "Team must consist of at least one member."
 
 # TeamFormComponent.php:25
 msgid "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
-msgstr "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
+msgstr "Team with the same name or contact email address already exists"
 
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
-# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:45
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:41
-# _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:41
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
-# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:45
-# layout.phtml:71
-# layout.phtml:71
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
+# _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:41
+# _9a1e0954900b84e0955a128d46156089.layout.phtml.php:41
+# layout.phtml:69
+# layout.phtml:69
 msgid "Týmy"
 msgstr "Teams"
 
 # TeamFormComponent.php:152
 # TeamFormComponent.php:160
 msgid "U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."
-msgstr "U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."
+msgstr "You entered a name of the %d. member but not his/her school."
 
 # TeamFormComponent.php:164
 msgid "U %d. člena není platná e-mailová adresa."
-msgstr "U %d. člena není platná e-mailová adresa."
+msgstr "The email address of the %d. member is not valid."
 
 # TeamFormComponent.php:199
 msgid "Upravit"
-msgstr "Edit"
+msgstr "Correct"
 
 # TeamFormComponent.php:166
 msgid "Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ."
-msgstr "Choose High school or Other."
+msgstr "Please enter what grade you attend (in high school). Elementary school is below high school. Everything else is above. "
 
 # default.phtml:4
 msgid "V průběhu hry nejsou statistiky okamžité, údaje jsou řádově po minutách přepočítávány."
-msgstr "V průběhu hry nejsou statistiky okamžité, údaje jsou řádově po minutách přepočítávány."
+msgstr "During the competition, the shown statistics are not instantaneous. We update them roughly every minute."
 
 # SkipFormComponent.php:20
 msgid "V tomto období není možno přeskakovat úlohy této série."
-msgstr "V tomto období není možno přeskakovat úlohy této série."
+msgstr "During this part of the competition, you can not skip problems from this series. "
 
 # AnswerFormComponent.php:24
 msgid "Vaše odpověď je správně."
-msgstr "Vaše odpověď je správně."
+msgstr "Your answer is correct."
 
 # AnswerFormComponent.php:27
 msgid "Vaše odpověď je špatně."
-msgstr "Vaše odpověď je špatně."
+msgstr "Your answer is not correct."
 
 # SkipFormComponent.php:59
 msgid "Vyberte prosím úkol k přeskočení."
-msgstr "Vyberte prosím úkol k přeskočení."
+msgstr "Please choose which problem you want to skip."
 
 # AnswerFormComponent.php:80
 msgid "Vyberte prosím řešený úkol."
-msgstr "Vyberte prosím řešený úkol."
+msgstr "Please choose the problem you are currently solving."
 
 # AnswerFormComponent.php:84
 msgid "Vyplňte prosím řešení úkolu."
-msgstr "Vyplňte prosím řešení úkolu."
+msgstr "Please fill in the solution to the problem."
 
 # AnswerFormComponent.php:88
 msgid "Výsledek musí být celé číslo."
-msgstr "Výsledek musí být celé číslo."
+msgstr "The answer must be an integer."
 
 # AnswerFormComponent.php:92
 msgid "Výsledek musí být reálné číslo."
-msgstr "Výsledek musí být reálné číslo."
+msgstr "The answer must be a real number."
 
 # layout.phtml:6
 # layout.phtml:6
 # StatsPresenter.php:11
 msgid "Výsledky"
-msgstr "Výsledky"
+msgstr "Results"
 
 # TeamFormComponent.php:127
 msgid "Zadejte prosím kontatní adresu."
-msgstr "Zadejte prosím kontatní adresu."
+msgstr "Please enter a contact address."
 
 # TeamFormComponent.php:123
 msgid "Zadejte prosím kontatní e-mail."
-msgstr "Zadejte prosím kontatní e-mail."
+msgstr "Please enter a contact email."
 
 # layout.phtml:5
 # layout.phtml:5
 # GamePresenter.php:14
 msgid "Zadání"
-msgstr "Zadání"
+msgstr "Problem statement"
 
 # TeamsModel.php:117
 msgid "Zahraniční SŠ"
-msgstr "Zahraniční SŠ"
+msgstr "High school outside of Czech Republic"
 
 # TeamFormComponent.php:134
 msgid "ZŠ"
-msgstr "ZŠ"
+msgstr "Elementary school"
 
 # results.phtml:7
 msgid "bonusové body"
-msgstr "bonusové body"
+msgstr "bonus points"
 
 # results.phtml:6
 msgid "celkem bodů"
-msgstr "celkem bodů"
+msgstr "total amount of points"
 
-# _3bd5acf9d8ef68099e271e95c13ef1e7.teamList.phtml.php:20
 # _3bd5acf9d8ef68099e271e95c13ef1e7.teamList.phtml.php:20
 # teamList.phtml:13
 msgid "informace o členech týmu nejsou dostupné"
-msgstr "informace o členech týmu nejsou dostupné"
+msgstr "information about the team members are not available"
 
 # taskStats.phtml:5
 msgid "nejhorší"
@@ -592,46 +531,44 @@ msgstr "team"
 
 # TeamFormComponent.php:140
 msgid "zahraničí"
-msgstr "zahraničí"
+msgstr "foreign country"
 
 # results.phtml:8
 msgid "záporné body"
-msgstr "záporné body"
+msgstr "negative points"
 
-# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:40
-# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:42
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:40
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:42
 # visualPaginator.phtml:38
 # visualPaginator.phtml:40
 msgid "« Předchozí"
-msgstr "« Předchozí"
+msgstr "« Previous"
 
 # SkipFormComponent.php:57
 # AnswerFormComponent.php:78
 msgid "Úkol"
-msgstr "Úkol"
+msgstr "Problem"
 
 # SkipFormComponent.php:16
 msgid "Úloha %s přeskočena."
-msgstr "Úloha %s přeskočena."
+msgstr "Problem %s was skipped."
 
 # TeamFormComponent.php:133
 msgid "ČR/SR"
-msgstr "ČR/SR"
+msgstr "Czech/Slovak Republic"
 
 # SkipFormComponent.php:78
 # AnswerFormComponent.php:113
 msgid "Čas vypršel."
-msgstr "Čas vypršel."
+msgstr "Time is up."
 
 # layout.phtml:12
 msgid "Řešení"
-msgstr "Řešení"
+msgstr "Solution"
 
 # default.phtml:5
 msgid "Šedé jsou týmy, jež neprojevily během hry aktivitu."
-msgstr "Šedé jsou týmy, jež neprojevily během hry aktivitu."
+msgstr "The teams marked with grey were not active throughout the game"
 
 # TeamFormComponent.php:150
 msgid "Škola"
@@ -643,9 +580,18 @@ msgstr "Grade"
 
 # taskStats.phtml:9
 msgid "špatně"
-msgstr "špatně"
+msgstr "incorrect"
 
 # default.phtml:10
 msgid "Žádné úlohy."
-msgstr "Žádné úlohy."
+msgstr "No more problems."
+
+msgid "Jiná"
+msgstr "Other"
+
+msgid "Nevyplněno"
+msgstr "Not filled"
+
+msgid "Pro zaslání případné odměny."
+msgstr "For purposes of sending out possible prizes (the address must be Czech or Slovak)."
 
