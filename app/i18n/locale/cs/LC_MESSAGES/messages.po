@@ -469,6 +469,11 @@ msgstr "Týmy"
 msgid "U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."
 msgstr "U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."
 
+# TeamFormComponent.php:152
+# TeamFormComponent.php:160
+msgid "U %d. člena musí být název školy alespoň %d znaků."
+msgstr "U %d. člena musí být název školy alespoň %d znaků."
+
 # TeamFormComponent.php:164
 msgid "U %d. člena není platná e-mailová adresa."
 msgstr "U %d. člena není platná e-mailová adresa."

@@ -407,6 +407,11 @@ msgstr "Teams"
 msgid "U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."
 msgstr "You entered a name of the %d. member but not his/her school."
 
+# TeamFormComponent.php:152
+# TeamFormComponent.php:160
+msgid "U %d. člena musí být název školy alespoň %d znaků."
+msgstr "Name of the school of the team member %d must be at least %d characters long."
+
 # TeamFormComponent.php:164
 msgid "U %d. člena není platná e-mailová adresa."
 msgstr "The email address of the %d. member is not valid."

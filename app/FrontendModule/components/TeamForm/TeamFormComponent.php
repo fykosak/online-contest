@@ -157,7 +157,8 @@ class TeamFormComponent extends BaseComponent {
             $form->addText("otherschool_" . $i, "Jiná škola")
                     ->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
                     ->addConditionOn($form["school_" . $i], Form::EQUAL, self::OTHER_SCHOOL)
-                    ->addRule(Form::FILLED, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."), $i));
+                    ->addRule(Form::FILLED, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."), $i))
+                    ->addRule(Form::MIN_LENGTH, sprintf(_("U %d. člena musí být název školy alespoň %d znaků."), $i, 5), 5);
             $form["otherschool_" . $i]->getLabelPrototype()->id = "frm" . $name . "-" . "otherschool_$i-label";
             $form->addText("email_$i", "Email")
                     ->addCondition(~Form::EQUAL, "")
@@ -165,7 +166,7 @@ class TeamFormComponent extends BaseComponent {
             $schoolElement = $form->addSelect("study_year_$i", "Školní ročník", $study_years)
                     ->setOption("description", _("Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ."))
                     ->setDefaultValue("2");
-            if(!Interlos::isRegistrationActive()){
+            if (!Interlos::isRegistrationActive()) {
                 $schoolElement->setDisabled();
                 $form->addHidden("study_year_hid_$i");
             }
