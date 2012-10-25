@@ -129,6 +129,10 @@ msgstr "Competition"
 msgid "Hra ještě nezačala."
 msgstr "Competition has not started yet."
 
+# TeamFormComponent.php:136
+msgid "Je nutno si nejdříve přečíst pravidla."
+msgstr "You have to read the rules first."
+
 # TeamFormComponent.php:157
 msgid "Jiná škola"
 msgstr "Other school"
@@ -284,6 +288,10 @@ msgstr "Pi can be entered in any of the following forms: 3.14; 3,14; 314e-2 nebo
 # GamePresenter.php:10
 msgid "Přeskočit úkol"
 msgstr "Skip this problem"
+
+# TeamFormComponent.php:131
+msgid "Přečetl jsem si "
+msgstr "I have read the "
 
 # ChatListComponent.php:39
 msgid "Přidat příspěvek"
@@ -517,6 +525,10 @@ msgstr "name"
 # TeamFormComponent.php:142
 msgid "ostatní"
 msgstr "other"
+
+# TeamFormComponent.php:132
+msgid "pravidla soutěže"
+msgstr "rules of the contest"
 
 # taskStats.phtml:10
 msgid "přeskočeno"

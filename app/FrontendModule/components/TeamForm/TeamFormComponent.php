@@ -126,6 +126,16 @@ class TeamFormComponent extends BaseComponent {
         $form->addTextArea("address", "Kontaktní adresa", 35, 4)
                 ->addRule(Form::FILLED, "Zadejte prosím kontatní adresu.")
                 ->setOption("description", _("Pro zaslání případné odměny."));
+        if (!Environment::getUser()->isLoggedIn()) {
+            $desc = Html::el();
+            $desc->add(_('Přečetl jsem si '));
+            $desc->add(Html::el('a')->href($this->getPresenter()->link('Default:rules'))->setText(_('pravidla soutěže')));
+            $desc->add('.');
+
+            $form->addCheckbox('understand', null)
+                    ->addRule(Form::EQUAL, 'Je nutno si nejdříve přečíst pravidla.', true)
+                ->setOption("description", $desc);
+        }
 
         $schools = Interlos::schools()->findAll()->orderBy("name")->fetchPairs("id_school", "name");
         $schools = array(NULL => _("Nevyplněno")) + $schools + array(self::OTHER_SCHOOL => _("Jiná"));
@@ -204,6 +214,7 @@ class TeamFormComponent extends BaseComponent {
             $form->addSubmit("update", "Upravit");
             $form->onSubmit[] = array($this, "updateSubmitted");
         } else {
+
             $form["password"]->addRule(Form::FILLED, "Není vyplněno heslo týmu.");
             $form->addSubmit("insert", "Registrovat");
             $form->onSubmit[] = array($this, "insertSubmitted");
