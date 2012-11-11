@@ -44,7 +44,7 @@ class Frontend_BasePresenter extends Presenter {
     protected function localize() {
         $i18nConf = Environment::getConfig('i18n');
         $this->detectLang($i18nConf);
-        $locale = GettextTranslator::$locales[$this->lang];
+        $locale = isset(GettextTranslator::$locales[$this->lang]) ? GettextTranslator::$locales[$this->lang] : 'cs_CZ.utf-8';
 
         setlocale(LC_MESSAGES, $locale);
         bindtextdomain('messages', $i18nConf->dir);
