@@ -117,6 +117,9 @@ blockquote{
     margin-right: 50px;
     display: inline;
 }
+#banners {
+    padding: 10px;
+}
 h3.solution {
     background-image: url('../images/icons/plus.png');
     background-repeat: no-repeat;
