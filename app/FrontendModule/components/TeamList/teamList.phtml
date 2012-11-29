@@ -6,10 +6,15 @@
 	    {foreach $teams[$category] AS $team}
 		<li>
 			<strong>{$team->name}</strong>:
+                            {var $prevSchool => null}
+                            {var $inSchool => 0}
 				{if isset($competitors[$team->id_team])}
 					{foreach $competitors[$team->id_team] AS $competitor}
-						{$competitor->name} {if $competitor->school_name != NULL}({$competitor->school_name}){/if}{if !$iterator->isLast()}, {/if}
+						{$competitor->name}{if $prevSchool !== null && $competitor->school_name != $prevSchool} ({$inSchool}&times; {$prevSchool}){*
+                                                *}{var $inSchool => 1}{else}{var $inSchool => $inSchool + 1}{/if}{*
+                                                *}{var $prevSchool => $competitor->school_name}{if !$iterator->isLast()}, {/if}
 					{/foreach}
+                                        {if $prevSchool !== null}({$inSchool}&times; {$prevSchool}){/if}
 				{else}
 				{_'informace o členech týmu nejsou dostupné'}
 				{/if}

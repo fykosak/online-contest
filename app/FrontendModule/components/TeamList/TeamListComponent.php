@@ -6,7 +6,7 @@ class TeamListComponent extends BaseListComponent {
 		$ids = $this->getSource()->fetchPairs("id_team", "id_team");
 		$this->getTemplate()->competitors = Interlos::competitors()->findAll()
 				->where("[id_team] IN %l", $ids)
-				->orderBy("name")
+				->orderBy("id_school", "name")
 				->fetchAssoc("id_team,id_competitor");
 		$this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
 	}
