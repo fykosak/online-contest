@@ -9,11 +9,11 @@
                             {var $prevSchool => null}
                             {var $inSchool => 0}
 				{if isset($competitors[$team->id_team])}
-					{foreach $competitors[$team->id_team] AS $competitor}
-						{$competitor->name}{if $prevSchool !== null && $competitor->school_name != $prevSchool} ({$inSchool}&times; {$prevSchool}){*
+					{foreach $competitors[$team->id_team] AS $competitor}{*
+						*}{if $prevSchool !== null && $competitor->school_name != $prevSchool} ({$inSchool}&times; {$prevSchool}){*
                                                 *}{var $inSchool => 1}{else}{var $inSchool => $inSchool + 1}{/if}{*
-                                                *}{var $prevSchool => $competitor->school_name}{if !$iterator->isLast()}, {/if}
-					{/foreach}
+                                                *}{var $prevSchool => $competitor->school_name}{if !$iterator->isFirst()}, {/if}{$competitor->name}{*
+					*}{/foreach}
                                         {if $prevSchool !== null}({$inSchool}&times; {$prevSchool}){/if}
 				{else}
 				{_'informace o členech týmu nejsou dostupné'}
