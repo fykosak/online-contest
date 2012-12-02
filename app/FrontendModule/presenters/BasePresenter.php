@@ -24,7 +24,8 @@ class Frontend_BasePresenter extends Presenter {
 
         $template = parent::createTemplate();
         $template->today = date("Y-m-d H:i:s");
-        $template->setTranslator(new GettextTranslator($this->lang));
+        $template->lang = $this->lang;
+        $template->setTranslator(Interlos::getTranslator());
 
         return InterlosTemplate::loadTemplate($template);
     }
