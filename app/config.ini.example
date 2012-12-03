@@ -1,11 +1,22 @@
 [common]
 debug.enable = TRUE
 debug.log = "%app_dir%/logs/php_error.log"
+; sender's e-mail address of confirmation e-mail
 mail.info = "interlos@fi.muni.cz"
-main.name = "Interlos tým"
+; sender's name of confirmation e-mail
+mail.name = "Interlos tým"
+; key that's checked when invoking HTTP request for stats refresh
 cron.key = "nejakyklic"
+; key that's checked when invoking HTTP request for stats refresh
 admin.key = "nejakyklic"
+; URL to directory(ies) where problem PDFs are stored
 tasks.mirrors[] = "http://example.com/set/"
+; path to gettext dir structure
+i18n.dir = "%app_dir%/i18n/locale"
+; language used when no or unknown language is requested
+i18n.defaultLang = 'cs'
+; comma separated list of hostnames that are server in English by default
+i18n.en.hosts = 
 
 [common.set!]
 date.timezone = "Europe/Prague"
@@ -27,8 +38,6 @@ database.database = "interlos"
 smtp.host = ""
 smtp.username = ""
 smtp.password = ""
-
-mail.info = "interlos@fi.muni.cz"
 
 service.Nette-Security-IAuthenticator = TeamAuthenticator
 service.Nette-Security-IAuthorizator = SimpleAuthorizator
