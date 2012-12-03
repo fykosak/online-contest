@@ -4,6 +4,7 @@ class AnswerFormComponent extends BaseComponent {
 
     const TASK_ELEMENT = 'task';
     const TASK_INFO_ELEMENT = 'answer-info';
+    const SUBMIT_ELEMENT = 'solution_submit';
 
     public function formSubmitted(Form $form) {
         $values = $form->getValues();
@@ -100,7 +101,7 @@ class AnswerFormComponent extends BaseComponent {
 
 
 
-        $submit = $form->addSubmit("solution_submit", "Odeslat řešení");
+        $submit = $form->addSubmit(self::SUBMIT_ELEMENT, "Odeslat řešení");
         if (count($options) == 0) {
             $submit->setDisabled(true);
         }
@@ -144,6 +145,7 @@ class AnswerFormComponent extends BaseComponent {
         }
         $this->getTemplate()->tasksInfo = $this->tasksInfo;
         $this->getTemplate()->tasksInfoElement = self::TASK_INFO_ELEMENT;
+        $this->getTemplate()->submitElement = self::SUBMIT_ELEMENT;
 
         $this->getTemplate()->realHint = _("Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1.");
         $this->getTemplate()->expected = _("Očekávaný počet platných cifer");

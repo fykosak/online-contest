@@ -6,7 +6,14 @@
 <script type="text/javascript">
     $('#'+{$tasksInfoElement}).infoElement($('#'+{$control['form']['task']->getHtmlId()}), {'data': {$tasksInfo}, 'realHint': {$realHint}, 'expected': {$expected}, 'unit': {$unit}});    
     $(function(){
-        $('.timesec').timeElement();
+        var timesecs = $('.timesec');
+        var button = $('#'+{$control['form'][$submitElement]->getHtmlId()});
+        if(timesecs.length){
+            button.attr('disabled', 'disabled');
+        }
+        timesecs.timeElement({'handler': function(){
+                button.removeAttr('disabled');
+        }});
     });
 </script>
 

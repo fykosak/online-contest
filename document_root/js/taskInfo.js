@@ -28,9 +28,14 @@ $.fn.extend({
         window.setInterval(function(){
             var time = parseInt(element.html());
             if(time > 0){
-                element.html(time - 1);
-            }else{
+                time -= 1;
+                element.html(time);
+            }
+            if(time == 0){
                 window.clearInterval();
+                if(options['handler'] != undefined){
+                    options['handler']();
+                }
             }
         }, 1000);
     }
