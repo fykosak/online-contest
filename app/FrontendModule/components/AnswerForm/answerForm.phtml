@@ -5,7 +5,9 @@
 
 <script type="text/javascript">
     $('#'+{$tasksInfoElement}).infoElement($('#'+{$control['form']['task']->getHtmlId()}), {'data': {$tasksInfo}, 'realHint': {$realHint}, 'expected': {$expected}, 'unit': {$unit}});    
-    
+    $(function(){
+        $('.timesec').timeElement();
+    });
 </script>
 
 {/if}

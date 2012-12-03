@@ -21,5 +21,17 @@ $.fn.extend({
         };
         select.change(handler);
         select.keyup(handler);
+    },
+    timeElement: function(options){
+        var element = $(this);
+        
+        window.setInterval(function(){
+            var time = parseInt(element.html());
+            if(time > 0){
+                element.html(time - 1);
+            }else{
+                window.clearInterval();
+            }
+        }, 1000);
     }
 });

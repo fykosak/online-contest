@@ -170,6 +170,10 @@ msgstr "Contact address"
 msgid "Kontrola hesla"
 msgstr "Password confirmation"
 
+# AnswerFormComponent.php:34
+msgid "Lze odpovídat až za <span class='timesec'>%d</span> sekund."
+msgstr "You can answer in <span class='timesec'>%d</span> seconds."
+
 # DefaultPresenter.php:15
 msgid "Mezinárodní soutež ve fyzice"
 msgstr "International physics competition"
@@ -241,12 +245,6 @@ msgstr "You must enter a team name."
 # ChatListComponent.php:37
 msgid "Obsah příspěvku není vyplněn."
 msgstr "Your entry is empty."
-
-# AnswerFormComponent.php:31
-msgid "Od vaší poslední špatné odpovědi ještě neuplynulo %d sekund."
-msgstr ""
-"The time passed since your last incorrect answer has not reached %d seconds "
-"yet."
 
 # AnswerFormComponent.php:98
 msgid "Odeslat řešení"
@@ -660,3 +658,9 @@ msgstr "incorrect"
 # default.phtml:10
 msgid "Žádné úlohy."
 msgstr "No more problems."
+
+# AnswerFormComponent.php:31
+#~ msgid "Od vaší poslední špatné odpovědi ještě neuplynulo %d sekund."
+#~ msgstr ""
+#~ "The time passed since your last incorrect answer has not reached %d "
+#~ "seconds yet."

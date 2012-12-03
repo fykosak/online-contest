@@ -1,6 +1,7 @@
 <?php
 
 class AnswersModel extends AbstractModel {
+
     const ERROR_TIME_LIMIT = 10;
     const ERROR_OUT_OF_PERIOD = 20;
     const ERROR_SKIP_OF_PERIOD = 30;
@@ -48,11 +49,13 @@ class AnswersModel extends AbstractModel {
         if (!empty($correctAnswers)) {
             $query->where("[id_answer] NOT IN %l", $correctAnswers);
         }
-        $lastInTimeLimit = $query->count();
+        $row = $query->fetch();
         // Check it
-        if ($lastInTimeLimit != 0) {
+        if ($row !== false) {
+            $timestamp = strtotime($row['inserted']);
             $this->log($team, "solution_tried", "The team tried to insert the solution of task [$task->id_task] with code [$solution].");
-            throw new InvalidStateException("There is a wrong answer in recent " . $period["time_penalty"] . " seconds.", self::ERROR_TIME_LIMIT);
+            $remaining = $period["time_penalty"] - (time() - $timestamp);
+            throw new InvalidStateException($remaining, self::ERROR_TIME_LIMIT);
         }
         $answer = array(
             "answer_str" => null,

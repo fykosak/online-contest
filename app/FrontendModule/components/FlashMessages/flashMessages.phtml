@@ -1,7 +1,12 @@
 <div id="flashes">
     {foreach $component->getParent()->getTemplate()->flashes AS $flash}
-    <div class="flash {$flash->type}">
-	    {$flash->message}
+    {var $type => substr($flash->type, 0, 1) == '!' ? substr($flash->type, 1) : $flash->type}
+    <div class="flash {$type}">
+        {if substr($flash->type, 0, 1) == '!'}
+	    {!$flash->message}
+        {else}
+            {$flash->message}
+        {/if}
 	</div>
     {/foreach}
 </div>

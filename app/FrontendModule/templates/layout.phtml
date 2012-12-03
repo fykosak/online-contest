@@ -7,8 +7,8 @@
 		<link rel="stylesheet" type="text/css" href="{$baseUri}css/forms.css" />
 		<link rel="stylesheet" type="text/css" href="{$baseUri}css/flashes.css" />
 		<link href="{$baseUri}favicon.png" rel="icon" type="image/png" />
-		<script type="text/javascript" src="{$baseUri}js/jquery-1.4.2.min.js"></script>
-        <script type="text/javascript" src="{$baseUri}js/jquery-ui-1.8.2.custom.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+                <script type="text/javascript" src="http://code.jquery.com/ui/1.8.2/jquery-ui.js"></script>
 
 		<title>
 	    {_'Fyziklání online'}{ifset $pageTite} - {$pageTitle}{/ifset}
@@ -72,7 +72,7 @@ s.parentNode.insertBefore(ga, s);
 					<li><a href="{link Team:list}" title="{_'Týmy'}">{_'Týmy'}</a></li>
 			    {if Interlos::isGameStarted()}
 					{if Environment::getUser()->isLoggedIn()}
-						<li class="highlight"><a href="{link Game:default}" title="{_'Hra'}">{_'Hra'}</a></li>
+						<li {if Interlos::isGameActive()}class="highlight"{/if}><a href="{link Game:default}" title="{_'Hra'}">{_'Hra'}</a></li>
 					{/if}
 					<li><a href="{link Stats:default}" title="{_'Statistiky'}">{_'Statistiky'}</a></li>
 			    {/if}
