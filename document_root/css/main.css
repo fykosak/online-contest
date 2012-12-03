@@ -47,6 +47,11 @@ body {
     margin-right: 20px;
     display: inline;
 }
+#menu ul li.highlight a {
+    color:#2e2e2e;
+    font-size: 120%;
+    font-weight: bold;
+}
 #menu ul li a {
     color: #2a6a93;
     font-weight: bolder;
