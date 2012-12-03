@@ -56,9 +56,16 @@ Bodování
 - za špatnou odpověď se blokuje možnost odpovídat na příklady dané skupiny po
   dobu ?? sekund
 
+I18n
+- Latte šablony podporují "libovolný" počet jazyků
+- pro překlady se používá gettext v PHP
+- databázové schéma umožňuje pouze "konstantní" počet jazyků
+	- tabulka 'task', sloupce suffixované dle jazyka v ISO 639-1
+	- schéma je takto řešeno kvůli ušetření joinů
+
 TODO
 - kolik bodů strhávat za přeskočení příkladu - vyřešeno: 1
 - kolik sekund dát na blokování (lze různě pro odevzdávací období) - vyřešeno 60
 - umožnit přeskočení příkladu i po zadání špatných odpovědí? - vyřešeno ano
-- loga na úvodní stránku
-- poděkování na úvodní stránku - KAM, tým Interlosu
+- loga na úvodní stránku - vyřešeno
+- poděkování na úvodní stránku - KAM, tým Interlosu - vyřešeno

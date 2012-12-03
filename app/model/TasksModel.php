@@ -1,6 +1,7 @@
 <?php
 
 class TasksModel extends AbstractModel {
+
     const TYPE_STR = 'str';
     const TYPE_INT = 'int';
     const TYPE_REAL = 'real';
@@ -39,16 +40,26 @@ class TasksModel extends AbstractModel {
     public function findSubmitAvailable($teamId) {
         $source = $this->getConnection()->dataSource("SELECT * FROM [view_submit_available_task] WHERE [id_team] = %i", $teamId);
 
-        // Find solved tasks
-        $solved = Interlos::answers()
-                ->findAllCorrect()
-                ->where("[id_team] = %i", $teamId)
-                ->fetchPairs("id_task", "id_task");
+
+        $solved = $this->findSolved($teamId);
+
         // Remove solved tasks from the source
         if (!empty($solved)) {
             $source->where("[id_task] NOT IN %l", $solved);
         }
         return $source;
+    }
+
+    /**
+     * Find solved tasks
+     * 
+     * @return array id_task => id_task
+     */
+    public function findSolved($teamId) {
+        return Interlos::answers()
+                        ->findAllCorrect()
+                        ->where("[id_team] = %i", $teamId)
+                        ->fetchPairs("id_task", "id_task");
     }
 
     public function findAllStats() {
@@ -95,13 +106,13 @@ class TasksModel extends AbstractModel {
                     "id_team" => $team,
                     "id_task" => $task["id_task"],
                     "skipped" => 1))->execute();
-        
+
         // Increase counter
         $sql = "INSERT INTO [group_state] ([id_group], [id_team], [task_counter])
                     VALUES(%i, %i, 0)
                 ON DUPLICATE KEY UPDATE [task_counter] = [task_counter] + 1";
         $this->getConnection()->query($sql, $task->id_group, $team);
-        
+
         // Log the action
         $this->log($team, "task_skipped", "The team successfuly skipped the task [$task->id_task].");
         return $return;
@@ -113,7 +124,8 @@ class TasksModel extends AbstractModel {
                     SELECT [id_group], [id_team], 0
                     FROM [view_group], [view_team]
                 ON DUPLICATE KEY UPDATE [task_counter] = [task_counter]";
-        if($full) $this->getConnection()->query($sql);
+        if ($full)
+            $this->getConnection()->query($sql);
 
 
         // Update according to current period
@@ -130,7 +142,7 @@ class TasksModel extends AbstractModel {
                             WHERE ts.id_team = gs.id_team AND tsk2.id_group = gs.id_group AND skipped = 1)
                         + (SELECT reserve_size FROM period AS p WHERE p.id_group = gs.id_group AND p.begin <= NOW() AND p.end > NOW()), 0),
                     gs.task_counter)";
-        
+
         $this->getConnection()->query($sql);
     }
 

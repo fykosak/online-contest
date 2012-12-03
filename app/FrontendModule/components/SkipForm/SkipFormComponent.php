@@ -11,7 +11,7 @@ class SkipFormComponent extends BaseComponent {
 
 
             Interlos::tasks()->skip($team, $task);
-            Environment::getCache()->clean(array(Cache::TAGS => array("problems/$team")));
+            //Environment::getCache()->clean(array(Cache::TAGS => array("problems/$team"))); not used
             
             $this->getPresenter()->flashMessage(sprintf(_("Úloha %s přeskočena."), $task->code_name), "success");
             Interlos::tasks()->updateCounter($team);
@@ -50,7 +50,7 @@ class SkipFormComponent extends BaseComponent {
         $options = array();
         foreach ($tasks as $task) {
             if (array_key_exists($task["id_group"], $skippableGroups) && !array_key_exists($task["id_task"], $answers)) {
-                $options[$task["id_task"]] = $task["code_name"] . ' (' . $task["name"] . ')';
+                $options[$task["id_task"]] = $task["code_name"] . ' (' . $task["name_" . $this->getPresenter()->lang] . ')';
             }
         }
         $tasks = array(NULL => _(" ---- Vybrat ---- ")) + $options;

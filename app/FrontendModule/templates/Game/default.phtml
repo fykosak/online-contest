@@ -3,22 +3,36 @@
 {block #subcontent}
 
 {*{cache "problems/$id_team", "problems"}*}
-{? Interlos::tasks()->updateCounter($id_team)}
+{? Interlos::tasks()->updateCounter($id_team, true)}
 
 <p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
-
-{if count($tasks) == 0}
+<h3>{_'Nevyřešené'}</h3>
+{if count($unsolvedTasks) == 0}
 <p>{_'Žádné úlohy.'}</p>
 {else}
 <ul>
-    {foreach $tasks as $task}
-    <li><strong>{$task->code_name}</strong>&nbsp;{$task->name} ({$task->points} b.)
-        <ul>
+    {foreach $unsolvedTasks as $task}
+    {block task}
+    <li><strong>{$task->code_name}</strong>&nbsp;{$task|i18n:'name',$lang} ({$task->points} b.)
+        <ul><li>
             {foreach $mirrors as $mirror}
-            <li><a href="{$mirror}{$task->filename}">{$mirror}{$task->filename}</a></li>
+            <a href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
             {/foreach}
+            </li>
         </ul>
     </li>
+    {/block}
+    {/foreach}
+</ul>
+{/if}
+
+<h3>{_'Vyřešené'}</h3>
+{if count($solvedTasks) == 0}
+<p>{_'Žádné úlohy.'}</p>
+{else}
+<ul>
+    {foreach $solvedTasks as $task}
+    {include #task}
     {/foreach}
 </ul>
 {/if}

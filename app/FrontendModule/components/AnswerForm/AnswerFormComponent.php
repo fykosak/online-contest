@@ -2,11 +2,14 @@
 
 class AnswerFormComponent extends BaseComponent {
 
+    const TASK_ELEMENT = 'task';
+    const TASK_INFO_ELEMENT = 'answer-info';
+
     public function formSubmitted(Form $form) {
         $values = $form->getValues();
 
         try {
-            $task = Interlos::tasks()->find($values["task"]);
+            $task = Interlos::tasks()->find($values[self::TASK_ELEMENT]);
             $period = Interlos::period()->findCurrent($task["id_group"]);
             $solution = trim($values["solution"], " ");
             $solution = strtr($solution, ",", ".");
@@ -18,7 +21,7 @@ class AnswerFormComponent extends BaseComponent {
             }
 
             Interlos::answers()->insert($team, $task, $solution, $period);
-            Environment::getCache()->clean(array(Cache::TAGS => array("problems/$team")));
+            //Environment::getCache()->clean(array(Cache::TAGS => array("problems/$team"))); // not used
 
             if (TasksModel::checkAnswer($task, $solution)) {
                 $this->getPresenter()->flashMessage(_("Vaše odpověď je správně."), "success");
@@ -61,21 +64,20 @@ class AnswerFormComponent extends BaseComponent {
         $form = new BaseForm($this, $name);
 
         // Tasks
-        $tasks = Interlos::tasks()
-                ->findSubmitAvailable(Interlos::getLoggedTeam()->id_team)
-                ->fetchAll();
+
         $options = array();
         $rules = array(
             TasksModel::TYPE_STR => array(),
             TasksModel::TYPE_INT => array(),
             TasksModel::TYPE_REAL => array(),
         );
-        foreach ($tasks as $task) {
-            $options[$task["id_task"]] = $task["code_name"] . ': ' . $task["name"] . ' (' . $task["answer_type"] . ')';
+
+        foreach ($this->tasks as $task) {
+            $options[$task["id_task"]] = $task["code_name"] . ': ' . $task["name_" . $this->getPresenter()->lang];
             $rules[$task["answer_type"]][] = $task["id_task"];
         }
         $tasks = array(NULL => " ---- Vybrat ---- ") + $options;
-        $select = $form->addSelect("task", "Úkol", $tasks)
+        $select = $form->addSelect(self::TASK_ELEMENT, "Úkol", $tasks)
                 ->skipFirst()
                 ->addRule(Form::FILLED, "Vyberte prosím řešený úkol.");
 
@@ -91,7 +93,10 @@ class AnswerFormComponent extends BaseComponent {
             $text->addConditionOn($select, Form::IS_IN, $rules[TasksModel::TYPE_REAL])
                     ->addRule(Form::REGEXP, "Výsledek musí být reálné číslo.", '/[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?/');
         }
-        $text->setOption("description", _("Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."));
+
+        $desc = Html::el('span');
+        $desc->id(self::TASK_INFO_ELEMENT);
+        $text->setOption("description", $desc);
 
 
 
@@ -117,7 +122,32 @@ class AnswerFormComponent extends BaseComponent {
             $this->getTemplate()->valid = FALSE;
         } else {
             $this->getTemplate()->valid = TRUE;
+            $this->initTasks();
         }
+    }
+
+    private $tasks;
+    private $tasksInfo;
+
+    private function initTasks() {
+        $this->tasks = Interlos::tasks()
+                ->findSubmitAvailable(Interlos::getLoggedTeam()->id_team)
+                ->fetchAll();
+
+        $this->tasksInfo = array();
+        foreach ($this->tasks as $task) {
+            $this->tasksInfo[$task["id_task"]] = array(
+                "sig_digits" => $task["real_sig_digits"],
+                "unit" => $task["answer_unit"],
+                "type" => $task["answer_type"],
+            );
+        }
+        $this->getTemplate()->tasksInfo = $this->tasksInfo;
+        $this->getTemplate()->tasksInfoElement = self::TASK_INFO_ELEMENT;
+
+        $this->getTemplate()->realHint = _("Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1.");
+        $this->getTemplate()->expected = _("Očekávaný počet platných cifer");
+        $this->getTemplate()->unit = _("Jednotka");
     }
 
 }

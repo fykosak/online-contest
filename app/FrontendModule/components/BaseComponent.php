@@ -21,6 +21,8 @@ abstract class BaseComponent extends Control {
 				$componentName . "/" .
 				ExtraString::lowerFirst($componentName) . ".phtml"
 		);
+                $template->setTranslator(Interlos::getTranslator());
+                $template->registerHelper('i18n', 'GettextTranslator::i18nHelper');
 
 		return InterlosTemplate::loadTemplate($template);
 	}

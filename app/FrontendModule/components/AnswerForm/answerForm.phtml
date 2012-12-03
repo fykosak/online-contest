@@ -1,4 +1,11 @@
 {widget flashMessages}
 {if $valid}
-	{widget form}
+<script type="text/javascript" src="{$baseUri}js/taskInfo.js"></script>
+{widget form}
+
+<script type="text/javascript">
+    $('#'+{$tasksInfoElement}).infoElement($('#'+{$control['form']['task']->getHtmlId()}), {'data': {$tasksInfo}, 'realHint': {$realHint}, 'expected': {$expected}, 'unit': {$unit}});    
+    
+</script>
+
 {/if}

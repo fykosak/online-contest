@@ -47,12 +47,15 @@ class TeamFormComponent extends BaseComponent {
             $mail->addTo($values["email"]);
             $mail->setFrom(Environment::getConfig("mail")->info, Environment::getConfig("mail")->name);
             $mail->setSubject(_("FoL registrace"));
-            // TODO: doresit odesilani e-mailu
-            $mail->send();
+            try {
+                $mail->send();
+            } catch (InvalidStateException $e) {
+                $this->getPresenter()->flashMessage(_("Potvrzovací e-mail se nepodařilo odeslat."), "error");
+            }
             // Redirect
             $this->insertCompetitorsFromValues($insertedTeam, $values);
             dibi::commit();
-            $this->getPresenter()->flashMessage(sprintf(_("Tým %s byl úspěšně zaregistrován.'"), $values["team_name"]), "success");
+            $this->getPresenter()->flashMessage(sprintf(_("Tým %s byl úspěšně zaregistrován."), $values["team_name"]), "success");
             $this->getPresenter()->redirect("Default:login");
         } catch (DibiDriverException $e) {
             $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "error");
@@ -134,7 +137,7 @@ class TeamFormComponent extends BaseComponent {
 
             $form->addCheckbox('understand', null)
                     ->addRule(Form::EQUAL, 'Je nutno si nejdříve přečíst pravidla.', true)
-                ->setOption("description", $desc);
+                    ->setOption("description", $desc);
         }
 
         $schools = Interlos::schools()->findAll()->orderBy("name")->fetchPairs("id_school", "name");

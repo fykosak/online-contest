@@ -15,8 +15,24 @@ class Frontend_GamePresenter extends Frontend_BasePresenter {
         $team = Interlos::getLoggedTeam()->id_team;
         $this->getTemplate()->id_team = $team;
         
-        $this->getTemplate()->tasks = Interlos::tasks()->findProblemAvailable($team);
+        
         $this->getTemplate()->mirrors = (array) Environment::getConfig("tasks")->mirrors;
+        
+        // tasks
+        $solved = Interlos::tasks()->findSolved($team);
+        
+        $unsolvedTasks = array();
+        $solvedTasks = array();
+        foreach(Interlos::tasks()->findProblemAvailable($team) as $task){
+            if(isset($solved[$task->id_task])){
+                $solvedTasks[] = $task;
+            }else{
+                $unsolvedTasks[] = $task;
+            }
+        }
+        $this->template->solvedTasks = $solvedTasks;
+        $this->template->unsolvedTasks = $unsolvedTasks;
+        
     }
 
     public function renderHistory() {
