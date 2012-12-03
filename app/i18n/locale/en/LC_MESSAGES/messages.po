@@ -2,16 +2,16 @@
 # Created: 2012-10-09T01:30:49+02:00
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Jan Humplik <jan.humplik@seznam.cz>\n"
+"Last-Translator: Michal Koutný <xm.koutny@gmail.com>\n"
 "Language-Team: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 # SkipFormComponent.php:56
 msgid " ---- Vybrat ---- "
@@ -133,6 +133,13 @@ msgstr "Competition has not started yet."
 msgid "Je nutno si nejdříve přečíst pravidla."
 msgstr "You have to read the rules first."
 
+# AnswerFormComponent.php:150
+msgid "Jednotka"
+msgstr "Unit"
+
+msgid "Jiná"
+msgstr "Other"
+
 # TeamFormComponent.php:157
 msgid "Jiná škola"
 msgstr "Other school"
@@ -152,10 +159,6 @@ msgstr "In accordance with the rules, these are the problems you have at your di
 # TeamFormComponent.php:79
 msgid "Kategorie zůstala stejná jako v průbehu registrace."
 msgstr "Category is the same as it was during the registration."
-
-# default.phtml:26
-msgid "Kdykoliv je v zadání uvedeno více alternativních webových adres, obsahují všechny adresy stejnou informaci a jsou uvedeny pouze pro zálohu (nikdy tedy není žádná úmyslně skrytá informace v rozdílech mezi verzemi)."
-msgstr "Every time a problem refers to more than one web address, all of them contain the exact same information (we show multiple addresses only for backup purposes). "
 
 # TeamFormComponent.php:126
 msgid "Kontaktní adresa"
@@ -177,7 +180,7 @@ msgstr "International physics competition"
 # layout.phtml:65
 # DefaultPresenter.php:19
 msgid "Minulé ročníky"
-msgstr "Last years"
+msgstr "Recent years"
 
 # skipForm.phtml:2
 msgid "Možností přeskakovat neplýtvejte, snadno se může stát, že vám pak dojdou příklady"
@@ -197,11 +200,18 @@ msgstr "You can not skip a problem that you have already submitted an answer to.
 
 # TeamFormComponent.php:202
 msgid "Není vyplněno heslo týmu."
-msgstr "Tem password was not entered."
+msgstr "Team password was not entered."
 
 # LoginFormComponent.php:16
 msgid "Nesprávné heslo"
 msgstr "Incorrect password"
+
+msgid "Nevyplněno"
+msgstr "Not filled"
+
+# default.phtml:8
+msgid "Nevyřešené"
+msgstr "Unsolved"
 
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:55
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:57
@@ -258,6 +268,10 @@ msgstr "Answer"
 msgid "Open"
 msgstr "Open"
 
+# AnswerFormComponent.php:149
+msgid "Očekávaný počet platných cifer"
+msgstr "Expected number of significant digits"
+
 # layout.phtml:13
 # layout.phtml:13
 # StatsPresenter.php:16
@@ -267,6 +281,10 @@ msgstr "Detailed results"
 # TeamFormComponent.php:19
 msgid "Pokoušíte se vložit školu, která již existuje."
 msgstr "You are trying to register a school that has already been registered."
+
+# TeamFormComponent.php:53
+msgid "Potvrzovací e-mail se nepodařilo odeslat."
+msgstr "Confirmation e-mail could not be sent."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:37
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:37
@@ -278,16 +296,23 @@ msgstr "You are trying to register a school that has already been registered."
 msgid "Pravidla"
 msgstr "Rules"
 
+msgid "Pro zaslání případné odměny."
+msgstr "For purposes of sending out possible prizes (the address must be Czech or Slovak)."
+
 # AnswerFormComponent.php:94
 msgid "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
 msgstr "Pi can be entered in any of the following forms: 3.14; 3,14; 314e-2 nebo 0.314e1."
+
+# default.phtml:39
+msgid "Přeskočené"
+msgstr "Skipped"
 
 # layout.phtml:8
 # layout.phtml:8
 # SkipFormComponent.php:62
 # GamePresenter.php:10
 msgid "Přeskočit úkol"
-msgstr "Skip this problem"
+msgstr "Skip problem"
 
 # TeamFormComponent.php:131
 msgid "Přečetl jsem si "
@@ -385,9 +410,9 @@ msgstr "High school students C"
 msgid "Tým"
 msgstr "Team"
 
-# TeamFormComponent.php:55
-msgid "Tým %s byl úspěšně zaregistrován.'"
-msgstr "Team %s has been successfully registered."
+# TeamFormComponent.php:58
+msgid "Tým %s byl úspěšně zaregistrován."
+msgstr "Team %s was successfully registered."
 
 # TeamFormComponent.php:90
 msgid "Tým byl úspěšně aktualizován."
@@ -459,6 +484,10 @@ msgstr "Please choose the problem you are currently solving."
 # AnswerFormComponent.php:84
 msgid "Vyplňte prosím řešení úkolu."
 msgstr "Please fill in the solution to the problem."
+
+# default.phtml:28
+msgid "Vyřešené"
+msgstr "Solved"
 
 # AnswerFormComponent.php:88
 msgid "Výsledek musí být celé číslo."
@@ -602,13 +631,4 @@ msgstr "incorrect"
 # default.phtml:10
 msgid "Žádné úlohy."
 msgstr "No more problems."
-
-msgid "Jiná"
-msgstr "Other"
-
-msgid "Nevyplněno"
-msgstr "Not filled"
-
-msgid "Pro zaslání případné odměny."
-msgstr "For purposes of sending out possible prizes (the address must be Czech or Slovak)."
 
