@@ -173,7 +173,7 @@ CREATE VIEW `view_bonus_help` AS
     FROM `view_team` AS `team`
     LEFT JOIN `view_correct_answer` USING (`id_team`)
     LEFT JOIN `view_task` USING (`id_task`)
-    WHERE `view_task`.`id_group` IN (2, 3, 4) -- vazba na data, skupiny ke kompletovani (hurry up)
+    WHERE `view_task`.`id_group` IN (6, 7, 8) -- vazba na data, skupiny ke kompletovani (hurry up)
     GROUP BY `id_team`, `number`;
 
 DROP VIEW IF EXISTS `view_bonus`;
@@ -182,7 +182,7 @@ CREATE VIEW `view_bonus` AS
         `id_team`,
         SUM(`view_task_result`.`score`) AS `score`
     FROM `view_bonus_help`
-    LEFT JOIN `view_task` ON `view_task`.`number` = `view_bonus_help`.`number` AND `view_task`.`id_group` IN (2, 3, 4)
+    LEFT JOIN `view_task` ON `view_task`.`number` = `view_bonus_help`.`number` AND `view_task`.`id_group` IN (6, 7, 8)
     LEFT JOIN `view_task_result` USING (`id_task`, `id_team`)
     WHERE `view_bonus_help`.`complete` = 3  -- vazba na data, skupiny ke kompletovani (hurry up) a jejich počet
     GROUP BY `id_team`;
