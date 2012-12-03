@@ -10,7 +10,11 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
     }
 
     public function renderDefault() {
-        $this->setPageTitle(Interlos::getLoggedTeam()->name);
+        $team = Interlos::getLoggedTeam();
+        if (!$team) {
+            $this->redirect("Default:default");
+        }
+        $this->setPageTitle($team->name);
     }
 
     public function renderList() {

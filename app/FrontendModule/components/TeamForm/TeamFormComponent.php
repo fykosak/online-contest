@@ -209,6 +209,7 @@ class TeamFormComponent extends BaseComponent {
                     "school_" . $counter => $competitor->id_school,
                     "email_" . $counter => $competitor->email,
                     "study_year_" . $counter => $competitor->study_year,
+                    "study_year_hid_" . $counter => $competitor->study_year,
                 );
                 $counter++;
             }
