@@ -1,5 +1,5 @@
 <div id="score-stats-wrapper">
-	<table id="score-stats" cellspacing="0">
+        <div id="score-left"><table class="score-stats" cellspacing="0">
 	{foreach $teams AS $team}
 		{if $iterator->getCounter() % 10 == 1}
 			<tr>
@@ -8,9 +8,6 @@
 				<th>&sum;</th>
 				<th>+</th>
 				<th>-</th>
-				{foreach $tasks AS $task}
-					<th>{$task->code_name}</th>
-				{/foreach}
 			</tr>
 		{/if}
 		{if $iterator->getCounter() % 10 == 1 }
@@ -41,6 +38,24 @@
 					0
 				{/if}
 			</td>
+		</tr>
+	{/foreach}
+	</table></div>
+    
+        <div id="score-right"><table class="score-stats" cellspacing="0">
+	{foreach $teams AS $team}
+		{if $iterator->getCounter() % 10 == 1}
+			<tr>
+				{foreach $tasks AS $task}
+					<th>{$task->code_name}</th>
+				{/foreach}
+			</tr>
+		{/if}
+		{if $iterator->getCounter() % 10 == 1 }
+			<tr>
+		{else}
+			<tr class="line">
+		{/if}
 			{foreach $tasks AS $task}
 				{if isset($skips[$team->id_team]) && isset($skips[$team->id_team][$task->id_task])}
 					<td class="skipped">S</td>
@@ -52,5 +67,5 @@
 			{/foreach}
 		</tr>
 	{/foreach}
-	</table>
+            </table></div>
 </div>

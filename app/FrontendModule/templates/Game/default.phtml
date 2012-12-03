@@ -35,6 +35,17 @@
     {include #task}
     {/foreach}
 </ul>
+
+<h3>{_'Přeskočené'}</h3>
+{if count($solvedTasks) == 0}
+<p>{_'Žádné úlohy.'}</p>
+{else}
+<ul>
+    {foreach $skippedTasks as $task}
+    {include #task}
+    {/foreach}
+</ul>
+{/if}
 {/if}
 {*{/cache}*}
 <p>

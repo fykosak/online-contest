@@ -20,17 +20,22 @@ class Frontend_GamePresenter extends Frontend_BasePresenter {
         
         // tasks
         $solved = Interlos::tasks()->findSolved($team);
+        $skipped = Interlos::tasks()->findSkipped($team);
         
         $unsolvedTasks = array();
+        $skippedTasks = array();
         $solvedTasks = array();
         foreach(Interlos::tasks()->findProblemAvailable($team) as $task){
             if(isset($solved[$task->id_task])){
                 $solvedTasks[] = $task;
+            }elseif(isset($skipped[$task->id_task])){
+                $skippedTasks[] = $task;
             }else{
                 $unsolvedTasks[] = $task;
             }
         }
         $this->template->solvedTasks = $solvedTasks;
+        $this->template->skippedTasks = $skippedTasks;
         $this->template->unsolvedTasks = $unsolvedTasks;
         
     }

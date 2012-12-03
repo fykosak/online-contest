@@ -13,7 +13,7 @@
 		{foreach $tasks AS $task}
 			<tr{if $iterator->isEven()} class="even"{/if}>
 				<td>{$task->code_name}</td>
-				<td>{$task->name}</td>
+				<td>{$task|i18n:'name',$control->getPresenter()->lang}</td>
 				<td>{$task->worst_time|timeOnly}</td>
 				<td>{$task->best_time|timeOnly}</td>
 				{*<td>{$task->avg_time|timeOnly}</td>*}

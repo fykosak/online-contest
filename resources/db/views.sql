@@ -74,7 +74,7 @@ CREATE VIEW `view_possibly_available_task` AS
 	SELECT
 		`view_task`.*
 	FROM `view_task`
-	WHERE `group_to_show` <= NOW()
+	WHERE `group_to_show` <= NOW() AND `number` <= (SELECT MAX(`task_counter`) FROM `group_state` gs WHERE gs.`id_group` = id_group)
 	ORDER BY `view_task`.`id_group`, `view_task`.`number`;
 
 DROP VIEW IF EXISTS `view_answer`;

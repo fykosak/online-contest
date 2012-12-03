@@ -62,6 +62,16 @@ class TasksModel extends AbstractModel {
                         ->fetchPairs("id_task", "id_task");
     }
 
+    /**
+     * Find skipped tasks
+     * 
+     * @return array id_task => id_task
+     */
+    public function findSkipped($teamId) {
+        $source = $this->getConnection()->dataSource("SELECT id_task FROM [task_state] WHERE [id_team] = %i", $teamId, " and skipped = 1");
+        return $source->fetchPairs("id_task", "id_task");
+    }
+
     public function findAllStats() {
         return $this->getConnection()->dataSource("SELECT * FROM [tmp_task_stat]");
     }
@@ -105,6 +115,7 @@ class TasksModel extends AbstractModel {
         $return = $this->getConnection()->insert("task_state", array(
                     "id_team" => $team,
                     "id_task" => $task["id_task"],
+                    "inserted" => new DateTime(),
                     "skipped" => 1))->execute();
 
         // Increase counter

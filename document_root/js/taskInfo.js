@@ -20,6 +20,6 @@ $.fn.extend({
             element.html(message.join(' '));
         };
         select.change(handler);
-        select.keypress(handler);
+        select.keyup(handler);
     }
 });

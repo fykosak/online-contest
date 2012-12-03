@@ -136,30 +136,40 @@ table tr.inactive {
 	color: #888;
 }
 /************************ SCORE STATS *****************************************/
-#score-stats-wrapper {
+.score-stats-wrapper {
 	/*overflow: auto;*/
 }
-#score-stats td,#score-stats th {
+.score-stats td,.score-stats th {
 	min-width: 40px;
 	text-align: center;
 }
-#score-stats th {
+.score-stats th {
 	background: #094c77;
 	color: #c1e2f8;
 	padding: 2px;
 }
-#score-stats td.team {
+.score-stats td.team {
 	font-weight: bolder;
 }
-#score-stats td.done {
+.score-stats td.done {
 	background-color: green;
 	color: white;
 }
-#score-stats td.skipped {
+.score-stats td.skipped {
 	background-color: lightgray;
 }
-#score-stats tr.line td {
+.score-stats tr.line td {
 	border-top: 1px dotted #dddddd;
+}
+#score-left {
+    float:left;
+    overflow:auto;
+    max-width:20%;
+}
+#score-right {
+    float:left;
+    overflow:auto;
+    width:80%;
 }
 /************************ ANSWER HISTORY **************************************/
 #answer-history th {
