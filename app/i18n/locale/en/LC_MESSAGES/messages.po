@@ -154,7 +154,9 @@ msgstr "You must enter the name of the first team member."
 
 # default.phtml:7
 msgid "K dispozici máte zadání těchto úloh dle podmínek v zadání:"
-msgstr "In accordance with the rules, these are the problems you have at your disposal:"
+msgstr ""
+"In accordance with the rules, these are the problems you have at your "
+"disposal:"
 
 # TeamFormComponent.php:79
 msgid "Kategorie zůstala stejná jako v průbehu registrace."
@@ -183,7 +185,9 @@ msgid "Minulé ročníky"
 msgstr "Recent years"
 
 # skipForm.phtml:2
-msgid "Možností přeskakovat neplýtvejte, snadno se může stát, že vám pak dojdou příklady"
+msgid ""
+"Možností přeskakovat neplýtvejte, snadno se může stát, že vám pak dojdou "
+"příklady"
 msgstr "Be careful with skipping the problems or you will run out of them"
 
 # AnswerFormComponent.php:44
@@ -196,7 +200,8 @@ msgstr "No answering period is active at this moment."
 
 # SkipFormComponent.php:23
 msgid "Není možno přeskočit úlohu, na níž již bylo odpovídáno."
-msgstr "You can not skip a problem that you have already submitted an answer to."
+msgstr ""
+"You can not skip a problem that you have already submitted an answer to."
 
 # TeamFormComponent.php:202
 msgid "Není vyplněno heslo týmu."
@@ -239,7 +244,9 @@ msgstr "Your entry is empty."
 
 # AnswerFormComponent.php:31
 msgid "Od vaší poslední špatné odpovědi ještě neuplynulo %d sekund."
-msgstr "The time passed since your last incorrect answer has not reached %d seconds yet."
+msgstr ""
+"The time passed since your last incorrect answer has not reached %d seconds "
+"yet."
 
 # AnswerFormComponent.php:98
 msgid "Odeslat řešení"
@@ -297,11 +304,15 @@ msgid "Pravidla"
 msgstr "Rules"
 
 msgid "Pro zaslání případné odměny."
-msgstr "For purposes of sending out possible prizes (the address must be Czech or Slovak)."
+msgstr ""
+"For purposes of sending out possible prizes (the address must be Czech or "
+"Slovak)."
 
 # AnswerFormComponent.php:94
 msgid "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
-msgstr "Pi can be entered in any of the following forms: 3.14; 3,14; 314e-2 nebo 0.314e1."
+msgstr ""
+"Pi can be entered in any of the following forms: 3.14; 3,14; 314e-2 nebo "
+"0.314e1."
 
 # default.phtml:39
 msgid "Přeskočené"
@@ -386,8 +397,10 @@ msgid "Statistiky"
 msgstr "Statistics"
 
 # StatsPresenter.php:42
-msgid "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
-msgstr "Statistics are unavailable at this moment. Updating is probably underway."
+msgid ""
+"Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
+msgstr ""
+"Statistics are unavailable at this moment. Updating is probably underway."
 
 # layout.phtml:14
 # layout.phtml:14
@@ -443,7 +456,8 @@ msgstr "You entered a name of the %d. member but not his/her school."
 # TeamFormComponent.php:152
 # TeamFormComponent.php:160
 msgid "U %d. člena musí být název školy alespoň %d znaků."
-msgstr "Name of the school of the team member %d must be at least %d characters long."
+msgstr ""
+"Name of the school of the team member %d must be at least %d characters long."
 
 # TeamFormComponent.php:164
 msgid "U %d. člena není platná e-mailová adresa."
@@ -454,16 +468,27 @@ msgid "Upravit"
 msgstr "Correct"
 
 # TeamFormComponent.php:166
-msgid "Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ."
-msgstr "For non-Czech, non-Slovak contestants: You can apply 'high school' category iff you are eligible for IPhO (International Physics Olympiads). Otherwise choose 'other'."
+msgid ""
+"Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je "
+"nad SŠ."
+msgstr ""
+"For non-Czech, non-Slovak contestants: You can apply 'high school' category "
+"iff you are eligible for IPhO (International Physics Olympiads). Otherwise "
+"choose 'other'."
 
 # default.phtml:4
-msgid "V průběhu hry nejsou statistiky okamžité, údaje jsou řádově po minutách přepočítávány."
-msgstr "During the competition, the shown statistics are not instantaneous. We update them roughly every minute."
+msgid ""
+"V průběhu hry nejsou statistiky okamžité, údaje jsou řádově po minutách "
+"přepočítávány."
+msgstr ""
+"During the competition, the shown statistics are not instantaneous. We "
+"update them roughly every minute."
 
 # SkipFormComponent.php:20
 msgid "V tomto období není možno přeskakovat úlohy této série."
-msgstr "During this part of the competition, you can not skip problems from this series. "
+msgstr ""
+"During this part of the competition, you can not skip problems from this "
+"series. "
 
 # AnswerFormComponent.php:24
 msgid "Vaše odpověď je správně."
@@ -524,6 +549,10 @@ msgstr "High school outside of Czech Republic"
 # TeamFormComponent.php:134
 msgid "ZŠ"
 msgstr "Elementary school"
+
+# default.phtml:15
+msgid "b."
+msgstr "p."
 
 # results.phtml:7
 msgid "bonusové body"
@@ -631,4 +660,3 @@ msgstr "incorrect"
 # default.phtml:10
 msgid "Žádné úlohy."
 msgstr "No more problems."
-

@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2012-12-03T17:56:07+01:00
+# Created: 2012-12-03T20:25:56+01:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -537,6 +537,10 @@ msgstr "Zahraniční SŠ"
 # TeamFormComponent.php:147
 msgid "ZŠ"
 msgstr "ZŠ"
+
+# default.phtml:15
+msgid "b."
+msgstr "b."
 
 # results.phtml:7
 msgid "bonusové body"
