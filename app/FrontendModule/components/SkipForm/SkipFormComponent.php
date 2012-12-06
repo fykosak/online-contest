@@ -14,7 +14,7 @@ class SkipFormComponent extends BaseComponent {
             //Environment::getCache()->clean(array(Cache::TAGS => array("problems/$team"))); not used
             
             $this->getPresenter()->flashMessage(sprintf(_("Úloha %s přeskočena."), $task->code_name), "success");
-            Interlos::tasks()->updateCounter($team);
+            Interlos::tasks()->updateSingleCounter($team, $task);
         } catch (InvalidStateException $e) {
             if ($e->getCode() == AnswersModel::ERROR_SKIP_OF_PERIOD) {
                 $this->getPresenter()->flashMessage(_("V tomto období není možno přeskakovat úlohy této série."), "error");

@@ -3,7 +3,7 @@
 {block #subcontent}
 
 {*{cache "problems/$id_team", "problems"}*}
-{? Interlos::tasks()->updateCounter($id_team, true)}
+
 
 <p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
 <h3>{_'Nevyřešené'}</h3>
@@ -38,7 +38,7 @@
 {/if}
 
 <h3>{_'Přeskočené'}</h3>
-{if count($solvedTasks) == 0}
+{if count($skippedTasks) == 0}
 <p>{_'Žádné úlohy.'}</p>
 {else}
 <ul>

@@ -157,6 +157,32 @@ class TasksModel extends AbstractModel {
         $this->getConnection()->query($sql);
     }
 
+    public function updateSingleCounter($teamId, $task) {
+        $sql = "UPDATE group_state AS gs
+                SET task_counter = 
+                    GREATEST(
+                        IFNULL(
+                            (
+                                SELECT COUNT(id_answer)
+                                FROM view_correct_answer AS ca
+                                LEFT JOIN view_task tsk USING (id_task)
+                                WHERE ca.id_team = gs.id_team AND tsk.id_group = gs.id_group
+                             ) + (
+                                SELECT COUNT(id_task)
+                                FROM task_state AS ts
+                                LEFT JOIN view_task tsk2 USING (id_task)
+                                WHERE ts.id_team = gs.id_team AND tsk2.id_group = gs.id_group AND skipped = 1
+                             ) + (
+                                SELECT reserve_size
+                                FROM period AS p
+                                WHERE p.id_group = gs.id_group AND p.begin <= NOW() AND p.end > NOW()
+                             ), 0),
+                    gs.task_counter)
+                WHERE gs.id_group = %i AND gs.id_team = %i";
+
+        $this->getConnection()->query($sql, $task['id_group'], $teamId);
+    }
+
     public static function checkAnswer($task, $solution) {
         switch ($task->answer_type) {
             case self::TYPE_STR:
