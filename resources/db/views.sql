@@ -94,7 +94,7 @@ CREATE VIEW `view_correct_answer` AS
 	WHERE 
 		(`task`.`answer_type` = 'str' AND `answer`.`answer_str` = `task`.`answer_str`)
 		OR (`task`.`answer_type` = 'int' AND `answer`.`answer_int` = `task`.`answer_int`)
-		OR (`task`.`answer_type` = 'real' AND ABS(`answer`.`answer_real` - `task`.`answer_real`) <= `task`.`real_tolerance`)
+		OR (`task`.`answer_type` = 'real' AND ABS(`answer`.`answer_real` - `task`.`answer_real`)-1e-9 <= `task`.`real_tolerance`)
 	GROUP BY `id_answer`;
 
 DROP VIEW IF EXISTS `view_last_correct_answer`;

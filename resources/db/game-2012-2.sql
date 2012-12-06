@@ -21,5 +21,5 @@ INSERT INTO `period` (`id_period`, `id_group`, `begin`, `end`, `allow_skip`, `ti
 
 DELETE FROM `year` WHERE `id_year` = 2;
 INSERT INTO `year` (`id_year`, `name`, `registration_start`, `registration_end`, `game_start`, `game_end`, `inserted`, `updated`) VALUES
-(2,	'2. ročník',	'2012-10-10 00:00:00',	'2012-12-05 22:59:59',	'2012-12-06 17:00:00',	'2012-12-06 19:59:59',	'2012-10-07 23:43:00',	'2012-10-07 23:44:38');
+(2,	'2. ročník',	'2012-10-10 00:00:00',	'2012-12-05 23:59:59',	'2012-12-06 17:00:00',	'2012-12-06 19:59:59',	'2012-10-07 23:43:00',	'2012-10-07 23:44:38');
 
