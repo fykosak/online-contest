@@ -209,6 +209,7 @@ table tr.inactive {
 }
 .score-stats td.team {
 	font-weight: bolder;
+        width:140px;
 }
 .score-stats td.done {
 	background-color: green;
@@ -223,7 +224,6 @@ table tr.inactive {
 #score-left {
     float:left;
     overflow:auto;
-    max-width:20%;
 }
 #score-right {
     float:left;

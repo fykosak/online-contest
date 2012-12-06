@@ -16,7 +16,7 @@
 			<tr class="line">
 		{/if}
 			<td>{$iterator->getCounter()}</td>
-			<td class="team">{$team->name}</td>
+			<td class="team">{$team->name|truncate:15}</td>
 			<td>
 				{if !empty($team->score)}
 					{$team->score}
