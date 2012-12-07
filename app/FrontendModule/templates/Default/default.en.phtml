@@ -10,8 +10,13 @@
 
 <ul>
     <li> Online physics competition organized by <a href="http://fykos.org/" title="The interner pyhsics competition">FYKOS</a> <a href="http://www.mff.cuni.cz/">MFF UK</a>.</li>
-        <li>It takes place on <strong style="font-size:1.8em">Thursday December 6, 2012 from 17:00 UTC+1 to 20:00 UTC+1</strong>.</li>
+{if Interlos::isGameEnd()}
+        <li>It took place on <strong style="font-size:1.8em">Thursday December 6, 2012 from 17:00 UTC+1 to 20:00 UTC+1</strong>.</li>
+        <li><strong>Registration was open from October 10, 2012 to December 5, 2012!</strong></li>
+{else}
+        <li>It takes place on <strong style="font-size:1.8em">Thursday December 6, 2012 from 17:00 UTC+1 to 23:59 UTC+1</strong>.</li>
         <li><strong>Registration is open from October 10, 2012 to December 5, 2012!</strong></li>
+{/if}
         <li>The competition is for teams of up to five people.</li>
         <li>You can add (or change) members of your team even after you <a href="{link :Frontend:Team:registration}">sign up</a>.</li>
         <li>
