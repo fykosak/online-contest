@@ -224,11 +224,12 @@ table tr.inactive {
 #score-left {
     float:left;
     overflow:auto;
+    max-width:25%;
 }
 #score-right {
     float:left;
     overflow:auto;
-    width:80%;
+    width:75%;
 }
 /************************ ANSWER HISTORY **************************************/
 #answer-history th {
