@@ -128,6 +128,8 @@ DECLARE RetVal int(2);
                 WHEN 3 THEN CEILING(maximum * 0.2)
                 ELSE 0
             END;
+    ELSEIF maximum = 0 THEN
+        RETURN 0;
     ELSE
         SET RetVal = maximum - wrong_tries;
     END IF;
@@ -217,16 +219,18 @@ CREATE VIEW `view_bonus` AS
  
 DROP VIEW IF EXISTS `view_task_stat`;
 CREATE VIEW `view_task_stat` AS
-	SELECT
+	SELECT 
 		`view_possibly_available_task`.*,
 		MIN(`view_correct_answer`.`inserted`) AS `best_time`,
 		MAX(`view_correct_answer`.`inserted`) AS `worst_time`,
 		FROM_UNIXTIME(AVG(UNIX_TIMESTAMP(`view_correct_answer`.`inserted`))) AS `avg_time`,
 		COUNT(DISTINCT `view_correct_answer`.`id_answer`) AS `count_correct_answer`,
-		IFNULL((SELECT COUNT(`view_incorrect_answer`.`id_answer`) FROM `view_incorrect_answer` WHERE `view_incorrect_answer`.`id_task` = `view_possibly_available_task`.`id_task` GROUP BY `view_incorrect_answer`.`id_task`),0) AS `count_incorrect_answer`,
+		COUNT(DISTINCT `view_answer`.`id_answer`) - COUNT(DISTINCT `view_correct_answer`.`id_answer`) AS `count_incorrect_answer`,
                 COUNT(DISTINCT `task_state`.`id_team`) AS `count_skipped`
+
 	FROM `view_possibly_available_task`
-	LEFT JOIN `view_correct_answer` USING(`id_task`)
+	LEFT JOIN `view_answer` USING(`id_task`)
+	LEFT JOIN `view_correct_answer` USING(`id_task`,`id_team`)
         LEFT JOIN `task_state` ON `task_state`.`id_task` = `view_possibly_available_task`.`id_task` AND `task_state`.`skipped` = 1
 	GROUP BY `view_possibly_available_task`.`id_task`
 	ORDER BY `view_possibly_available_task`.`id_group`, `view_possibly_available_task`.`number`;
