@@ -1,0 +1,21 @@
+load information on homepage from database (registration time, game time, etc.)
+tidy repository with dynamic content (download directory submodule, now missing problems from 2012-2)
+design better editing of team after registration deadline (due to fixing category of the team)
+	- is category speculation real issue?
+display current Prague time before start of game (to sync teams in different TZ)
+
+separate organizers access
+	- communication
+	- registration
+	- unfreezed statistics
+better communication channel than forum
+automated event notifications
+	- begin of hurry-up
+	- task solved by teammate at different computer
+	- (consider server load)
+better layout of detailed statistics table
+allow running game in instances per user (aka single user mode :-)
+	- only passed games, training
+do not freeze statistics of tasks
+
+
