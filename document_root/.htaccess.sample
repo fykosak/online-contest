@@ -6,6 +6,9 @@ Allow from all
 # mod_rewrite
 RewriteEngine On
 # RewriteBase /
+RewriteCond %{HTTP_HOST} physicsbrawl\.org
+RewriteCond %{HTTP_HOST} !^physicsbrawl\.org
+RewriteRule ^(.*)$ http://physicsbrawl.org/$1 [R,L,QSA]
 
 # front controller
 RewriteCond %{REQUEST_FILENAME} !-f
