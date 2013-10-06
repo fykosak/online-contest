@@ -175,6 +175,7 @@ blockquote{
     margin: 0;
     margin-right: 50px;
     display: inline;
+    text-decoration: none;
 }
 #banners {
     padding: 10px;
