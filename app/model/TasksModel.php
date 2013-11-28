@@ -159,6 +159,10 @@ class TasksModel extends AbstractModel {
                                 SELECT reserve_size
                                 FROM period AS p 
                                 WHERE p.id_group = gs.id_group AND p.begin <= NOW() AND p.end > NOW()
+                            ) + (
+                                SELECT COUNT(id_task)
+                                FROM view_task
+                                WHERE number <= gs.task_counter AND cancelled = 1
                             ), 0),
                     gs.task_counter)";
 
@@ -184,6 +188,10 @@ class TasksModel extends AbstractModel {
                                 SELECT reserve_size
                                 FROM period AS p
                                 WHERE p.id_group = gs.id_group AND p.begin <= NOW() AND p.end > NOW()
+                             ) + (
+                                SELECT COUNT(id_task)
+                                FROM view_task
+                                WHERE number <= gs.task_counter AND cancelled = 1
                              ), 0),
                     gs.task_counter)
                 WHERE gs.id_group = %i AND gs.id_team = %i";

@@ -13,7 +13,7 @@
 <ul>
     {foreach $unsolvedTasks as $task}
     {block task}
-    <li><strong>{$task->code_name}</strong>&nbsp;{$task|i18n:'name',$lang} ({$task->points} {_'b.'})
+    <li><del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}"><strong>{$task->code_name}</strong>&nbsp;{$task|i18n:'name',$lang} ({$task->points} {_'b.'})</del>
         <ul><li>
             {foreach $mirrors as $mirror}
             <a href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
