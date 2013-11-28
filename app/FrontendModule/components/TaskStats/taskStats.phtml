@@ -11,14 +11,13 @@
                         <th>{_'přeskočeno'}</th>
 		</thead>
 		{foreach $tasks AS $task}
-			<tr{if $iterator->isEven()} class="even"{/if}>
+			<tr class="{if $iterator->isEven()}even{/if}{if $task->cancelled == 1} inactive{/if}">
 				<td>{$task->code_name}</td>
 				<td>{$task|i18n:'name',$control->getPresenter()->lang}</td>
 				<td>{$task->worst_time|timeOnly}</td>
 				<td>{$task->best_time|timeOnly}</td>
-				{*<td>{$task->avg_time|timeOnly}</td>*}
-				<td>{$task->count_correct_answer}</td>
-				<td>{$task->count_incorrect_answer}</td>
+				<td>{if $task->cancelled == 1}{_'undef'}{else}{$task->count_correct_answer}{/if}</td>
+				<td>{if $task->cancelled == 1}{_'undef'}{else}{$task->count_incorrect_answer}{/if}</td>
                                 <td>{$task->count_skipped}</td>
 			</tr>
 		{/foreach}

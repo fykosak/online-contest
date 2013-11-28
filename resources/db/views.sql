@@ -40,6 +40,7 @@ CREATE VIEW `view_task` AS
 	ORDER BY `task`.`id_group`, `task`.`number`;
 
 -- úlohy přístupné týmu jako zadání
+-- stornované úlohy jsou takto dostupné (stejně si je mohl už někdo stáhnout)
 DROP VIEW IF EXISTS `view_available_task`;
 CREATE VIEW `view_available_task` AS
 	SELECT
@@ -65,7 +66,8 @@ CREATE VIEW `view_submit_available_task` AS
             `period`.`id_group` = `view_task`.`id_group`
             AND `period`.`begin` <= NOW()
             AND `period`.`end` > NOW()
-        WHERE `task_state`.`skipped` IS NULL OR `task_state`.`skipped` != 1
+        WHERE (`task_state`.`skipped` IS NULL OR `task_state`.`skipped` != 1)
+            AND `view_task`.`cancelled` <> 1
 	ORDER BY `view_task`.`id_group`, `view_task`.`number`;
 
 -- úlohy potenciálně přístupné všem (pro účely statistik úkolů)
@@ -81,21 +83,30 @@ DROP VIEW IF EXISTS `view_answer`;
 CREATE VIEW `view_answer` AS
     SELECT `answer`.*
     FROM `answer`
-    INNER JOIN `task` USING(`id_task`)
+    INNER JOIN `view_task` USING(`id_task`)
     INNER JOIN `group` USING(`id_group`)
     INNER JOIN `view_current_year` USING(`id_year`);
+
+DROP VIEW IF EXISTS `view_seemingly_correct_answer`;
+CREATE VIEW `view_seemingly_correct_answer` AS
+	SELECT
+		`answer`.*,
+                `view_task`.`cancelled`
+	FROM `view_answer` AS `answer`
+	INNER JOIN `view_task` USING(`id_task`)
+	WHERE 
+            (`view_task`.`answer_type` = 'str' AND `answer`.`answer_str` = `view_task`.`answer_str`)
+            OR (`view_task`.`answer_type` = 'int' AND `answer`.`answer_int` = `view_task`.`answer_int`)
+            OR (`view_task`.`answer_type` = 'real' AND ABS(`answer`.`answer_real` - `view_task`.`answer_real`) - 1e-9 <= `view_task`.`real_tolerance`)                
+	GROUP BY `id_answer`;
 
 DROP VIEW IF EXISTS `view_correct_answer`;
 CREATE VIEW `view_correct_answer` AS
 	SELECT
 		`answer`.*
-	FROM `view_answer` AS `answer`
-	INNER JOIN `task` USING(`id_task`)
+	FROM `view_seemingly_correct_answer` AS `answer`
 	WHERE 
-		(`task`.`answer_type` = 'str' AND `answer`.`answer_str` = `task`.`answer_str`)
-		OR (`task`.`answer_type` = 'int' AND `answer`.`answer_int` = `task`.`answer_int`)
-		OR (`task`.`answer_type` = 'real' AND ABS(`answer`.`answer_real` - `task`.`answer_real`)-1e-9 <= `task`.`real_tolerance`)
-	GROUP BY `id_answer`;
+            `cancelled` = 0;
 
 DROP VIEW IF EXISTS `view_last_correct_answer`;
 CREATE VIEW `view_last_correct_answer` AS
@@ -110,7 +121,8 @@ CREATE VIEW `view_incorrect_answer` AS
 	SELECT
 		`answer`.*
 	FROM `view_answer` AS `answer`
-	WHERE `answer`.`id_answer` NOT IN (SELECT `id_answer` FROM `view_correct_answer`);
+        INNER JOIN `task` USING(`id_task`)
+	WHERE (`task`.`cancelled` = 0) AND `answer`.`id_answer` NOT IN (SELECT `id_answer` FROM `view_correct_answer`);
 
 DROP FUNCTION IF EXISTS `task_points_with_discount`;
 delimiter //
@@ -197,6 +209,8 @@ CREATE VIEW `view_bonus` AS
  		COUNT(`task_state`.`id_task`) AS `score` -- body dolů za přeskakování
  	FROM `view_team` AS `team`
  	LEFT JOIN `task_state` ON `task_state`.`id_team` = `team`.`id_team` AND `task_state`.`skipped` = 1
+        LEFT JOIN `view_task` ON `view_task`.`id_task` = `task_state`.`id_task`
+        WHERE `view_task`.`cancelled` = 0
  	GROUP BY `id_team`;
 
 
@@ -205,10 +219,13 @@ CREATE VIEW `view_bonus` AS
  CREATE VIEW `view_total_result` AS
  	SELECT
  		`team`.*,
- 		SUM(`view_task_result`.`score`) + IFNULL(`view_bonus`.`score`,0) - `view_penality`.`score` AS `score`,
-                IF((SELECT COUNT(`id_task`) FROM `task_state` WHERE `id_team` = `team`.`id_team` AND `skipped` = 0)
-                + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `team`.`id_team`) > 0, 1, 0)
-                 AS `activity`
+ 		SUM(`view_task_result`.`score`)
+                    + IFNULL(`view_bonus`.`score`,0) 
+                    - `view_penality`.`score` AS `score`,
+                IF(
+                    (SELECT COUNT(`id_task`) FROM `task_state` WHERE `id_team` = `team`.`id_team` AND `skipped` = 0)
+                    + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `team`.`id_team`) > 0
+                , 1, 0) AS `activity`
  	FROM `view_team` AS `team`
  	LEFT JOIN `view_task_result` USING(`id_team`)
  	LEFT JOIN `view_penality` USING(`id_team`)
@@ -223,9 +240,8 @@ CREATE VIEW `view_task_stat` AS
 		`view_possibly_available_task`.*,
 		MIN(`view_correct_answer`.`inserted`) AS `best_time`,
 		MAX(`view_correct_answer`.`inserted`) AS `worst_time`,
-		FROM_UNIXTIME(AVG(UNIX_TIMESTAMP(`view_correct_answer`.`inserted`))) AS `avg_time`,
-		COUNT(DISTINCT `view_correct_answer`.`id_answer`) AS `count_correct_answer`,
-		COUNT(DISTINCT `view_answer`.`id_answer`) - COUNT(DISTINCT `view_correct_answer`.`id_answer`) AS `count_incorrect_answer`,
+		COUNT(DISTINCT `view_correct_answer`.`id_answer`) AS `count_correct_answer`, -- doesn't make sense for cancelled tasks
+		COUNT(DISTINCT `view_answer`.`id_answer`) - COUNT(DISTINCT `view_correct_answer`.`id_answer`) AS `count_incorrect_answer`, -- doesn't make sense for cancelled tasks
                 COUNT(DISTINCT `task_state`.`id_team`) AS `count_skipped`
 
 	FROM `view_possibly_available_task`
