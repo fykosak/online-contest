@@ -220,8 +220,8 @@ CREATE VIEW `view_bonus` AS
  	SELECT
  		`team`.*,
  		SUM(`view_task_result`.`score`)
-                    + IFNULL(`view_bonus`.`score`,0) 
-                    - `view_penality`.`score` AS `score`,
+                    + IFNULL(`view_bonus`.`score`, 0) 
+                    - IFNULL(`view_penality`.`score`, 0) AS `score`,
                 IF(
                     (SELECT COUNT(`id_task`) FROM `task_state` WHERE `id_team` = `team`.`id_team` AND `skipped` = 0)
                     + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `team`.`id_team`) > 0
