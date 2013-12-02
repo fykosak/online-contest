@@ -223,7 +223,7 @@ CREATE VIEW `view_bonus` AS
                     + IFNULL(`view_bonus`.`score`, 0) 
                     - IFNULL(`view_penality`.`score`, 0) AS `score`,
                 IF(
-                    (SELECT COUNT(`id_task`) FROM `task_state` WHERE `id_team` = `team`.`id_team` AND `skipped` = 0)
+                    (SELECT COUNT(`id_task`) FROM `task_state` WHERE `id_team` = `team`.`id_team` AND `skipped` = 1)
                     + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `team`.`id_team`) > 0
                 , 1, 0) AS `activity`
  	FROM `view_team` AS `team`
@@ -283,7 +283,7 @@ CREATE VIEW `view_total_result_cached` AS
                     + IFNULL(`tmp_bonus`.`score`, 0) 
                     - IFNULL(`tmp_penality`.`score`, 0) AS `score`,
                 IF(
-                    (SELECT COUNT(`id_task`) FROM `task_state` WHERE `id_team` = `team`.`id_team` AND `skipped` = 0)
+                    (SELECT COUNT(`id_task`) FROM `task_state` WHERE `id_team` = `team`.`id_team` AND `skipped` = 1)
                     + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `team`.`id_team`) > 0
                 , 1, 0) AS `activity`
  	FROM `view_team` AS `team`
