@@ -67,7 +67,7 @@ CREATE VIEW `view_submit_available_task` AS
             AND `period`.`begin` <= NOW()
             AND `period`.`end` > NOW()
         WHERE (`task_state`.`skipped` IS NULL OR `task_state`.`skipped` != 1)
-            AND `view_task`.`cancelled` <> 1
+            AND `view_task`.`cancelled` = 0
 	ORDER BY `view_task`.`id_group`, `view_task`.`number`;
 
 -- úlohy potenciálně přístupné všem (pro účely statistik úkolů)
