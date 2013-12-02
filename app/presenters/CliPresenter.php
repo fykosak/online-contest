@@ -20,7 +20,7 @@ class CliPresenter extends Presenter {
 
         $this->generateTeams($teams);
         $this->generateAnswers($answers);
-        echo "AHOJ";
+        echo "\n---\n";
         echo "\n";
     }
 
@@ -62,7 +62,7 @@ class CliPresenter extends Presenter {
     private function generateAnswers($n) {
         $tasks = dibi::fetchAll('SELECT * FROM [view_task]');
         $teamIds = array_keys($this->teams);
-
+        Debug::timer();
         for ($j = 0; $j < $n; ++$j) {
             do {
                 $team = $teamIds[rand(0, count($teamIds) - 1)];
@@ -86,6 +86,8 @@ class CliPresenter extends Presenter {
                 'inserted' => dibi::datetime(),
             ))->execute();
         }
+        $time = Debug::timer();
+        echo "Inserted $n answers in $time s.";
     }
 
 }
