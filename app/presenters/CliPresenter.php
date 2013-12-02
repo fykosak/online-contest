@@ -11,15 +11,21 @@ class CliPresenter extends Presenter {
     private $teams;
 
     public function actionDefault() {
-        dibi::query("DELETE FROM [team] WHERE name NOT LIKE '%test%'");
-        dibi::query("DELETE FROM [answer]");
-
         $this->year = $this->getParam('year', 1);
         $teams = $this->getParam('teams', 10);
         $answers = $this->getParam('answers', 100);
 
-        $this->generateTeams($teams);
-        $this->generateAnswers($answers);
+        if ($this->getParam('ao', 0) == 1) {
+            $this->loadTeams();
+            $this->generateAnswers($answers, $this->getParam('sleep', 0));
+        } else {
+            dibi::query("DELETE FROM [group_state]");
+            dibi::query("DELETE FROM [team] WHERE name NOT LIKE '%test%'");
+            dibi::query("DELETE FROM [answer]");
+
+            $this->generateTeams($teams);
+            $this->generateAnswers($answers);
+        }
         echo "\n---\n";
         echo "\n";
     }
@@ -43,6 +49,7 @@ class CliPresenter extends Presenter {
                 $name = implode(' ', $teamwords);
             } while (isset($used[$name]));
             $used[$name] = true;
+
             dibi::insert('team', array(
                 'name' => $name,
                 'id_year' => $this->year,
@@ -52,17 +59,26 @@ class CliPresenter extends Presenter {
                 'address' => 'adresa',
                 'inserted' => dibi::datetime()
             ))->execute();
-
             $teamId = dibi::insertId();
 
             $this->teams[$teamId] = new TeamData();
         }
     }
 
-    private function generateAnswers($n) {
+    private function loadTeams() {
+        $teams = dibi::fetchAll('SELECT * FROM [view_team]');
+        $this->teams = array();
+        foreach ($teams as $team) {
+            $this->teams[$team['id_team']] = new TeamData();
+        }
+    }
+
+    private function generateAnswers($n, $sleep = 0) {
         $tasks = dibi::fetchAll('SELECT * FROM [view_task]');
         $teamIds = array_keys($this->teams);
         Debug::timer();
+        $dbTime = 0;
+        $phpTime = 0;
         for ($j = 0; $j < $n; ++$j) {
             do {
                 $team = $teamIds[rand(0, count($teamIds) - 1)];
@@ -78,16 +94,28 @@ class CliPresenter extends Presenter {
             } else {
                 $answer = $task['answer_' . $suff] * rand(2, 5);
             }
+            $phpTime += Debug::timer();
+            do {
+                $exp = false;
+                try {
 
-            dibi::insert('answer', array(
-                'id_team' => $team,
-                'id_task' => $task['id_task'],
-                'answer_' . $suff => $answer,
-                'inserted' => dibi::datetime(),
-            ))->execute();
+                    dibi::insert('answer', array(
+                        'id_team' => $team,
+                        'id_task' => $task['id_task'],
+                        'answer_' . $suff => $answer,
+                        'inserted' => dibi::datetime(),
+                    ))->execute();
+                } catch (DibiDriverException $e) {
+                    $exp = true;
+                }
+                $dbTime += Debug::timer();
+                if ($sleep) {
+                    usleep($sleep * 1000);
+                }
+            } while ($exp);
         }
-        $time = Debug::timer();
-        echo "Inserted $n answers in $time s.";
+
+        echo "Inserted $n answers in $dbTime s + $phpTime s (DB + PHP).";
     }
 
 }
