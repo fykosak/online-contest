@@ -15,7 +15,6 @@ CREATE TABLE `answer` (
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
   PRIMARY KEY (`id_answer`),
-  UNIQUE KEY `id_team` (`id_team`,`id_task`,`answer_str`),
   KEY `id_team_2` (`id_team`),
   KEY `id_task` (`id_task`),
   CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE,

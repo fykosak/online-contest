@@ -7,7 +7,7 @@ class Interlos {
     private static $currentYear;
     private static $loggedTeam;
     private static $translator;
-    private static $models = array();    
+    private static $models = array();
 
     /** @return AnswersModel */
     public static function answers() {
@@ -78,7 +78,7 @@ class Interlos {
         }
         return self::$loggedTeam;
     }
-    
+
     /** @return GettextTranslator */
     public static function getTranslator() {
         if (empty(self::$translator)) {
@@ -158,32 +158,32 @@ class Interlos {
         if ((!self::isCronAccess() && !self::isAdminAccess())) {
             return;
         }
-        self::getConnection()->begin();
-        // Total results
-        self::getConnection()->query("DROP TABLE IF EXISTS [tmp_total_result]");
-        self::getConnection()->query("CREATE TABLE [tmp_total_result] AS SELECT * FROM [view_total_result]");
-        // Task results
-        self::getConnection()->query("DROP TABLE IF EXISTS [tmp_task_result]");
-        self::getConnection()->query("CREATE TABLE [tmp_task_result] AS SELECT * FROM [view_task_result]");
-        // Task statistics
-        self::getConnection()->query("DROP TABLE IF EXISTS [tmp_task_stat]");
-        self::getConnection()->query("CREATE TABLE [tmp_task_stat] AS SELECT * FROM [view_task_stat]");
-        // Correct answers
-        self::getConnection()->query("DROP TABLE IF EXISTS [tmp_correct_answer]");
-        self::getConnection()->query("CREATE TABLE [tmp_correct_answer] (INDEX([id_team]),INDEX([id_task])) AS SELECT * FROM [view_correct_answer]");
-        // Penalities
-        self::getConnection()->query("DROP TABLE IF EXISTS [tmp_penality]");
-        self::getConnection()->query("CREATE TABLE [tmp_penality] AS SELECT * FROM [view_penality]");
-        // Bonuses
-        self::getConnection()->query("DROP TABLE IF EXISTS [tmp_bonus]");
-        self::getConnection()->query("CREATE TABLE [tmp_bonus] AS SELECT * FROM [view_bonus]");
-        self::getConnection()->commit();
+
+        $src = 'view_'; // view
+        $result = 'tmp_'; // resulting cache
+
+        $tables = array(
+            'task_result' => 'task_result',
+            'task_stat' => 'task_stat',
+            'penality' => 'penality',
+            'bonus_cached' => 'bonus',
+            'total_result_cached' => 'total_result',
+        );
+
+        foreach ($tables as $view => $table) {
+            Debug::timer();
+            self::getConnection()->query("DROP TABLE IF EXISTS [$result$table]");
+            self::getConnection()->query("CREATE TABLE [$result$table] AS SELECT * FROM [$src$view]");
+            echo "$table: " . Debug::timer() . "<br>";
+        }
+
     }
 
     /** @return GroupsModel */
     public static function groups() {
         return self::getModel("groups");
     }
+
     /** @return PeriodModel */
     public static function period() {
         return self::getModel("period");
