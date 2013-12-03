@@ -52,7 +52,8 @@ label:after {
 }
 #chat form textarea {
     width: 100%;
-}body {
+}
+body {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     font-size: 12px;
     margin: 0;
@@ -166,6 +167,9 @@ blockquote{
     border-left: 5px solid #c1e2f8;
     font-style: italic;
     padding: 10px;
+}
+span.unimportant {
+    color: #888;
 }
 /******************** CLASSES AND IDS *****************************************/
 #logos {
