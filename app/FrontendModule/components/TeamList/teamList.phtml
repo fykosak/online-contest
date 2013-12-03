@@ -10,7 +10,7 @@
                             {var $inSchool => 0}
 				{if isset($competitors[$team->id_team])}
 					{foreach $competitors[$team->id_team] AS $competitor}{*
-						*}{if $prevSchool !== null && $competitor->school_name != $prevSchool} ({if $inSchool > 1}{$inSchool}&times; {/if}{$prevSchool}){*
+						*}{if $prevSchool !== null && $competitor->school_name != $prevSchool} <span class="unimportant">({if $inSchool > 1}{$inSchool}&times; {/if}{$prevSchool})</span>{*
                                                 *}{var $inSchool => 1}{else}{var $inSchool => $inSchool + 1}{/if}{*
                                                 *}{var $prevSchool => $competitor->school_name}{if !$iterator->isFirst()}, {/if}{$competitor->name}{*
 					*}{/foreach}
