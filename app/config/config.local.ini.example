@@ -22,6 +22,12 @@ machine.game = true
 ; URL to which user is redirected when this is not a game machine (watch out for redirect loops!)
 machine.url = http://localhost/
 
+; sender's e-mail address of confirmation e-mail
+mail.info = "fyziklani@fykos.cz"
+
+; sender's name of confirmation e-mail
+mail.name = "FYKOS"
+
 ; database connection
 database.host = "localhost"
 database.username = "user"
