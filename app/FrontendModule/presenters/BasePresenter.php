@@ -9,7 +9,7 @@ class Frontend_BasePresenter extends Presenter {
         $this->getTemplate()->pageTitle = $pageTitle;
     }
 
-    // ----- PROTECTED METHODS
+// ----- PROTECTED METHODS
 
     protected function createComponentClock($name) {
         return new ClockComponent($this, $name);
@@ -33,6 +33,8 @@ class Frontend_BasePresenter extends Presenter {
 
     protected function startUp() {
         parent::startup();
+        $this->machineRedirect();
+
         $this->localize();
 
 
@@ -41,7 +43,7 @@ class Frontend_BasePresenter extends Presenter {
         $this->oldModuleMode = FALSE;
     }
 
-    // -------------- l12n ------------------
+// -------------- l12n ------------------
 
     protected function localize() {
         $i18nConf = Environment::getConfig('i18n');
@@ -61,7 +63,7 @@ class Frontend_BasePresenter extends Presenter {
             } else {
                 $this->lang = $this->getHttpRequest()->detectLanguage(GettextTranslator::$supportedLangs);
             }
-        } 
+        }
         if (array_search($this->lang, GettextTranslator::$supportedLangs) === false) {
             $this->lang = $i18nConf->defaultLang;
         }
@@ -69,6 +71,14 @@ class Frontend_BasePresenter extends Presenter {
 
     protected function changeViewByLang() {
         $this->setView($this->getView() . '.' . $this->lang);
+    }
+
+    // -------------- game server ------------------
+    private function machineRedirect() {
+        $machine = Environment::getConfig('machine');
+        if (!$machine['game']) {
+            $this->redirectUri($machine['url']);
+        }
     }
 
 }

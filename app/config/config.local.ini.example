@@ -10,6 +10,12 @@ tasks.mirrors[] = "http://example.com/set/"
 ; comma separated list of hostnames that are server in English by default
 i18n.en.hosts = physicsbrawl.org www.physicsbrawl.org
 
+; specify whether this is the machine dedicated for the game
+machine.game = true
+
+; URL to which user is redirected when this is not a game machine (watch out for redirect loops!)
+machine.url = http://localhost/
+
 ; database connection
 database.host = "localhost"
 database.username = "user"
