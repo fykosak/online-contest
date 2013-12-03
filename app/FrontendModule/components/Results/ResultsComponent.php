@@ -2,19 +2,18 @@
 class ResultsComponent extends BaseComponent
 {
 
-	protected function startUp() {
+	protected function beforeRender() {
 		$this->getTemplate()->teams = Interlos::teams()
-			->findAllWithScore()
-			->fetchAssoc("category,id_team");
+			->findAllWithScore();
 
 		$this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
 
 		$this->getTemplate()->bonus = Interlos::score()
-			->findAllBonus()
-			->fetchAssoc("id_team");
+			->findAllBonus();
+			
 		$this->getTemplate()->penality = Interlos::score()
-			->findAllPenality()
-			->fetchAssoc("id_team");
+			->findAllPenality();
+
 	}
 
 }

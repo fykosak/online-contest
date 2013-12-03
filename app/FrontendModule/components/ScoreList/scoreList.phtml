@@ -1,3 +1,11 @@
+{*{cache "results"}*}
+{cache}
+{var $teams => $teams->fetchAll()}
+{var $score => $score->fetchAssoc("id_team,id_task")}
+{var $skips => $skips->fetchAssoc("id_team,id_task")}
+{var $bonus => $bonus->fetchAssoc("id_team")}
+{var $penality => $penality->fetchAssoc("id_team")}
+
 <div id="score-stats-wrapper">
         <div id="score-left"><table class="score-stats" cellspacing="0">
 	{foreach $teams AS $team}
@@ -47,7 +55,7 @@
 		{if $iterator->getCounter() % 10 == 1}
 			<tr>
 				{foreach $tasks AS $task}
-					<th>{$task->code_name}</th>
+                                    <th><del n:tag-if="$task->cancelled" title="{_'Zrušená úloha'}">{$task->code_name}</del></th>
 				{/foreach}
 			</tr>
 		{/if}
@@ -57,7 +65,9 @@
 			<tr class="line">
 		{/if}
 			{foreach $tasks AS $task}
-				{if isset($skips[$team->id_team]) && isset($skips[$team->id_team][$task->id_task])}
+                                {if $task->cancelled}
+                                        <td class="empty" title="{_'Zrušená úloha'}">&nbsp;</td>
+				{elseif isset($skips[$team->id_team]) && isset($skips[$team->id_team][$task->id_task])}
 					<td class="skipped">S</td>
                                 {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task]) || $score[$team->id_team][$task->id_task]->inserted == NULL}
                                         <td class="empty">X</td>
@@ -69,3 +79,4 @@
 	{/foreach}
             </table></div>
 </div>
+{/cache}

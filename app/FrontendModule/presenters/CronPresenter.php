@@ -4,14 +4,16 @@ class Frontend_CronPresenter extends Frontend_BasePresenter {
 
     public function renderDatabase($key) {
         Interlos::resetTemporaryTables();
+        $this->invalidateCache();
     }
-    
+
     public function renderCounters($key) {
         Interlos::tasks()->updateCounter(null, true);
     }
 
-    public function renderCache($key) {
-        Environment::getCache()->clean(array(Cache::TAGS => array("problems")));
+    private function invalidateCache() {
+        $cache = Environment::getCache('Nette.Template.Curly');
+        $cache->clean(array(Cache::ALL => true)); // clean w/out tags, it's broken in Nette 0.9        
     }
 
     protected function startup() {
