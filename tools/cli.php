@@ -13,8 +13,8 @@ $loader->register();
 
 $debug = Environment::getConfig('debug');
 
-Environment::loadConfig(APP_DIR . '/config.ini');
-
+Environment::loadConfig(APP_DIR . '/config/config.ini');
+Environment::loadConfig(APP_DIR . '/config/config.local.ini');
 
 // Step 4: Set up the sessions.
 
