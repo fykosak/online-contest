@@ -1,0 +1,27 @@
+[common]
+debug.enable = TRUE
+
+; key that's checked when invoking HTTP request for stats refresh
+cron.key = "nejaky-klic"
+
+; URL to directory(ies) where problem PDFs are stored
+tasks.mirrors[] = "http://example.com/set/"
+
+; comma separated list of hostnames that are server in English by default
+i18n.en.hosts = physicsbrawl.org www.physicsbrawl.org
+
+; database connection
+database.host = "localhost"
+database.username = "user"
+database.password = "pwd"
+database.database = "fol"
+
+; TODO is this necessary?
+;smtp.host = ""
+;smtp.username = ""
+;smtp.password = ""
+
+
+[development < common]
+
+[production < common]
