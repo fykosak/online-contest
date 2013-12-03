@@ -259,7 +259,7 @@ DROP TABLE IF EXISTS `tmp_task_result`;
 CREATE TABLE `tmp_task_result` AS SELECT * FROM `view_task_result`;
 
 DROP TABLE IF EXISTS `tmp_bonus`;
-CREATE TABLE `tmp_bonus` AS SELECT * FROM `view_bonus_cached`;
+CREATE TABLE `tmp_bonus` AS SELECT * FROM `view_bonus`;
 
 DROP TABLE IF EXISTS `tmp_penality`;
 CREATE TABLE `tmp_penality` AS SELECT * FROM `view_penality`;
