@@ -15,7 +15,8 @@ $loader->register();
 
 $debug = Environment::getConfig('debug');
 
-Environment::loadConfig(APP_DIR . '/config.ini');
+Environment::loadConfig(APP_DIR . '/config/config.ini');
+Environment::loadConfig(APP_DIR . '/config/config.local.ini');
 
 $debug = Environment::getConfig("debug");
 
