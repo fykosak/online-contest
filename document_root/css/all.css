@@ -217,9 +217,14 @@ table tr.inactive {
         width:140px;
 }
 .score-stats td.done {
-	background-color: green;
+	background-color: #3b3;
 	color: white;
 }
+.score-stats td.done.full{
+	background-color: #080;
+	color: white;
+}
+
 .score-stats td.skipped {
 	background-color: lightgray;
 }

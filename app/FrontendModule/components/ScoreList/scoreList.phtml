@@ -71,9 +71,11 @@
 					<td class="skipped">S</td>
                                 {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task]) || $score[$team->id_team][$task->id_task]->inserted == NULL}
                                         <td class="empty">X</td>
-				{else}
+				{elseif $score[$team->id_team][$task->id_task]->score == $task->points}
+					<td class="done full">{$score[$team->id_team][$task->id_task]->score}</td>
+                                {else}
 					<td class="done">{$score[$team->id_team][$task->id_task]->score}</td>
-				{/if}
+				{/if}                                
 			{/foreach}
 		</tr>
 	{/foreach}
