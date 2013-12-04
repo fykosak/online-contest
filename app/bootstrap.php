@@ -13,8 +13,6 @@ $loader->register();
 // Step 3: Enable Nette\Debug
 // for better exception and error visualisation
 
-$debug = Environment::getConfig('debug');
-
 Environment::loadConfig(APP_DIR . '/config/config.ini');
 Environment::loadConfig(APP_DIR . '/config/config.local.ini');
 

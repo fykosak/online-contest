@@ -2,6 +2,33 @@
 -- V definicích pohledů view_bonus_help, view_bonus a view_bonus_cached je třeba upravit série, které tvoří hurry up sérii
 -- TODO doimplementovat chování pro skupiny typu 'set' (skipped příznak etc.)
 --
+DROP FUNCTION IF EXISTS `task_points_with_discount`;
+delimiter //
+CREATE FUNCTION `task_points_with_discount`(maximum int(2), allow_zeroes tinyint(1), wrong_tries int(25))
+RETURNS int(2)
+DETERMINISTIC
+BEGIN
+DECLARE RetVal int(2);
+    IF maximum >= 4 THEN
+        SET RetVal =
+            CASE wrong_tries
+                WHEN 0 THEN maximum
+                WHEN 1 THEN CEILING(maximum * 0.6)
+                WHEN 2 THEN CEILING(maximum * 0.4)
+                WHEN 3 THEN CEILING(maximum * 0.2)
+                ELSE 0
+            END;
+    ELSEIF maximum = 0 THEN
+        RETURN 0;
+    ELSE
+        SET RetVal = maximum - wrong_tries;
+    END IF;
+    RETURN CASE allow_zeroes
+        WHEN 1 THEN GREATEST(0, RetVal)
+        WHEN 0 THEN GREATEST(1, RetVal)
+    END;
+END//
+delimiter ;
 
 DROP VIEW IF EXISTS `view_current_year`;
 CREATE VIEW `view_current_year` AS
@@ -33,7 +60,8 @@ CREATE VIEW `view_task` AS
 		`task`.*,
                 CONCAT(`group`.`code_name`, `task`.`number`) AS `code_name`,
                 `group`.`to_show` AS `group_to_show`,
-                `group`.`type` AS `group_type`
+                `group`.`type` AS `group_type`,
+                `group`.`allow_zeroes` AS `allow_zeroes`
 	FROM `task`
 	INNER JOIN `group` USING(`id_group`)
 	INNER JOIN `view_current_year` USING(`id_year`)
@@ -124,35 +152,30 @@ CREATE VIEW `view_incorrect_answer` AS
         INNER JOIN `task` USING(`id_task`)
 	WHERE (`task`.`cancelled` = 0) AND `answer`.`id_answer` NOT IN (SELECT `id_answer` FROM `view_correct_answer`);
 
-DROP FUNCTION IF EXISTS `task_points_with_discount`;
-delimiter //
-CREATE FUNCTION `task_points_with_discount`(maximum int(2), allow_zeroes tinyint(1), wrong_tries int(25))
-RETURNS int(2)
-DETERMINISTIC
-BEGIN
-DECLARE RetVal int(2);
-    IF maximum >= 4 THEN
-        SET RetVal =
-            CASE wrong_tries
-                WHEN 0 THEN maximum
-                WHEN 1 THEN CEILING(maximum * 0.6)
-                WHEN 2 THEN CEILING(maximum * 0.4)
-                WHEN 3 THEN CEILING(maximum * 0.2)
-                ELSE 0
-            END;
-    ELSEIF maximum = 0 THEN
-        RETURN 0;
-    ELSE
-        SET RetVal = maximum - wrong_tries;
-    END IF;
-    RETURN CASE allow_zeroes
-        WHEN 1 THEN GREATEST(0, RetVal)
-        WHEN 0 THEN GREATEST(1, RetVal)
-    END;
-END//
-delimiter ;
 
 
+-- if this proves to be sufficiently robust/fast it can substitute original view_submit_available_task
+DROP VIEW IF EXISTS `view_available_task_rp`;
+CREATE VIEW `view_available_task_rp` AS
+	SELECT
+                `view_team`.`id_team`,
+		`view_task`.*,
+                task_points_with_discount(
+                    `view_task`.`points`,
+                    `view_task`.`allow_zeroes`,
+                    (SELECT COUNT(1)
+                     FROM `view_incorrect_answer` AS `wrong`
+                     WHERE `wrong`.`id_team` = `view_team`.`id_team` AND `wrong`.`id_task` = `view_task`.`id_task`
+                    )
+                ) as `real_points`
+	FROM (`view_task`, `view_team`)
+        LEFT JOIN `group_state` USING (`id_group`, `id_team`)
+	WHERE `group_to_show` <= NOW()
+              AND (
+                (`group_type` = 'serie' AND `view_task`.`number` <= `group_state`.`task_counter`)
+                OR (`group_type` = 'set')
+              )
+	ORDER BY `view_task`.`id_group`, `view_task`.`number`;
 
  DROP VIEW IF EXISTS `view_task_result`;
  CREATE VIEW `view_task_result` AS

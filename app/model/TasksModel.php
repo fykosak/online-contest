@@ -30,7 +30,13 @@ class TasksModel extends AbstractModel {
      * @return DibiDataSource
      */
     public function findProblemAvailable($teamId) {
-        $source = $this->getConnection()->dataSource("SELECT * FROM [view_available_task] WHERE [id_team] = %i", $teamId);
+        $realPoints = Environment::getConfig('real_points', false);
+        if($realPoints) {
+            $source = $this->getConnection()->dataSource("SELECT * FROM [view_available_task_rp] WHERE [id_team] = %i", $teamId);
+        } else {
+            $source = $this->getConnection()->dataSource("SELECT * FROM [view_available_task] WHERE [id_team] = %i", $teamId);
+        }
+        
         return $source;
     }
 
