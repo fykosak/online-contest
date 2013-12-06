@@ -5,7 +5,15 @@
 {*{cache "problems/$id_team", "problems"}*}
 
 
+{if $lang == 'cs'}
+<p><b>Věnujte prosím pár minut vyplnění <a href="https://docs.google.com/spreadsheet/viewform?formkey=dHV5SmZ2NnRBWGxxYVJvRVprVEhIdXc6MA">ankety</a> o letšním FoLu.</b></p>
+{else}
+<p><b>Please, spend few moments with filling our <a href="https://docs.google.com/spreadsheet/viewform?formkey=dDVnMVRIRzlYUUNWQkdOQ2NOQ2dOenc6MA">exit poll</a>.</b></p>
+{/if}
+
+
 <p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
+
 <h3>{_'Nevyřešené'}</h3>
 {if count($unsolvedTasks) == 0}
 <p>{_'Žádné úlohy.'}</p>
