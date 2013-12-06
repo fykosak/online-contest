@@ -55,7 +55,7 @@
 		{if $iterator->getCounter() % 10 == 1}
 			<tr>
 				{foreach $tasks AS $task}
-                                    <th><del n:tag-if="$task->cancelled" title="{_'Zrušená úloha'}">{$task->code_name}</del></th>
+                                    <th n:if="!$task->cancelled">{$task->code_name}</th>
 				{/foreach}
 			</tr>
 		{/if}
@@ -66,7 +66,7 @@
 		{/if}
 			{foreach $tasks AS $task}
                                 {if $task->cancelled}
-                                        <td class="empty" title="{_'Zrušená úloha'}">&nbsp;</td>
+                                        {*<td class="empty" title="{_'Zrušená úloha'}">&nbsp;</td>*}
 				{elseif isset($skips[$team->id_team]) && isset($skips[$team->id_team][$task->id_task])}
 					<td class="skipped">S</td>
                                 {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task]) || $score[$team->id_team][$task->id_task]->inserted == NULL}
