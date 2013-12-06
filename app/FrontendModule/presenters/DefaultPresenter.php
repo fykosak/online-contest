@@ -13,6 +13,7 @@ class Frontend_DefaultPresenter extends Frontend_BasePresenter {
 
 	public function renderDefault() {
 		$this->setPagetitle(_("Mezinárodní soutež ve fyzice"));
+                $this->template->year = Interlos::getCurrentYear();
                 $this->changeViewByLang();
 	}
 

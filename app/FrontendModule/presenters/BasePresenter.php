@@ -51,6 +51,7 @@ class Frontend_BasePresenter extends Presenter {
         $locale = isset(GettextTranslator::$locales[$this->lang]) ? GettextTranslator::$locales[$this->lang] : 'cs_CZ.utf-8';
 
         setlocale(LC_MESSAGES, $locale);
+        setlocale(LC_TIME, $locale);
         bindtextdomain('messages', $i18nConf->dir);
         bind_textdomain_codeset('messages', "utf-8");
         textdomain('messages');

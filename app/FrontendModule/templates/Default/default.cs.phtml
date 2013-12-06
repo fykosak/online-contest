@@ -13,11 +13,10 @@
 <ul>
     <li>Fyzikální soutěž pořádaná <a href="http://fykos.cz/" title="Fyzikální korespondenční seminář">Fyzikálním korespondenčním seminářem</a> <a href="http://www.mff.cuni.cz/">MFF UK</a>.</li>
 {if Interlos::isGameEnd()}
-        <li>Proběhla ve <strong style="font-size:1.8em">čtvrtek 6. prosince 2012 od 17:00 do 20:00</strong>.</li>
-        <li><strong>Registrace byla otevřena od 10. 10. 2012 do 5. 12. 2012!</strong></li>
+        <li>Proběhla ve <strong n:block='game_period' style="font-size:1.8em">{$year->game_start|date:'%A %e. %#m.'|lower} od {$year->game_start|date:'%k.%M'} do {$year->game_end|date:'%k.%M'}</strong>.</li>
 {else}
-        <li>Proběhne ve <strong style="font-size:1.8em">čtvrtek 5. prosince 2013 od 17:00 do 20:00</strong>.</li>
-        <li><strong>Registrace otevřena od 9. 10. 2013 do 4. 12. 2013!</strong></li>
+        <li>Proběhne ve {include #game_period}.</li>
+        <li><strong>Registrace otevřena {block reg_period}od {$year->registration_start|date:'%d. %#m. %Y'} do {$year->registration_end|date:'%d. %#m. %Y %k.%M'}{/block}!</strong></li>
 {/if}
         <li>Složení týmu je možné doladit i po <a href="{link :Frontend:Team:registration}">registraci</a>.</li>
         <li>

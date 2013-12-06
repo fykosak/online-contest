@@ -13,11 +13,10 @@
 <ul>
     <li> Online physics competition organized by <a href="http://fykos.org/" title="The interner pyhsics competition">FYKOS</a> <a href="http://www.mff.cuni.cz/">MFF UK</a>.</li>
 {if Interlos::isGameEnd()}
-        <li>It took place on <strong style="font-size:1.8em">Thursday December 6, 2012 from 17:00 UTC+1 to 20:00 UTC+1</strong>.</li>
-        <li><strong>Registration was open from October 10, 2012 to December 5, 2012!</strong></li>
+        <li>It took place on <strong n:block='game_period' style="font-size:1.8em">{$year->game_start|date:'%A %B %e, %Y'} from {$year->game_start|date:'%k:%M %Z'} to {$year->game_end|date:'%k.%M %Z'}</strong>.</li>
 {else}
-        <li>It takes place on <strong style="font-size:1.8em">Thursday December 5, 2013 from 17:00 UTC+1 to 20:00 UTC+1</strong>.</li>
-        <li><strong>Registration is open from October 9, 2013 to December 4, 2013!</strong></li>
+        <li>It takes place on {include #game_period}.</li>
+        <li><strong>Registration is open from {$year->registration_start|date:'%B %e, %Y'} to {$year->registration_end|date:'%B %e, %Y %k:%M %Z'}!</strong></li>
 {/if}
         <li>The competition is for teams of up to five people.</li>
         <li>You can add (or change) members of your team even after you <a href="{link :Frontend:Team:registration}">sign up</a>.</li>
