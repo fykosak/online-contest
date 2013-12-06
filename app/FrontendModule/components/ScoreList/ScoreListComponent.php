@@ -16,6 +16,8 @@ class ScoreListComponent extends BaseComponent {
                 ->findAllBonus();
         $this->getTemplate()->penality = Interlos::score()
                 ->findAllPenality();
+        $this->template->lang = $this->presenter->lang;
+        $this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
     }
 
 }

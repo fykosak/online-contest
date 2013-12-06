@@ -19,12 +19,12 @@
 			</tr>
 		{/if}
 		{if $iterator->getCounter() % 10 == 1 }
-			<tr>
+			<tr {if $team->activity == 0}class="inactive"{/if}>
 		{else}
-			<tr class="line">
+			<tr class="line{if $team->activity == 0} inactive{/if}">
 		{/if}
 			<td>{$iterator->getCounter()}</td>
-			<td class="team">{$team->name|truncate:15}</td>
+			<td class="team" title="{$team->name}, {$categories[$team->category]}">{$team->name|truncate:15}</td>
 			<td>
 				{if !empty($team->score)}
 					{$team->score}
@@ -55,26 +55,26 @@
 		{if $iterator->getCounter() % 10 == 1}
 			<tr>
 				{foreach $tasks AS $task}
-                                    <th n:if="!$task->cancelled">{$task->code_name}</th>
+                                    <th n:if="!$task->cancelled" title="{$task|i18n:'name',$lang}">{$task->code_name}</th>
 				{/foreach}
 			</tr>
 		{/if}
 		{if $iterator->getCounter() % 10 == 1 }
-			<tr>
+			<tr {if $team->activity == 0}class="inactive"{/if}>
 		{else}
-			<tr class="line">
+			<tr class="line{if $team->activity == 0} inactive{/if}">
 		{/if}
 			{foreach $tasks AS $task}
                                 {if $task->cancelled}
                                         {*<td class="empty" title="{_'Zrušená úloha'}">&nbsp;</td>*}
 				{elseif isset($skips[$team->id_team]) && isset($skips[$team->id_team][$task->id_task])}
-					<td class="skipped">S</td>
+					<td class="skipped" title="{$skips[$team->id_team][$task->id_task]->inserted}">S</td>
                                 {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task]) || $score[$team->id_team][$task->id_task]->inserted == NULL}
                                         <td class="empty">X</td>
 				{elseif $score[$team->id_team][$task->id_task]->score == $task->points}
-					<td class="done full">{$score[$team->id_team][$task->id_task]->score}</td>
+					<td class="done full" title="{$score[$team->id_team][$task->id_task]->inserted}">{$score[$team->id_team][$task->id_task]->score}</td>
                                 {else}
-					<td class="done">{$score[$team->id_team][$task->id_task]->score}</td>
+					<td class="done" title="{$score[$team->id_team][$task->id_task]->inserted}">{$score[$team->id_team][$task->id_task]->score}</td>
 				{/if}                                
 			{/foreach}
 		</tr>
