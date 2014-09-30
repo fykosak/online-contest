@@ -70,3 +70,9 @@ CREATE VIEW `view_competitor` AS
     LEFT JOIN fksdb.person_history ph on ph.person_id = ep.person_id AND ph.ac_year = 2014 -- UPDATE HERE
     LEFT JOIN fksdb.school s on s.school_id = ph.school_id
 ;
+
+ALTER TABLE `chat`
+DROP FOREIGN KEY `chat_ibfk_1`;
+
+-- ALTER TABLE `chat`
+-- ADD FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE;
