@@ -6,6 +6,10 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
         if (!Interlos::isRegistrationActive()) {
             $this->flashMessage(_("Registrace není aktivní."), "error");
             $this->redirect("Default:default");
+        } else if ($url = $this->getRegistrationValue('url')) {
+            $uri = new Uri($url);
+            $uri->appendQuery(array('lang' => $this->lang));
+            $this->redirectUri($uri, IHttpResponse::S307_TEMPORARY_REDIRECT);
         }
     }
 
@@ -15,6 +19,18 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
             $this->redirect("Default:default");
         }
         $this->setPageTitle($team->name);
+        $url = $this->getRegistrationValue('editUrl');
+        if ($url) {
+            $link = Html::el('a', _('na stránce přihlášky'))->href(sprintf($url, $team->id_team));
+            $message = Html::el();
+            $message->add(_('Editaci přihlášky provádějte po přihlášení '));
+            $message->add($link);
+            $message->add('.');
+            $this->flashMessage($message);
+            $this->getTemplate()->external = true;
+        } else {
+            $this->getTemplate()->external = false;
+        }
     }
 
     public function renderList() {
@@ -37,6 +53,12 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
 
     protected function createComponentTeamList($name) {
         return new TeamListComponent($this, $name);
+    }
+
+    // ---- PRIVATE METHODS
+    private function getRegistrationValue($key) {
+        $registration = Environment::getConfig('registration');
+        return $registration[$key];
     }
 
 }

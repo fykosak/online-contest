@@ -1,0 +1,72 @@
+--
+-- !! Important !!
+-- UPDATE HERE labels places necessary to manualy update
+--
+
+DROP VIEW IF EXISTS `view_fksdb_event`;
+CREATE VIEW `view_fksdb_event` AS
+    SELECT *
+    FROM fksdb.event f
+    WHERE f.event_type_id = 9
+        AND f.year = 28; -- UPDATE HERE
+
+DROP VIEW IF EXISTS `view_current_year`;
+CREATE VIEW `view_current_year` AS
+    SELECT
+        1 as `id_year`,
+        CONCAT(e.event_year, '. ročník') as `name`,
+        e.registration_begin as `registration_start`,
+        e.registration_end as `registration_end`,
+        addtime(e.begin, '0 17:00:00') as `game_start`,
+        addtime(e.end, '0 19:59:59') as `game_end`,
+        NOW() as `inserted`,
+        NOW() as `updated`
+    FROM view_fksdb_event e
+;
+    
+DROP VIEW IF EXISTS `view_team`;
+CREATE VIEW `view_team` AS
+    SELECT
+        t.e_fyziklani_team_id as `id_team`,
+        1 as `id_year`,
+        t.name As `name`,
+        t.password as `password`,
+        CASE t.category
+            WHEN 'A' THEN 'hs_a'
+            WHEN 'B' THEN 'hs_b'
+            WHEN 'C' THEN 'hs_c'
+            WHEN 'F' THEN 'abroad'
+            WHEN 'O' THEN 'open'
+            ELSE NULL
+        END as `category`,
+        NULL as `email`,
+        t.note as `address`,
+        t.created as `inserted`,
+        null as `updated`
+    FROM fksdb.e_fyziklani_team t
+    INNER JOIN view_fksdb_event USING(`event_id`)
+    WHERE t.status != 'cancelled'
+;
+
+DROP VIEW IF EXISTS `view_competitor`;
+CREATE VIEW `view_competitor` AS
+    SELECT
+        ep.event_participant_id as `id_competitor`,
+        efp.e_fyziklani_team_id as `id_team`,
+        ph.school_id as `id_school`,
+        p.name as `name`,
+        p.email as `email`,
+        null as `study_year`,
+        ep.created as `inserted`,
+        null as `updated`,
+        s.name_abbrev as `school_name`,
+        vt.name as `team_name`,
+        vt.category as `category`
+    FROM fksdb.event_participant ep
+    INNER JOIN view_fksdb_event e ON e.event_id = ep.event_id
+    LEFT JOIN fksdb.e_fyziklani_participant efp ON efp.event_participant_id = ep.event_participant_id
+    LEFT JOIN view_team vt ON vt.id_team = efp.e_fyziklani_team_id
+    LEFT JOIN fksdb.v_person p on p.person_id = ep.person_id
+    LEFT JOIN fksdb.person_history ph on ph.person_id = ep.person_id AND ph.ac_year = 2014 -- UPDATE HERE
+    LEFT JOIN fksdb.school s on s.school_id = ph.school_id
+;

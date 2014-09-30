@@ -1,5 +1,7 @@
 {extends layout.phtml}
 
 {block #content}
+    {if !$external}
     {widget teamForm}
+    {/if}
 {/block}

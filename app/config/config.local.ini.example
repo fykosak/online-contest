@@ -22,6 +22,12 @@ machine.game = true
 ; URL to which user is redirected when this is not a game machine (watch out for redirect loops!)
 machine.url = http://localhost/
 
+; Specifying non-null URL, means registration will be redirected to FKSDB
+;registration.url = null
+
+; Specifies URL mask to team's application edit (only team ID will be substituted)
+;registration.editUrl = "https://db.fykos.local/fykos28/application/default/%s?eventId=8"
+
 ; sender's e-mail address of confirmation e-mail
 mail.info = "fyziklani@fykos.cz"
 
