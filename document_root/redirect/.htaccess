@@ -1,0 +1,5 @@
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} online\.fyzikalni\.cz$
+RewriteCond %{REQUEST_URI} !online/
+RewriteRule ^(.*)$ online/$1 [L,QSA]
