@@ -76,7 +76,7 @@ msgstr "Entered e-mail does not have a correct format."
 
 # TeamPresenter.php:26
 msgid "Editaci přihlášky provádějte po přihlášení "
-msgstr "You can edit your application after login"
+msgstr "You can edit your application after login "
 
 # TeamFormComponent.php:162
 msgid "Email"

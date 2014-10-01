@@ -21,7 +21,9 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
         $this->setPageTitle($team->name);
         $url = $this->getRegistrationValue('editUrl');
         if ($url) {
-            $link = Html::el('a', _('na stránce přihlášky'))->href(sprintf($url, $team->id_team));
+            $uri = new Uri(sprintf($url, $team->id_team));
+            $uri->appendQuery(array('lang' => $this->lang));
+            $link = Html::el('a', _('na stránce přihlášky'))->href($uri);
             $message = Html::el();
             $message->add(_('Editaci přihlášky provádějte po přihlášení '));
             $message->add($link);
