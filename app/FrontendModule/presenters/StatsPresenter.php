@@ -39,7 +39,7 @@ class Frontend_StatsPresenter extends Frontend_BasePresenter {
             $this->getComponent($componentName);
             $this->getTemplate()->available = TRUE;
         } catch (Exception $e) {
-            $this->flashMessage(_("Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."), "error");
+            $this->flashMessage(_("Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."), "danger");
             $this->getTemplate()->available = FALSE;
         }
     }

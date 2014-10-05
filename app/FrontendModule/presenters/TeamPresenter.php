@@ -4,7 +4,7 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
 
     public function actionRegistration() {
         if (!Interlos::isRegistrationActive()) {
-            $this->flashMessage(_("Registrace není aktivní."), "error");
+            $this->flashMessage(_("Registrace není aktivní."), "danger");
             $this->redirect("Default:default");
         } else if ($url = $this->getRegistrationValue('url')) {
             $uri = new Uri($url);

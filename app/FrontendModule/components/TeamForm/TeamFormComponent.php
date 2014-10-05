@@ -16,13 +16,13 @@ class TeamFormComponent extends BaseComponent {
         $values = $form->getValues();
         $competitors = $this->loadCompetitorsFromValues($values);
         if (!$competitors) {
-            $this->getPresenter()->flashMessage(_("Pokoušíte se vložit školu, která již existuje."), "error");
+            $this->getPresenter()->flashMessage(_("Pokoušíte se vložit školu, která již existuje."), "danger");
             return;
         }
         // Check team name and e-mail because the database consistency
         $teamExists = Interlos::teams()->findAll()->where("[name] = %s", $values["team_name"], " OR [email] = %s", $values["email"])->count();
         if ($teamExists != 0) {
-            $this->getPresenter()->flashMessage(_("Tým se stejným názvem nebo kontaktním e-mailem již existuje"), "error");
+            $this->getPresenter()->flashMessage(_("Tým se stejným názvem nebo kontaktním e-mailem již existuje"), "danger");
             return;
         }
         try {
@@ -50,7 +50,7 @@ class TeamFormComponent extends BaseComponent {
             try {
                 $mail->send();
             } catch (InvalidStateException $e) {
-                $this->getPresenter()->flashMessage(_("Potvrzovací e-mail se nepodařilo odeslat."), "error");
+                $this->getPresenter()->flashMessage(_("Potvrzovací e-mail se nepodařilo odeslat."), "danger");
             }
             // Redirect
             $this->insertCompetitorsFromValues($insertedTeam, $values);
@@ -58,7 +58,7 @@ class TeamFormComponent extends BaseComponent {
             $this->getPresenter()->flashMessage(sprintf(_("Tým %s byl úspěšně zaregistrován."), $values["team_name"]), "success");
             $this->getPresenter()->redirect("Default:login");
         } catch (DibiDriverException $e) {
-            $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "error");
+            $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "danger");
             Debug::processException($e);
             throw $e;
             return;
@@ -93,13 +93,13 @@ class TeamFormComponent extends BaseComponent {
             $this->getPresenter()->flashMessage(_("Tým byl úspěšně aktualizován."), "success");
             $this->getPresenter()->redirect("this");
         } catch (InvalidArgumentException $e) {
-            $this->getPresenter()->flashMessage(_("Tým musí mít alespoň jednoho člena."), "error");
+            $this->getPresenter()->flashMessage(_("Tým musí mít alespoň jednoho člena."), "danger");
             Debug::processException($e);
         } catch (DuplicityException $e) {
-            $this->getPresenter()->flashMessage(_("Daný tým již existuje."), "error");
+            $this->getPresenter()->flashMessage(_("Daný tým již existuje."), "danger");
             Debug::processException($e);
         } catch (DibiDriveException $e) {
-            $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "error");
+            $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "danger");
             Debug::processException($e);
         }
     }

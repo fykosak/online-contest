@@ -1,68 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs">
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <meta http-equiv="content-language" content="cs" />
-        <link rel="stylesheet" type="text/css" href="/css/all.css" />
-        <link href="/favicon.png" rel="icon" type="image/png" />
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/ui/1.8.2/jquery-ui.js"></script>
+{extends ../layout.phtml}
+{block #content}
 
-        <title>
-            Online Physics Brawl
-        </title>
-    </head>
-
-    <body>
-        <!-- HEADER -->
-        <div id="header">
-            <a href="/en/" title="Online Physics Brawl">
-                <div class="wrapper">
-                    <div id="logo"></div>
-                    <h1>Online Physics Brawl</h1>
-                </div>
-            </a>
-        </div>
-        <!-- MENU -->
-        <div id="menu">
-            <div class="wrapper">
-                <ul id="team-navigation">
-                    <li><a href="/en/default/login">Log in</a></li>
-                    <li><a href="/cs/stats/tasks"><img src="/images/icons/cz-icon.png" alt="čeština" title="Přepnout do češtiny"/></a></li>
-                </ul>
-                <ul id="general-navigation">
-                    <li><a href="/en/default/rules" title="Rules">Rules</a></li>
-                    <li><a href="/en/default/last-years" title="Recent years">Recent years</a></li>
-                    <li><a href="/en/default/chat" title="Forum">Forum</a></li>
-                    <li><a href="/en/team/list" title="Teams">Teams</a></li>
-                    <li><a href="/en/stats/" title="Statistics">Statistics</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="wrapper">
-            <!-- PAGE TITLE -->            <h1>Problem statistics</h1>
-            <!-- FLASH MESSAGES -->
-<div id="flashes">
-</div>            <!-- CONTENT -->
-            <div id="content">
-                    <div id="submenu">
-	<ul>
-		<li>
-			<a href="/en/stats/" title="Results">Results</a>
-			<ul>
-                                <li><a href="/en/stats/#hs_a" title="High school students A">High school students A</a></li>
-                                <li><a href="/en/stats/#hs_b" title="High school students B">High school students B</a></li>
-                                <li><a href="/en/stats/#hs_c" title="High school students C">High school students C</a></li>
-                                <li><a href="/en/stats/#abroad" title="High school outside of Czech Republic">High school outside of Czech Republic</a></li>
-                                <li><a href="/en/stats/#open" title="Open">Open</a></li>
-			</ul>
-		</li>
-		<li><a href="/en/stats/detail" title="Detailed results">Detailed results</a></li>
-		<li><a href="/en/stats/tasks" title="Problem statistics">Problem statistics</a></li>
-	</ul>
-    </div>
-    <div id="subcontent">
-	<table id="task-stats" cellspacing="0">
+<table class="table table-condensed table-striped">
 		<thead>
 			<th>#</th>
 			<th>name</th>
@@ -108,7 +47,7 @@
 				<td>181</td>
                                 <td>4</td>
 			</tr>
-			<tr class=" inactive" title="Zrušená úloha">
+			<tr class=" text-muted" title="Zrušená úloha">
 				<td>FoL5</td>
 				<td>fall one</td>
 				<td></td>
@@ -117,7 +56,7 @@
 				<td>&mdash;</td>
                                 <td>16</td>
 			</tr>
-			<tr class="even inactive" title="Zrušená úloha">
+			<tr class="even text-muted" title="Zrušená úloha">
 				<td>FoL6</td>
 				<td>choo choo train</td>
 				<td></td>
@@ -126,7 +65,7 @@
 				<td>&mdash;</td>
                                 <td>0</td>
 			</tr>
-			<tr class=" inactive" title="Zrušená úloha">
+			<tr class=" text-muted" title="Zrušená úloha">
 				<td>FoL7</td>
 				<td>collision!!!</td>
 				<td></td>
@@ -514,29 +453,3 @@
                                 <td>0</td>
 			</tr>
 	</table>
-    </div>
-
-            </div>
-        </div>
-        <div id="footer"></div>
-        <script type="text/javascript">
-
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-27814405-2']);
-            _gaq.push(['_setDomainName', "online.fyziklani.cz"]);
-            _gaq.push(['_setAllowLinker', true]);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-                var ga = document.createElement('script');
-                ga.type = 'text/javascript';
-                ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
-
-        </script>
-
-    </body>
-</html>

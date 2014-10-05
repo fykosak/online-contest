@@ -53,7 +53,7 @@ class Frontend_GamePresenter extends Frontend_BasePresenter {
     protected function startUp() {
         parent::startUp();
         if (Interlos::getLoggedTeam() == null) {
-            $this->flashMessage(_("Do této sekce mají přístup pouze přihlášené týmy."), "error");
+            $this->flashMessage(_("Do této sekce mají přístup pouze přihlášené týmy."), "danger");
             $this->redirect("Default:default");
         }
     }

@@ -28,32 +28,32 @@ class AnswerFormComponent extends BaseComponent {
                 $this->getPresenter()->flashMessage(_("Vaše odpověď je správně."), "success");
                 Interlos::tasks()->updateSingleCounter($team, $task);
             } else {
-                $this->getPresenter()->flashMessage(_("Vaše odpověď je špatně."), "error");
+                $this->getPresenter()->flashMessage(_("Vaše odpověď je špatně."), "danger");
             }
         } catch (InvalidStateException $e) {
             if ($e->getCode() == AnswersModel::ERROR_TIME_LIMIT) {
                 $this->getPresenter()->flashMessage(sprintf(_("Lze odpovídat až za <span class='timesec'>%d</span> sekund."), $e->getMessage()), "!error");
                 return;
             } else if ($e->getCode() == AnswersModel::ERROR_OUT_OF_PERIOD) {
-                $this->getPresenter()->flashMessage(_("Není aktuální žádné odpovídací období."), "error");
+                $this->getPresenter()->flashMessage(_("Není aktuální žádné odpovídací období."), "danger");
                 return;
             } else {
-                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
+                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
                 Debug::processException($e, TRUE);
                 //error_log($e->getTraceAsString());
                 return;
             }
         } catch (DibiDriverException $e) {
             if ($e->getCode() == 1062) {
-                $this->getPresenter()->flashMessage(_("Na zadaný úkol jste již takto jednou odpovídali."), "error");
+                $this->getPresenter()->flashMessage(_("Na zadaný úkol jste již takto jednou odpovídali."), "danger");
             } else {
-                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
+                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
                 Debug::processException($e, TRUE);
                 //error_log($e->getTraceAsString());
             }
             return;
         } catch (Exception $e) {
-            $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
+            $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
             Debug::processException($e, TRUE);
             //error_log($e->getTraceAsString());
             return;
@@ -116,10 +116,10 @@ class AnswerFormComponent extends BaseComponent {
             throw new InvalidStateException("There is no logged team.");
         }
         if (Interlos::isGameEnd()) {
-            $this->flashMessage(_("Čas vypršel."), "error");
+            $this->flashMessage(_("Čas vypršel."), "danger");
             $this->getTemplate()->valid = FALSE;
         } else if (!Interlos::isGameStarted()) {
-            $this->flashMessage(_("Hra ještě nezačala."), "error");
+            $this->flashMessage(_("Hra ještě nezačala."), "danger");
             $this->getTemplate()->valid = FALSE;
         } else {
             $this->getTemplate()->valid = TRUE;

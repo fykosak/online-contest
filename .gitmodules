@@ -4,3 +4,7 @@
 [submodule "libs/gettext-extractor"]
 	path = libs/gettext-extractor
 	url = git://github.com/karelklima/gettext-extractor.git
+[submodule "resources/design/fol-bootstrap"]
+	path = resources/design/fol-bootstrap
+	url = https://github.com/Werkov/fol-bootstrap.git
+

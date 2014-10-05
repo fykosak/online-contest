@@ -17,19 +17,19 @@ class SkipFormComponent extends BaseComponent {
             Interlos::tasks()->updateSingleCounter($team, $task);
         } catch (InvalidStateException $e) {
             if ($e->getCode() == AnswersModel::ERROR_SKIP_OF_PERIOD) {
-                $this->getPresenter()->flashMessage(_("V tomto období není možno přeskakovat úlohy této série."), "error");
+                $this->getPresenter()->flashMessage(_("V tomto období není možno přeskakovat úlohy této série."), "danger");
                 return;
             } else if ($e->getCode() == AnswersModel::ERROR_SKIP_OF_ANSWERED) {
-                $this->getPresenter()->flashMessage(_("Není možno přeskočit úlohu, na níž již bylo odpovídáno."), "error");
+                $this->getPresenter()->flashMessage(_("Není možno přeskočit úlohu, na níž již bylo odpovídáno."), "danger");
                 return;
             } else {
-                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
+                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
                 Debug::processException($e, TRUE);
                 //error_log($e->getTraceAsString());
                 return;
             }
         } catch (Exception $e) {
-            $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "error");
+            $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
             Debug::processException($e, TRUE);
             //error_log($e->getTraceAsString());
             return;
@@ -75,10 +75,10 @@ class SkipFormComponent extends BaseComponent {
             throw new InvalidStateException("There is no logged team.");
         }
         if (Interlos::isGameEnd()) {
-            $this->flashMessage(_("Čas vypršel."), "error");
+            $this->flashMessage(_("Čas vypršel."), "danger");
             $this->getTemplate()->valid = FALSE;
         } else if (!Interlos::isGameStarted()) {
-            $this->flashMessage(_("Hra ještě nezačala."), "error");
+            $this->flashMessage(_("Hra ještě nezačala."), "danger");
             $this->getTemplate()->valid = FALSE;
         } else {
             $this->getTemplate()->valid = TRUE;

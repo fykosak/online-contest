@@ -9,9 +9,9 @@
 {foreach $posts AS $post}
     <div class="chat-item">
 	<h3>
-	    {$post['team_name']} <span style="float: right">{$post['inserted']|time}</span>
+	    {$post['team_name']} <span class="pull-right small">{$post['inserted']|time}</span>
 	</h3>
-	<div class="block" id="chat">{!$post['content']|texy}</div>
+	<div>{!$post['content']|texy}</div>
     </div>
 {/foreach}
 </div>

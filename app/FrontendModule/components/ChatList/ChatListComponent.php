@@ -15,7 +15,7 @@ class ChatListComponent extends BaseListComponent {
 			$this->getPresenter()->redirect("this");
 		}
 		catch (DibiException $e) {
-			$this->flashMessage(_("Chyba při práci s databází."), "error");
+			$this->flashMessage(_("Chyba při práci s databází."), "danger");
 			error_log($e->getTraceAsString());
 		}
 	}

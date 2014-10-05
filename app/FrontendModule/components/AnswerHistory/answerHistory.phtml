@@ -1,4 +1,4 @@
-<table id="answer-history" cellspacing="0">
+<table class="table table-condensed table-striped">
     <thead>
     <th>#</th>
     <th>{_ 'úkol'}</th>
@@ -6,7 +6,7 @@
     <th>{_ 'odpověď'}</th>
 </thead>
 	{foreach $history AS $answer}
-<tr{if isset($correct[$answer->id_answer])} class="correct"{/if}>
+<tr{if isset($correct[$answer->id_answer])} class="text-correct"{/if}>
     <td>{$answer->id_answer}</td>
     <td>{$tasks[$answer->id_task]->code_name}</td>
     <td>{$answer->inserted|timeOnly}</td>

@@ -1,7 +1,7 @@
 {*{cache "results"}*}
 {cache}
 {if !empty($tasks)}
-	<table id="task-stats" cellspacing="0">
+	<table class="table table-condensed table-striped small">
 		<thead>
 			<th>#</th>
 			<th>{_'název'}</th>
@@ -13,7 +13,7 @@
                         <th>{_'přeskočeno'}</th>
 		</thead>
 		{foreach $tasks AS $task}
-			<tr class="{if $iterator->isEven()}even{/if}{if $task->cancelled == 1} inactive{/if}" {if $task->cancelled == 1}title="{_'Zrušená úloha'}"{/if}>
+			<tr class="{if $task->cancelled == 1} text-muted{/if}" {if $task->cancelled == 1}title="{_'Zrušená úloha'}"{/if}>
 				<td>{$task->code_name}</td>
 				<td>{$task|i18n:'name',$control->getPresenter()->lang}</td>
 				<td>{$task->worst_time|timeOnly}</td>

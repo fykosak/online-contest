@@ -1,14 +1,19 @@
 {extends layout.phtml}
 
 {block #content}
-    <div id="submenu">
-	<ul>
-	    {foreach $categories AS $category => $name}
-		<li><a href="#{$category}" title="{$name}">{$name}</a></li>
-	    {/foreach}
-	</ul>
+
+<div class="row">
+    <div class="col-md-9">
+        {widget teamList}
     </div>
-    <div id="subcontent">
-	{widget teamList}
+    <div class="col-md-3">
+        <div class="hidden-print hidden-xs hidden-sm affix">
+            <ul class="nav">
+                {foreach $categories AS $category => $name}
+                <li><a href="#{$category}" title="{$name}">{$name}</a></li>
+                {/foreach}
+            </ul>
+        </div>
     </div>
+</div>
 {/block}

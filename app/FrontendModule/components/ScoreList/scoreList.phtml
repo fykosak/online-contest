@@ -24,7 +24,7 @@
 			<tr class="line{if $team->activity == 0} inactive{/if}">
 		{/if}
 			<td>{$iterator->getCounter()}</td>
-			<td class="team" title="{$team->name}, {$categories[$team->category]}">{$team->name|truncate:15}</td>
+                        <td class="team" title="{$team->name}, {$categories[$team->category]}">{$team->name|truncate:15|replace:' ':' '}</td>{* Unicode non-breaking space*}
 			<td>
 				{if !empty($team->score)}
 					{$team->score}

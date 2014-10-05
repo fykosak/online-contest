@@ -1,7 +1,7 @@
-<div id="flashes">
+<div>
     {foreach $component->getParent()->getTemplate()->flashes AS $flash}
     {var $type => substr($flash->type, 0, 1) == '!' ? substr($flash->type, 1) : $flash->type}
-    <div class="flash {$type}">
+    <div class="alert alert-{$type}">
         {if substr($flash->type, 0, 1) == '!'}
 	    {!$flash->message}
         {else}

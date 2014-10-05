@@ -1,71 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs">
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <meta http-equiv="content-language" content="cs" />
-        <link rel="stylesheet" type="text/css" href="/css/all.css" />
-        <link href="/favicon.png" rel="icon" type="image/png" />
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/ui/1.8.2/jquery-ui.js"></script>
-
-        <title>
-            Online Physics Brawl
-        </title>
-    </head>
-
-    <body>
-        <!-- HEADER -->
-        <div id="header">
-            <a href="/en/" title="Online Physics Brawl">
-                <div class="wrapper">
-                    <div id="logo"></div>
-                    <h1>Online Physics Brawl</h1>
-                </div>
-            </a>
-        </div>
-        <!-- MENU -->
-        <div id="menu">
-            <div class="wrapper">
-                <ul id="team-navigation">
-                    <li><a href="/en/default/login">Log in</a></li>
-                    <li><a href="/cs/stats/"><img src="/images/icons/cz-icon.png" alt="čeština" title="Přepnout do češtiny"/></a></li>
-                </ul>
-                <ul id="general-navigation">
-                    <li><a href="/en/default/rules" title="Rules">Rules</a></li>
-                    <li><a href="/en/default/last-years" title="Recent years">Recent years</a></li>
-                    <li><a href="/en/default/chat" title="Forum">Forum</a></li>
-                    <li><a href="/en/team/list" title="Teams">Teams</a></li>
-                    <li><a href="/en/stats/" title="Statistics">Statistics</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="wrapper">
-            <!-- PAGE TITLE -->            <h1>Results</h1>
-            <!-- FLASH MESSAGES -->
-<div id="flashes">
-</div>            <!-- CONTENT -->
-            <div id="content">
-                    <div id="submenu">
-	<ul>
-		<li>
-			<a href="/en/stats/" title="Results">Results</a>
-			<ul>
-                                <li><a href="/en/stats/#hs_a" title="High school students A">High school students A</a></li>
-                                <li><a href="/en/stats/#hs_b" title="High school students B">High school students B</a></li>
-                                <li><a href="/en/stats/#hs_c" title="High school students C">High school students C</a></li>
-                                <li><a href="/en/stats/#abroad" title="High school outside of Czech Republic">High school outside of Czech Republic</a></li>
-                                <li><a href="/en/stats/#open" title="Open">Open</a></li>
-			</ul>
-		</li>
-		<li><a href="/en/stats/detail" title="Detailed results">Detailed results</a></li>
-		<li><a href="/en/stats/tasks" title="Problem statistics">Problem statistics</a></li>
-	</ul>
-    </div>
-    <div id="subcontent">
-		<p>The teams marked with grey were not active throughout the game</p>
-
+{extends ../layout.phtml}
+{block #content}
+<p>Šedé jsou týmy, jež neprojevily během hry aktivitu.</p>
 	<h2 id="hs_a">Středoškoláci A</h2>
-	<table class="results" cellspacing="0">
+	<table class="table table-condensed table-striped">
 		<thead>
 			<th>#</th>
 			<th>tým</th>
@@ -398,7 +335,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>26</td>
 				<td>!SVETLOM</td>
 				<td>
@@ -411,7 +348,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>27</td>
 				<td>Alda tým</td>
 				<td>
@@ -426,7 +363,7 @@
 			</tr>
 	</table>
 	<h2 id="hs_b">Středoškoláci B</h2>
-	<table class="results" cellspacing="0">
+	<table class="table table-condensed table-striped">
 		<thead>
 			<th>#</th>
 			<th>tým</th>
@@ -980,7 +917,7 @@
 						1
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>43</td>
 				<td>eXtroZz</td>
 				<td>
@@ -993,7 +930,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>44</td>
 				<td>Gympláci3</td>
 				<td>
@@ -1006,7 +943,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>45</td>
 				<td>Halaatchqowi bosoni</td>
 				<td>
@@ -1019,7 +956,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>46</td>
 				<td>YOLO</td>
 				<td>
@@ -1034,7 +971,7 @@
 			</tr>
 	</table>
 	<h2 id="hs_c">Středoškoláci C</h2>
-	<table class="results" cellspacing="0">
+	<table class="table table-condensed table-striped">
 		<thead>
 			<th>#</th>
 			<th>tým</th>
@@ -1549,7 +1486,7 @@
 						5
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>40</td>
 				<td>A-team</td>
 				<td>
@@ -1562,7 +1499,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>41</td>
 				<td>BK-Brno</td>
 				<td>
@@ -1575,7 +1512,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>42</td>
 				<td>Piškůtek</td>
 				<td>
@@ -1588,7 +1525,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>43</td>
 				<td>Team -A</td>
 				<td>
@@ -1601,7 +1538,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>44</td>
 				<td>Tl1</td>
 				<td>
@@ -1616,7 +1553,7 @@
 			</tr>
 	</table>
 	<h2 id="abroad">Zahraniční SŠ</h2>
-	<table class="results" cellspacing="0">
+	<table class="table table-condensed table-striped">
 		<thead>
 			<th>#</th>
 			<th>tým</th>
@@ -1962,7 +1899,7 @@
 						31
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>27</td>
 				<td>Barbosa</td>
 				<td>
@@ -1975,7 +1912,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>28</td>
 				<td>dadiani</td>
 				<td>
@@ -1988,7 +1925,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>29</td>
 				<td>DetoNewtons</td>
 				<td>
@@ -2001,7 +1938,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>30</td>
 				<td>FisicaCampinas</td>
 				<td>
@@ -2014,7 +1951,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>31</td>
 				<td>HIAST</td>
 				<td>
@@ -2027,7 +1964,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>32</td>
 				<td>HKteam</td>
 				<td>
@@ -2040,7 +1977,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>33</td>
 				<td>Jojo</td>
 				<td>
@@ -2053,7 +1990,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>34</td>
 				<td>Kilchy</td>
 				<td>
@@ -2066,7 +2003,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>35</td>
 				<td>Lima&#039;s Physics</td>
 				<td>
@@ -2079,7 +2016,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>36</td>
 				<td>Los desempleados</td>
 				<td>
@@ -2092,7 +2029,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>37</td>
 				<td>Los Muchachos</td>
 				<td>
@@ -2105,7 +2042,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>38</td>
 				<td>matherossi</td>
 				<td>
@@ -2118,7 +2055,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>39</td>
 				<td>Matheus VCG</td>
 				<td>
@@ -2131,7 +2068,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>40</td>
 				<td>Physics Online</td>
 				<td>
@@ -2144,7 +2081,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>41</td>
 				<td>PhysicsPERJ</td>
 				<td>
@@ -2157,7 +2094,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>42</td>
 				<td>Rafael Coracini</td>
 				<td>
@@ -2170,7 +2107,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>43</td>
 				<td>Schrodinger</td>
 				<td>
@@ -2183,7 +2120,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>44</td>
 				<td>Termomaníacs</td>
 				<td>
@@ -2196,7 +2133,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>45</td>
 				<td>WINNER</td>
 				<td>
@@ -2211,7 +2148,7 @@
 			</tr>
 	</table>
 	<h2 id="open">Open</h2>
-	<table class="results" cellspacing="0">
+	<table class="table table-condensed table-striped">
 		<thead>
 			<th>#</th>
 			<th>tým</th>
@@ -2635,7 +2572,7 @@
 						3
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>33</td>
 				<td>Amazonske anakondy</td>
 				<td>
@@ -2648,7 +2585,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>34</td>
 				<td>Bender Rulez</td>
 				<td>
@@ -2661,7 +2598,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>35</td>
 				<td>Flammenmeer</td>
 				<td>
@@ -2674,7 +2611,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>36</td>
 				<td>Galileo</td>
 				<td>
@@ -2687,7 +2624,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>37</td>
 				<td>Lefundes</td>
 				<td>
@@ -2700,7 +2637,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>38</td>
 				<td>NEPAL</td>
 				<td>
@@ -2713,7 +2650,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>39</td>
 				<td>Noshiro</td>
 				<td>
@@ -2726,7 +2663,7 @@
 						0
 				</td>
 			</tr>
-			<tr class="even inactive">
+			<tr class="even text-muted">
 				<td>40</td>
 				<td>Organizátoři</td>
 				<td>
@@ -2739,7 +2676,7 @@
 						0
 				</td>
 			</tr>
-			<tr class=" inactive">
+			<tr class=" text-muted">
 				<td>41</td>
 				<td>Physic solvers</td>
 				<td>
@@ -2753,29 +2690,3 @@
 				</td>
 			</tr>
 	</table>
-    </div>
-
-            </div>
-        </div>
-        <div id="footer"></div>
-        <script type="text/javascript">
-
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-27814405-2']);
-            _gaq.push(['_setDomainName', "online.fyziklani.cz"]);
-            _gaq.push(['_setAllowLinker', true]);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-                var ga = document.createElement('script');
-                ga.type = 'text/javascript';
-                ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
-
-        </script>
-
-    </body>
-</html>
