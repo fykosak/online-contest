@@ -25,7 +25,7 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
             $uri->appendQuery(array('lang' => $this->lang));
             $link = Html::el('a', _('na stránce přihlášky'))->href($uri);
             $message = Html::el();
-            $message->add(_('Editaci přihlášky provádějte po přihlášení '));
+            $message->add(_('Editaci přihlášky provádějte po osobním přihlášení '));
             $message->add($link);
             $message->add('.');
             $this->flashMessage($message);

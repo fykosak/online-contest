@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2014-09-30T17:25:41+02:00
+# Created: 2014-10-06T13:13:40+02:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,8 +43,8 @@ msgstr "Daný tým již existuje."
 msgid "Daný tým neexistuje."
 msgstr "Daný tým neexistuje."
 
-# layout.phtml:54
-# layout.phtml:54
+# layout.phtml:42
+# layout.phtml:42
 # DefaultPresenter.php:11
 msgid "Diskuse"
 msgstr "Diskuse"
@@ -61,9 +61,9 @@ msgstr "E-mail"
 msgid "E-mail nemá správný formát."
 msgstr "E-mail nemá správný formát."
 
-# TeamPresenter.php:26
-msgid "Editaci přihlášky provádějte po přihlášení "
-msgstr "Editaci přihlášky provádějte po přihlášení "
+# TeamPresenter.php:28
+msgid "Editaci přihlášky provádějte po osobním přihlášení "
+msgstr "Editaci přihlášky provádějte po osobním přihlášení "
 
 # TeamFormComponent.php:176
 msgid "Email"
@@ -74,10 +74,8 @@ msgid "FoL registrace"
 msgstr "FoL registrace"
 
 # a201205detail.phtml:11
-# layout.phtml:11
-# layout.phtml:19
-# default.en.phtml:5
-# default.cs.phtml:5
+# layout.phtml:10
+# layout.phtml:35
 msgid "Fyziklání online"
 msgstr "Fyziklání online"
 
@@ -94,7 +92,7 @@ msgstr "Heslo a kontrola hesla se neshodují."
 msgid "Heslo musí být vyplněno."
 msgstr "Heslo musí být vyplněno."
 
-# layout.phtml:15
+# layout.phtml:22
 msgid "Historie"
 msgstr "Historie"
 
@@ -102,8 +100,8 @@ msgstr "Historie"
 msgid "Historie odpovědí"
 msgstr "Historie odpovědí"
 
-# layout.phtml:58
-# layout.phtml:58
+# layout.phtml:53
+# layout.phtml:54
 msgid "Hra"
 msgstr "Hra"
 
@@ -160,8 +158,8 @@ msgstr "Lze odpovídat až za <span class='timesec'>%d</span> sekund."
 msgid "Mezinárodní soutež ve fyzice"
 msgstr "Mezinárodní soutež ve fyzice"
 
-# layout.phtml:51
-# layout.phtml:51
+# layout.phtml:40
+# layout.phtml:40
 # DefaultPresenter.php:21
 msgid "Minulé ročníky"
 msgstr "Minulé ročníky"
@@ -198,8 +196,7 @@ msgstr "Nevyplněno"
 msgid "Nevyřešené"
 msgstr "Nevyřešené"
 
-# visualPaginator.phtml:53
-# visualPaginator.phtml:55
+# visualPaginator.phtml:15
 msgid "Následující »"
 msgstr "Následující »"
 
@@ -224,14 +221,14 @@ msgstr "Obsah příspěvku není vyplněn."
 msgid "Odeslat řešení"
 msgstr "Odeslat řešení"
 
-# layout.phtml:7
-# layout.phtml:7
+# layout.phtml:14
+# layout.phtml:14
 # GamePresenter.php:6
 msgid "Odevzdat řešení"
 msgstr "Odevzdat řešení"
 
-# layout.phtml:42
-# layout.phtml:42
+# layout.phtml:79
+# layout.phtml:80
 msgid "Odhlásit se"
 msgstr "Odhlásit se"
 
@@ -247,8 +244,8 @@ msgstr "Open"
 msgid "Očekávaný počet platných cifer"
 msgstr "Očekávaný počet platných cifer"
 
-# layout.phtml:13
-# layout.phtml:13
+# layout.phtml:19
+# layout.phtml:19
 # StatsPresenter.php:16
 msgid "Podrobné výsledky"
 msgstr "Podrobné výsledky"
@@ -257,12 +254,16 @@ msgstr "Podrobné výsledky"
 msgid "Pokoušíte se vložit školu, která již existuje."
 msgstr "Pokoušíte se vložit školu, která již existuje."
 
+# layout.phtml:112
+msgid "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu"
+msgstr "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu"
+
 # TeamFormComponent.php:53
 msgid "Potvrzovací e-mail se nepodařilo odeslat."
 msgstr "Potvrzovací e-mail se nepodařilo odeslat."
 
-# layout.phtml:50
-# layout.phtml:50
+# layout.phtml:39
+# layout.phtml:39
 # DefaultPresenter.php:30
 msgid "Pravidla"
 msgstr "Pravidla"
@@ -279,8 +280,8 @@ msgstr "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
 msgid "Přeskočené"
 msgstr "Přeskočené"
 
-# layout.phtml:8
-# layout.phtml:8
+# layout.phtml:15
+# layout.phtml:15
 # SkipFormComponent.php:62
 # GamePresenter.php:10
 msgid "Přeskočit úkol"
@@ -294,7 +295,8 @@ msgstr "Přečetl jsem si "
 msgid "Přidat příspěvek"
 msgstr "Přidat příspěvek"
 
-# layout.phtml:40
+# layout.phtml:74
+# layout.phtml:75
 # LoginFormComponent.php:39
 # DefaultPresenter.php:26
 msgid "Přihlásit se"
@@ -308,7 +310,8 @@ msgstr "Přiřazena kategorie %s."
 msgid "Příspěvek byl vložen."
 msgstr "Příspěvek byl vložen."
 
-# TeamPresenter.php:45
+# layout.phtml:67
+# TeamPresenter.php:47
 msgid "Registrace"
 msgstr "Registrace"
 
@@ -320,13 +323,11 @@ msgstr "Registrace není aktivní."
 msgid "Registrovat"
 msgstr "Registrovat"
 
-# layout.phtml:52
-# layout.phtml:52
 # DefaultPresenter.php:35
 msgid "Rozcvička"
 msgstr "Rozcvička"
 
-# TeamPresenter.php:37
+# TeamPresenter.php:39
 msgid "Seznam týmů"
 msgstr "Seznam týmů"
 
@@ -343,8 +344,8 @@ msgstr "Stala se neočekávaná chyba."
 msgid "Statistika úkolů"
 msgstr "Statistika úkolů"
 
-# layout.phtml:60
-# layout.phtml:60
+# layout.phtml:48
+# layout.phtml:49
 msgid "Statistiky"
 msgstr "Statistiky"
 
@@ -352,8 +353,8 @@ msgstr "Statistiky"
 msgid "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 msgstr "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 
-# layout.phtml:14
-# layout.phtml:14
+# layout.phtml:20
+# layout.phtml:20
 msgid "Statistiky úkolů"
 msgstr "Statistiky úkolů"
 
@@ -390,8 +391,8 @@ msgstr "Tým musí mít alespoň jednoho člena."
 msgid "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 msgstr "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 
-# layout.phtml:55
-# layout.phtml:55
+# layout.phtml:43
+# layout.phtml:44
 msgid "Týmy"
 msgstr "Týmy"
 
@@ -456,8 +457,8 @@ msgstr "Výsledek musí být celé číslo."
 msgid "Výsledek musí být reálné číslo."
 msgstr "Výsledek musí být reálné číslo."
 
-# layout.phtml:6
-# layout.phtml:6
+# layout.phtml:12
+# layout.phtml:12
 # StatsPresenter.php:11
 msgid "Výsledky"
 msgstr "Výsledky"
@@ -470,8 +471,8 @@ msgstr "Zadejte prosím kontatní adresu."
 msgid "Zadejte prosím kontatní e-mail."
 msgstr "Zadejte prosím kontatní e-mail."
 
-# layout.phtml:5
-# layout.phtml:5
+# layout.phtml:12
+# layout.phtml:12
 # GamePresenter.php:14
 msgid "Zadání"
 msgstr "Zadání"
@@ -479,6 +480,10 @@ msgstr "Zadání"
 # TeamsModel.php:117
 msgid "Zahraniční SŠ"
 msgstr "Zahraniční SŠ"
+
+# layout.phtml:30
+msgid "Zobrazit navigaci"
+msgstr "Zobrazit navigaci"
 
 # default.phtml:23
 # taskStats.phtml:15
@@ -506,7 +511,7 @@ msgstr "celkem bodů"
 msgid "informace o členech týmu nejsou dostupné"
 msgstr "informace o členech týmu nejsou dostupné"
 
-# TeamPresenter.php:24
+# TeamPresenter.php:26
 msgid "na stránce přihlášky"
 msgstr "na stránce přihlášky"
 
@@ -521,6 +526,10 @@ msgstr "nejlepší"
 # taskStats.phtml:6
 msgid "název"
 msgstr "název"
+
+# answerHistory.phtml:5
+msgid "odpověď"
+msgstr "odpověď"
 
 # TeamFormComponent.php:152
 # TeamFormComponent.php:155
@@ -547,6 +556,10 @@ msgstr "střední škola"
 msgid "tým"
 msgstr "tým"
 
+# answerHistory.phtml:4
+msgid "vloženo"
+msgstr "vloženo"
+
 # TeamFormComponent.php:153
 msgid "zahraničí"
 msgstr "zahraničí"
@@ -555,8 +568,7 @@ msgstr "zahraničí"
 msgid "záporné body"
 msgstr "záporné body"
 
-# visualPaginator.phtml:38
-# visualPaginator.phtml:40
+# visualPaginator.phtml:8
 msgid "« Předchozí"
 msgstr "« Předchozí"
 
@@ -569,6 +581,10 @@ msgstr "Úkol"
 msgid "Úloha %s přeskočena."
 msgstr "Úloha %s přeskočena."
 
+# answerHistory.phtml:3
+msgid "úkol"
+msgstr "úkol"
+
 # TeamFormComponent.php:146
 msgid "ČR/SR"
 msgstr "ČR/SR"
@@ -578,7 +594,7 @@ msgstr "ČR/SR"
 msgid "Čas vypršel."
 msgstr "Čas vypršel."
 
-# layout.phtml:12
+# layout.phtml:19
 msgid "Řešení"
 msgstr "Řešení"
 

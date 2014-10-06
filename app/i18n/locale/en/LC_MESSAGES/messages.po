@@ -74,9 +74,9 @@ msgstr "E-mail"
 msgid "E-mail nemá správný formát."
 msgstr "Entered e-mail does not have a correct format."
 
-# TeamPresenter.php:26
-msgid "Editaci přihlášky provádějte po přihlášení "
-msgstr "You can edit your application after login "
+# TeamPresenter.php:28
+msgid "Editaci přihlášky provádějte po osobním přihlášení "
+msgstr "You can edit your application after personal login "
 
 # TeamFormComponent.php:162
 msgid "Email"
@@ -291,6 +291,13 @@ msgstr "Detailed results"
 # TeamFormComponent.php:19
 msgid "Pokoušíte se vložit školu, která již existuje."
 msgstr "You are trying to register a school that has already been registered."
+
+# layout.phtml:112
+msgid ""
+"Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši "
+"adresu"
+msgstr ""
+"If you have any questions, remarks, or suggestions please send us an email to"
 
 # TeamFormComponent.php:53
 msgid "Potvrzovací e-mail se nepodařilo odeslat."
@@ -549,6 +556,10 @@ msgstr "Problem statement"
 msgid "Zahraniční SŠ"
 msgstr "High school outside of Czech Republic"
 
+# layout.phtml:30
+msgid "Zobrazit navigaci"
+msgstr "Zobrazit navigaci"
+
 # default.phtml:23
 # taskStats.phtml:15
 # scoreList.phtml:68
@@ -592,6 +603,10 @@ msgstr "best"
 msgid "název"
 msgstr "name"
 
+# answerHistory.phtml:5
+msgid "odpověď"
+msgstr "answer"
+
 # TeamFormComponent.php:139
 # TeamFormComponent.php:142
 msgid "ostatní"
@@ -617,6 +632,10 @@ msgstr "high school"
 msgid "tým"
 msgstr "team"
 
+# answerHistory.phtml:4
+msgid "vloženo"
+msgstr "inserted"
+
 # TeamFormComponent.php:140
 msgid "zahraničí"
 msgstr "foreign country"
@@ -640,6 +659,10 @@ msgstr "Problem"
 # SkipFormComponent.php:16
 msgid "Úloha %s přeskočena."
 msgstr "Problem %s was skipped."
+
+# answerHistory.phtml:3
+msgid "úkol"
+msgstr "problem"
 
 # TeamFormComponent.php:133
 msgid "ČR/SR"
