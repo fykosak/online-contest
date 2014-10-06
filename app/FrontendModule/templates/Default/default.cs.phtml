@@ -5,17 +5,25 @@
 {block jumbotron}
 <div class="jumbotron">
     <div class="container">
-        <h1>Fyziklání online</h1>
-        <p>
-            Fyzikální&hellip;
-            Mezinárodní&hellip;<br/>
-            Internetová&hellip;
-            Tříhodinová&hellip;<br/>
-            Soutěž pořádaná <a href="http://fykos.cz/" title="Fyzikální korespondenční seminář">Fyzikálním korespondenčním seminářem</a> <a href="http://www.mff.cuni.cz/">MFF UK</a>.
-        </p>
-        {if Interlos::isRegistrationActive()}
-        <p><a class="btn btn-primary btn-lg" href="{link :Frontend:Team:registration}" role="button">Registrace &raquo;</a></p>
-        {/if}
+        <div class="row">
+            <div class="col-md-3 vcenter hidden-sm hidden-xs text-center">
+                <div class="logo"></div>
+            </div><!--
+            --><div class="col-md-9 vcenter">
+                <h1>Fyziklání online</h1>
+                <p>
+                    Fyzikální&hellip;
+                    Mezinárodní&hellip;<br/>
+                    Internetová&hellip;
+                    Tříhodinová&hellip;<br/>
+                    Soutěž pořádaná <a href="http://fykos.cz/" title="Fyzikální korespondenční seminář">Fyzikálním korespondenčním seminářem</a> <a href="http://www.mff.cuni.cz/">MFF UK</a>.
+                </p>
+                {if Interlos::isRegistrationActive()}
+                <p><a class="btn btn-primary btn-lg" href="{link :Frontend:Team:registration}" role="button">Registrace &raquo;</a></p>
+                {/if}
+            </div>
+        </div>
+
     </div>
 </div>
 {/block}
@@ -31,9 +39,6 @@
         {else}
         <p>Proběhne ve {include #game_period}.</p>
         <p>Registrace otevřena {if !Interlos::isRegistrationStarted()}od {$year->registration_start|date:'%d. %#m. %Y'} {/if}<strong>do {$year->registration_end|date:'%d. %#m. %Y %k.%M'}</strong>.</p>
-        {/if}
-        {if Interlos::isRegistrationActive()}
-        <p><a class="btn btn-default" href="{link :Frontend:Team:registration}" role="button">Registace &raquo;</a></p>
         {/if}
     </div>
     <div class="col-md-4">
