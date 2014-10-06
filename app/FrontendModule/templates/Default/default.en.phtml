@@ -18,7 +18,7 @@
                     Three-hour&hellip;<br/>
                     Competition organized by <a href="http://fykos.org/" title="The internet physics competition">FYKOS</a> <a href="http://www.mff.cuni.cz/">MFF UK</a>.
                 </p>
-                {if Interlos::isRegistrationActive()}
+                {if Interlos::isRegistrationActive() && !Environment::getUser()->isLoggedIn()}
                 <p><a class="btn btn-primary btn-lg" href="{link :Frontend:Team:registration}" role="button">Registration &raquo;</a></p>
                 {/if}
             </div>
