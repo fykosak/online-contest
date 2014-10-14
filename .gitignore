@@ -1,3 +1,4 @@
 /nbproject/
 app/config/config.local.ini
 document_root/.htaccess
+document_root/adminer/.htaccess
