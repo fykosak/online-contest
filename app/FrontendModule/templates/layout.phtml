@@ -105,7 +105,19 @@
             <!-- FLASH MESSAGES -->
             {widget flashMessages}
             <!-- CONTENT -->
-            {block #content}{/block}
+            
+            {block #bigcontent}
+            <div class="row">
+                <div class="col-sm-3 col-sm-push-9">
+                    <div class="hidden-print affix-sm">
+                        {block #subnavigation}{/block}
+                    </div>
+                </div>
+                <div class="col-sm-9 col-sm-pull-3">
+                    {block #content}{/block}
+                </div>
+            </div>
+            {/block}
 
             <hr>
 

@@ -1,28 +1,17 @@
 {extends ../layout.phtml}
 
-{block #content}
-<div class="row">
-    <div class="col-md-9">
-
-        {block #subcontent}
-        {/block}
-    </div>
-    <div class="col-md-3">
-        <div class="hidden-print hidden-xs hidden-sm affix">
-            <ul class="nav">
-                <li><a href="{plink Game:default}" title="{_'Zadání'}">{_'Zadání'}</a></li>
-                {if  Interlos::isGameActive()}
-                <li><a href="{plink Game:answer}" title="{_'Odevzdat řešení'}">{_'Odevzdat řešení'}</a></li>
-                <li><a href="{plink Game:skip}" title="{_'Přeskočit úkol'}">{_'Přeskočit úkol'}</a></li>
-                {/if}
-                {if Interlos::isGameEnd()}
-                <li>
-                    <a href="{$baseUri}download/2014/ulohy/reseni.{$lang}.pdf">{_'Řešení'}</a>
-                </li>
-                {/if}
-                <li><a href="{plink Game:history}" title="Historie">{_'Historie'}</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+{block #subnavigation}
+<ul class="nav">
+    <li><a href="{plink Game:default}" title="{_'Zadání'}">{_'Zadání'}</a></li>
+    {if  Interlos::isGameActive()}
+    <li><a href="{plink Game:answer}" title="{_'Odevzdat řešení'}">{_'Odevzdat řešení'}</a></li>
+    <li><a href="{plink Game:skip}" title="{_'Přeskočit úkol'}">{_'Přeskočit úkol'}</a></li>
+    {/if}
+    {if Interlos::isGameEnd()}
+    <li>
+        <a href="{$baseUri}download/2014/ulohy/reseni.{$lang}.pdf">{_'Řešení'}</a>
+    </li>
+    {/if}
+    <li><a href="{plink Game:history}" title="Historie">{_'Historie'}</a></li>
+</ul>
 {/block}
