@@ -32,7 +32,7 @@ class AnswerFormComponent extends BaseComponent {
             }
         } catch (InvalidStateException $e) {
             if ($e->getCode() == AnswersModel::ERROR_TIME_LIMIT) {
-                $this->getPresenter()->flashMessage(sprintf(_("Lze odpovídat až za <span class='timesec'>%d</span> sekund."), $e->getMessage()), "!error");
+                $this->getPresenter()->flashMessage(sprintf(_("Lze odpovídat až za <span class='timesec'>%d</span> sekund."), $e->getMessage()), "!warning");
                 return;
             } else if ($e->getCode() == AnswersModel::ERROR_OUT_OF_PERIOD) {
                 $this->getPresenter()->flashMessage(_("Není aktuální žádné odpovídací období."), "danger");
