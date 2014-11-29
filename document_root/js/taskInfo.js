@@ -13,7 +13,7 @@ $.fn.extend({
                     message.push(options['unit'] + ': <span class="unit">' + item['unit'] + '</span>.');
                 }
                 if(item['type'] == 'real'){
-                    message.push(options['realHint']);
+                    message.push('<br/>' + options['realHint']);
                 }
             }
             

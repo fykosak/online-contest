@@ -4,6 +4,9 @@ class Frontend_BasePresenter extends Presenter {
 
     /** @persistent */
     public $lang; // = 'cs';
+    
+    /** @var string */
+    private $customScript = '';
 
     public function setPageTitle($pageTitle) {
         $this->getTemplate()->pageTitle = $pageTitle;
@@ -25,10 +28,19 @@ class Frontend_BasePresenter extends Presenter {
         $template = parent::createTemplate();
         $template->today = date("Y-m-d H:i:s");
         $template->lang = $this->lang;
+        $template->customScript = '';
         $template->setTranslator(Interlos::getTranslator());
         $template->registerHelper('i18n', 'GettextTranslator::i18nHelper');
 
         return InterlosTemplate::loadTemplate($template);
+    }
+    
+    public function addCustomScript($script) {
+        $this->customScript .= $script;
+    }
+    
+    public function getCustomScript(){
+        return $this->customScript;
     }
 
     protected function startUp() {
