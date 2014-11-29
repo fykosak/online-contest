@@ -39,6 +39,7 @@ database.host = "localhost"
 database.username = "user"
 database.password = "pwd"
 database.database = "fol"
+database.charset = "utf8"
 
 ; TODO is this necessary?
 ;smtp.host = ""
