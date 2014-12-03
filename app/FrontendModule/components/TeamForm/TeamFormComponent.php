@@ -70,7 +70,7 @@ class TeamFormComponent extends BaseComponent {
         try {
             // Update the team
             $changes = array(
-                "email" => $values["email"],
+                "email" => null,
                 "address" => $values["address"],
             );
 
@@ -122,9 +122,6 @@ class TeamFormComponent extends BaseComponent {
 
 
         // Contatcs
-        $form->addText("email", "E-mail")
-                ->addRule(Form::FILLED, "Zadejte prosím kontatní e-mail.")
-                ->addRule(Form::EMAIL, "E-mail nemá správný formát.");
 
         $form->addTextArea("address", "Kontaktní adresa", 35, 4)
                 ->addRule(Form::FILLED, "Zadejte prosím kontatní adresu.")
@@ -173,12 +170,13 @@ class TeamFormComponent extends BaseComponent {
                     ->addRule(Form::FILLED, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."), $i))
                     ->addRule(Form::MIN_LENGTH, sprintf(_("U %d. člena musí být název školy alespoň %d znaků."), $i, 5), 5);
             $form["otherschool_" . $i]->getLabelPrototype()->id = "frm" . $name . "-" . "otherschool_$i-label";
-            $form->addText("email_$i", "Email")
-                    ->addCondition(~Form::EQUAL, "")
+            $email = $form->addText("email_$i", "Email");
+            $email->addCondition(~Form::EQUAL, "")
                     ->addRule(Form::EMAIL, sprintf(_("U %d. člena není platná e-mailová adresa."), $i));
-            $schoolElement = $form->addSelect("study_year_$i", "Školní ročník", $study_years)
-                    ->setOption("description", _("Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je nad SŠ."))
-                    ->setDefaultValue("2");
+            $email->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
+                    ->addRule(Form::FILLED, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněn e-mail."), $i));
+            
+            $schoolElement = $form->addHidden("study_year_$i");
             if (!Interlos::isRegistrationActive()) {
                 $schoolElement->setDisabled();
                 $form->addHidden("study_year_hid_$i");
