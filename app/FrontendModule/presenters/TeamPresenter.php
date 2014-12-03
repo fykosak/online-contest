@@ -45,6 +45,7 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
 
     public function renderRegistration() {
         $this->setPageTitle(_("Registrace"));
+        $this->flashMessage(_('Registrace nového týmu je možná jen přes FKSDB.'), 'warning');
     }
 
     // ---- PROTECTED METHODS

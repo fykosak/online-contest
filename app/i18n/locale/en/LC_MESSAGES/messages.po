@@ -370,6 +370,10 @@ msgstr "Registration"
 msgid "Registrace není aktivní."
 msgstr "Registration is not active."
 
+# TeamPresenter.php:48
+msgid "Registrace nového týmu je možná jen přes FKSDB."
+msgstr "Registration of a new team is possible via FKSDB only."
+
 # TeamFormComponent.php:203
 msgid "Registrovat"
 msgstr "Register"

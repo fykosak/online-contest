@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2014-10-06T13:13:40+02:00
+# Created: 2014-12-03T14:33:49+01:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -92,7 +92,7 @@ msgstr "Heslo a kontrola hesla se neshodují."
 msgid "Heslo musí být vyplněno."
 msgstr "Heslo musí být vyplněno."
 
-# layout.phtml:22
+# layout.phtml:14
 msgid "Historie"
 msgstr "Historie"
 
@@ -221,8 +221,8 @@ msgstr "Obsah příspěvku není vyplněn."
 msgid "Odeslat řešení"
 msgstr "Odeslat řešení"
 
-# layout.phtml:14
-# layout.phtml:14
+# layout.phtml:6
+# layout.phtml:6
 # GamePresenter.php:6
 msgid "Odevzdat řešení"
 msgstr "Odevzdat řešení"
@@ -244,8 +244,8 @@ msgstr "Open"
 msgid "Očekávaný počet platných cifer"
 msgstr "Očekávaný počet platných cifer"
 
-# layout.phtml:19
-# layout.phtml:19
+# layout.phtml:13
+# layout.phtml:13
 # StatsPresenter.php:16
 msgid "Podrobné výsledky"
 msgstr "Podrobné výsledky"
@@ -254,7 +254,7 @@ msgstr "Podrobné výsledky"
 msgid "Pokoušíte se vložit školu, která již existuje."
 msgstr "Pokoušíte se vložit školu, která již existuje."
 
-# layout.phtml:112
+# layout.phtml:124
 msgid "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu"
 msgstr "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu"
 
@@ -280,8 +280,8 @@ msgstr "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
 msgid "Přeskočené"
 msgstr "Přeskočené"
 
-# layout.phtml:15
-# layout.phtml:15
+# layout.phtml:7
+# layout.phtml:7
 # SkipFormComponent.php:62
 # GamePresenter.php:10
 msgid "Přeskočit úkol"
@@ -319,6 +319,10 @@ msgstr "Registrace"
 msgid "Registrace není aktivní."
 msgstr "Registrace není aktivní."
 
+# TeamPresenter.php:48
+msgid "Registrace nového týmu je možná jen přes FKSDB."
+msgstr "Registrace nového týmu je možná jen přes FKSDB."
+
 # TeamFormComponent.php:223
 msgid "Registrovat"
 msgstr "Registrovat"
@@ -353,8 +357,8 @@ msgstr "Statistiky"
 msgid "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 msgstr "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 
-# layout.phtml:20
-# layout.phtml:20
+# layout.phtml:14
+# layout.phtml:14
 msgid "Statistiky úkolů"
 msgstr "Statistiky úkolů"
 
@@ -457,8 +461,8 @@ msgstr "Výsledek musí být celé číslo."
 msgid "Výsledek musí být reálné číslo."
 msgstr "Výsledek musí být reálné číslo."
 
-# layout.phtml:12
-# layout.phtml:12
+# layout.phtml:6
+# layout.phtml:6
 # StatsPresenter.php:11
 msgid "Výsledky"
 msgstr "Výsledky"
@@ -471,8 +475,8 @@ msgstr "Zadejte prosím kontatní adresu."
 msgid "Zadejte prosím kontatní e-mail."
 msgstr "Zadejte prosím kontatní e-mail."
 
-# layout.phtml:12
-# layout.phtml:12
+# layout.phtml:4
+# layout.phtml:4
 # GamePresenter.php:14
 msgid "Zadání"
 msgstr "Zadání"
@@ -594,7 +598,7 @@ msgstr "ČR/SR"
 msgid "Čas vypršel."
 msgstr "Čas vypršel."
 
-# layout.phtml:19
+# layout.phtml:11
 msgid "Řešení"
 msgstr "Řešení"
 
