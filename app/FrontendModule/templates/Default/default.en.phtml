@@ -38,7 +38,11 @@
         <p>It took place on <strong n:block='game_period'>{$year->game_start|date:'%A %B %e, %Y'} from {$year->game_start|date:'%k:%M %Z'} to {$year->game_end|date:'%k.%M %Z'}</strong>.</p>
         {else}
         <p>It takes place on {include #game_period}.</p>
+        {if Interlos::isRegistrationEnd()}
+        <p>Registration <strong>was closed</strong> on {$year->registration_end|date:'%B %e, %Y %k:%M %Z'|replace:' C':' C'}.</p>
+        {else}
         <p>Registration is open {if !Interlos::isRegistrationStarted()}from {$year->registration_start|date:'%B %e, %Y'} {/if}<strong>until {$year->registration_end|date:'%B %e, %Y %k:%M %Z'|replace:' C':' C'}</strong>.</p>
+        {/if}        
         {/if}
     </div>
     <div class="col-md-4">
