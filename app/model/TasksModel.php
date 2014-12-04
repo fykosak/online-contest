@@ -208,7 +208,7 @@ class TasksModel extends AbstractModel {
                 return $solution == $task->answer_int;
                 break;
             case self::TYPE_REAL:
-                return abs($solution - $task->answer_real) <= $task->real_tolerance;
+                return ($task->answer_real - $task->real_tolerance <= $solution) && ($solution <= $task->answer_real + $task->real_tolerance);
                 break;
         }
     }
