@@ -19,9 +19,9 @@
 			</tr>
 		{/if}
 		{if $iterator->getCounter() % 10 == 1 }
-			<tr {if $team->activity == 0}class="inactive"{/if}>
+			<tr {if $team->activity == 0}class="text-muted"{/if}>
 		{else}
-			<tr class="line{if $team->activity == 0} inactive{/if}">
+			<tr class="line{if $team->activity == 0} text-muted{/if}">
 		{/if}
 			<td>{$iterator->getCounter()}</td>
                         <td class="team" title="{$team->name}, {$categories[$team->category]}">{$team->name|truncate:15|replace:' ':' '}</td>{* Unicode non-breaking space*}
