@@ -6,7 +6,7 @@
     <th>{_'odpověď'}</th>
 </thead>
 	{foreach $history AS $answer}
-<tr{if isset($correct[$answer->id_answer])} class="text-correct"{/if}>
+<tr{if isset($correct[$answer->id_answer])} class="bg-success"{else} class="bg-danger"{/if}>
     <td>{$answer->id_answer}</td>
     <td>{$tasks[$answer->id_task]->code_name}</td>
     <td>{$answer->inserted|timeOnly}</td>
