@@ -15,7 +15,7 @@ CREATE VIEW `view_team` AS
     SELECT `team`.*
     FROM `team`
     INNER JOIN `view_current_year` USING(`id_year`)
-    ORDER BY `category`, `name`;
+    ORDER BY `category`, `inserted`;
 
 DROP VIEW IF EXISTS `view_group`;
 CREATE VIEW `view_group` AS
