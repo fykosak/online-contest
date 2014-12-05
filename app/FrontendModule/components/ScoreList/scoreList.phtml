@@ -60,9 +60,9 @@
 			</tr>
 		{/if}
 		{if $iterator->getCounter() % 10 == 1 }
-			<tr {if $team->activity == 0}class="inactive"{/if}>
+			<tr {if $team->activity == 0}class="text-muted"{/if}>
 		{else}
-			<tr class="line{if $team->activity == 0} inactive{/if}">
+			<tr class="line{if $team->activity == 0} text-muted{/if}">
 		{/if}
 			{foreach $tasks AS $task}
                                 {if $task->cancelled}
@@ -71,10 +71,9 @@
 					<td class="skipped" title="{$skips[$team->id_team][$task->id_task]->inserted}">S</td>
                                 {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task]) || $score[$team->id_team][$task->id_task]->inserted == NULL}
                                         <td class="empty">X</td>
-				{elseif $score[$team->id_team][$task->id_task]->score == $task->points}
-					<td class="done full" title="{$score[$team->id_team][$task->id_task]->inserted}">{$score[$team->id_team][$task->id_task]->score}</td>
                                 {else}
-					<td class="done" title="{$score[$team->id_team][$task->id_task]->inserted}">{$score[$team->id_team][$task->id_task]->score}</td>
+                                        {var ratio => floor(round(9.9 * $score[$team->id_team][$task->id_task]->score / $task->points)/2)}
+					<td class="done ratio-{$ratio}" title="{$score[$team->id_team][$task->id_task]->inserted}">{$score[$team->id_team][$task->id_task]->score}</td>
 				{/if}                                
 			{/foreach}
 		</tr>
