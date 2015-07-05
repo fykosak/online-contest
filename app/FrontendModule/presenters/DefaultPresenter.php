@@ -7,7 +7,7 @@ class Frontend_DefaultPresenter extends Frontend_BasePresenter {
 	}
 
 	public function renderChat() {
-		$this->getComponent("chat")->setSource(Interlos::chat()->findAll());
+		$this->getComponent("chat")->setSource(Interlos::chat()->findAll($this->lang));
 		$this->setPageTitle(_("Diskuse"));
 	}
 

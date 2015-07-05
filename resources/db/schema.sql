@@ -1,4 +1,5 @@
--- Adminer 2.3.2 dump
+-- Adminer 4.2.0 MySQL dump
+
 SET NAMES utf8;
 SET foreign_key_checks = 0;
 SET time_zone = 'SYSTEM';
@@ -19,20 +20,24 @@ CREATE TABLE `answer` (
   KEY `id_task` (`id_task`),
   CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `answer_ibfk_2` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='pokusy uhadnout kod ukolu';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='pokusy uhadnout kod ukolu';
 
 
 DROP TABLE IF EXISTS `chat`;
 CREATE TABLE `chat` (
   `id_chat` int(25) unsigned NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
+  `id_parent` int(25) unsigned DEFAULT NULL COMMENT 'identifikator rodicovskeho prispevku',
   `id_team` int(25) unsigned NOT NULL COMMENT 'tym, ktery prispevek vlozil',
   `content` text COLLATE utf8_czech_ci NOT NULL COMMENT 'text prispevku',
+  `lang` enum('cs','en') COLLATE utf8_czech_ci NOT NULL COMMENT 'jazyk fora',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
   PRIMARY KEY (`id_chat`),
   KEY `id_team` (`id_team`),
+  KEY `id_parent` (`id_parent`),
+  CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`id_parent`) REFERENCES `chat` (`id_chat`) ON DELETE SET NULL,
   CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='diskusni prispevku na chatu';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='diskusni prispevky na chatu';
 
 
 DROP TABLE IF EXISTS `competitor`;
@@ -41,6 +46,8 @@ CREATE TABLE `competitor` (
   `id_team` int(25) unsigned NOT NULL COMMENT 'tym, do ktereho ucastnik patri',
   `id_school` int(25) unsigned DEFAULT NULL COMMENT 'skola, kam ucastnik chodi',
   `name` varchar(250) COLLATE utf8_czech_ci NOT NULL COMMENT 'jmeno',
+  `email` varchar(150) COLLATE utf8_czech_ci DEFAULT NULL,
+  `study_year` tinyint(4) DEFAULT NULL COMMENT 'rocnik, ktery studuje, viz TeamFormComponent',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
   PRIMARY KEY (`id_competitor`),
@@ -48,7 +55,7 @@ CREATE TABLE `competitor` (
   KEY `id_school` (`id_school`),
   CONSTRAINT `competitor_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `competitor_ibfk_2` FOREIGN KEY (`id_school`) REFERENCES `school` (`id_school`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='informace o soutezicich';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='informace o soutezicich';
 
 
 DROP TABLE IF EXISTS `group`;
@@ -65,7 +72,7 @@ CREATE TABLE `group` (
   PRIMARY KEY (`id_group`),
   KEY `id_year` (`id_year`),
   CONSTRAINT `group_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='serie ukolu';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='serie ukolu';
 
 
 DROP TABLE IF EXISTS `group_state`;
@@ -84,14 +91,14 @@ CREATE TABLE `group_state` (
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE `log` (
   `id_log` int(25) unsigned NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
-  `id_team` int(25) unsigned NULL COMMENT 'tym, ktereho se zaznam tyka',
+  `id_team` int(25) unsigned DEFAULT NULL COMMENT 'tym, ktereho se zaznam tyka',
   `type` varchar(250) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'typ zaznamu',
   `text` text COLLATE utf8_czech_ci NOT NULL COMMENT 'text zaznamu',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
   PRIMARY KEY (`id_log`),
   KEY `id_team` (`id_team`),
   CONSTRAINT `log_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='logovani akci tymu';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='logovani akci tymu';
 
 
 DROP TABLE IF EXISTS `period`;
@@ -106,7 +113,7 @@ CREATE TABLE `period` (
   PRIMARY KEY (`id_period`),
   KEY `id_group` (`id_group`),
   CONSTRAINT `period_ibfk_1` FOREIGN KEY (`id_group`) REFERENCES `group` (`id_group`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='období pro odevzdávání série úloh';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='období pro odevzdávání série úloh';
 
 
 DROP TABLE IF EXISTS `school`;
@@ -117,7 +124,7 @@ CREATE TABLE `school` (
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
   PRIMARY KEY (`id_school`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Skoly, ze kterych pochazi soutezici';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Skoly, ze kterych pochazi soutezici';
 
 
 DROP TABLE IF EXISTS `task`;
@@ -125,21 +132,27 @@ CREATE TABLE `task` (
   `id_task` int(25) unsigned NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
   `id_group` int(25) unsigned NOT NULL COMMENT 'skupina, do ktere ukol patri',
   `number` int(2) unsigned NOT NULL COMMENT 'cislo ukolu v ramci serie',
-  `name` varchar(250) COLLATE utf8_czech_ci NOT NULL COMMENT 'nazev ukolu',
-  `filename` varchar(250) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'neuhodnutelny nazev souboru se zadanim ukolu',
+  `name_cs` varchar(250) COLLATE utf8_czech_ci NOT NULL COMMENT 'nazev ukolu',
+  `name_en` varchar(250) CHARACTER SET utf8 NOT NULL COMMENT 'nazev ukolu',
+  `filename_cs` varchar(250) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'neuhodnutelny nazev souboru se zadanim ukolu',
+  `filename_en` varchar(250) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'neuhodnutelny nazev souboru se zadanim ukolu',
   `points` int(2) unsigned NOT NULL COMMENT 'plny pocet bodu za ulohu',
+  `cancelled` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'uloha zrusena v prubehu hry',
   `answer_type` enum('str','int','real') COLLATE utf8_czech_ci NOT NULL COMMENT 'datovy typ vysledku ukolu',
   `answer_str` varchar(250) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'sloupec pro retezcovou odpoved',
   `answer_int` int(25) DEFAULT NULL COMMENT 'sloupec pro celociselnou odpoved',
   `answer_real` double DEFAULT NULL COMMENT 'sloupec pro realnou odpoved',
+  `answer_unit` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'jednotka vysledku, HTML fragment',
   `real_tolerance` double DEFAULT NULL COMMENT 'povolena odchylka u realnych odpovedi',
+  `real_sig_digits` tinyint(4) DEFAULT NULL COMMENT 'ocekavany pocet platnych cifer vysledku',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
   PRIMARY KEY (`id_task`),
   KEY `id_serie` (`id_group`),
   KEY `number` (`number`),
+  KEY `cancelled` (`cancelled`),
   CONSTRAINT `task_ibfk_1` FOREIGN KEY (`id_group`) REFERENCES `group` (`id_group`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='ukoly';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='ukoly';
 
 
 DROP TABLE IF EXISTS `task_state`;
@@ -148,6 +161,7 @@ CREATE TABLE `task_state` (
   `id_team` int(25) unsigned NOT NULL,
   `skipped` tinyint(1) NOT NULL COMMENT 'úloha byla přeskočena',
   `substitute` tinyint(1) NOT NULL COMMENT 'úloha vydána jako náhrada při přeskakování',
+  `inserted` datetime NOT NULL COMMENT 'cas vlozeni zaznamu',
   PRIMARY KEY (`id_task`,`id_team`),
   KEY `id_task` (`id_task`),
   KEY `id_team` (`id_team`),
@@ -162,7 +176,7 @@ CREATE TABLE `team` (
   `id_year` int(25) unsigned NOT NULL,
   `name` varchar(150) COLLATE utf8_czech_ci NOT NULL COMMENT 'prihlasovaci jmeno',
   `password` varchar(160) COLLATE utf8_czech_ci NOT NULL COMMENT 'zahashovane heslo',
-  `category` enum('high_school','open') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
+  `category` enum('high_school','open','abroad','hs_a','hs_b','hs_c') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
   `email` varchar(150) COLLATE utf8_czech_ci NOT NULL COMMENT 'e-mailova adresa',
   `address` text COLLATE utf8_czech_ci NOT NULL COMMENT 'kontaktni adresa',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
@@ -171,8 +185,7 @@ CREATE TABLE `team` (
   UNIQUE KEY `id_year` (`id_year`,`name`),
   UNIQUE KEY `id_year_2` (`id_year`,`email`),
   CONSTRAINT `team_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Soutezni tymy';
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Soutezni tymy';
 
 DROP TABLE IF EXISTS `year`;
 CREATE TABLE `year` (
@@ -186,31 +199,7 @@ CREATE TABLE `year` (
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
   PRIMARY KEY (`id_year`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Rocniky';
-
-ALTER TABLE `competitor`
-ADD `email` varchar(150) COLLATE 'utf8_czech_ci' NULL AFTER `name`,
-ADD `study_year` tinyint NULL COMMENT 'rocnik, ktery studuje, viz TeamFormComponent' AFTER `email`,
-COMMENT='informace o soutezicich';
-
-ALTER TABLE `team`
-CHANGE `category` `category` enum('high_school','open','abroad','hs_a','hs_b','hs_c') COLLATE 'utf8_czech_ci' NOT NULL COMMENT 'soutezni kategorie' AFTER `password`,
-COMMENT='Soutezni tymy';
-ALTER TABLE `task`
-ADD `real_sig_digits` tinyint NULL COMMENT 'ocekavany pocet platnych cifer vysledku' AFTER `real_tolerance`,
-ADD `answer_unit` varchar(255) NULL COMMENT 'jednotka vysledku, HTML fragment' AFTER `answer_real`,
-CHANGE `name` `name_cs` varchar(250) COLLATE 'utf8_czech_ci' NOT NULL COMMENT 'nazev ukolu' AFTER `number`,
-CHANGE `filename` `filename_cs` varchar(250) COLLATE 'utf8_bin' NOT NULL COMMENT 'neuhodnutelny nazev souboru se zadanim ukolu' AFTER `name_cs`,
-ADD `name_en` varchar(250) COLLATE 'utf8_general_ci' NOT NULL COMMENT 'nazev ukolu' AFTER `name_cs`,
-ADD `filename_en` varchar(250) COLLATE 'utf8_bin' NOT NULL COMMENT 'neuhodnutelny nazev souboru se zadanim ukolu' AFTER `filename_cs`;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Rocniky';
 
 
-
-
-ALTER TABLE `task_state`
-ADD `inserted` DATETIME NOT NULL COMMENT 'cas vlozeni zaznamu' AFTER `substitute`;
-ALTER TABLE `task`
-ADD `cancelled` tinyint NOT NULL DEFAULT 0 COMMENT 'uloha zrusena v prubehu hry' AFTER `points`;
-
-ALTER TABLE `task`
-ADD INDEX `cancelled` (`cancelled`);
+-- 2015-07-05 09:49:18

@@ -147,7 +147,7 @@
             s.parentNode.insertBefore(ga, s);
         })();
         </script>
-
+        
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
@@ -157,6 +157,7 @@
         <script src="{$baseUri}js/fix-navbar-issue.js"></script>
         <script src="{$baseUri}js/clock.js"></script>
         {!$presenter->getCustomScript()}
+        {block #scripts}{/block}
         {/block}
     </body>
 </html>

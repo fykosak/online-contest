@@ -1,17 +1,28 @@
 
 <div id="chat" class="list">
 {if Environment::getUser()->isLoggedIn()}
-    <div id="chat-form">
-	{widget chatForm}
+<div>
+    <div id="chat-form0" class="chat-form">
+	{widget chatForm0}
     </div>
+    <button class="hideChatForm">{_'Přidat příspěvek'}</button>
+</div>
 {/if}
     
 {foreach $posts AS $post}
-    <div class="chat-item">
+    <div class="chat-item" {if !$post['root']}style="margin: 0 0 80px 20px"{/if}>
 	<h3>
 	    {$post['team_name']} <span class="pull-right small">{$post['inserted']|time}</span>
 	</h3>
 	<div>{$post['content']}</div>
+        {if Environment::getUser()->isLoggedIn() && $post['root']}
+            <div>
+                <div id="chat-form{$post['id_chat']}" class="chat-form">
+                    {widget 'chatForm'.$post['id_chat']}
+                </div>
+                <button class="hideChatForm">{_'Reagovat'}</button>
+            </div>
+        {/if}
     </div>
 {/foreach}
 </div>
