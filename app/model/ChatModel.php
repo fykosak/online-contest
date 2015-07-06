@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Model;
+
 class ChatModel extends AbstractModel {
 
 	public function find($id) {

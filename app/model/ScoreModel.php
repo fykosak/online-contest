@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Model;
+
 class ScoreModel extends AbstractModel {
 	public function find($id) {
 		throw new NotSupportedException();

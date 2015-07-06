@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Model;
+
 class YearsModel extends AbstractModel {
 
 	public function find($id) {

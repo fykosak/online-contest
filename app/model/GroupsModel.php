@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class GroupsModel extends AbstractModel {
 
     public function find($id) {

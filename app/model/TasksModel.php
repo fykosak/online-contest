@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class TasksModel extends AbstractModel {
 
     const TYPE_STR = 'str';

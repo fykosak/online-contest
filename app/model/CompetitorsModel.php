@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Model;
+
 class CompetitorsModel extends AbstractModel {
 
 	public function deleteByTeam($team) {

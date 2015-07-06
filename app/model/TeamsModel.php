@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class TeamsModel extends AbstractModel {
 
     const HIGH_SCHOOL = 'high_school';

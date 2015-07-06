@@ -2,6 +2,14 @@
 /**
  * @author Jan Papousek
  */
+
+namespace App\Model\Authentication;
+
+use Nette\Security\IAuthenticator,
+    Nette\Security\Identity,
+    Nette\Security\AuthenticationException,
+    App\Model\Interlos;
+
 class TeamAuthenticator implements IAuthenticator
 {
 

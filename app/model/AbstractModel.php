@@ -1,9 +1,12 @@
 <?php
+
+namespace App\Model;
+
 abstract class AbstractModel implements InterlosModel {
 
 	private $connection;
 
-	public function  __construct(DibiConnection $connection) {
+	public function  __construct(\DibiConnection $connection) {
 		$this->connection = $connection;
 	}
 
@@ -26,7 +29,7 @@ abstract class AbstractModel implements InterlosModel {
 					"id_team"	=> $team,
 					"type"	=> $type,
 					"text"	=> $text,
-					"inserted"	=> new DateTime()
+					"inserted"	=> new \DateTime()
 					))->execute();
 		}
 		catch(Exception $e) {

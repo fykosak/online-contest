@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class PeriodModel extends AbstractModel {
 
     public function find($id) {

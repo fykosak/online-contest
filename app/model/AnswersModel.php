@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Model;
+
 class AnswersModel extends AbstractModel {
 
     const ERROR_TIME_LIMIT = 10;
