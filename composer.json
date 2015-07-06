@@ -32,7 +32,8 @@
 		"latte/latte": "~2.3.0",
 		"tracy/tracy": "~2.3.0",
 		"dg/adminer-custom": "~1.6",
-		"dibi/dibi": "^2.3"
+		"dibi/dibi": "^2.3",
+		"dg/texy": "^2.6"
 	},
 	"require-dev": {
 		"nette/tester": "~1.3"
