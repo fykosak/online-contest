@@ -4,6 +4,9 @@
  *
  * @author Jan Papousek
  */
+
+namespace App\Tools;
+
 final class Helpers {
 
     /** @var Texy */

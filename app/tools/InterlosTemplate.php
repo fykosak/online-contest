@@ -1,4 +1,9 @@
 <?php
+
+namespace App\Tools;
+
+use Nette\Application\UI\ITemplate;
+
 final class InterlosTemplate
 {
 
