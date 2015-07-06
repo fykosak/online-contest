@@ -1,51 +1,22 @@
 <?php
-// Step 1: Load Nette Framework
-// this allows Nette to load classes automatically so that
-// you don't have to litter your code with 'require' statements
-require_once LIBS_DIR . '/Nette/loader.php';
 
-// Step 2: Register auto loader
-$loader = new RobotLoader();
-$loader->addDirectory(APP_DIR);
-$loader->addDirectory(LIBS_DIR);
-$loader->register();
+require __DIR__ . '/../vendor/autoload.php';
 
-// Step 3: Enable Nette\Debug
-// for better exception and error visualisation
+$configurator = new Nette\Configurator;
 
-$debug = Environment::getConfig('debug');
+//$configurator->setDebugMode('23.75.345.200'); // enable for your remote IP
+$configurator->enableDebugger(__DIR__ . '/../log');
 
-Environment::loadConfig(APP_DIR . '/config/config.ini');
-Environment::loadConfig(APP_DIR . '/config/config.local.ini');
+$configurator->setTempDirectory(__DIR__ . '/../temp');
 
-$debug = Environment::getConfig("debug");
+$configurator->createRobotLoader()
+	->addDirectory(__DIR__)
+        ->addDirectory(__DIR__ . '/../vendor/others')
+	->register();
 
-if ($debug->enable) {
+$configurator->addConfig(__DIR__ . '/config/config.neon');
+$configurator->addConfig(__DIR__ . '/config/config.local.neon');
 
-	Debug::enable(Debug::DEVELOPMENT, $debug->log, $debug->email);
+$container = $configurator->createContainer();
 
-	Environment::getApplication()->catchExceptions = false;
-
-	if ($debug->profiler) {
-		Debug::enableProfiler();
-	}
-}else{
-    Debug::enable(Debug::PRODUCTION, $debug->log, $debug->email);
-}
-
-// Step 4: Set up the sessions.
-Environment::getSession()->setExpiration(60*60*24*7);
-Environment::getUser()->setNamespace("olfyziklani");
-
-// Step 5: Get the front controller
-$application = Environment::getApplication();
-
-// Step 6: Setup application router
-$router = $application->getRouter();
-$router[] = FrontendModule::createRouter();
-
-// Step 7: Connect to the database
-dibi::connect(Environment::getConfig("database"));
-
-// Step 8: Run the application!
-$application->run();
+return $container;

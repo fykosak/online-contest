@@ -1,4 +1,4 @@
 /nbproject/
 app/config/config.local.neon
-document_root/.htaccess
-document_root/adminer/.htaccess
+www/.htaccess
+www/adminer/.htaccess
