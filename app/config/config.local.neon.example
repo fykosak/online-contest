@@ -19,7 +19,7 @@ parameters:
     i18n:
         en:
             # comma separated list of hostnames that are server in English by default
-            hosts: physicsbrawl.org,www.physicsbrawl.org
+            hosts: "physicsbrawl.org,www.physicsbrawl.org"
         # path to gettext dir structure
         dir: %appDir%/i18n/locale
         # language used when no or unknown language is requested
