@@ -1,5 +1,5 @@
-[submodule "document_root/download"]
-	path = document_root/download
+[submodule "www/download"]
+	path = www/download
 	url = git@fykos.cz:fol-data.git
 [submodule "libs/gettext-extractor"]
 	path = libs/gettext-extractor
