@@ -1,0 +1,105 @@
+{block title}{/block}
+
+{block jumbotron}
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 vcenter hidden-sm hidden-xs text-center">
+                <div class="logo"></div>
+            </div><!--
+            --><div class="col-md-9 vcenter">
+                <h1>Online Physics Brawl</h1>
+                <p>
+                    Physics&hellip;
+                    International&hellip;<br/>
+                    Online&hellip;
+                    Three-hour&hellip;<br/>
+                    Competition organized by <a href="http://fykos.org/" title="The internet physics competition">FYKOS</a> <a href="http://www.mff.cuni.cz/">MFF UK</a>.
+                </p>
+                {if App\Model\Interlos::isRegistrationActive() && !$user->isLoggedIn()}
+                <p><a class="btn btn-primary btn-lg" href="{link :Frontend:Team:registration}" role="button">Registration &raquo;</a></p>
+                {/if}
+            </div>
+        </div>
+
+    </div>
+</div>
+{/block}
+
+{block bigcontent}
+
+
+<div class="row">
+    <div class="col-md-4">        
+        <h2>When</h2>
+        {if App\Model\Interlos::isGameEnd()}
+        <p>It took place on <strong n:block='game_period'>{$year->game_start|date:'%A %B %e, %Y'} from {$year->game_start|date:'%k:%M %Z'} to {$year->game_end|date:'%k.%M %Z'}</strong>.</p>
+        {else}
+        <p>It takes place on {include #game_period}.</p>
+        {if App\Model\Interlos::isRegistrationEnd()}
+        <p>Registration <strong>was closed</strong> on {$year->registration_end|date:'%B %e, %Y %k:%M %Z'|replace:' C':' C'}.</p>
+        {else}
+        <p>Registration is open {if !App\Model\Interlos::isRegistrationStarted()}from {$year->registration_start|date:'%B %e, %Y'} {/if}<strong>until {$year->registration_end|date:'%B %e, %Y %k:%M %Z'|replace:' C':' C'}</strong>.</p>
+        {/if}        
+        {/if}
+    </div>
+    <div class="col-md-4">
+        <h2>How</h2>
+        <p>Online Physics Brawl is three-hour internet competition.</p>
+        <p>The competition is for teams of up to five people.</p>
+        <p>You can look forward to a modification of our classic <a href="http://www.fyziklani.cz/">Physics Brawl</a> (known to Czech students only, sorry) and a Hurry-up problem series.</p>
+        <p><a class="btn btn-default" href="{link Default:rules}" role="button">Rules &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Why</h2>
+        <p><strong>Try and win the best imaginable prize ever &ndash; fame.</strong></p>
+        <p>Participation is free.</p>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Online Physics Brawl is brought to you by</h3>
+        <p><a href="http://fykos.org/">FYKOS</a> (organization, problems),
+            <a href="http://utf.mff.cuni.cz/">Institute of Theoretical Physics, MFF UK</a> (rooms, hosting),
+            <a href="http://kam.mff.cuni.cz/">Department of Applied Mathematics</a> (hardware),
+            <a href="http://www.msmt.cz/index.php?lang=2">Ministry of Education, Youth and Sports</a>&nbsp;(co-announcer) and
+            <a href="http://interlos.fi.muni.cz/">Interlos</a> (the game engine).
+{*            <a href="http://www.cez.cz/en/home.html">CEZ Group</a> (sponsorship). *}
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <a href="http://www.cuni.cz" title="Univerzita Karlova v Praze">
+            <img src="{$basePath}/images/uk-logo.png" alt="Univerzita Karlova v Praze"/>
+        </a>
+    </div>
+    <div class="col-md-2"><a href="http://www.mff.cuni.cz" title="Matematicko-fyzikální fakulta UK">
+            <img src="{$basePath}/images/mff-logo.png" alt="Matematicko-fyzikální fakulta UK" />
+        </a>
+    </div>
+    <div class="col-md-2"><a href="http://fykos.cz" title="Fyzikální korespondenční seminář MFF UK">
+            <img src="{$basePath}/images/fykos-logo.png" alt="Fyzikální korespondenční seminář MFF UK" />
+        </a>
+    </div>
+    <div class="col-md-2"><a href="http://www.msmt.cz/" title="Ministerstvo školství, mládeže a tělovýchovy">
+            <img src="{$basePath}/images/msmt-logo.png" alt="Ministerstvo školství, mládeže a tělovýchovy" />
+        </a>
+    </div>
+{*    <div class="col-md-2"><a href="http://www.cez.cz/" title="Skupina ČEZ">
+            <img src="{$basePath}/images/cez-logo.png" alt="Skupina ČEZ" />
+        </a>
+    </div> *}
+    <div class="col-md-2"><a href="http://www.mff.cuni.cz/admission/">
+            <img src="{$basePath}/download/2012-2/banner234_60znak.jpg" alt="Study compuer science at Charles University"/>
+        </a>
+    </div>
+</div>
+
+{/block}
+
+
+
