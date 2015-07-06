@@ -2,7 +2,7 @@
 	path = www/download
 	url = git@fykos.cz:fol-data.git
 [submodule "libs/gettext-extractor"]
-	path = libs/gettext-extractor
+	path = vendor/others/gettext-extractor
 	url = https://github.com/karelklima/gettext-extractor.git
 [submodule "resources/design/fol-bootstrap"]
 	path = resources/design/fol-bootstrap
