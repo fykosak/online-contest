@@ -1,12 +1,22 @@
 <?php
 
-class Frontend_BasePresenter extends Presenter {
+namespace App\FrontendModule\Presenters;
+
+use Nette,
+    App\Model\Translator\GettextTranslator,
+    App\Model\Interlos,
+    App\Tools\InterlosTemplate;
+
+class BasePresenter extends Nette\Application\UI\Presenter {
 
     /** @persistent */
     public $lang; // = 'cs';
     
     /** @var string */
     private $customScript = '';
+    
+    /** @var \App\Model\Interlos */
+    private $interlos;
 
     public function setPageTitle($pageTitle) {
         $this->getTemplate()->pageTitle = $pageTitle;
@@ -15,15 +25,15 @@ class Frontend_BasePresenter extends Presenter {
 // ----- PROTECTED METHODS
 
     protected function createComponentClock($name) {
-        return new ClockComponent($this, $name);
+        return new \ClockComponent($this, $name);
     }
 
     protected function createComponentFlashMessages($name) {
-        return new FlashMessagesComponent($this, $name);
+        return new \FlashMessagesComponent($this, $name);
     }
 
     protected function createTemplate() {
-        $this->oldLayoutMode = false;
+        //$this->oldLayoutMode = false;
 
         $template = parent::createTemplate();
         $template->today = date("Y-m-d H:i:s");
@@ -42,6 +52,12 @@ class Frontend_BasePresenter extends Presenter {
     public function getCustomScript(){
         return $this->customScript;
     }
+    
+    /* temporary hack for DI */
+    public function __construct(\App\Model\Interlos $interlos) {
+        parent::__construct();
+        $this->interlos = $interlos;
+    }
 
     protected function startUp() {
         parent::startup();
@@ -50,35 +66,35 @@ class Frontend_BasePresenter extends Presenter {
         $this->localize();
 
 
-        Interlos::prepareAdminProperties();
-        Interlos::createAdminMessages();
-        $this->oldModuleMode = FALSE;
+        //Interlos::prepareAdminProperties();
+        //Interlos::createAdminMessages();
+        //$this->oldModuleMode = FALSE;
     }
 
 // -------------- l12n ------------------
 
     protected function localize() {
-        $i18nConf = Environment::getConfig('i18n');
+        $i18nConf = $this->context->parameters['i18n'];
         $this->detectLang($i18nConf);
         $locale = isset(GettextTranslator::$locales[$this->lang]) ? GettextTranslator::$locales[$this->lang] : 'cs_CZ.utf-8';
 
         setlocale(LC_MESSAGES, $locale);
         setlocale(LC_TIME, $locale);
-        bindtextdomain('messages', $i18nConf->dir);
+        bindtextdomain('messages', $i18nConf['dir']);
         bind_textdomain_codeset('messages', "utf-8");
         textdomain('messages');
     }
 
     protected function detectLang($i18nConf) {
         if ($this->lang === null) {
-            if (array_search($this->getHttpRequest()->getUri()->host, explode(',', $i18nConf->en->hosts)) !== false) {
+            if (array_search($this->getHttpRequest()->getUrl()->host, explode(',', $i18nConf['en']['hosts'])) !== false) {
                 $this->lang = 'en';
             } else {
                 $this->lang = $this->getHttpRequest()->detectLanguage(GettextTranslator::$supportedLangs);
             }
         }
         if (array_search($this->lang, GettextTranslator::$supportedLangs) === false) {
-            $this->lang = $i18nConf->defaultLang;
+            $this->lang = $i18nConf['defaultLang'];
         }
     }
 
@@ -88,7 +104,7 @@ class Frontend_BasePresenter extends Presenter {
 
     // -------------- game server ------------------
     private function machineRedirect() {
-        $machine = Environment::getConfig('machine');
+        $machine=$this->context->parameters['machine'];
         if (!$machine['game']) {
             $this->redirectUri($machine['url']);
         }

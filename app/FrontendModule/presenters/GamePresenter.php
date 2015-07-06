@@ -1,6 +1,10 @@
 <?php
 
-class Frontend_GamePresenter extends Frontend_BasePresenter {
+namespace App\FrontendModule\Presenters;
+
+use App\Model\Interlos;
+
+class GamePresenter extends BasePresenter {
 
     public function renderAnswer() {
         $this->setPageTitle(_("Odevzdat řešení"));
@@ -12,10 +16,10 @@ class Frontend_GamePresenter extends Frontend_BasePresenter {
 
     public function renderDefault() {
         $this->setPageTitle(_("Zadání"));
-        $team = Interlos::getLoggedTeam()->id_team;
+        $team = Interlos::getLoggedTeam($this->user)->id_team;
         $this->getTemplate()->id_team = $team;
         
-        $mirrors = (array) Environment::getConfig("tasks")->mirrors;
+        $mirrors = (array) $this->context->parameters["tasks"]["mirrors"];
         shuffle($mirrors);
         $this->getTemplate()->mirrors = $mirrors;
         
@@ -45,7 +49,7 @@ class Frontend_GamePresenter extends Frontend_BasePresenter {
         $this->setPageTitle(_("Historie odpovědí"));
         $this->getComponent("answerHistory")->setSource(
                 Interlos::answers()->findAll()
-                        ->where("[id_team] = %i", Interlos::getLoggedTeam()->id_team)
+                        ->where("[id_team] = %i", Interlos::getLoggedTeam($this->user)->id_team)
                         ->orderBy("inserted", "DESC")
         );
         $this->getComponent("answerHistory")->setLimit(50);
@@ -53,22 +57,22 @@ class Frontend_GamePresenter extends Frontend_BasePresenter {
 
     protected function startUp() {
         parent::startUp();
-        if (Interlos::getLoggedTeam() == null) {
+        if (Interlos::getLoggedTeam($this->user) == null) {
             $this->flashMessage(_("Do této sekce mají přístup pouze přihlášené týmy."), "danger");
             $this->redirect("Default:default");
         }
     }
 
     protected function createComponentAnswerForm($name) {
-        return new AnswerFormComponent($this, $name);
+        return new \AnswerFormComponent($this, $name);
     }
 
     protected function createComponentAnswerHistory($name) {
-        return new AnswerHistoryComponent($this, $name);
+        return new \AnswerHistoryComponent($this, $name);
     }
 
     protected function createComponentSkipForm($name) {
-        return new SkipFormComponent($this, $name);
+        return new \SkipFormComponent($this, $name);
     }
 
 }

@@ -1,6 +1,10 @@
 <?php
 
-class Frontend_CronPresenter extends Frontend_BasePresenter {
+namespace App\FrontendModule\Presenters;
+
+use App\Model\Interlos;
+
+class CronPresenter extends BasePresenter {
 
     public function renderDatabase($key) {
         Interlos::resetTemporaryTables();

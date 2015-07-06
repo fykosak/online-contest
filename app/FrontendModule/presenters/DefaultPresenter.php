@@ -1,8 +1,14 @@
 <?php
-class Frontend_DefaultPresenter extends Frontend_BasePresenter {
+
+namespace App\FrontendModule\Presenters;
+
+use Nette,
+    App\Model\Interlos;
+
+class DefaultPresenter extends BasePresenter {
 
 	public function actionLogout() {
-		Environment::getUser()->logout();
+                $this->getUser()->logout();
 		$this->redirect("default");
 	}
 
@@ -38,12 +44,12 @@ class Frontend_DefaultPresenter extends Frontend_BasePresenter {
 	// ----- PROTECTED METHODS
         
         protected function createComponentChat($name) {
-		$chat = new ChatListComponent($this, $name);
+		$chat = new \ChatListComponent($this, $name);
 		return $chat;
 	}
 	
 	protected function createComponentLogin($name) {
-		return new LoginFormComponent($this, $name);
+		return new \LoginFormComponent($this, $name);
 	}
 
 }

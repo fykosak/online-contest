@@ -1,6 +1,10 @@
 <?php
 
-class Frontend_StatsPresenter extends Frontend_BasePresenter {
+namespace App\FrontendModule\Presenters;
+
+use App\Model\Interlos;
+
+class StatsPresenter extends BasePresenter {
 
     protected function beforeRender() {
         parent::beforeRender();
@@ -23,22 +27,22 @@ class Frontend_StatsPresenter extends Frontend_BasePresenter {
     }
 
     protected function createComponentResults($name) {
-        return new ResultsComponent($this, $name);
+        return new \ResultsComponent($this, $name);
     }
 
     protected function createComponentScoreList($name) {
-        return new ScoreListComponent($this, $name);
+        return new \ScoreListComponent($this, $name);
     }
 
     protected function createComponentTaskStats($name) {
-        return new TaskStatsComponent($this, $name);
+        return new \TaskStatsComponent($this, $name);
     }
 
     private function check($componentName) {
         try {
             $this->getComponent($componentName);
             $this->getTemplate()->available = TRUE;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->flashMessage(_("Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."), "danger");
             $this->getTemplate()->available = FALSE;
         }

@@ -1,30 +1,36 @@
 <?php
 
-class Frontend_TeamPresenter extends Frontend_BasePresenter {
+namespace App\FrontendModule\Presenters;
+
+use App\Model\Interlos,
+    Nette\Http\Url,
+    Nette\Utils;
+
+class TeamPresenter extends BasePresenter {
 
     public function actionRegistration() {
         if (!Interlos::isRegistrationActive()) {
             $this->flashMessage(_("Registrace není aktivní."), "danger");
             $this->redirect("Default:default");
         } else if ($url = $this->getRegistrationValue('url')) {
-            $uri = new Uri($url);
+            $uri = new Url($url);
             $uri->appendQuery(array('lang' => $this->lang));
             $this->redirectUri($uri, IHttpResponse::S307_TEMPORARY_REDIRECT);
         }
     }
 
     public function renderDefault() {
-        $team = Interlos::getLoggedTeam();
+        $team = Interlos::getLoggedTeam($this->user);
         if (!$team) {
             $this->redirect("Default:default");
         }
         $this->setPageTitle($team->name);
         $url = $this->getRegistrationValue('editUrl');
         if ($url) {
-            $uri = new Uri(sprintf($url, $team->id_team));
+            $uri = new Url(sprintf($url, $team->id_team));
             $uri->appendQuery(array('lang' => $this->lang));
-            $link = Html::el('a', _('na stránce přihlášky'))->href($uri);
-            $message = Html::el();
+            $link = Utils\Html::el('a', _('na stránce přihlášky'))->href($uri);
+            $message = Utils\Html::el();
             $message->add(_('Editaci přihlášky provádějte po osobním přihlášení '));
             $message->add($link);
             $message->add('.');
@@ -51,16 +57,16 @@ class Frontend_TeamPresenter extends Frontend_BasePresenter {
     // ---- PROTECTED METHODS
 
     protected function createComponentTeamForm($name) {
-        return new TeamFormComponent($this, $name);
+        return new \TeamFormComponent($this, $name);
     }
 
     protected function createComponentTeamList($name) {
-        return new TeamListComponent($this, $name);
+        return new \TeamListComponent($this, $name);
     }
 
     // ---- PRIVATE METHODS
     private function getRegistrationValue($key) {
-        $registration = Environment::getConfig('registration');
+        $registration = $this->context->parameters['registration'];
         return $registration[$key];
     }
 
