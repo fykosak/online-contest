@@ -1,0 +1,55 @@
+parameters:
+    # database connection
+    database:
+        driver: mysql
+        charset: utf8
+        host: localhost
+        database: fol
+        user: user
+        password: pwd
+        lazy: true
+        profiler: false
+    cron:
+        # key that's checked when invoking HTTP request for stats refresh
+        key: nejaky-klic
+    tasks:
+        # URL to directory(ies) where problem PDFs are stored
+        mirrors:
+            - http://example.com/set/
+    i18n:
+        en:
+            # comma separated list of hostnames that are server in English by default
+            hosts: physicsbrawl.org,www.physicsbrawl.org
+        # path to gettext dir structure
+        dir: %appDir%/i18n/locale
+        # language used when no or unknown language is requested
+        defaultLang: cs
+    machine:
+        # specify whether this is the machine dedicated for the game
+        game: true
+        # URL to which user is redirected when this is not a game machine (watch out for redirect loops!)
+        url: http://localhost/
+    registration:
+        # Specifying non-null URL, means registration will be redirected to FKSDB
+        url: null
+        # Specifies URL mask to team's application edit (only team ID will be substituted)
+        editUrl: "https://db.fykos.local/fykos28/application/default/%s?eventId=8"
+    mail:
+        # sender's e-mail address of confirmation e-mail
+        info: "fyziklani@fykos.cz"
+        # sender's name of confirmation e-mail
+        name: FYKOS
+
+#TODO not reimplemented yet
+#[common]
+#debug.enable = TRUE
+#
+#; TODO is this necessary?
+#;smtp.host = ""
+#;smtp.username = ""
+#;smtp.password = ""
+#
+#
+#[development < common]
+#
+#[production < common]

@@ -1,0 +1,35 @@
+parameters:
+    debug:
+        log: %appDir%/temp/php_error.log
+        email: michal@fykos.cz
+
+php:
+    date.timezone: Europe/Prague
+
+application:
+    errorPresenter: Error
+    mapping:
+        *: App\*Module\Presenters\*Presenter
+
+session:
+    expiration: 14 days
+
+services:
+    Nette\Security\IAuthenticator: App\Model\Authentication\TeamAuthenticator
+    #Nette\Security\IAuthorizator: SimpleAuthorizator
+    router: App\FrontendModule\FrontendModule::createRouter
+    connection: DibiConnection(%database%)
+    - App\Model\Interlos
+
+#TODO not reimplemented yet
+#[common]
+#service.Nette-Security-IAuthorizator = SimpleAuthorizator
+#
+#[common.set!]
+#short_open_tag = Off
+#
+#[development < common]
+#
+#[production < common]
+#
+#[console < common]
