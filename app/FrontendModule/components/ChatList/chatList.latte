@@ -1,9 +1,9 @@
 
 <div id="chat" class="list">
-{if Environment::getUser()->isLoggedIn()}
+    {if $user->isLoggedIn()}
 <div>
     <div id="chat-form0" class="chat-form">
-	{widget chatForm0}
+	{control chatForm0}
     </div>
     <button class="hideChatForm">{_'Přidat příspěvek'}</button>
 </div>
@@ -15,10 +15,10 @@
 	    {$post['team_name']} <span class="pull-right small">{$post['inserted']|time}</span>
 	</h3>
 	<div>{$post['content']}</div>
-        {if Environment::getUser()->isLoggedIn() && $post['root']}
+        {if $user->isLoggedIn() && $post['root']}
             <div>
                 <div id="chat-form{$post['id_chat']}" class="chat-form">
-                    {widget 'chatForm'.$post['id_chat']}
+                    {control 'chatForm'.$post['id_chat']}
                 </div>
                 <button class="hideChatForm">{_'Reagovat'}</button>
             </div>
@@ -27,4 +27,4 @@
 {/foreach}
 </div>
 
-{widget paginator}
+{control paginator}
