@@ -1,9 +1,19 @@
 <?php
 
+namespace App\FrontendModule;
+
+use Nette,
+	Nette\Application\Routers\RouteList,
+	Nette\Application\Routers\Route,
+	Nette\Application\Routers\SimpleRouter;
+
 class FrontendModule {
 
+    /**
+    *  @return \Nette\Application\IRouter
+    */
     public static function createRouter() {
-        $router = new MultiRouter();
+        $router = new RouteList();
 
         $router[] = new Route('index.php', array(
                     "module" => "Frontend",
@@ -19,6 +29,14 @@ class FrontendModule {
 
         return $router;
     }
+    
+    
+//	public static function createRouter()
+//	{
+//		$router = new RouteList();
+//		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+//		return $router;
+//	}
 
     public static function getModuleDir() {
         return APP_DIR . "/FrontendModule";
