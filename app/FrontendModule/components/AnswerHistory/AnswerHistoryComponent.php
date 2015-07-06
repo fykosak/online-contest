@@ -1,4 +1,7 @@
 <?php
+
+use App\Model\Interlos;
+
 class AnswerHistoryComponent extends BaseListComponent
 {
 

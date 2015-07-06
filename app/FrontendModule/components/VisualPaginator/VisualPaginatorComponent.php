@@ -18,7 +18,7 @@
 
 /*use Nette\Paginator;*/
 
-
+use Nette\Utils\Paginator;
 
 /**
  * Visual paginator control.

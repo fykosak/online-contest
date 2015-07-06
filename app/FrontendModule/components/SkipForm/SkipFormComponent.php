@@ -1,5 +1,9 @@
 <?php
 
+use App\Model\Interlos,
+    App\Model\AnswersModel,
+    Nette\Application\UI\Form;
+
 class SkipFormComponent extends BaseComponent {
 
     public function formSubmitted(Form $form) {
@@ -7,7 +11,7 @@ class SkipFormComponent extends BaseComponent {
 
         try {
             $task = Interlos::tasks()->find($values["task"]);
-            $team = Interlos::getLoggedTeam()->id_team;
+            $team = Interlos::getLoggedTeam($this->getPresenter()->user)->id_team;
 
 
             Interlos::tasks()->skip($team, $task);
@@ -15,7 +19,7 @@ class SkipFormComponent extends BaseComponent {
             
             $this->getPresenter()->flashMessage(sprintf(_("Úloha %s přeskočena."), $task->code_name), "success");
             Interlos::tasks()->updateSingleCounter($team, $task);
-        } catch (InvalidStateException $e) {
+        } catch (Nette\InvalidStateException $e) {
             if ($e->getCode() == AnswersModel::ERROR_SKIP_OF_PERIOD) {
                 $this->getPresenter()->flashMessage(_("V tomto období není možno přeskakovat úlohy této série."), "danger");
                 return;
@@ -39,7 +43,7 @@ class SkipFormComponent extends BaseComponent {
 
     protected function createComponentForm($name) {
         $form = new BaseForm($this, $name);
-        $team = Interlos::getLoggedTeam()->id_team;
+        $team = Interlos::getLoggedTeam($this->getPresenter()->user)->id_team;
 
         // Tasks
         $tasks = Interlos::tasks()
@@ -71,8 +75,8 @@ class SkipFormComponent extends BaseComponent {
 
     protected function startUp() {
         parent::startUp();
-        if (!Environment::getUser()->isLoggedIn()) {
-            throw new InvalidStateException("There is no logged team.");
+        if (!$this->getPresenter()->user->isLoggedIn()) {
+            throw new Nette\InvalidStateException("There is no logged team.");
         }
         if (Interlos::isGameEnd()) {
             $this->flashMessage(_("Čas vypršel."), "danger");

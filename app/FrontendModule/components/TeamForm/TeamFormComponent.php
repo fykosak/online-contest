@@ -5,6 +5,14 @@
  *
  * @author Jan Papousek
  */
+
+use App\Model\Interlos,
+    App\Tools\InterlosTemplate,
+    App\FrontendModule\FrontendModule,
+    Nette\Application\UI\Form,
+    Nette\Utils\Html,
+    App\Model\Authentication\TeamAuthenticator;
+
 class TeamFormComponent extends BaseComponent {
 
     const NUMBER_OF_MEMBERS = 5;
@@ -42,14 +50,16 @@ class TeamFormComponent extends BaseComponent {
             $template->team_name = $values["team_name"];
             $template->password = $values["password"];
             $template->category = $names[$values["category"]];
-            $mail = new Mail();
+            
+            $mailConfig = $this->getPresenter()->context->parameters['mail'];            
+            $mail = new Nette\Mail\Message();
             $mail->setBody($template);
             $mail->addTo($values["email"]);
-            $mail->setFrom(Environment::getConfig("mail")->info, Environment::getConfig("mail")->name);
+            $mail->setFrom($mailConfig['info'], $mailConfig['name']);
             $mail->setSubject(_("FoL registrace"));
             try {
                 $mail->send();
-            } catch (InvalidStateException $e) {
+            } catch (Nette\InvalidStateException $e) {
                 $this->getPresenter()->flashMessage(_("Potvrzovací e-mail se nepodařilo odeslat."), "danger");
             }
             // Redirect
@@ -92,7 +102,7 @@ class TeamFormComponent extends BaseComponent {
             // Success
             $this->getPresenter()->flashMessage(_("Tým byl úspěšně aktualizován."), "success");
             $this->getPresenter()->redirect("this");
-        } catch (InvalidArgumentException $e) {
+        } catch (Nette\InvalidArgumentException $e) {
             $this->getPresenter()->flashMessage(_("Tým musí mít alespoň jednoho člena."), "danger");
             Debug::processException($e);
         } catch (DuplicityException $e) {
@@ -126,7 +136,7 @@ class TeamFormComponent extends BaseComponent {
         $form->addTextArea("address", "Kontaktní adresa", 35, 4)
                 ->addRule(Form::FILLED, "Zadejte prosím kontatní adresu.")
                 ->setOption("description", _("Pro zaslání případné odměny."));
-        if (!Environment::getUser()->isLoggedIn()) {
+        if (!$this->getPresenter()->user->isLoggedIn()) {
             $desc = Html::el();
             $desc->add(_('Přečetl jsem si '));
             $desc->add(Html::el('a')->href($this->getPresenter()->link('Default:rules'))->setText(_('pravidla soutěže')));
@@ -190,8 +200,8 @@ class TeamFormComponent extends BaseComponent {
 
         $form->addGroup();
 
-        if (Environment::getUser()->isLoggedIn()) {
-            $loggedTeam = Interlos::getLoggedTeam();
+        if ($this->getPresenter()->user->isLoggedIn()) {
+            $loggedTeam = Interlos::getLoggedTeam($this->getPresenter()->user);
             $defaults += array(
                 "team_name" => $loggedTeam->name,
                 "email" => $loggedTeam->email,

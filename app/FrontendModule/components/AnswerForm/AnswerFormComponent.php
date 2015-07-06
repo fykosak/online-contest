@@ -1,5 +1,12 @@
 <?php
 
+use Nette,
+    Nette\Application\UI\Form,
+    Nette\Utils\Html,
+    App\Model\Interlos,
+    App\Model\AnswersModel,
+    App\Model\TasksModel;
+
 class AnswerFormComponent extends BaseComponent {
 
     const TASK_ELEMENT = 'task';
@@ -18,7 +25,7 @@ class AnswerFormComponent extends BaseComponent {
 
             if (!$period) {
                 $this->log($team, "solution_tried", "The team tried to insert the solution of task [$task->id_task] with solution [$solution].");
-                throw new InvalidStateException("There is no active submit period.", AnswersModel::ERROR_OUT_OF_PERIOD);
+                throw new Nette\InvalidStateException("There is no active submit period.", AnswersModel::ERROR_OUT_OF_PERIOD);
             }
 
             Interlos::answers()->insert($team, $task, $solution, $period);
@@ -30,7 +37,7 @@ class AnswerFormComponent extends BaseComponent {
             } else {
                 $this->getPresenter()->flashMessage(_("Vaše odpověď je špatně."), "danger");
             }
-        } catch (InvalidStateException $e) {
+        } catch (Nette\InvalidStateException $e) {
             if ($e->getCode() == AnswersModel::ERROR_TIME_LIMIT) {
                 $this->getPresenter()->flashMessage(sprintf(_("Lze odpovídat až za <span class='timesec'>%d</span> sekund."), $e->getMessage()), "!warning");
                 return;
@@ -112,8 +119,8 @@ class AnswerFormComponent extends BaseComponent {
 
     protected function startUp() {
         parent::startUp();
-        if (!Environment::getUser()->isLoggedIn()) {
-            throw new InvalidStateException("There is no logged team.");
+        if (!$this->getPresenter()->user->isLoggedIn()) {
+            throw new Nette\InvalidStateException("There is no logged team.");
         }
         if (Interlos::isGameEnd()) {
             $this->flashMessage(_("Čas vypršel."), "danger");

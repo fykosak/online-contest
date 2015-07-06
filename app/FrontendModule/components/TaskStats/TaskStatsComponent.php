@@ -1,4 +1,7 @@
 <?php
+
+use App\Model\Interlos;
+
 class TaskStatsComponent extends BaseComponent
 {
 

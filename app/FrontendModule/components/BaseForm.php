@@ -1,8 +1,11 @@
 <?php
 
-class BaseForm extends AppForm {
+use Nette\Application\UI,
+    App\Model\Interlos;
 
-    public function __construct(IComponentContainer $parent = NULL, $name = NULL) {
+class BaseForm extends UI\Form {
+
+    public function __construct(Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
         parent::__construct($parent, $name);
         $this->setTranslator(Interlos::getTranslator());
         $this->setRenderer($this->createRenderer());
@@ -10,7 +13,7 @@ class BaseForm extends AppForm {
 
     private function createRenderer() {
         $this->getElementPrototype()->class = 'form-horizontal';
-        $renderer = new ConventionalRenderer();
+        $renderer = new Nette\Forms\Rendering\DefaultFormRenderer();
         $renderer->wrappers['controls']['container'] = 'div';
         $renderer->wrappers['pair']['container'] = 'div class="form-group"';
         $renderer->wrappers['label']['container'] = '';

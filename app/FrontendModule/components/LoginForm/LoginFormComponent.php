@@ -1,4 +1,8 @@
 <?php
+
+use Nette\Application\UI\Form,
+    Nette\Security;
+
 class LoginFormComponent extends BaseComponent
 {
 
@@ -6,10 +10,10 @@ class LoginFormComponent extends BaseComponent
 	$values = $form->getValues();
 
 	try {
-	    Environment::getUser()->login($values['name'], $values['password']);
+	    $this->getPresenter()->user->login($values['name'], $values['password']);
 	}
-	catch(AuthenticationException $e) {
-	    if ($e->getCode() == IAuthenticator::IDENTITY_NOT_FOUND) {
+	catch(Security\AuthenticationException $e) {
+	    if ($e->getCode() == Security\IAuthenticator::IDENTITY_NOT_FOUND) {
 		$this->getPresenter()->flashMessage(_("Daný tým neexistuje."), "danger");
 	    }
 	    else {

@@ -1,4 +1,7 @@
 <?php
+
+use App\Model\Interlos;
+
 class TeamListComponent extends BaseListComponent {
 
 	protected function beforeRender() {

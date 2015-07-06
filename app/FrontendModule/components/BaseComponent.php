@@ -1,6 +1,13 @@
 <?php
-abstract class BaseComponent extends Control {
-	public function __construct(/*Nette\*/IComponentContainer $parent = NULL, $name = NULL) {
+
+//namespace App\FrontendModule\Components;
+
+use Nette,
+    App\Model\Interlos,
+    App\Tools\InterlosTemplate;
+
+abstract class BaseComponent extends Nette\Application\UI\Control {
+	public function __construct(/*Nette\*/Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
 		parent::__construct($parent, $name);
 		$this->startUp();
 	}
@@ -19,7 +26,7 @@ abstract class BaseComponent extends Control {
 		$template->setFile(
 				dirname(__FILE__) . "/" .
 				$componentName . "/" .
-				ExtraString::lowerFirst($componentName) . ".phtml"
+				\ExtraString::lowerFirst($componentName) . ".latte"
 		);
                 $template->setTranslator(Interlos::getTranslator());
                 $template->registerHelper('i18n', 'GettextTranslator::i18nHelper');

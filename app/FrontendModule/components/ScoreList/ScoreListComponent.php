@@ -1,5 +1,7 @@
 <?php
 
+use App\Model\Interlos;
+
 class ScoreListComponent extends BaseComponent {
 
     protected function beforeRender() {

@@ -1,10 +1,14 @@
 <?php
+
+use App\Model\Interlos,
+    Nette\Application\UI\Form;
+
 class ChatListComponent extends BaseListComponent {
 
 	// PUBLIC METHODS
 
 	public function chatSubmitted(Form $form) {
-                if(!Environment::getUser()->isLoggedIn()){
+                if(!$this->getPresenter()->user->isLoggedIn()){
                     $this->redirect('Sign:in');
                 }
             
@@ -17,10 +21,10 @@ class ChatListComponent extends BaseListComponent {
 		// Insert a chat post
 		try {                    
 			Interlos::chat()->insert(
-					Environment::getUser()->getIdentity()->id_team,
-					$values["content"],
-                                        $values["parent_id"],
-                                        $this->getPresenter()->lang
+                            $this->getPresenter()->user->getIdentity()->id_team,
+                            $values["content"],
+                            $values["parent_id"],
+                            $this->getPresenter()->lang
 			);
 			$this->getPresenter()->flashMessage(_("Příspěvek byl vložen."), "success");
 			$this->getPresenter()->redirect("this");
