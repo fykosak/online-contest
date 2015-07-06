@@ -82,9 +82,9 @@
                                 <span class="hidden-sm">{_'Odhlásit se'}</span>
                                 <span class="visible-sm-inline glyphicon glyphicon-log-out" title="{_'Odhlásit se'}"/>
                             </a></li>
-                        <li><a href="{link Team:default}" title="{=Interlos::getLoggedTeam()->name}">
-                                <span class="hidden-sm">{=String::truncate(Interlos::getLoggedTeam()->name, 15)}</span>
-                                <span class="visible-sm-inline glyphicon glyphicon-user" title="{=String::truncate(Interlos::getLoggedTeam()->name, 15)}"/>                                
+                        <li><a href="{link Team:default}" title="{=App\Model\Interlos::getLoggedTeam($user)->name}">
+                                <span class="hidden-sm">{=Nette\Utils\Strings::truncate(App\Model\Interlos::getLoggedTeam($user)->name, 15)}</span>
+                                <span class="visible-sm-inline glyphicon glyphicon-user" title="{=Nette\Utils\Strings::truncate(App\Model\Interlos::getLoggedTeam($user)->name, 15)}"/>                                
                             </a></li>
                         {/if}
                         {/if}
