@@ -2,7 +2,8 @@
 
 use App\Model\Interlos,
     App\Model\AnswersModel,
-    Nette\Application\UI\Form;
+    Nette\Application\UI\Form,
+    Tracy\Debugger;
 
 class SkipFormComponent extends BaseComponent {
 
@@ -28,13 +29,15 @@ class SkipFormComponent extends BaseComponent {
                 return;
             } else {
                 $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
-                Debug::processException($e, TRUE);
+                //Debug::processException($e, TRUE);
+                Debugger::log($e);
                 //error_log($e->getTraceAsString());
                 return;
             }
         } catch (Exception $e) {
             $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
-            Debug::processException($e, TRUE);
+            //Debug::processException($e, TRUE);
+            Debugger::log($e);
             //error_log($e->getTraceAsString());
             return;
         }

@@ -10,11 +10,11 @@
     <td>{$answer->id_answer}</td>
     <td>{$tasks[$answer->id_task]->code_name}</td>
     <td>{$answer->inserted|timeOnly}</td>
-    <td>{if $tasks[$answer->id_task]->answer_type == TasksModel::TYPE_STR}
+    <td>{if $tasks[$answer->id_task]->answer_type == \App\Model\TasksModel::TYPE_STR}
                     {$answer->answer_str}
-                    {elseif $tasks[$answer->id_task]->answer_type == TasksModel::TYPE_INT}
+                    {elseif $tasks[$answer->id_task]->answer_type == \App\Model\TasksModel::TYPE_INT}
                     {$answer->answer_int}
-                    {elseif $tasks[$answer->id_task]->answer_type == TasksModel::TYPE_REAL}
+                    {elseif $tasks[$answer->id_task]->answer_type == \App\Model\TasksModel::TYPE_REAL}
                     {$answer->answer_real}
                     {/if}
     </td>

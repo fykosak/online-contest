@@ -38,7 +38,7 @@ class VisualPaginatorComponent extends BaseComponent
 
 
 	/**
-	 * @return Nette\Paginator
+	 * @return Nette\Utils\Paginator
 	 */
 	public function getPaginator()
 	{

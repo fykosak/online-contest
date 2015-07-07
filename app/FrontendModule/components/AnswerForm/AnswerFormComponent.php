@@ -5,7 +5,8 @@ use Nette,
     Nette\Utils\Html,
     App\Model\Interlos,
     App\Model\AnswersModel,
-    App\Model\TasksModel;
+    App\Model\TasksModel,
+    Tracy\Debugger;
 
 class AnswerFormComponent extends BaseComponent {
 
@@ -21,7 +22,7 @@ class AnswerFormComponent extends BaseComponent {
             $period = Interlos::period()->findCurrent($task["id_group"]);
             $solution = trim($values["solution"], " ");
             $solution = strtr($solution, ",", ".");
-            $team = Interlos::getLoggedTeam()->id_team;
+            $team = Interlos::getLoggedTeam($this->getPresenter()->user)->id_team;
 
             if (!$period) {
                 $this->log($team, "solution_tried", "The team tried to insert the solution of task [$task->id_task] with solution [$solution].");
@@ -46,7 +47,8 @@ class AnswerFormComponent extends BaseComponent {
                 return;
             } else {
                 $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
-                Debug::processException($e, TRUE);
+                //Debug::processException($e, TRUE);
+                Debugger::log($e);
                 //error_log($e->getTraceAsString());
                 return;
             }
@@ -55,13 +57,15 @@ class AnswerFormComponent extends BaseComponent {
                 $this->getPresenter()->flashMessage(_("Na zadaný úkol jste již takto jednou odpovídali."), "danger");
             } else {
                 $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
-                Debug::processException($e, TRUE);
+                //Debug::processException($e, TRUE);
+                Debugger::log($e);
                 //error_log($e->getTraceAsString());
             }
             return;
         } catch (Exception $e) {
             $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
-            Debug::processException($e, TRUE);
+            //Debug::processException($e, TRUE);
+            Debugger::log($e);
             //error_log($e->getTraceAsString());
             return;
         }
@@ -139,7 +143,7 @@ class AnswerFormComponent extends BaseComponent {
 
     private function initTasks() {
         $this->tasks = Interlos::tasks()
-                ->findSubmitAvailable(Interlos::getLoggedTeam()->id_team)
+                ->findSubmitAvailable(Interlos::getLoggedTeam($this->getPresenter()->user)->id_team)
                 ->fetchAll();
 
         $this->tasksInfo = array();

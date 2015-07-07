@@ -11,7 +11,8 @@ use App\Model\Interlos,
     App\FrontendModule\FrontendModule,
     Nette\Application\UI\Form,
     Nette\Utils\Html,
-    App\Model\Authentication\TeamAuthenticator;
+    App\Model\Authentication\TeamAuthenticator,
+    Tracy\Debugger;
 
 class TeamFormComponent extends BaseComponent {
 
@@ -46,7 +47,7 @@ class TeamFormComponent extends BaseComponent {
             // Send e-mail
             $template = InterlosTemplate::loadTemplate(new Template());
             $template->registerFilter(new LatteFilter());
-            $template->setFile(FrontendModule::getModuleDir() . "/templates/mail/registration." . $this->getPresenter()->lang . ".phtml");
+            $template->setFile(FrontendModule::getModuleDir() . "/templates/mail/registration." . $this->getPresenter()->lang . ".latte");
             $template->team_name = $values["team_name"];
             $template->password = $values["password"];
             $template->category = $names[$values["category"]];
@@ -69,8 +70,9 @@ class TeamFormComponent extends BaseComponent {
             $this->getPresenter()->redirect("Default:login");
         } catch (DibiDriverException $e) {
             $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "danger");
-            Debug::processException($e);
-            throw $e;
+            //Debug::processException($e);
+            Debugger::log($e);
+            throw $e; //TODO neccessary?
             return;
         }
     }
@@ -104,13 +106,13 @@ class TeamFormComponent extends BaseComponent {
             $this->getPresenter()->redirect("this");
         } catch (Nette\InvalidArgumentException $e) {
             $this->getPresenter()->flashMessage(_("Tým musí mít alespoň jednoho člena."), "danger");
-            Debug::processException($e);
+            Debugger::log($e);
         } catch (DuplicityException $e) {
             $this->getPresenter()->flashMessage(_("Daný tým již existuje."), "danger");
-            Debug::processException($e);
+            Debugger::log($e);
         } catch (DibiDriveException $e) {
             $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "danger");
-            Debug::processException($e);
+            Debugger::log($e);
         }
     }
 

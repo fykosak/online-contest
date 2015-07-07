@@ -2,12 +2,11 @@
 
 //namespace App\FrontendModule\Components;
 
-use Nette,
-    App\Model\Interlos,
+use App\Model\Interlos,
     App\Tools\InterlosTemplate;
 
 abstract class BaseComponent extends Nette\Application\UI\Control {
-	public function __construct(/*Nette\*/Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
+	public function __construct(Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
 		parent::__construct($parent, $name);
 		$this->startUp();
 	}
@@ -29,7 +28,7 @@ abstract class BaseComponent extends Nette\Application\UI\Control {
 				\ExtraString::lowerFirst($componentName) . ".latte"
 		);
                 $template->setTranslator(Interlos::getTranslator());
-                $template->registerHelper('i18n', 'GettextTranslator::i18nHelper');
+                $template->registerHelper('i18n', '\App\Model\Translator\GettextTranslator::i18nHelper');
 
 		return InterlosTemplate::loadTemplate($template);
 	}
