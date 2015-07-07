@@ -4,7 +4,8 @@ namespace App\FrontendModule\Presenters;
 
 use App\Model\Interlos,
     Nette\Http\Url,
-    Nette\Utils;
+    Nette\Utils,
+    Nette\Http;
 
 class TeamPresenter extends BasePresenter {
 
@@ -15,7 +16,7 @@ class TeamPresenter extends BasePresenter {
         } else if ($url = $this->getRegistrationValue('url')) {
             $uri = new Url($url);
             $uri->appendQuery(array('lang' => $this->lang));
-            $this->redirectUri($uri, IHttpResponse::S307_TEMPORARY_REDIRECT);
+            $this->redirectUrl($uri, Http\IResponse::S307_TEMPORARY_REDIRECT);
         }
     }
 

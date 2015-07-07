@@ -106,7 +106,7 @@ class BasePresenter extends Nette\Application\UI\Presenter {
     private function machineRedirect() {
         $machine=$this->context->parameters['machine'];
         if (!$machine['game']) {
-            $this->redirectUri($machine['url']);
+            $this->redirectUrl($machine['url']);
         }
     }
 

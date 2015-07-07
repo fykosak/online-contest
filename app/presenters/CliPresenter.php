@@ -5,6 +5,10 @@
  * 
  * @author Michal Koutný <michal@fykos.cz>
  */
+
+use Nette\Application\UI\Presenter,
+    Tracy\Debugger;
+
 class CliPresenter extends Presenter {
 
     private $year;
@@ -76,7 +80,7 @@ class CliPresenter extends Presenter {
     private function generateAnswers($n, $sleep = 0) {
         $tasks = dibi::fetchAll('SELECT * FROM [view_task]');
         $teamIds = array_keys($this->teams);
-        Debug::timer();
+        Debugger::timer();
         $dbTime = 0;
         $phpTime = 0;
         for ($j = 0; $j < $n; ++$j) {
@@ -94,7 +98,7 @@ class CliPresenter extends Presenter {
             } else {
                 $answer = $task['answer_' . $suff] * rand(2, 5);
             }
-            $phpTime += Debug::timer();
+            $phpTime += Debugger::timer();
             do {
                 $exp = false;
                 try {
@@ -108,7 +112,7 @@ class CliPresenter extends Presenter {
                 } catch (DibiDriverException $e) {
                     $exp = true;
                 }
-                $dbTime += Debug::timer();
+                $dbTime += Debugger::timer();
                 if ($sleep) {
                     usleep($sleep * 1000);
                 }
