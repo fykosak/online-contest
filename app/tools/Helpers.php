@@ -9,7 +9,7 @@ namespace App\Tools;
 
 final class Helpers {
 
-    /** @var Texy */
+    /** @var \Texy */
     private static $texy;
 
     final private function  __construct() {
@@ -25,7 +25,7 @@ final class Helpers {
      */
     public static function getHelper($helper) {
 	if (empty($helper)) {
-	    throw NullPointerException("helper");
+	    throw new \NullPointerException("helper");
 	}
 	switch ($helper) {
 	    case "date": return array(get_class(), 'dateFormatHelper');
@@ -38,7 +38,7 @@ final class Helpers {
 		break;
 	    case 'texy': return array(get_class(), "texyHelper");
 	    default:
-		throw new DataNotFoundException("helper: $helper");
+		throw new \DataNotFoundException("helper: $helper");
 	}
     }
 
@@ -86,10 +86,10 @@ final class Helpers {
 
     // ---- PRIVATE METHODS
 
-    /** @return Texy */
+    /** @return \Texy */
     private static function getTexy() {
 	if (!isset(self::$texy)) {
-	    self::$texy = new Texy();
+	    self::$texy = new \Texy();
 	    self::$texy->encoding = 'utf8';
 	}
 	return self::$texy;

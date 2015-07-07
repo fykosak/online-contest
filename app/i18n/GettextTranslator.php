@@ -4,6 +4,11 @@
  *
  * @author Michal Koutný <xm.koutny@gmail.com>
  */
+
+namespace App\Model\Translator;
+
+use Nette\Localization\ITranslator;
+
 class GettextTranslator implements ITranslator {
 
     public static $supportedLangs = array('cs', 'en');

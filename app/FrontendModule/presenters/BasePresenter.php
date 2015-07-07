@@ -40,7 +40,7 @@ class BasePresenter extends Nette\Application\UI\Presenter {
         $template->lang = $this->lang;
         $template->customScript = '';
         $template->setTranslator(Interlos::getTranslator());
-        $template->registerHelper('i18n', 'GettextTranslator::i18nHelper');
+        $template->registerHelper('i18n', '\App\Model\Translator\GettextTranslator::i18nHelper');
 
         return InterlosTemplate::loadTemplate($template);
     }
