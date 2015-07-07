@@ -10,21 +10,21 @@ class GroupsModel extends AbstractModel {
     }
 
     /**
-     * @return DibiDataSource
+     * @return \DibiDataSource
      */
     public function findAll() {
         return $this->getConnection()->dataSource("SELECT * FROM [view_group]");
     }
 
     /**
-     * @return DibiDataSource
+     * @return \DibiDataSource
      */
     public function findAllAvailable() {
         return $this->getConnection()->dataSource("SELECT * FROM [view_group] WHERE [to_show] < NOW() ORDER BY [id_group]");
     }
 
     /**
-     * @return DibiDataSource
+     * @return \DibiDataSource
      */
     public function findAllSkippable() {
         $source = $this->getConnection()->dataSource("

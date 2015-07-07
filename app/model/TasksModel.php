@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Nette;
+
 class TasksModel extends AbstractModel {
 
     const TYPE_STR = 'str';
@@ -14,14 +16,14 @@ class TasksModel extends AbstractModel {
     }
 
     /**
-     * @return DibiDataSource
+     * @return \DibiDataSource
      */
     public function findAll() {
         return $this->getConnection()->dataSource("SELECT * FROM [view_task]");
     }
 
     /**
-     * @return DibiDataSource
+     * @return \DibiDataSource
      */
     public function findPossiblyAvailable($teamId = NULL) {
         $source = $this->getConnection()->dataSource("SELECT * FROM [view_possibly_available_task]");
@@ -29,7 +31,7 @@ class TasksModel extends AbstractModel {
     }
 
     /**
-     * @return DibiDataSource
+     * @return \DibiDataSource
      */
     public function findProblemAvailable($teamId) {
         $source = $this->getConnection()->dataSource("SELECT * FROM [view_available_task] WHERE [id_team] = %i", $teamId);
@@ -37,7 +39,7 @@ class TasksModel extends AbstractModel {
     }
 
     /**
-     * @return DibiDataSource
+     * @return \DibiDataSource
      */
     public function findSubmitAvailable($teamId) {
         $source = $this->getConnection()->dataSource("SELECT * FROM [view_submit_available_task] WHERE [id_team] = %i", $teamId);
@@ -104,20 +106,20 @@ class TasksModel extends AbstractModel {
         $answers = Interlos::answers()->findAllCorrect($team)->where("[id_task] = %i", $task->id_task);
         if ($answers->count() > 0) {
             $this->log($team, "skip_tried", "The team tried to skip the task [$task->id_task].");
-            throw new InvalidStateException("Skipping not allowed for the task [$task->id_task].", AnswersModel::ERROR_SKIP_OF_ANSWERED);
+            throw new Nette\InvalidStateException("Skipping not allowed for the task [$task->id_task].", AnswersModel::ERROR_SKIP_OF_ANSWERED);
         }
 
         // Check that skip is allowed in period
         $skippableGroups = Interlos::groups()->findAllSkippable()->fetchPairs('id_group', 'id_group');
         if (!array_key_exists($task["id_group"], $skippableGroups)) {
             $this->log($team, "skip_tried", "The team tried to skip the task [$task->id_task].");
-            throw new InvalidStateException("Skipping not allowed during this period.", AnswersModel::ERROR_SKIP_OF_PERIOD);
+            throw new Nette\InvalidStateException("Skipping not allowed during this period.", AnswersModel::ERROR_SKIP_OF_PERIOD);
         }
         // Insert a skip record
         $return = $this->getConnection()->insert("task_state", array(
                     "id_team" => $team,
                     "id_task" => $task["id_task"],
-                    "inserted" => new DateTime(),
+                    "inserted" => new \DateTime(),
                     "skipped" => 1))->execute();
 
         // Increase counter

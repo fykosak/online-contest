@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Nette;
+
 class AnswersModel extends AbstractModel {
 
     const ERROR_TIME_LIMIT = 10;
@@ -57,7 +59,7 @@ class AnswersModel extends AbstractModel {
             $timestamp = strtotime($row['inserted']);
             $this->log($team, "solution_tried", "The team tried to insert the solution of task [$task->id_task] with code [$solution].");
             $remaining = $period["time_penalty"] - (time() - $timestamp);
-            throw new InvalidStateException($remaining, self::ERROR_TIME_LIMIT);
+            throw new Nette\InvalidStateException($remaining, self::ERROR_TIME_LIMIT);
         }
         $answer = array(
             "answer_str" => null,
@@ -79,7 +81,7 @@ class AnswersModel extends AbstractModel {
         $return = $this->getConnection()->insert("answer", array(
                     "id_team" => $team,
                     "id_task" => $task["id_task"],
-                    "inserted" => new DateTime()
+                    "inserted" => new \DateTime()
                         ) + $answer)->execute();
         // Log the action
         $this->log($team, "solution_inserted", "The team successfuly inserted the solution of task [$task->id_task] with code [$solution].");

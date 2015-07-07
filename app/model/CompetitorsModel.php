@@ -17,10 +17,16 @@ class CompetitorsModel extends AbstractModel {
 		return $this->findAll()->where("[id_competitor] = %i", $id)->fetch();
 	}
 
+        /**
+        * @return \DibiDataSource
+        */
 	public function findAll() {
 		return $this->getConnection()->dataSource("SELECT * FROM [view_competitor]");
 	}
 
+        /**
+        * @return \DibiDataSource
+        */
 	public function findAllByTeam($team) {
 		$this->checkEmptiness($team, "team");
 		return $this->findAll()->where("[id_team] = %i", $team);

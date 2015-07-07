@@ -21,7 +21,7 @@ class TeamsModel extends AbstractModel {
     }
 
     /**
-     * @return DibiDataSource
+     * @return \DibiDataSource
      */
     public function findAllWithScore() {
         return $this->getConnection()->dataSource("SELECT * FROM [tmp_total_result]");
@@ -33,14 +33,14 @@ class TeamsModel extends AbstractModel {
         $this->checkEmptiness($category, "category");
         $this->checkEmptiness($password, "password");
         $this->checkEmptiness($address, "address");
-        $password = TeamAuthenticator::passwordHash($password);
+        $passwordHash = Authentication\TeamAuthenticator::passwordHash($password);
         $this->getConnection()->insert("team", array(
             "name" => $name,
             "email" => $email,
             "category" => $category,
-            "password" => $password,
+            "password" => $passwordHash,
             "address" => $address,
-            "inserted" => new DateTime(),
+            "inserted" => new \DateTime(),
             "id_year" => Interlos::years()->findCurrent()->id_year
         ))->execute();
         $return = $this->getConnection()->insertId();
@@ -48,7 +48,7 @@ class TeamsModel extends AbstractModel {
         return $return;
     }
 
-    /** @return DibiFluent */
+    /** @return \DibiFluent */
     public function update(array $changes) {
         return $this->getConnection()->update("team", $changes);
     }

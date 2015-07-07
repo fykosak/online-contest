@@ -2,11 +2,12 @@
 
 namespace App\Model;
 
-use Nette;
+use Nette,
+    Tracy\Debugger;
 
 class Interlos {
 
-    private static $adminMessages = FALSE;
+    //private static $adminMessages = FALSE;
     private static $connection;
     private static $currentYear;
     private static $loggedTeam;
@@ -67,7 +68,7 @@ class Interlos {
         }
     }
 
-    /** @return DibiRow */
+    /** @return \DibiRow */
     public static function getCurrentYear() {
         if (!isset(self::$currentYear)) {
             self::$currentYear = self::years()->findCurrent();
@@ -75,7 +76,7 @@ class Interlos {
         return self::$currentYear;
     }
 
-    /** @return DibiRow */
+    /** @return \DibiRow */
     public static function getLoggedTeam($user) {
         if (!isset(self::$loggedTeam)) {
             if ($user->isLoggedIn()) {
@@ -87,7 +88,7 @@ class Interlos {
         return self::$loggedTeam;
     }
 
-    /** @return GettextTranslator */
+    /** @return Translator\GettextTranslator */
     public static function getTranslator() {
         if (empty(self::$translator)) {
             return new Translator\GettextTranslator();
@@ -101,6 +102,7 @@ class Interlos {
 //    }
 
     public static function isCronAccess() {
+        //TODO work of presenter or authenticator
         return isset($_GET["cron-key"]) && Environment::getConfig("cron")->key == $_GET["cron-key"];
     }
 
@@ -179,10 +181,10 @@ class Interlos {
         );
 
         foreach ($tables as $view => $table) {
-            Debug::timer();
+            Debugger::timer();
             self::getConnection()->query("DROP TABLE IF EXISTS [$result$table]");
             self::getConnection()->query("CREATE TABLE [$result$table] AS SELECT * FROM [$src$view]");
-            echo "$table: " . Debug::timer() . "<br>";
+            echo "$table: " . Debugger::timer() . "<br>";
         }
 
     }
@@ -207,7 +209,7 @@ class Interlos {
         return self::getModel("score");
     }
 
-    public static function setConnection(DibiConnection $connection) {
+    public static function setConnection(\DibiConnection $connection) {
         self::$connection = $connection;
     }
 

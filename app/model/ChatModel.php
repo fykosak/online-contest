@@ -10,7 +10,7 @@ class ChatModel extends AbstractModel {
 	}
 
 	/**
-	 * @return DibiDataSource
+	 * @return \DibiDataSource
 	 */
 	public function findAll($lang = NULL) {
 		$dataSource = $this->getConnection()->dataSource("SELECT * FROM [view_chat]");
@@ -22,14 +22,14 @@ class ChatModel extends AbstractModel {
 	}
         
         /**
-	 * @return DibiDataSource
+	 * @return \DibiDataSource
 	 */
 	public function findAllRoot($lang = NULL) {
             return $this->findAll($lang)->where("[id_parent] IS NULL");
 	}
         
         /**
-	 * @return DibiDataSource
+	 * @return \DibiDataSource
 	 */
 	public function findDescendants($parent_id, $lang = NULL) {
 		return $this->findAll($lang)->where("[id_parent] = %i", $parent_id);
@@ -43,7 +43,7 @@ class ChatModel extends AbstractModel {
 				"id_team"	=> $team,
 				"content"	=> $content,
                                 "lang"          => $lang,
-				"inserted"	=> new DateTime()
+				"inserted"	=> new \DateTime()
 				))->execute();
 		$this->log($team, "chat_inserted", "The team successfuly contributed to the chat.");
 		return $return;

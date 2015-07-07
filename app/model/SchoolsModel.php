@@ -17,7 +17,7 @@ class SchoolsModel extends AbstractModel {
 		$this->checkEmptiness($name, "name");
 		$this->getConnection()->insert("school", array(
 				"name"	=> $name,
-				"inserted"	=> new DateTime()
+				"inserted"	=> new \DateTime()
 				))->execute();
 		$return = $this->getConnection()->insertId();
 		$this->log(NULL, "school_inserted", "The school [$name] has been inserted.");

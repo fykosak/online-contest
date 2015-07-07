@@ -2,14 +2,16 @@
 
 namespace App\Model;
 
+use Nette;
+
 class PeriodModel extends AbstractModel {
 
     public function find($id) {
-        throw new NotSupportedException();
+        throw new Nette\NotSupportedException();
     }
 
     public function findAll() {
-        throw new NotSupportedException();
+        throw new Nette\NotSupportedException();
     }
 
     public function findCurrent($groupId) {

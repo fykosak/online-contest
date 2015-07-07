@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Tracy\Debugger;
+
 abstract class AbstractModel implements InterlosModel {
 
 	private $connection;
@@ -18,7 +20,7 @@ abstract class AbstractModel implements InterlosModel {
 //		}
 	}
 
-	/** @return DibiConnection */
+	/** @return \DibiConnection */
 	protected final function getConnection() {
 		return $this->connection;
 	}
@@ -32,8 +34,8 @@ abstract class AbstractModel implements InterlosModel {
 					"inserted"	=> new \DateTime()
 					))->execute();
 		}
-		catch(Exception $e) {
-			Debug::processException($e);
+		catch(\Exception $e) {
+                        Debugger::log($e);
 		}
 	}
 

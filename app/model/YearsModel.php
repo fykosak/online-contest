@@ -9,12 +9,12 @@ class YearsModel extends AbstractModel {
 		$this->getConnection()->query("SELECT * FROM [year] WHERE [id_year] = %i", $id)->fetch();
 	}
 
-	/** @return DibiRow */
+	/** @return \DibiRow */
 	public function findCurrent() {
 		return $this->getConnection()->query("SELECT * FROM [view_current_year]")->fetch();
 	}
 
-	/** @return DibiDataSource */
+	/** @return \DibiDataSource */
 	public function findAll() {
 		return $this->getConnection()->dataSource("SELECT * FROM [year]");
 	}
