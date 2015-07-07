@@ -45,8 +45,7 @@ class TeamFormComponent extends BaseComponent {
                     $values["team_name"], $values["email"], $values["category"], $values["password"], $values["address"]
             );
             // Send e-mail
-            $template = InterlosTemplate::loadTemplate(new Template());
-            $template->registerFilter(new LatteFilter());
+            $template = $this->createTemplate();
             $template->setFile(FrontendModule::getModuleDir() . "/templates/mail/registration." . $this->getPresenter()->lang . ".latte");
             $template->team_name = $values["team_name"];
             $template->password = $values["password"];
@@ -54,7 +53,7 @@ class TeamFormComponent extends BaseComponent {
             
             $mailConfig = $this->getPresenter()->context->parameters['mail'];            
             $mail = new Nette\Mail\Message();
-            $mail->setBody($template);
+            $mail->setHtmlBody($template);
             $mail->addTo($values["email"]);
             $mail->setFrom($mailConfig['info'], $mailConfig['name']);
             $mail->setSubject(_("FoL registrace"));
