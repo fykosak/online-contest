@@ -92,7 +92,7 @@ class TasksModel extends AbstractModel {
                     "serie" => $serie,
                     "type" => $type,
                     "code" => $code,
-                    "inserted" => $inserted
+                    "inserted" => new \DateTime()
                 ))->execute();
         $this->log(NULL, "task_inserted", "The task [$name] has been inserted.");
         return $return;
