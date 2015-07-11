@@ -58,7 +58,8 @@ class TeamFormComponent extends BaseComponent {
             $mail->setFrom($mailConfig['info'], $mailConfig['name']);
             $mail->setSubject(_("FoL registrace"));
             try {
-                $mail->send();
+                $mailer = new Nette\Mail\SendmailMailer;
+                $mailer->send($mail);
             } catch (Nette\InvalidStateException $e) {
                 $this->getPresenter()->flashMessage(_("Potvrzovací e-mail se nepodařilo odeslat."), "danger");
             }
