@@ -1,7 +1,5 @@
-parameters:
-    debug:
-        log: %appDir%/temp/php_error.log
-        email: michal@fykos.cz
+tracy:
+    email: webmaster@fykos.cz
 
 php:
     date.timezone: Europe/Prague
