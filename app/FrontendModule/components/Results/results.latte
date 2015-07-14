@@ -1,5 +1,4 @@
-{*{cache "results"}*}
-{cache}
+{cache "results/".$presenter->lang}
 {var $teams => $teams->fetchAssoc("category,id_team")}
 {var $bonus => $bonus->fetchAssoc("id_team")}
 {var $penality => $penality->fetchAssoc("id_team")}

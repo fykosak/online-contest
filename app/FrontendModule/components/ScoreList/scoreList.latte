@@ -1,5 +1,4 @@
-{*{cache "results"}*}
-{cache}
+{cache "scoreList/".$presenter->lang}
 {var $teams => $teams->fetchAll()}
 {var $score => $score->fetchAssoc("id_team,id_task")}
 {var $skips => $skips->fetchAssoc("id_team,id_task")}
