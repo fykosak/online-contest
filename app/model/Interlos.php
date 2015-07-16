@@ -101,11 +101,6 @@ class Interlos {
 //        return isset($_GET["admin-key"]) && Environment::getConfig("admin")->key == $_GET["admin-key"];
 //    }
 
-    public static function isCronAccess() {
-        //TODO work of presenter or authenticator
-        return isset($_GET["cron-key"]) && Environment::getConfig("cron")->key == $_GET["cron-key"];
-    }
-
     public static function isGameActive() {
         return self::isGameStarted() && !self::isGameEnd();
     }
@@ -165,10 +160,6 @@ class Interlos {
 //    }
 
     public static function resetTemporaryTables() {
-        if (!self::isCronAccess()) {
-            return;
-        }
-
         $src = 'view_'; // view
         $result = 'tmp_'; // resulting cache
 
