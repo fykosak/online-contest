@@ -18,6 +18,16 @@ services:
     router: App\FrontendModule\FrontendModule::createRouter
     connection: DibiConnection(%database%)
     - App\Model\Interlos
+    - App\Model\AnswersModel
+    - App\Model\ChatModel
+    - App\Model\CompetitorsModel
+    - App\Model\GroupsModel
+    - App\Model\PeriodModel
+    - App\Model\SchoolsModel
+    - App\Model\ScoreModel
+    - App\Model\TasksModel
+    - App\Model\TeamsModel
+    - App\Model\YearsModel
 
 #TODO not reimplemented yet
 #[common]
