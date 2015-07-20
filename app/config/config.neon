@@ -28,6 +28,9 @@ services:
     - App\Model\TasksModel
     - App\Model\TeamsModel
     - App\Model\YearsModel
+    nette.userStorage:
+        setup:
+            - setNamespace("olfyziklani")
 
 #TODO not reimplemented yet
 #[common]
