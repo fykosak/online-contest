@@ -26,78 +26,7 @@
 
     <body onload="fixNavbarIssue()">
         {block body}
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">{_'Zobrazit navigaci'}</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{link Default:default}">{_'Fyziklání online'}</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{link Default:rules}" title="{_'Pravidla'}">{_'Pravidla'}</a></li>
-                        <li><a href="{link Default:lastYears}" title="{_'Minulé ročníky'}">{_'Minulé ročníky'}</a></li>
-                        {if App\Model\Interlos::isRegistrationStarted()}
-                        <li><a href="{link Default:chat}" title="{_'Diskuse'}">{_'Diskuse'}</a></li>
-                        <li><a href="{link Team:list}" title="{_'Týmy'}">
-                                <span class="hidden-sm">{_'Týmy'}</span>
-                                <span class="visible-sm-inline glyphicon glyphicon-list"/>                                
-                            </a></li>
-                        {if App\Model\Interlos::isGameStarted()}
-                        <li><a href="{link Stats:default}" title="{_'Statistiky'}">
-                                <span class="hidden-sm">{_'Statistiky'}</span>
-                                <span class="visible-sm-inline glyphicon glyphicon-stats"/>
-                            </a></li>
-                            {if $user->isLoggedIn()}
-                        <li {if App\Model\Interlos::isGameActive()}class="active"{/if}><a href="{link Game:default}" title="{_'Hra'}">
-                                <span class="hidden-sm">{_'Hra'}</span>
-                                <span class="visible-sm-inline glyphicon glyphicon-globe"/>
-                            </a></li>
-                        {/if}
-                        {/if}
-                        {/if}
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        {if App\Model\Interlos::isRegistrationActive()}
-                            {if !$user->isLoggedIn()}
-                        <li><a href="{link Team:registration}">
-                                <span class="hidden-sm">{_ 'Registrace'}</span>
-                                <span class="visible-sm-inline glyphicon glyphicon-edit" title="{_'Registrace'}"/>
-                            </a></li>
-                        {/if}
-                        {/if}
-                        {if App\Model\Interlos::isRegistrationStarted()}
-                            {if !$user->isLoggedIn()}
-                        <li><a href="{link Default:login}">
-                                <span class="hidden-sm">{_'Přihlásit se'}</span>
-                                <span class="visible-sm-inline glyphicon glyphicon-log-in" title="{_'Přihlásit se'}"/>
-                            </a></li>
-                        {else}
-                        <li><a href="{link Default:logout}">
-                                <span class="hidden-sm">{_'Odhlásit se'}</span>
-                                <span class="visible-sm-inline glyphicon glyphicon-log-out" title="{_'Odhlásit se'}"/>
-                            </a></li>
-                        <li><a href="{link Team:default}" title="{=App\Model\Interlos::getLoggedTeam($user)->name}">
-                                <span class="hidden-sm">{=Nette\Utils\Strings::truncate(App\Model\Interlos::getLoggedTeam($user)->name, 15)}</span>
-                                <span class="visible-sm-inline glyphicon glyphicon-user" title="{=Nette\Utils\Strings::truncate(App\Model\Interlos::getLoggedTeam($user)->name, 15)}"/>                                
-                            </a></li>
-                        {/if}
-                        {/if}
-                        <li n:if="$control->lang == 'cs'"><a href="{link this, lang => 'en'}"><img src="{$basePath}/images/icons/us-icon.png" alt="English" title="Switch to English"/></a></li>
-                        <li n:if="$control->lang == 'en'"><a href="{link this, lang => 'cs'}"><img src="{$basePath}/images/icons/cz-icon.png" alt="čeština" title="Přepnout do češtiny"/></a></li>                                    
-                    </ul>
-                    {if App\Model\Interlos::isGameActive()}
-                    <p class="navbar-text navbar-right visible-lg-inline-block">{control clock}</p>
-                    {/if}
-
-                </div><!--/.navbar-collapse -->
-            </div>
-        </div>
+        {include 'menu.latte'}
 
         {block #jumbotron}{/block}
 
