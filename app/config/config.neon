@@ -32,6 +32,8 @@ services:
         setup:
             - setNamespace("olfyziklani")
 
+includes:
+        - acl.neon
 #TODO not reimplemented yet
 #[common]
 #service.Nette-Security-IAuthorizator = SimpleAuthorizator
