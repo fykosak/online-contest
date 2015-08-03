@@ -1,16 +1,26 @@
 <?php
 
 use Nette\Application\UI\Form,
-    Nette\Security;
+    Nette\ComponentModel\IContainer,
+    Nette\Security,
+    App\Model\Authentication\AbstractAuthenticator;
 
 class LoginFormComponent extends BaseComponent
 {
+    /** @var App\Model\Authentication\AbstractAuthenticator */
+    private $authenticator;
+            
+    public function __construct(AbstractAuthenticator $authenticator, IContainer $parent = NULL, $name = NULL) {
+        parent::__construct($parent, $name);
+        $this->authenticator = $authenticator;
+    }
 
     public function formSubmitted(Form $form) {
 	$values = $form->getValues();
 
 	try {
-	    $this->getPresenter()->user->login($values['name'], $values['password']);
+	    //$this->getPresenter()->user->login($values['name'], $values['password']);
+            $this->authenticator->login($values['name'], $values['password']);
 	}
 	catch(Security\AuthenticationException $e) {
 	    if ($e->getCode() == Security\IAuthenticator::IDENTITY_NOT_FOUND) {

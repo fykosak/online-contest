@@ -10,12 +10,12 @@ use Nette\Security\IAuthenticator,
     Nette\Security\AuthenticationException,
     App\Model\Interlos;
 
-class TeamAuthenticator implements IAuthenticator
+class TeamAuthenticator extends AbstractAuthenticator
 {
 
 	const TEAM = "team";
 
-	public function authenticate(array $credentials) {
+	protected function authenticate(array $credentials) {
 		$name		= $credentials[IAuthenticator::USERNAME];
 		$password	= self::passwordHash($credentials[IAuthenticator::PASSWORD]);
 		$row = Interlos::teams()->findAll()->where("[name] = %s", $name)->fetch();

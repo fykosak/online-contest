@@ -6,6 +6,9 @@ use Nette,
     App\Model\Interlos;
 
 class DefaultPresenter extends BasePresenter {
+    
+        /** @var \App\Model\Authentication\TeamAuthenticator @inject*/
+        public $authenticator;
 
 	public function actionLogout() {
                 $this->getUser()->logout();
@@ -49,7 +52,7 @@ class DefaultPresenter extends BasePresenter {
 	}
 	
 	protected function createComponentLogin($name) {
-		return new \LoginFormComponent($this, $name);
+		return new \LoginFormComponent($this->authenticator, $this, $name);
 	}
 
 }

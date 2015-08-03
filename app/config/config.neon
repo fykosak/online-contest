@@ -13,7 +13,9 @@ session:
     expiration: 14 days
 
 services:
-    Nette\Security\IAuthenticator: App\Model\Authentication\TeamAuthenticator
+    - App\Model\Authentication\TeamAuthenticator
+    - App\Model\Authentication\OrgAuthenticator(%orgs%)
+    - App\Model\Authentication\CronAuthenticator(%cron.key%)
     #Nette\Security\IAuthorizator: SimpleAuthorizator
     router: App\FrontendModule\FrontendModule::createRouter
     connection: DibiConnection(%database%)

@@ -8,16 +8,26 @@ services:
             #Roles
             - addRole(guest)
             - addRole(team, guest)
-            - addRole(org, team)
+            - addRole(org, guest)
+            - addRole(cron)
 
             #Resources
             - addResource(chat) #add
             - addResource(dashboard) #add
+            - addResource(cron)
+            - addResource(game)
+#            - addResource(team) #edit
 #            - addResource(stats) #show
 
             #ACL
             #- allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])
             - allow(team, chat, add)
+            - allow(team, game)
+
+            - allow(org, chat, add)
+            - allow(org, dashboard, add)
+
+            - allow(cron, cron)
 
 #            - allow(org, gossip)
 #            - allow(admin, Nette\Security\Permission::ALL)
