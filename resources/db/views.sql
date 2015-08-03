@@ -304,5 +304,5 @@ CREATE VIEW `view_chat` AS
 		`chat`.*,
 		`team`.`name` AS `team_name`
 	FROM `chat`
-	INNER JOIN `view_team` AS `team` USING(`id_team`)
+	LEFT JOIN `view_team` AS `team` USING(`id_team`)
 	ORDER BY `chat`.`inserted` DESC;

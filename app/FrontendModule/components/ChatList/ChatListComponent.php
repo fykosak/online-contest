@@ -8,7 +8,8 @@ class ChatListComponent extends BaseListComponent {
 	// PUBLIC METHODS
 
 	public function chatSubmitted(Form $form) {
-                if(!$this->getPresenter()->user->isLoggedIn()){
+                $user = $this->getPresenter()->user;
+                if(!$user->isLoggedIn()){
                     $this->redirect('Sign:in');
                 }
             
@@ -19,9 +20,18 @@ class ChatListComponent extends BaseListComponent {
                 }
                 
 		// Insert a chat post
-		try {                    
+		try {
+                        if ($user->isInRole('org')) {
+                            $team = null;
+                            $org = 1;
+                        }
+                        else {
+                            $team = $user->getIdentity()->id_team;
+                            $org = 0;
+                        }
 			Interlos::chat()->insert(
-                            $this->getPresenter()->user->getIdentity()->id_team,
+                            $team,
+                            $org,
                             $values["content"],
                             $values["parent_id"],
                             $this->getPresenter()->lang

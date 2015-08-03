@@ -27,7 +27,8 @@ DROP TABLE IF EXISTS `chat`;
 CREATE TABLE `chat` (
   `id_chat` int(25) unsigned NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
   `id_parent` int(25) unsigned DEFAULT NULL COMMENT 'identifikator rodicovskeho prispevku',
-  `id_team` int(25) unsigned NOT NULL COMMENT 'tym, ktery prispevek vlozil',
+  `id_team` int(25) unsigned DEFAULT NULL COMMENT 'tym, ktery prispevek vlozil',
+  `org` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'organizatorsky prispevek'
   `content` text COLLATE utf8_czech_ci NOT NULL COMMENT 'text prispevku',
   `lang` enum('cs','en') COLLATE utf8_czech_ci NOT NULL COMMENT 'jazyk fora',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',

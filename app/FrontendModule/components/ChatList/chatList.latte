@@ -5,14 +5,14 @@
     <div id="chat-form0" class="chat-form">
 	{control chatForm0}
     </div>
-    <button class="hideChatForm">{_'Přidat příspěvek'}</button>
+    <button class="hideChatForm btn btn-default">{_'Přidat příspěvek'}</button>
 </div>
 {/if}
     
 {foreach $posts AS $post}
-    <div class="chat-item" {if !$post['root']}style="margin: 0 0 80px 20px"{/if}>
-	<h3>
-	    {$post['team_name']} <span class="pull-right small">{$post['inserted']|time}</span>
+    <div class="chat-item" {if !$post['root']}style="margin: 0 0 0 20px"{/if}>
+	<h3 {if $post['org']}style="color: orange"{/if}>
+            {if $post['org']}{_'Organizátoři'}{else}{$post['team_name']}{/if} <span class="pull-right small">{$post['inserted']|time}</span>
 	</h3>
 	<div>{$post['content']}</div>
         {if $user->isLoggedIn() && $post['root']}
@@ -20,7 +20,7 @@
                 <div id="chat-form{$post['id_chat']}" class="chat-form">
                     {control 'chatForm'.$post['id_chat']}
                 </div>
-                <button class="hideChatForm">{_'Reagovat'}</button>
+                <button class="hideChatForm btn btn-default">{_'Reagovat'}</button>
             </div>
         {/if}
     </div>
