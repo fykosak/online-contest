@@ -14,7 +14,7 @@ class DashboardPresenter extends BasePresenter {
     public $httpRequest;
     
     public function renderDefault() {
-        $this->template->notifications = $this->notificationModel->findAll($this->lang)->orderBy('created', 'DESC');
+        $this->template->notifications = $this->notificationModel->findActive($this->lang);
         $this->setPageTitle(_("Důležitá oznámení"));
     }
     
@@ -42,7 +42,7 @@ class DashboardPresenter extends BasePresenter {
             $notifications[] = $notification;
         }
         else {
-            $notifications = $this->notificationModel->findNew($lastAsked, $lang)->orderBy('created');
+            $notifications = $this->notificationModel->findNew($lastAsked, $lang);
         }
         
         $this->template->setFile(__DIR__.'/../templates/Dashboard/@notificationsContainer.latte');

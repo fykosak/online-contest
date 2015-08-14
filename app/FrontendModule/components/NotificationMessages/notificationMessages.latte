@@ -12,7 +12,6 @@
             //var now = Date.now(); //TODO better take from server?
             var now = data['lastAsked'];
             document.cookie = "lastAsked=" + now + "; expires="+gameEnd.toUTCString();
-            alert(gameEnd.toUTCString());
             window.setTimeout(function() {
                 pollNotifications(now);
             }, data['pollInterval']);

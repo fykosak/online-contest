@@ -24,15 +24,22 @@ class NotificationModel extends AbstractModel {
     /**
      * @return \DibiDataSource
      */
+    public function findActive($lang = NULL) {
+        return $this->findAll($lang)->where("[created] < NOW()")->orderBy('created', 'DESC');
+    }
+    
+    /**
+     * @return \DibiDataSource
+     */
     public function findNew($timestamp, $lang = NULL) {
-        return $this->findAll($lang)->where("[created] > %t", $timestamp);
+        return $this->findActive($lang)->where("[created] > %t", $timestamp)->orderBy('created');
     }
     
     public function insert($message, $lang) {
-        $return = $this->getConnection()->insert("notification", array(
-                'message' => $message,
-                'lang' => $lang
-            ))->execute();
+        $this->getConnection()->insert("notification", array(
+            'message' => $message,
+            'lang' => $lang
+        ))->execute();
     }
     
     public function insertNotification($messageCs, $messageEn) {

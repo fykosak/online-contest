@@ -1,6 +1,6 @@
 {foreach $notifications as $notification}
     <div class="alert alert-info">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close"><span class="glyphicon glyphicon-remove"/></a>
         {$notification['message']} {$notification['created']|time}
     </div>
 {/foreach}
