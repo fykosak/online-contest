@@ -24,6 +24,7 @@ services:
     - App\Model\ChatModel
     - App\Model\CompetitorsModel
     - App\Model\GroupsModel
+    - App\Model\NotificationModel
     - App\Model\PeriodModel
     - App\Model\SchoolsModel
     - App\Model\ScoreModel

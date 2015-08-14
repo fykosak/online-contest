@@ -101,6 +101,14 @@ CREATE TABLE `log` (
   CONSTRAINT `log_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='logovani akci tymu';
 
+DROP TABLE IF EXISTS `notification`;
+CREATE TABLE `notification` (
+  `notification_id` int(25) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `message` text COLLATE utf8_czech_ci NOT NULL COMMENT 'text notifikace',
+  `lang` enum('cs','en') COLLATE utf8_czech_ci NOT NULL COMMENT 'jazyk notifikace',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka vlozena do systemu'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='notifikace na nastenku';
+
 
 DROP TABLE IF EXISTS `period`;
 CREATE TABLE `period` (

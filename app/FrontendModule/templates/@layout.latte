@@ -35,6 +35,9 @@
             {block #title}<h1 n:ifset="$pageTitle">{$pageTitle}</h1>{/block}
             <!-- FLASH MESSAGES -->
             {control flashMessages}
+            {if \App\Model\Interlos::isGameStarted()}
+            {control notificationMessages}
+            {/if}
             <!-- CONTENT -->
             
             {block #bigcontent}

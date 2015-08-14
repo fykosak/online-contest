@@ -31,6 +31,10 @@ class BasePresenter extends Nette\Application\UI\Presenter {
     protected function createComponentFlashMessages($name) {
         return new \FlashMessagesComponent($this, $name);
     }
+    
+    protected function createComponentNotificationMessages($name) {
+        return new \NotificationMessagesComponent($this, $name);
+    }
 
     protected function createTemplate() {
         //$this->oldLayoutMode = false;

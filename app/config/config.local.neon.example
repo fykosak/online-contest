@@ -42,6 +42,9 @@ parameters:
         info: "fyziklani@fykos.cz"
         # sender's name of confirmation e-mail
         name: FYKOS
+    notifications:
+        # interval for Ajax notification polling (in ms)
+        pollInterval: 60000
 
 #TODO not reimplemented yet
 #[common]
