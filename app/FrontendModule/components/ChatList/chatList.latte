@@ -28,3 +28,28 @@
 </div>
 
 {control paginator}
+
+{capture $script}
+    <script n:syntax="off">
+    function hideForms(){
+        $(".chat-form").each(function(){
+            $(this).hide();
+        });
+        
+        $(".hideChatForm").each(function(){
+            $(this).show();
+        });
+    }
+    
+    $(document).ready(function(){
+        hideForms();
+        
+        $(".hideChatForm").click(function() {
+            hideForms();
+            $(this).parent().find("div").eq(0).slideDown();
+            $(this).hide();
+        });
+    });
+    </script>
+{/capture}
+{$presenter->addCustomScript($script)}

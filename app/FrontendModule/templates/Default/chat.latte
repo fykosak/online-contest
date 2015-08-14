@@ -6,27 +6,3 @@
 {block #bigcontent}
     {control chat}
 {/block}
-
-{block #scripts}
-<script>
-    function hideForms(){
-        $(".chat-form").each(function(){
-            $(this).hide();
-        });
-        
-        $(".hideChatForm").each(function(){
-            $(this).show();
-        });
-    }
-    
-    $(document).ready(function(){
-        hideForms();
-        
-        $(".hideChatForm").click(function() {
-            hideForms();
-            $(this).parent().find("div").eq(0).slideDown();
-            $(this).hide();
-        });
-    });
-</script>
-{/block}
