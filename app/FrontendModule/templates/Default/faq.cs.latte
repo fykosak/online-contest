@@ -1,4 +1,48 @@
+{*{capture $script}
+    <script n:syntax="off">
+    function hideForms(){
+        $(".chat-form").each(function(){
+            $(this).hide();
+        });
+        
+        $(".hideChatForm").each(function(){
+            $(this).show();
+        });
+    }
+    
+    function showAll(){
+        $('.collapse:not(".in")').collapse('show');
+        $('.collapseAll').click(hideAll());
+    }
+    
+    function hideAll(){
+        $('.collapse.in').collapse('hide');
+        $('.collapseAll').click(showAll());
+    }
+    
+    $(document).ready(function(){
+        //hideForms();
+        hideAll();
+      /*  $(".collapseAll:not('.in')").click(function() {
+            
+            $('.collapseAll').toggleClass('in');
+            $(this).html('skrýt');
+        });
+        
+        $(".collapseAll.in").click(function() {
+            
+            
+            $('.collapseAll').toggleClass('in');
+        });*/
+    });
+    </script>
+{/capture}
+{$presenter->addCustomScript($script)}*}
+
 {block #content}
+
+{*<button class="collapseAll btn btn-default">{_'Zobrazit vše'}</button>*}
+
 {var $i=1}
 <h2 id="registration">Registrace</h2>
 
@@ -31,10 +75,12 @@ Mohu se soutěže zúčastnit, i když už nejsem studentem střední školy?
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
-Mohu se soutěže zúčastnit, i když jsem na střední školu (případně odpovídající ročník gymnázia) ještě nenastoupil?
+Mohu se soutěže zúčastnit, i když jsem na střední školu (případně odpovídající 
+ročník gymnázia) ještě nenastoupil?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Ano. Musíš ale počítat s tím, že nejnižší kategorie, ve které můžeš soutěžit je kategorie středoškoláků v prvním ročníku. 
+    Ano. Musíš ale počítat s tím, že nejnižší kategorie, ve které můžeš soutěžit 
+    je kategorie středoškoláků v prvním ročníku. 
     Budeš tedy soutěžit ve stejné kategorii jako oni. Více najdeš v pravidlech.
 </div><br />
 
@@ -42,8 +88,43 @@ Mohu se soutěže zúčastnit, i když jsem na střední školu (případně odp
 Může se zúčastnit kamarád z cizí země?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Ano. Pokud ale nebude součástí týmu z České nebo Slovenské republiky, bude muset soutěžit v jiné kategorii. 
-    Samozřejmě velkou výhodou pro něj bude, pokud bude umět anglicky nebo česky, potažmo slovensky.
+    Ano. Pokud ale nebude součástí týmu z České nebo Slovenské republiky, bude muset 
+    soutěžit v jiné kategorii. Samozřejmě velkou výhodou pro něj bude, pokud bude 
+    umět anglicky nebo česky, potažmo slovensky.
+</div><br />
+
+<h2 id="game">Průběh soutěže</h2>
+
+<a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
+Budeme moci s organizátory soutěže v jejím průběhu nějak komunikovat? Jak? V jakých jazycích?
+</a>
+<div id="faq{$i++}" class="collapse">
+    Ano, v průběhu celé soutěže budeme proklamovat důležité informace týkající se 
+    soutěže prostřednictvím nástěnky, která bude umístěna na našich stránkách. 
+    Vaše otázky ohledně úloh (ale i dalšího) pak můžete poslat na adresu 
+    <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>. 
+    Povzbuzovat se navzájem apod. můžete v diskuzi na stránkách soutěže. 
+    Komunikace je možná v češtině (rozumíme i slovensky) a angličtině (to se ale 
+    týká pouze týmů zahraničních středoškoláků a Open).
+</div><br />
+
+<a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
+Můžu v průběhu soutěže vyhledávat informace pomocí internetu?
+</a>
+<div id="faq{$i++}" class="collapse">
+    Ano, ale nesmí to být informace z komunikačních kanálů s lidmi, kteří nejsou 
+    na soupisce vašeho týmu.
+</div><br />
+
+<a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
+Jaké jsou fáze soutěže a v čem se liší?
+</a>
+<div id="faq{$i++}" class="collapse">
+    Soutěž má dvě hlavní fáze a jednu doplňkovou (Hurry-up). První fáze je započata 
+    startem soutěže a v jejím průběhu začne a souběžně běží Hurry-up série, 
+    obě současně končí a navazuje druhá fáze a ta běží až do konce soutěže. 
+    Druhá část hlavní fáze se liší od té první podstatně pouze v tom, že je v ní 
+    umožněno úlohy přeskakovat. Hurry-up viz pravidla a další otázka.
 </div><br />
 
 <h2 id="tasks">Zadání úloh</h2>
@@ -59,18 +140,21 @@ V jakých jazycích bude psáno zadání úloh?
 Kdy, popřípadě za jakých okolností, budeme dostávat v průběhu soutěže nová zadání úloh?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Zadání prvních sedmi úloh dostanete při samotném zahájení soutěže. Další přísun nových úloh přijde se začátkem Hurry-up série. 
-    V průběhu soutěže se o zisk dalších nových úloh musíte zasloužit sami. Možné jsou dva způsoby. 
-    Buďto získáte novou úlohu díky tomu, že vyřešíte nějakou úlohu předešlou, nebo úlohu tzv. přeskočíte. 
-    Vždy se jedná o jednu úlohu, za jednu úlohu. Detailnější informace najdete v pravidlech soutěže.
+    Zadání prvních sedmi úloh dostanete při samotném zahájení soutěže. Další přísun 
+    nových úloh přijde se začátkem Hurry-up série. V průběhu soutěže se o zisk 
+    dalších nových úloh musíte zasloužit sami. Možné jsou dva způsoby. Buďto získáte 
+    novou úlohu díky tomu, že vyřešíte nějakou úlohu předešlou, nebo úlohu 
+    tzv. přeskočíte. Vždy se jedná o jednu úlohu, za jednu úlohu. Detailnější 
+    informace najdete v pravidlech soutěže.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
 Jak se vyvíjí obtížnost úloh s pořadovým číslem úlohy?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Průměrná obtížnost úloh roste, nicméně i v pozdější fázi soutěže se můžou objevit jednodušší úlohy. 
-    Pamatujte také na to, že obtížnost je individuálně vnímaná věc.
+    Průměrná obtížnost úloh roste, nicméně i v pozdější fázi soutěže se můžou 
+    objevit jednodušší úlohy. Pamatujte také na to, že obtížnost je individuálně 
+    vnímaná věc.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
@@ -78,7 +162,8 @@ Dostaneme autorská řešení úloh?
 </a>
 <div id="faq{$i++}" class="collapse">
     Ano, po ukončení soutěže se autorská řešení objeví na našich stránkách. 
-    Nějakou dobu po ukončení soutěže budou ještě organizátoři na stránkách aktivně sledovat soutěžní fórum a reagovat na vaše případné připomínky, 
+    Nějakou dobu po ukončení soutěže budou ještě organizátoři na stránkách aktivně 
+    sledovat soutěžní fórum a reagovat na vaše případné připomínky, 
     dojmy nebo reklamace vztahující se k úlohám, nebo soutěži obecně.
 </div><br />
 
@@ -90,8 +175,10 @@ Dostaneme autorská řešení úloh?
 Na kolik platných cifer máme náš výsledek úlohy zadávat?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Ze zadání každé úlohy by mělo být patrné, kolik platných cifer vyžadujeme. Pokud by to zřejmé nebylo, obraťte se s touto otázkou na organizátory. 
-    Obecně ale platí, že pokud máte výsledek správně, více desetinných míst vašemu výsledku neuškodí.
+    Ze zadání každé úlohy by mělo být patrné, kolik platných cifer vyžadujeme. 
+    Pokud by to zřejmé nebylo, obraťte se s touto otázkou na organizátory. 
+    Obecně ale platí, že pokud máte výsledek správně, více desetinných míst 
+    vašemu výsledku neuškodí.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
@@ -105,22 +192,25 @@ V zadání není specifikováno, v jakých jednotkách máme řešení odesílat
 Chceme odpovědět na úlohu, ale výsledek nelze odeslat. Co se děje?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Důvodem zřejmě je, že jste před méně než jednou minutou na nějakou úlohu odpověděli chybně. 
-    Pokud tomu tak není, kontaktuje, prosím, organizátory soutěže.
+    Důvodem zřejmě je, že jste před méně než jednou minutou na nějakou úlohu 
+    odpověděli chybně. Pokud tomu tak není, kontaktuje, prosím, organizátory soutěže.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
 Když na úlohu odpovím špatně, mohu svoji odpověď opravit?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Ano, na každou úlohu můžete odpovídat opakovaně v neomezovaném množství až do konce soutěže. 
-    Mějte ale na paměti, že za každou špatnou odpověď může klesnout možný bodový zisk z této úlohy, a také, 
-    že se na 1 minutu po špatném zodpovězení úlohy uzavře možnost odpovídat na libovolnou úlohu dané skupiny (úlohy hlavní části a tři skupiny v Hurry-up). 
-    Pro více informací nahlédněte do pravidel soutěže.
+    Ano, na každou úlohu můžete odpovídat opakovaně v neomezovaném množství 
+    až do konce soutěže. Mějte ale na paměti, že za každou špatnou odpověď může 
+    klesnout možný bodový zisk z této úlohy, a také, že se na 1 minutu po špatném 
+    zodpovězení úlohy uzavře možnost odpovídat na libovolnou úlohu dané skupiny 
+    (úlohy hlavní části a tři skupiny v Hurry-up). Pro více informací nahlédněte 
+    do pravidel soutěže.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
-Když budeme chtít odeslat výsledek jako desetinné číslo, máme pro zápis použít desetinnou čárku nebo tečku?
+Když budeme chtít odeslat výsledek jako desetinné číslo, máme pro zápis použít 
+desetinnou čárku nebo tečku?
 </a>
 <div id="faq{$i++}" class="collapse">
     Je jedno, který znak použijete. Nepoužívejte však žádné oddělovače tisíců.
@@ -130,7 +220,9 @@ Když budeme chtít odeslat výsledek jako desetinné číslo, máme pro zápis 
 Jaké všechny formáty zápisu čísla jsou akceptovány?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Akceptujeme tvar čísla popsaný na http://php.net/manual/en/language.types.float.php a navíc umožňujeme použít desetinou tečku i desetinou čárku.
+    Akceptujeme tvar čísla popsaný na 
+    <a href='http://php.net/manual/en/language.types.float.php'>http://php.net/manual/en/language.types.float.php</a> 
+    a navíc umožňujeme použít desetinou tečku i desetinou čárku.
 </div><br />
 
 <h2 id="skipping">Přeskakování úloh</h2>
@@ -146,16 +238,19 @@ Kdy můžu úlohu přeskočit?
 Je za přeskočení úlohy nějaký bodový postih?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Ano, za přeskočení úlohy dostanete penalizaci mínus jeden bod do vašeho celkového skóre.
+    Ano, za přeskočení úlohy dostanete penalizaci mínus jeden bod do vašeho 
+    celkového skóre.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
 Kolik úloh můžu přeskočit?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Počet úloh, které můžete přeskočit, není omezený, musíte ale mít dostatečný počet bodů, abyste to mohli udělat. 
-    Další úlohu už nemůžete přeskočit, pokud jste se přeskakováním dostali na -7 bodů. 
-    Pokud se vám to stalo, pak můžete další úlohu přeskočit až poté, co za vyřešení nějaké úlohy dostanete další body a budete tedy mít opět více než -7 bodů.
+    Počet úloh, které můžete přeskočit, není omezený, musíte ale mít dostatečný 
+    počet bodů, abyste to mohli udělat. Další úlohu už nemůžete přeskočit, 
+    pokud jste se přeskakováním dostali na -7 bodů. Pokud se vám to stalo, 
+    pak můžete další úlohu přeskočit až poté, co za vyřešení nějaké úlohy dostanete 
+    další body a budete tedy mít opět více než -7 bodů.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
@@ -172,40 +267,43 @@ Můžeme se k přeskočené úloze ještě vrátit?
 Jak můžeme získat bonusové body?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Bonusové body můžete získat za správně vyřešenou sadu úloh v sérii Hurry-up. Více najdete v pravidlech soutěže.
+    Bonusové body můžete získat za správně vyřešenou sadu úloh v sérii Hurry-up. 
+    Více najdete v pravidlech soutěže.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
 Za úlohu, která byla oceněna X body jsme dostali Y bodů. Jak to?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Je to proto, že za špatně zodpovězenou úlohu klesne při následující odpovědi možný bodový zisk z této úlohy. 
-    Pro upřesňující údaje ohledně strhávání bodů prosím nahlédněte do pravidel soutěže.
+    Je to proto, že za špatně zodpovězenou úlohu klesne při následující odpovědi 
+    možný bodový zisk z této úlohy. Pro upřesňující údaje ohledně strhávání bodů 
+    prosím nahlédněte do pravidel soutěže.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
-
-Úlohu jsme vyřešili správně, ale ve výsledkové listině se nám záznam o správně vyřešené úloze neobjevil. Jak to?
+Úlohu jsme vyřešili správně, ale ve výsledkové listině se nám záznam o správně 
+vyřešené úloze neobjevil. Jak to?
 </a>
 <div id="faq{$i++}" class="collapse">
     Výsledková listina se obnovuje průběžně jednou za dvě minuty. Musíte chvíli počkat. 
-    Také pamatujte na to, že 20 minut před koncem se výsledková listina přestane obnovovat úplně, abyste byli trochu napjatí.
+    Také pamatujte na to, že 20 minut před koncem se výsledková listina přestane 
+    obnovovat úplně, abyste byli trochu napjatí.
 </div><br />
 
 <h2 id="hurry-up">Hurry up</h2>
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
-
 Co je to Hurry-up?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Je to období soutěže v intervalu 18:00 až 18:30, kdy budete mít možnost řešit nové relativně jednoduché úlohy. 
-    Jde o paralelně probíhající sérii k sérii standardní (její první fázi), která naopak probíhá po celou dobu soutěže Fyziklání Online. 
-    Sérii Hurry-up však provází jistá specifika v pravidlech, která najdete na stránce s pravidly naší soutěže.
+    Je to období soutěže v intervalu 18:00 až 18:30, kdy budete mít možnost řešit 
+    nové relativně jednoduché úlohy. Jde o paralelně probíhající sérii k sérii 
+    standardní (její první fázi), která naopak probíhá po celou dobu soutěže 
+    Fyziklání Online. Sérii Hurry-up však provází jistá specifika v pravidlech, 
+    která najdete na stránce s pravidly naší soutěže.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
-
 Můžu odevzdávat řešení úloh standardní série v období Hurry-up série?
 </a>
 <div id="faq{$i++}" class="collapse">
@@ -213,20 +311,21 @@ Můžu odevzdávat řešení úloh standardní série v období Hurry-up série?
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
-
 Jak se dozvím, že Hurry-up série už začala?
 </a>
 <div id="faq{$i++}" class="collapse">
     Podle hodin. Bude to zároveň oznámeno na nástěnce. 
-    Také by se vám měly objevit nové úlohy k řešení – k tomu však může být potřeba obnovení stránky.
+    Také by se vám měly objevit nové úlohy k řešení &mdash; k tomu však může být 
+    potřeba obnovení stránky.
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
-
-Řídí se bodování a strhávání bodů z úloh Hurry-up série stejnými pravidly jako u ostatních úloh?
+Řídí se bodování a strhávání bodů z úloh Hurry-up série stejnými pravidly jako 
+u ostatních úloh?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Ne. Za každou špatnou odpověď na danou úlohu v Hurry-up sérii se vám možný bodový zisk sníží o jeden bod, pokud jste ještě nedosáhli hranice nula bodů. 
+    Ne. Za každou špatnou odpověď na danou úlohu v Hurry-up sérii se vám možný 
+    bodový zisk sníží o jeden bod, pokud jste ještě nedosáhli hranice nula bodů. 
     Záporný příděl bodů za správně vyřešenou úlohu vám nehrozí.
 </div><br />
 
@@ -237,23 +336,15 @@ Kdy můžu Hurry-up řešit?
     Od 18:00 do 18:30, pak už výsledky úloh z Hurry-up série nebudou akceptovány.
 </div><br />
 
-<h2><strike>Ostatní</strike> Zatím nezařazené</h2>
-
-
-
-<a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
-Můžu v průběhu soutěže vyhledávat informace pomocí internetu?
-</a>
-<div id="faq{$i++}" class="collapse">
-    Ano, ale nesmí to být informace z komunikačních kanálů s lidmi, kteří nejsou na soupisce vašeho týmu.
-</div><br />
+<h2 id="otherFAQ">Ostatní</h2>
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
 Dostanu diplom nebo nějaké osvědčení o účasti?
 </a>
 <div id="faq{$i++}" class="collapse">
     Nejlepším týmům je posíláme automaticky. Pokud vám nepřišel a chcete ho, 
-    neváhejte se ozvat na email <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>
+    neváhejte se ozvat na email 
+    <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>
 </div><br />
 
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
@@ -271,38 +362,25 @@ Na jakou adresu mám psát otázky ohledně soutěže, ještě než soutěž za�
 </div><br />
     
 <a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
-Budeme moci s organizátory soutěže v jejím průběhu nějak komunikovat? Jak? V jakých jazycích?
-</a>
-<div id="faq{$i++}" class="collapse">
-    Ano, v průběhu celé soutěže budeme proklamovat důležité informace týkající se soutěže prostřednictvím nástěnky, která bude umístěna na našich stránkách. 
-    Vaše otázky ohledně úloh (ale i dalšího) pak můžete poslat na adresu online@fyziklani.cz. Povzbuzovat se navzájem apod. můžete v diskuzi na stránkách soutěže. 
-    Komunikace je možná v češtině (rozumíme i slovensky) a angličtině (to se ale týká pouze týmů zahraničních středoškoláků a Open).
-</div><br />
-
-<a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
-Jaké jsou fáze soutěže a v čem se liší?
-</a>
-<div id="faq{$i++}" class="collapse">
-    Soutěž má dvě hlavní fáze a jednu doplňkovou (Hurry-up). První fáze je započata startem soutěže a v jejím průběhu začne a souběžně běží Hurry-up série, 
-    obě současně končí a navazuje druhá fáze a ta běží až do konce soutěže. 
-    Druhá část hlavní fáze se liší od té první podstatně pouze v tom, že je v ní umožněno úlohy přeskakovat. Hurry-up viz pravidla a další otázka.
-</div><br />
-
-<a href="javascript:void(0)" data-toggle="collapse" data-target="#faq{$i}">
 Kde naleznu všechny důležité informace o soutěži?
 </a>
 <div id="faq{$i++}" class="collapse">
-    Na našich stránkách online.fyziklani.cz, zejména pak v oddílu věnovanému pravidlům online.fyziklani.cz/cs/default/rules.
+    Na našich stránkách <a href='{link Default}'>online.fyziklani.cz</a>, zejména 
+    pak v oddílu věnovanému pravidlům 
+    <a href='{link Default:rules}'>online.fyziklani.cz/cs/default/rules</a>.
 </div><br />
 {/block}
 
 {block #subnavigation}
 <ul class="nav">
     <li><a href="#registration">Registrace</a></li>
+    <li><a href="#game">Průběh soutěže</a></li>
     <li><a href="#tasks">Zadání úloh</a></li>
     <li><a href="#submits">Odevzdávání řešení</a></li>
     <li><a href="#skipping">Přeskakování úloh</a></li>
     <li><a href="#scoring">Bodování</a></li>
     <li><a href="#hurry-up">Hurry up</a></li>
+    <li><a href="#otherFAQ">Ostatní</a></li>
 </ul>
 {/block}
+
