@@ -1,14 +1,14 @@
+dibi:
+    driver: mysql
+    charset: utf8
+    host: localhost
+    database: fol
+    user: user
+    password: pwd
+    lazy: true
+    profiler: true
+
 parameters:
-    # database connection
-    database:
-        driver: mysql
-        charset: utf8
-        host: localhost
-        database: fol
-        user: user
-        password: pwd
-        lazy: true
-        profiler: false
     cron:
         # key that's checked when invoking HTTP request for stats refresh
         key: nejaky-klic

@@ -18,7 +18,6 @@ services:
     - App\Model\Authentication\CronAuthenticator(%cron.key%)
     #Nette\Security\IAuthorizator: SimpleAuthorizator
     router: App\FrontendModule\FrontendModule::createRouter
-    connection: DibiConnection(%database%)
     - App\Model\Interlos
     - App\Model\AnswersModel
     - App\Model\ChatModel
@@ -34,6 +33,9 @@ services:
     nette.userStorage:
         setup:
             - setNamespace("olfyziklani")
+
+extensions:
+    dibi: Dibi\Bridges\Nette\DibiExtension22
 
 includes:
         - acl.neon
