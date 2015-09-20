@@ -1,47 +1,27 @@
-{*{capture $script}
+{capture $script}
     <script n:syntax="off">
-    function hideForms(){
-        $(".chat-form").each(function(){
-            $(this).hide();
-        });
-        
-        $(".hideChatForm").each(function(){
-            $(this).show();
-        });
-    }
-    
-    function showAll(){
-        $('.collapse:not(".in")').collapse('show');
-        $('.collapseAll').click(hideAll());
-    }
-    
-    function hideAll(){
-        $('.collapse.in').collapse('hide');
-        $('.collapseAll').click(showAll());
-    }
+    var hideText = 'Skrýt vše';
+    var showText = 'Zobrazit vše';
     
     $(document).ready(function(){
-        //hideForms();
-        hideAll();
-      /*  $(".collapseAll:not('.in')").click(function() {
-            
-            $('.collapseAll').toggleClass('in');
-            $(this).html('skrýt');
+        $('.collapseAll').click(function() {
+            if($(this).text() === hideText) {
+                $('.collapse.in').collapse('hide');
+                $(this).text(showText);
+            }
+            else {
+                $('.collapse:not(".in")').collapse('show');
+                $(this).text(hideText);
+            }
         });
-        
-        $(".collapseAll.in").click(function() {
-            
-            
-            $('.collapseAll').toggleClass('in');
-        });*/
     });
     </script>
 {/capture}
-{$presenter->addCustomScript($script)}*}
+{$presenter->addCustomScript($script)}
 
 {block #content}
 
-{*<button class="collapseAll btn btn-default">{_'Zobrazit vše'}</button>*}
+<button class="collapseAll btn btn-default">Zobrazit vše</button>
 
 {var $i=1}
 <h2 id="registration">Registrace</h2>
@@ -383,4 +363,3 @@ Kde naleznu všechny důležité informace o soutěži?
     <li><a href="#otherFAQ">Ostatní</a></li>
 </ul>
 {/block}
-
