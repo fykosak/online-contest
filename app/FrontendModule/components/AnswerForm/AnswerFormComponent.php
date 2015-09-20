@@ -1,7 +1,6 @@
 <?php
 
-use Nette,
-    Nette\Application\UI\Form,
+use Nette\Application\UI\Form,
     Nette\Utils\Html,
     App\Model\Interlos,
     App\Model\AnswersModel,
@@ -88,9 +87,9 @@ class AnswerFormComponent extends BaseComponent {
             $options[$task["id_task"]] = $task["code_name"] . ': ' . $task["name_" . $this->getPresenter()->lang];
             $rules[$task["answer_type"]][] = $task["id_task"];
         }
-        $tasks = array(NULL => " ---- Vybrat ---- ") + $options;
+        $tasks = $options;
         $select = $form->addSelect(self::TASK_ELEMENT, "Úkol", $tasks)
-                ->skipFirst()
+                ->setPrompt(" ---- Vybrat ---- ")
                 ->addRule(Form::FILLED, "Vyberte prosím řešený úkol.");
 
         // Solution
@@ -103,7 +102,7 @@ class AnswerFormComponent extends BaseComponent {
         }
         if (count($rules[TasksModel::TYPE_REAL])) {
             $text->addConditionOn($select, Form::IS_IN, $rules[TasksModel::TYPE_REAL])
-                    ->addRule(Form::REGEXP, "Výsledek musí být reálné číslo.", '/[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?/');
+                    ->addRule(Form::PATTERN, "Výsledek musí být reálné číslo.", '[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?');
         }
 
         $desc = Html::el('span');
@@ -116,7 +115,7 @@ class AnswerFormComponent extends BaseComponent {
         if (count($options) == 0) {
             $submit->setDisabled(true);
         }
-        $form->onSubmit[] = array($this, "formSubmitted");
+        $form->onSuccess[] = array($this, "formSubmitted");
 
         return $form;
     }

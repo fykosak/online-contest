@@ -60,9 +60,9 @@ class SkipFormComponent extends BaseComponent {
                 $options[$task["id_task"]] = $task["code_name"] . ' (' . $task["name_" . $this->getPresenter()->lang] . ')';
             }
         }
-        $tasks = array(NULL => _(" ---- Vybrat ---- ")) + $options;
+        $tasks = $options;
         $select = $form->addSelect("task", "Úkol", $tasks)
-                ->skipFirst()
+                ->setPrompt(_(" ---- Vybrat ---- "))
                 ->addRule(Form::FILLED, "Vyberte prosím úkol k přeskočení.");
 
 
@@ -71,7 +71,7 @@ class SkipFormComponent extends BaseComponent {
             $submit->setDisabled(true);
         }
 
-        $form->onSubmit[] = array($this, "formSubmitted");
+        $form->onSuccess[] = array($this, "formSubmitted");
 
         return $form;
     }

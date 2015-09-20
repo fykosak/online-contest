@@ -51,7 +51,7 @@ class LoginFormComponent extends BaseComponent
 	    ->addRule(Form::FILLED, "Heslo musí být vyplněno.");
 
 	$form->addSubmit("login", "Přihlásit se");
-	$form->onSubmit[] = array($this, "formSubmitted");
+	$form->onSuccess[] = array($this, "formSubmitted");
 
 	return $form;
     }

@@ -98,7 +98,7 @@ class ChatListComponent extends BaseListComponent {
                 $form->addHidden("parent_id", $id);
 
 		$form->addSubmit("chatSubmit","Přidat příspěvek");
-		$form->onSubmit[] = array($this, "chatSubmitted");
+		$form->onSuccess[] = array($this, "chatSubmitted");
 
 		return $form;
         }
