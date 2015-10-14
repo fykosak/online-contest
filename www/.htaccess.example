@@ -1,5 +1,8 @@
 # Apache configuration file (see httpd.apache.org/docs/current/mod/quickreference.html)
 
+# allow access
+Allow from all
+
 # configure PHP
 php_flag magic_quotes_gpc off
 php_flag register_globals off
@@ -13,6 +16,10 @@ php_flag register_globals off
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	# RewriteBase /
+
+	RewriteCond %{HTTP_HOST} fyzikalni\.cz
+	#RewriteRule %{REQUEST_URI} !^redirect
+	RewriteRule ^(.*)$ redirect/$1 [L]
 
 	RewriteCond %{HTTP_HOST} physicsbrawl\.org
 	RewriteCond %{HTTP_HOST} !^physicsbrawl\.org
