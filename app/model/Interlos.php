@@ -5,7 +5,7 @@ namespace App\Model;
 use Nette,
     Tracy\Debugger;
 
-class Interlos {
+class Interlos extends Nette\Object {
 
     //private static $adminMessages = FALSE;
     private static $connection;

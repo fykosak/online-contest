@@ -7,7 +7,9 @@
 
 namespace App\Tools;
 
-final class Helpers {
+use Nette;
+
+final class Helpers extends Nette\Object {
 
     /** @var \Texy */
     private static $texy;

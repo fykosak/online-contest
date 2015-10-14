@@ -2,9 +2,10 @@
 
 namespace App\Tools;
 
-use Nette\Application\UI\ITemplate;
+use Nette\Application\UI\ITemplate,
+    Nette;
 
-final class InterlosTemplate
+final class InterlosTemplate extends Nette\Object
 {
 
     final private function  __construct() {}

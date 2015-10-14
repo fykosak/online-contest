@@ -2,9 +2,10 @@
 
 namespace App\Model;
 
-use Tracy\Debugger;
+use Tracy\Debugger,
+    Nette;
 
-abstract class AbstractModel implements InterlosModel {
+abstract class AbstractModel extends Nette\Object implements InterlosModel {
 
 	private $connection;
 

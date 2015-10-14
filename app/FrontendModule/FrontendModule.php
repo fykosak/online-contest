@@ -7,7 +7,7 @@ use Nette,
 	Nette\Application\Routers\Route,
 	Nette\Application\Routers\SimpleRouter;
 
-class FrontendModule {
+class FrontendModule extends Nette\Object {
 
     /**
     *  @return \Nette\Application\IRouter
