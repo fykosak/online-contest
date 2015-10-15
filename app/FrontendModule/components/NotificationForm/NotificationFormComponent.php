@@ -16,14 +16,14 @@ class NotificationFormComponent extends BaseComponent
 
 
     public function formSucceeded(Form $form) {
-        if(!$this->getPresenter()->user->isAllowed('dashboard', 'add')) {
+        if(!$this->getPresenter()->user->isAllowed('noticeboard', 'add')) {
             $this->getPresenter()->error('Nemáte oprávnění pro přidání notifikace.', Nette\Http\Response::S403_FORBIDDEN);
         }
         
         $values = $form->getValues();
         $this->notificationModel->insertNotification($values['messageCs'], $values['messageEn']);
         $this->getPresenter()->flashMessage(_("Notifikace byla vložena"), "info");
-        $this->getPresenter()->redirect('Dashboard:add');
+        $this->getPresenter()->redirect('Noticeboard:add');
     }
     
     protected function createComponentForm($name) {

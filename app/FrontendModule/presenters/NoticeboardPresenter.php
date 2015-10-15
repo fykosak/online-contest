@@ -6,7 +6,7 @@ use Nette,
     Nette\Application\Responses\JsonResponse,
     App\Model\NotificationModel;
 
-class DashboardPresenter extends BasePresenter {
+class NoticeboardPresenter extends BasePresenter {
     /** @var NotificationModel @inject*/
     public $notificationModel;
     
@@ -19,7 +19,7 @@ class DashboardPresenter extends BasePresenter {
     }
     
     public function actionAdd() {
-        if(!$this->user->isAllowed('dashboard', 'add')) {
+        if(!$this->user->isAllowed('noticeboard', 'add')) {
             $this->error('Nemáte oprávnění pro přidání notifikace.', Nette\Http\Response::S403_FORBIDDEN);
         }
     }
@@ -45,7 +45,7 @@ class DashboardPresenter extends BasePresenter {
             $notifications = $this->notificationModel->findNew($lastAsked, $lang);
         }
         
-        $this->template->setFile(__DIR__.'/../templates/Dashboard/@notificationsContainer.latte');
+        $this->template->setFile(__DIR__.'/../templates/Noticeboard/@notificationsContainer.latte');
         $this->template->notifications = $notifications;
             
         $payload = array(
