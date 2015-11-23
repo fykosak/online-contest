@@ -40,6 +40,9 @@
         <p>Registrace <strong>skončila</strong> {$year->registration_end|date:'%d. %#m. %Y %k.%M'}.</p>
         {else}
         <p>Registrace otevřena {if !App\Model\Interlos::isRegistrationStarted()}od {$year->registration_start|date:'%d. %#m. %Y'} {/if}<strong>do {$year->registration_end|date:'%d. %#m. %Y %k.%M'}</strong>.</p>
+        <p>Pomozte nám propagovat šířením letáku.
+            <a href="{$basePath}/download/2015-1/fol_2015-v1.compressed.pdf"><img src="{$basePath}/download/2015-1/letak-fol_2015.png" width="100px"></a>
+        </p>
         {/if}
         {/if}
     </div>
@@ -54,7 +57,7 @@
         <h2>Proč</h2>
         <p><strong>Hraje se o prestiž i hmotné ceny,</strong> oceněno bude prvních pět týmů v každé z kategorií A, B, C a jeden tým v kategorii open, který je z ČR nebo SR.</p>
         <p><a href="{$basePath}/download/2013-1/knihy.pdf">Příklady knih</a> a <a href="{$basePath}/download/2013-1/hry.pdf">příklady her</a>.</p>
-        <p>Účast je zcela zdarma.</p>        
+        <p>Účast je zcela zdarma.</p>
     </div>
 </div>
 
