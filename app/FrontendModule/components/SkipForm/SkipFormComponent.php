@@ -8,6 +8,10 @@ use App\Model\Interlos,
 class SkipFormComponent extends BaseComponent {
 
     public function formSubmitted(Form $form) {
+        if(!$this->getPresenter()->user->isAllowed('task', 'skip')) {
+            $this->getPresenter()->error(_('Nemáte dostatek bodů pro přeskočení úlohy.'), Nette\Http\Response::S403_FORBIDDEN);
+        }
+        
         $values = $form->getValues();
 
         try {
@@ -42,7 +46,14 @@ class SkipFormComponent extends BaseComponent {
             //error_log($e->getTraceAsString());
             return;
         }
-        $this->getPresenter()->redirect("this");
+        
+        /*to avoid error after skipping last possible*/
+        if($this->getPresenter()->user->isAllowed('task', 'skip')) { 
+            $this->getPresenter()->redirect("this");
+        }
+        else {
+            $this->getPresenter()->redirect("Game:default");
+        }        
     }
 
     protected function createComponentForm($name) {
@@ -81,10 +92,6 @@ class SkipFormComponent extends BaseComponent {
         parent::startUp();
         if (!$this->getPresenter()->user->isLoggedIn()) {
             throw new Nette\InvalidStateException("There is no logged team.");
-        }
-        if (!$this->getPresenter()->user->isAllowed('task', 'skip')) {
-            $this->flashMessage(_("Nemáte dostatek bodů pro přeskočení úlohy."), "danger");
-            $this->getTemplate()->valid = FALSE;
         }
         if (Interlos::isGameEnd()) {
             $this->flashMessage(_("Čas vypršel."), "danger");

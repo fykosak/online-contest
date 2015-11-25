@@ -9,10 +9,11 @@ class OrgPresenter extends BasePresenter {
     /** @var \App\Model\Authentication\OrgAuthenticator @inject*/
     public $authenticator;
     
-    public function actionDefault() {
+    public function renderDefault() {
         if (!$this->user->isInRole('org')) {
             $this->redirect('login');
         }
+        $this->setPageTitle(_("Orgovský rozcestník"));
     }
     
     public function renderLogin() {

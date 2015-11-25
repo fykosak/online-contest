@@ -53,7 +53,7 @@ class ScoreModel extends AbstractModel {
                     $count = $this->getConnection()->query("SELECT task_counter FROM [group_state] WHERE %and", [
                         array('id_team = %i', $teamId),
                         array('id_group = %i', $task->id_group),
-                    ])->fetch();
+                    ])->fetchSingle();
                     if($count == 5) {//TODO
                         $groupTasks = Interlos::tasks()->findAll()->where("[id_group] = %i", $task->id_group)->fetchAll();
                         foreach ($groupTasks as $groupTask) {
@@ -73,7 +73,7 @@ class ScoreModel extends AbstractModel {
             $answerCount = $this->getConnection()->query("SELECT COUNT(*) FROM [answer] WHERE %and", [
                 array('id_team = %i', $teamId),
                 array('id_task = %i', $task->id_task),
-            ])->fetch();
+            ])->fetchSingle();
             
             return $this->getPointCount($task->points, $answerCount-1, $group->allow_zeroes);
         }

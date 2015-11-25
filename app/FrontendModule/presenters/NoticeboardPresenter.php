@@ -18,10 +18,11 @@ class NoticeboardPresenter extends BasePresenter {
         $this->setPageTitle(_("Důležitá oznámení"));
     }
     
-    public function actionAdd() {
+    public function renderAdd() {
         if(!$this->user->isAllowed('noticeboard', 'add')) {
             $this->error('Nemáte oprávnění pro přidání notifikace.', Nette\Http\Response::S403_FORBIDDEN);
         }
+        $this->setPageTitle(_("Přidat notifikaci"));
     }
     
     public function actionAjax() {

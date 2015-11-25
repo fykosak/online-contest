@@ -3,6 +3,7 @@
 namespace App\FrontendModule\Presenters;
 
 use App\Model\Interlos;
+use Nette;
 
 class GamePresenter extends BasePresenter {
 
@@ -11,6 +12,11 @@ class GamePresenter extends BasePresenter {
     }
 
     public function renderSkip() {
+        if (!$this->user->isAllowed('task', 'skip')) {
+            $this->flashMessage(_('Nemáte dostatek bodů pro přeskočení úlohy.'), "danger");
+            $this->redirect("default");
+        }
+        
         $this->setPageTitle(_("Přeskočit úkol"));
     }
 
