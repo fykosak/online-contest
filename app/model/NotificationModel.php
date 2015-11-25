@@ -44,15 +44,13 @@ class NotificationModel extends AbstractModel {
     
     public function insertNotification($messageCs, $messageEn) {
         $connection = $this->getConnection();
-        $connection->begin();
         $connection->insert("notification", array(
             'message' => $messageCs,
             'lang' => 'cs'
-        ));
+        ))->execute();
         $connection->insert("notification", array(
             'message' => $messageEn,
             'lang' => 'en'
-        ));
-        $connection->commit();
+        ))->execute();
     }
 }
