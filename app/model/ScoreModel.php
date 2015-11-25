@@ -35,7 +35,7 @@ class ScoreModel extends AbstractModel {
 	}
         
         public function updateAfterSkip($teamId) {
-            $this->getConnection()->query("UPDATE [team] SET score = score-1 WHERE id_team = %i", $teamId);
+            $this->getConnection()->query("UPDATE [team] SET score_exp = score_exp-1 WHERE id_team = %i", $teamId);
         }
         
         public function updateAfterCancel($task) {
@@ -62,7 +62,7 @@ class ScoreModel extends AbstractModel {
                     }
                 }
             
-                $this->getConnection()->query("UPDATE [team] SET score = score + %i", $score,"WHERE id_team = %i", $teamId);
+                $this->getConnection()->query("UPDATE [team] SET score_exp = score_exp + %i", $score,"WHERE id_team = %i", $teamId);
             }
             catch(Exception $e) {
                 Debugger::log($e);

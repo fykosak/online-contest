@@ -33,7 +33,7 @@ class SkipAssertion
      * @return type
      */
     public function canSkip(Permission $acl, $role, $resourceId, $privilege) {
-        $score = $this->connection->query("SELECT score FROM [team] WHERE id_team = %i", $this->user->getIdentity()->id_team)->fetchSingle();
+        $score = $this->connection->query("SELECT score_exp FROM [team] WHERE id_team = %i", $this->user->getIdentity()->id_team)->fetchSingle();
         return ($score > self::MIN_SCORE); 
     }
 }
