@@ -20,6 +20,7 @@ class SkipFormComponent extends BaseComponent {
             
             $this->getPresenter()->flashMessage(sprintf(_("Úloha %s přeskočena."), $task->code_name), "success");
             Interlos::tasks()->updateSingleCounter($team, $task);
+            Interlos::score()->updateAfterSkip($team);
         } catch (Nette\InvalidStateException $e) {
             if ($e->getCode() == AnswersModel::ERROR_SKIP_OF_PERIOD) {
                 $this->getPresenter()->flashMessage(_("V tomto období není možno přeskakovat úlohy této série."), "danger");
@@ -80,6 +81,10 @@ class SkipFormComponent extends BaseComponent {
         parent::startUp();
         if (!$this->getPresenter()->user->isLoggedIn()) {
             throw new Nette\InvalidStateException("There is no logged team.");
+        }
+        if (!$this->getPresenter()->user->isAllowed('task', 'skip')) {
+            $this->flashMessage(_("Nemáte dostatek bodů pro přeskočení úlohy."), "danger");
+            $this->getTemplate()->valid = FALSE;
         }
         if (Interlos::isGameEnd()) {
             $this->flashMessage(_("Čas vypršel."), "danger");

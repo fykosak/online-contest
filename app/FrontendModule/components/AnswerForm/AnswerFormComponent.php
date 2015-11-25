@@ -34,6 +34,7 @@ class AnswerFormComponent extends BaseComponent {
             if (TasksModel::checkAnswer($task, $solution)) {
                 $this->getPresenter()->flashMessage(_("Vaše odpověď je správně."), "success");
                 Interlos::tasks()->updateSingleCounter($team, $task);
+                Interlos::score()->updateAfterInsert($team, $task); //musi byt az po updatu counteru
             } else {
                 $this->getPresenter()->flashMessage(_("Vaše odpověď je špatně."), "danger");
             }

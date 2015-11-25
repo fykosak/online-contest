@@ -190,6 +190,7 @@ CREATE TABLE `team` (
   `address` text COLLATE utf8_czech_ci NOT NULL COMMENT 'kontaktni adresa',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
+  `score` int(25) NOT NULL DEFAULT 0 COMMENT 'zive skore, experimental hotfix feature',
   PRIMARY KEY (`id_team`),
   UNIQUE KEY `id_year` (`id_year`,`name`),
   UNIQUE KEY `id_year_2` (`id_year`,`email`),
