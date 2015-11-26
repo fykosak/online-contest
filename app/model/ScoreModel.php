@@ -45,12 +45,12 @@ class ScoreModel extends AbstractModel {
         public function updateAfterInsert($teamId, $task) {
             try{
                 $group = Interlos::groups()->find($task->id_group);
-                $hurry = ($group->allow_zeroes == 1)? true : false; //dle SQL id_group=2,3,4
+                $hurry = ($task->id_group == 1)? false : true; //dle SQL id_group=2,3,4
             
                 $score = $this->getSingleTaskScore($teamId, $task, $group);
             
                 if($hurry) {
-                    $count = $this->getConnection()->query("SELECT task_counter FROM [group_state] WHERE %and", [
+/*                    $count = $this->getConnection()->query("SELECT task_counter FROM [group_state] WHERE %and", [
                         array('id_team = %i', $teamId),
                         array('id_group = %i', $task->id_group),
                     ])->fetchSingle();
@@ -58,6 +58,18 @@ class ScoreModel extends AbstractModel {
                         $groupTasks = Interlos::tasks()->findAll()->where("[id_group] = %i", $task->id_group)->fetchAll();
                         foreach ($groupTasks as $groupTask) {
                             $score += $this->getSingleTaskScore($teamId, $groupTask, $group);
+                        }
+                    }
+*/                    
+                    $solvedTasks = Interlos::tasks()->findSolved($teamId);
+                    $hurryTasks = Interlos::tasks()->findAll()
+                            ->where("[id_task] IN %l", $solvedTasks)
+                            ->where("[number] = %i", $task->number)
+                            ->where("[id_group] <> 1")->fetchAll();
+                    if(count($hurryTasks) == 3) {
+                        foreach ($hurryTasks as $hurryTask) {
+                            $curGroup = Interlos::groups()->find($hurryTask->id_group);
+                            $score += $this->getSingleTaskScore($teamId, $hurryTask, $curGroup);
                         }
                     }
                 }
