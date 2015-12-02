@@ -1,6 +1,6 @@
 <?php
 
-define('LIB_DIR', dirname(__FILE__) . '/../libs');
+define('LIB_DIR', dirname(__FILE__) . '/../vendor/others');
 define('APP_DIR', dirname(__FILE__) . '/../app');
 $poTarget = APP_DIR . '/i18n/locale/cs/LC_MESSAGES/messages.po';
 
