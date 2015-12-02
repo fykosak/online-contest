@@ -3,7 +3,7 @@
 {control form}
 
 {capture $script}
-<script type="text/javascript" src="{$baseUri}js/taskInfo.js"></script>
+    <script type="text/javascript" src="{$basePath}/js/taskInfo.js"></script>
 
 <script type="text/javascript">
     $('#'+{$tasksInfoElement}).infoElement($('#'+{$control['form']['task']->getHtmlId()}), {'data': {$tasksInfo}, 'realHint': {$realHint}, 'expected': {$expected}, 'unit': {$unit}});    
