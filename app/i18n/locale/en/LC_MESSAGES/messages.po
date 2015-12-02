@@ -5,14 +5,14 @@ msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Michal Koutný <xm.koutny@gmail.com>\n"
+"Last-Translator: Lukáš Timko <lukast@fykos.cz>\n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.10\n"
 
 # SkipFormComponent.php:56
 msgid " ---- Vybrat ---- "
@@ -66,13 +66,9 @@ msgstr "Forum"
 msgid "Do této sekce mají přístup pouze přihlášené týmy."
 msgstr "Only registered teams can see the contents of this section."
 
-# TeamFormComponent.php:122
-msgid "E-mail"
-msgstr "E-mail"
-
-# TeamFormComponent.php:124
-msgid "E-mail nemá správný formát."
-msgstr "Entered e-mail does not have a correct format."
+# NoticeboardPresenter.php:18
+msgid "Důležitá oznámení"
+msgstr "Important notifications"
 
 # TeamPresenter.php:28
 msgid "Editaci přihlášky provádějte po osobním přihlášení "
@@ -81,6 +77,12 @@ msgstr "You can edit your application after personal login "
 # TeamFormComponent.php:162
 msgid "Email"
 msgstr "Email"
+
+# DefaultPresenter.php:44
+# menu.latte:14
+# menu.latte:14
+msgid "FAQ"
+msgstr "FAQ"
 
 # TeamFormComponent.php:49
 msgid "FoL registrace"
@@ -203,6 +205,11 @@ msgstr "Be careful with skipping the problems or you will run out of them"
 msgid "Na zadaný úkol jste již takto jednou odpovídali."
 msgstr "You have already tried this answer before."
 
+# SkipFormComponent.php:12
+# GamePresenter.php:16
+msgid "Nemáte dostatek bodů pro přeskočení úlohy."
+msgstr "You don't have enough points to skip task."
+
 # AnswerFormComponent.php:34
 msgid "Není aktuální žádné odpovídací období."
 msgstr "No answering period is active at this moment."
@@ -227,12 +234,21 @@ msgstr "Not filled"
 msgid "Nevyřešené"
 msgstr "Unsolved"
 
+# NotificationFormComponent.php:25
+msgid "Notifikace byla vložena"
+msgstr "Notification was inserted"
+
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:55
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:57
 # visualPaginator.phtml:53
 # visualPaginator.phtml:55
 msgid "Následující »"
 msgstr "Next »"
+
+# menu.latte:27
+# menu.latte:28
+msgid "Nástěnka"
+msgstr "Noticeboard"
 
 # LoginFormComponent.php:33
 # TeamFormComponent.php:112
@@ -250,6 +266,10 @@ msgstr "You must enter a team name."
 # ChatListComponent.php:37
 msgid "Obsah příspěvku není vyplněn."
 msgstr "Your entry is empty."
+
+# NotificationFormComponent.php:35
+msgid "Odeslat"
+msgstr "Submit"
 
 # AnswerFormComponent.php:98
 msgid "Odeslat řešení"
@@ -277,6 +297,14 @@ msgstr "Answer"
 # TeamsModel.php:118
 msgid "Open"
 msgstr "Open"
+
+# chatList.latte:14
+msgid "Organizátoři"
+msgstr "Organizers"
+
+# OrgPresenter.php:25
+msgid "Orgovský rozcestník"
+msgstr "Org dashboard"
 
 # AnswerFormComponent.php:149
 msgid "Očekávaný počet platných cifer"
@@ -339,6 +367,10 @@ msgstr "Skip problem"
 msgid "Přečetl jsem si "
 msgstr "I have read the "
 
+# NoticeboardPresenter.php:25
+msgid "Přidat notifikaci"
+msgstr "Add notification"
+
 # ChatListComponent.php:39
 msgid "Přidat příspěvek"
 msgstr "Add a new entry"
@@ -358,6 +390,10 @@ msgstr "You have been assigned the %s category."
 # ChatListComponent.php:14
 msgid "Příspěvek byl vložen."
 msgstr "Your entry has been submitted."
+
+# chatList.latte:22
+msgid "Reagovat"
+msgstr "React"
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:28
 # _a0cc2abf3e952f2bbc9699711b590abb.layout.phtml.php:28
@@ -388,6 +424,10 @@ msgstr "Warm-up"
 msgid "Seznam týmů"
 msgstr "List of registered teams"
 
+# NoticeboardPresenter.php:40
+msgid "Sledujte prosím nástěnku."
+msgstr "Please check the noticeboard regularly."
+
 # SkipFormComponent.php:26
 # SkipFormComponent.php:32
 # LoginFormComponent.php:21
@@ -416,10 +456,18 @@ msgid ""
 msgstr ""
 "Statistics are unavailable at this moment. Updating is probably underway."
 
+# OrgPresenter.php:36
+msgid "Statistiky odpovědí"
+msgstr "Answer statistics"
+
 # layout.phtml:14
 # layout.phtml:14
 msgid "Statistiky úkolů"
 msgstr "Problem statistics"
+
+# a201205results.latte:2
+msgid "Středoškoláci"
+msgstr "High school students"
 
 # TeamsModel.php:114
 msgid "Středoškoláci A"
@@ -462,6 +510,10 @@ msgstr "Team with the same name or contact email address already exists"
 msgid "Týmy"
 msgstr "Teams"
 
+# TeamFormComponent.php:189
+msgid "U %d. člena je vyplněno jméno, ale není u něj vyplněn e-mail."
+msgstr "The %d th member has filled name, but doesn't have filled e-mail."
+
 # TeamFormComponent.php:152
 # TeamFormComponent.php:160
 msgid "U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."
@@ -480,15 +532,6 @@ msgstr "The email address of the %d. member is not valid."
 # TeamFormComponent.php:199
 msgid "Upravit"
 msgstr "Correct"
-
-# TeamFormComponent.php:166
-msgid ""
-"Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní je "
-"nad SŠ."
-msgstr ""
-"For non-Czech, non-Slovak contestants: You can apply 'high school' category "
-"iff you are eligible for IPhO (International Physics Olympiads). Otherwise "
-"choose 'other'."
 
 # default.phtml:4
 msgid ""
@@ -546,10 +589,6 @@ msgstr "Results"
 msgid "Zadejte prosím kontatní adresu."
 msgstr "Please enter a contact address."
 
-# TeamFormComponent.php:123
-msgid "Zadejte prosím kontatní e-mail."
-msgstr "Please enter a contact email."
-
 # layout.phtml:5
 # layout.phtml:5
 # GamePresenter.php:14
@@ -562,7 +601,23 @@ msgstr "High school outside of Czech Republic"
 
 # layout.phtml:30
 msgid "Zobrazit navigaci"
-msgstr "Zobrazit navigaci"
+msgstr "Show navigation"
+
+# NotificationFormComponent.php:34
+msgid "Zpráva v angličtině musí být vyplněna."
+msgstr "Message in english has to be filled."
+
+# NotificationFormComponent.php:33
+msgid "Zpráva v angličtině."
+msgstr "Message in english."
+
+# NotificationFormComponent.php:32
+msgid "Zpráva v češtině musí být vyplněna."
+msgstr "Message in czech has to be filled."
+
+# NotificationFormComponent.php:31
+msgid "Zpráva v češtině."
+msgstr "Message in czech."
 
 # default.phtml:23
 # taskStats.phtml:15
@@ -615,6 +670,10 @@ msgstr "answer"
 # TeamFormComponent.php:142
 msgid "ostatní"
 msgstr "other"
+
+# default.latte:3
+msgid "oznámení"
+msgstr "notification"
 
 # TeamFormComponent.php:132
 msgid "pravidla soutěže"
@@ -677,6 +736,10 @@ msgstr "Czech/Slovak Republic"
 msgid "Čas vypršel."
 msgstr "Time is up."
 
+# default.latte:4
+msgid "čas vzniku"
+msgstr "time of creation"
+
 # layout.phtml:12
 msgid "Řešení"
 msgstr "Solution"
@@ -689,10 +752,6 @@ msgstr "The teams marked with grey were not active throughout the game"
 msgid "Škola"
 msgstr "School"
 
-# TeamFormComponent.php:165
-msgid "Školní ročník"
-msgstr "Grade"
-
 # taskStats.phtml:9
 msgid "špatně"
 msgstr "incorrect"
@@ -700,3 +759,28 @@ msgstr "incorrect"
 # default.phtml:10
 msgid "Žádné úlohy."
 msgstr "No more problems."
+
+# TeamFormComponent.php:122
+#~ msgid "E-mail"
+#~ msgstr "E-mail"
+
+# TeamFormComponent.php:124
+#~ msgid "E-mail nemá správný formát."
+#~ msgstr "Entered e-mail does not have a correct format."
+
+# TeamFormComponent.php:166
+#~ msgid ""
+#~ "Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní "
+#~ "je nad SŠ."
+#~ msgstr ""
+#~ "For non-Czech, non-Slovak contestants: You can apply 'high school' "
+#~ "category iff you are eligible for IPhO (International Physics Olympiads). "
+#~ "Otherwise choose 'other'."
+
+# TeamFormComponent.php:123
+#~ msgid "Zadejte prosím kontatní e-mail."
+#~ msgstr "Please enter a contact email."
+
+# TeamFormComponent.php:165
+#~ msgid "Školní ročník"
+#~ msgstr "Grade"
