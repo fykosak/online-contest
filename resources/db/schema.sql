@@ -193,7 +193,7 @@ CREATE TABLE `team` (
   `score_exp` int(25) NOT NULL DEFAULT 0 COMMENT 'zive skore, experimental hotfix feature',
   PRIMARY KEY (`id_team`),
   UNIQUE KEY `id_year` (`id_year`,`name`),
-  UNIQUE KEY `id_year_2` (`id_year`,`email`),
+  -- UNIQUE KEY `id_year_2` (`id_year`,`email`),
   CONSTRAINT `team_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Soutezni tymy';
 
