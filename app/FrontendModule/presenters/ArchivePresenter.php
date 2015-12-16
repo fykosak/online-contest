@@ -2,6 +2,8 @@
 
 namespace App\FrontendModule\Presenters;
 
+use Nette\Application\Responses\TextResponse;
+
 class ArchivePresenter extends BasePresenter
 {
 
@@ -21,10 +23,10 @@ class ArchivePresenter extends BasePresenter
             $this->setView('a' . $year . 'tasks.' . $this->lang);
         }
         
-        public function renderDetail($year) {
+        public function actionDetail($year) {
             if(!is_numeric($year)){
                 $this->error();
             }
-            $this->setView('a' . $year . 'detail.' . $this->lang);
+            $this->sendResponse(new TextResponse(readfile(__DIR__.'/../templates/Archive/a' . $year . 'detail.' . $this->lang . '.latte')));
         }
 }
