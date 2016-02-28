@@ -24,4 +24,7 @@ $authorizator = $container->getService('skipAssertion');
 $user = $container->getService('user');
 $authorizator->setUser($user);
 
+// trigger Interlos initialization, so we have environment ready
+$container->getByType('App\Model\Interlos');
+
 return $container;
