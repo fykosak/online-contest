@@ -16,6 +16,9 @@
                     Tříhodinová&hellip;<br/>
                     Soutěž pořádaná <a href="http://fykos.cz/" title="Fyzikální korespondenční seminář">Fyzikálním korespondenčním seminářem</a> <a href="http://www.mff.cuni.cz/">MFF UK</a>.
                 </p>
+                {if !App\Model\Interlos::isRegistrationStarted()}
+                <p>Pokud si přejete být informováni, až bude registrace otevřena, <a href="https://docs.google.com/a/fykos.cz/forms/d/1IAMp-oGnuRjPx2Tf3Vvn4a3r2HYrfloT-hVnVYpGTNQ/viewform">vyplňte nám svůj e-mail</a>.</p>
+                {/if}
                 {if App\Model\Interlos::isRegistrationActive() && !$user->isLoggedIn()}
                 <p><a class="btn btn-primary btn-lg" href="{link :Frontend:Team:registration}" role="button">Registrace &raquo;</a></p>
                 {/if}

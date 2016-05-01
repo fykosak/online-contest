@@ -16,6 +16,9 @@
                     Three-hour&hellip;<br/>
                     Competition organized by <a href="http://fykos.org/" title="The internet physics competition">FYKOS</a> <a href="http://www.mff.cuni.cz/">MFF UK</a>.
                 </p>
+                {if !App\Model\Interlos::isRegistrationStarted()}
+                <p>If you wish to get informed when the registration begins <a href="https://docs.google.com/a/fykos.cz/forms/d/1my8OP4_UdMzT3IyOnZsH1X1uJZHSTPkbzOG645-IjnE/viewform">fill in your e-mail</a>.</p>
+                {/if}
                 {if App\Model\Interlos::isRegistrationActive() && !$user->isLoggedIn()}
                 <p><a class="btn btn-primary btn-lg" href="{link :Frontend:Team:registration}" role="button">Registration &raquo;</a></p>
                 {/if}
