@@ -1,0 +1,10 @@
+{block bigcontent}
+{foreach $reports as $report}
+    <h2>{$report['team']}</h2>
+    <h3>{$report['header']}</h3>
+    {$report['text']}
+    <br/>
+    {foreach $report['images'] as $image}
+        <img src="{$image['url']}" width="100px">{$image['caption']}
+    {/foreach}
+{/foreach}

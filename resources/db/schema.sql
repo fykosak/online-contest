@@ -101,12 +101,14 @@ CREATE TABLE `log` (
   CONSTRAINT `log_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='logovani akci tymu';
 
+
 DROP TABLE IF EXISTS `notification`;
 CREATE TABLE `notification` (
-  `notification_id` int(25) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `notification_id` int(25) NOT NULL AUTO_INCREMENT,
   `message` text COLLATE utf8_czech_ci NOT NULL COMMENT 'text notifikace',
   `lang` enum('cs','en') COLLATE utf8_czech_ci NOT NULL COMMENT 'jazyk notifikace',
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka vlozena do systemu'
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka vlozena do systemu',
+  PRIMARY KEY (`notification_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='notifikace na nastenku';
 
 
@@ -123,6 +125,37 @@ CREATE TABLE `period` (
   KEY `id_group` (`id_group`),
   CONSTRAINT `period_ibfk_1` FOREIGN KEY (`id_group`) REFERENCES `group` (`id_group`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='období pro odevzdávání série úloh';
+
+
+DROP TABLE IF EXISTS `report`;
+CREATE TABLE `report` (
+  `id_report` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id reportu',
+  `id_team` int(11) NOT NULL COMMENT 'id tymu dle FKSDB',
+  `team` varchar(150) COLLATE utf8_czech_ci NOT NULL COMMENT 'nazev tymu',
+  `year_rank` int(11) NOT NULL COMMENT 'rocnik FoLu',
+  `text` text COLLATE utf8_czech_ci NOT NULL COMMENT 'obsah reportu',
+  `lang` enum('cs','en') COLLATE utf8_czech_ci NOT NULL COMMENT 'jazyk',
+  `header` varchar(150) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'titulek reportu',
+  `inserted` datetime NOT NULL COMMENT 'cas vlozeni',
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'cas posledni upravy',
+  `publisher` varchar(150) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'jmeno publikujiciho',
+  `published` datetime DEFAULT NULL COMMENT 'cas publikace',
+  `year_date` date NOT NULL COMMENT 'datum konani',
+  PRIMARY KEY (`id_report`),
+  UNIQUE KEY `id_team_year_rank_lang` (`id_team`,`year_rank`,`lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='reporty tymu';
+
+
+DROP TABLE IF EXISTS `report_image`;
+CREATE TABLE `report_image` (
+  `id_report_image` int(11) NOT NULL AUTO_INCREMENT,
+  `id_report` int(11) NOT NULL COMMENT 'id reportu',
+  `image_hash` char(40) COLLATE utf8_czech_ci NOT NULL COMMENT 'sha1 hash obrazku',
+  `caption` varchar(150) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'popisek obrazku',
+  PRIMARY KEY (`id_report_image`),
+  UNIQUE KEY `id_report_image_hash` (`id_report`,`image_hash`),
+  CONSTRAINT `report_image_ibfk_1` FOREIGN KEY (`id_report`) REFERENCES `report` (`id_report`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='M:N mapovani obrazku a reportu';
 
 
 DROP TABLE IF EXISTS `school`;
@@ -190,12 +223,12 @@ CREATE TABLE `team` (
   `address` text COLLATE utf8_czech_ci NOT NULL COMMENT 'kontaktni adresa',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
-  `score_exp` int(25) NOT NULL DEFAULT 0 COMMENT 'zive skore, experimental hotfix feature',
+  `score_exp` int(25) NOT NULL DEFAULT '0' COMMENT 'zive skore, experimental hotfix feature',
   PRIMARY KEY (`id_team`),
   UNIQUE KEY `id_year` (`id_year`,`name`),
-  -- UNIQUE KEY `id_year_2` (`id_year`,`email`),
   CONSTRAINT `team_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Soutezni tymy';
+
 
 DROP TABLE IF EXISTS `year`;
 CREATE TABLE `year` (
@@ -212,4 +245,4 @@ CREATE TABLE `year` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Rocniky';
 
 
--- 2015-07-05 09:49:18
+-- 2016-06-19 14:54:47

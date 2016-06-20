@@ -45,6 +45,9 @@ parameters:
     notifications:
         # interval for Ajax notification polling (in ms)
         pollInterval: 60000
+    reports:
+        # path to report images relative to wwwDir
+        imagePath: /images/report
 
 #TODO not reimplemented yet
 #[common]

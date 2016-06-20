@@ -25,6 +25,7 @@ services:
     - App\Model\GroupsModel
     - App\Model\NotificationModel
     - App\Model\PeriodModel
+    - App\Model\ReportModel
     - App\Model\SchoolsModel
     - App\Model\ScoreModel
     - App\Model\TasksModel
