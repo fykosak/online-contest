@@ -4,7 +4,16 @@
     <h3>{$report['header']}</h3>
     {$report['text']}
     <br/>
+    <div class="row">
     {foreach $report['images'] as $image}
-        <img src="{$image['url']}" width="100px">{$image['caption']}
+        <div class="col-sm-6 col-md-4">
+            <div class="img-thumbnail">
+                <a href="{$image['img-url']}">
+                    <img src="{$image['thumb-url']}">
+                </a>
+                <div class="caption">{$image['caption']}</div>
+            </div>
+        </div>
     {/foreach}
+    </div>
 {/foreach}

@@ -57,10 +57,8 @@ class ReportAddFormComponent extends BaseComponent
                 ->setItems(array("cs","en"), FALSE)
                 ->setPrompt("----Jazyk----")
                 ->setRequired("Jazyk reportu musí být vyplněn.");
-        $form->addText("header", "Nadpis reportu.")
-                ->setRequired("Nadpis reportu musí být vyplněn.");
-        $form->addTextArea("text", "Text reportu.", 80, 200)
-                ->setRequired("Text reportu musí být vyplněn.");
+        $form->addText("header", "Nadpis reportu.");
+        $form->addTextArea("text", "Text reportu.", 80, 200);
         $form->addMultiUpload("images", "Fotky.")
                 ->addRule(Form::MAX_LENGTH, "Je možné nahrát maximálně 10 fotek.", 10)
                 ->addRule(Form::MAX_FILE_SIZE, "Fotografie nesmí být větší, než 500 kB.", 500*1024)

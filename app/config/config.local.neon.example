@@ -48,6 +48,10 @@ parameters:
     reports:
         # path to report images relative to wwwDir
         imagePath: /images/report
+        thumbnailPath: /images/report/thumb
+        imageHeight: 1024
+        thumbnailHeight: 256
+        jpgQuality: 80
 
 #TODO not reimplemented yet
 #[common]

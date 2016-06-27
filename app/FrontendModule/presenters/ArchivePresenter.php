@@ -45,7 +45,8 @@ class ArchivePresenter extends BasePresenter
                 foreach($imageData as $image){
                     $images[] = array(
                         'caption' => $image['caption'],
-                        'url' => $this->reportModel->getImageUrl($image['image_hash'])
+                        'img-url' => $this->reportModel->getImageUrl($image['image_hash']),
+                        'thumb-url' => $this->reportModel->getThumbnailUrl($image['image_hash'])
                     );
                 }
                 $this->template->reports[] = array(
