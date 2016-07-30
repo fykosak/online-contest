@@ -52,6 +52,14 @@ msgstr "The team already exists."
 msgid "Daný tým neexistuje."
 msgstr "The team does not exist."
 
+# ReportAddFormComponent.php:46
+msgid "Datum konání"
+msgstr "Datum konání"
+
+# ReportAddFormComponent.php:48
+msgid "Datum musí mít podobu YYYY-mm-dd."
+msgstr "Datum musí mít podobu YYYY-mm-dd."
+
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:40
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:40
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:40
@@ -65,6 +73,10 @@ msgstr "Forum"
 # GamePresenter.php:35
 msgid "Do této sekce mají přístup pouze přihlášené týmy."
 msgstr "Only registered teams can see the contents of this section."
+
+# ReportAddFormComponent.php:35
+msgid "Děkujeme za vložení reportu"
+msgstr "Děkujeme za vložení reportu"
 
 # NoticeboardPresenter.php:18
 msgid "Důležitá oznámení"
@@ -84,9 +96,21 @@ msgstr "Email"
 msgid "FAQ"
 msgstr "FAQ"
 
+# ReportAddFormComponent.php:50
+msgid "FKSDB ID týmu."
+msgstr "FKSDB ID týmu."
+
 # TeamFormComponent.php:49
 msgid "FoL registrace"
 msgstr "Online Physics Brawl registration"
+
+# ReportAddFormComponent.php:65
+msgid "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
+msgstr "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
+
+# ReportAddFormComponent.php:64
+msgid "Fotografie nesmí být větší, než 500 kB."
+msgstr "Fotografie nesmí být větší, než 500 kB."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:15
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:18
@@ -135,6 +159,18 @@ msgstr "Competition"
 # AnswerFormComponent.php:116
 msgid "Hra ještě nezačala."
 msgstr "Competition has not started yet."
+
+# ReportAddFormComponent.php:52
+msgid "ID týmu musí být větší než %d."
+msgstr "ID týmu musí být větší než %d."
+
+# ReportAddFormComponent.php:56
+msgid "Jazyk reportu."
+msgstr "Jazyk reportu."
+
+# ReportAddFormComponent.php:63
+msgid "Je možné nahrát maximálně 10 fotek."
+msgstr "Je možné nahrát maximálně 10 fotek."
 
 # TeamFormComponent.php:136
 msgid "Je nutno si nejdříve přečíst pravidla."
@@ -204,6 +240,10 @@ msgstr "Be careful with skipping the problems or you will run out of them"
 # AnswerFormComponent.php:44
 msgid "Na zadaný úkol jste již takto jednou odpovídali."
 msgstr "You have already tried this answer before."
+
+# ReportAddFormComponent.php:60
+msgid "Nadpis reportu."
+msgstr "Nadpis reportu."
 
 # SkipFormComponent.php:12
 # GamePresenter.php:16
@@ -293,6 +333,10 @@ msgstr "Log out"
 # AnswerFormComponent.php:83
 msgid "Odpověď"
 msgstr "Answer"
+
+# ArchivePresenter.php:59
+msgid "Ohlasy účastníků"
+msgstr "Contestants' references"
 
 # TeamsModel.php:118
 msgid "Open"
@@ -420,6 +464,14 @@ msgstr "Register"
 msgid "Rozcvička"
 msgstr "Warm-up"
 
+# ReportAddFormComponent.php:42
+msgid "Ročník"
+msgstr "Ročník"
+
+# ReportAddFormComponent.php:44
+msgid "Ročník musí být větší než %d."
+msgstr "Ročník musí být větší než %d."
+
 # TeamPresenter.php:17
 msgid "Seznam týmů"
 msgstr "List of registered teams"
@@ -427,6 +479,10 @@ msgstr "List of registered teams"
 # NoticeboardPresenter.php:40
 msgid "Sledujte prosím nástěnku."
 msgstr "Please check the noticeboard regularly."
+
+# OrgPresenter.php:46
+msgid "Správa reportů"
+msgstr "Správa reportů"
 
 # SkipFormComponent.php:26
 # SkipFormComponent.php:32
@@ -481,6 +537,10 @@ msgstr "High school students B"
 msgid "Středoškoláci C"
 msgstr "High school students C"
 
+# ReportAddFormComponent.php:61
+msgid "Text reportu."
+msgstr "Text reportu."
+
 # TeamFormComponent.php:109
 msgid "Tým"
 msgstr "Team"
@@ -500,6 +560,10 @@ msgstr "Team must consist of at least one member."
 # TeamFormComponent.php:25
 msgid "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 msgstr "Team with the same name or contact email address already exists"
+
+# ReportAddFormComponent.php:54
+msgid "Tým, za který se vkládá."
+msgstr "Tým, za který se vkládá."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41

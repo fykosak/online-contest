@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2015-12-02T03:43:06+01:00
+# Created: 2016-07-30T10:18:53+02:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,6 +43,14 @@ msgstr "Daný tým již existuje."
 msgid "Daný tým neexistuje."
 msgstr "Daný tým neexistuje."
 
+# ReportAddFormComponent.php:46
+msgid "Datum konání"
+msgstr "Datum konání"
+
+# ReportAddFormComponent.php:48
+msgid "Datum musí mít podobu YYYY-mm-dd."
+msgstr "Datum musí mít podobu YYYY-mm-dd."
+
 # DefaultPresenter.php:20
 # menu.latte:17
 # menu.latte:17
@@ -52,6 +60,10 @@ msgstr "Diskuse"
 # GamePresenter.php:67
 msgid "Do této sekce mají přístup pouze přihlášené týmy."
 msgstr "Do této sekce mají přístup pouze přihlášené týmy."
+
+# ReportAddFormComponent.php:35
+msgid "Děkujeme za vložení reportu"
+msgstr "Děkujeme za vložení reportu"
 
 # NoticeboardPresenter.php:18
 msgid "Důležitá oznámení"
@@ -71,9 +83,21 @@ msgstr "Email"
 msgid "FAQ"
 msgstr "FAQ"
 
+# ReportAddFormComponent.php:50
+msgid "FKSDB ID týmu."
+msgstr "FKSDB ID týmu."
+
 # TeamFormComponent.php:59
 msgid "FoL registrace"
 msgstr "FoL registrace"
+
+# ReportAddFormComponent.php:65
+msgid "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
+msgstr "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
+
+# ReportAddFormComponent.php:64
+msgid "Fotografie nesmí být větší, než 500 kB."
+msgstr "Fotografie nesmí být větší, než 500 kB."
 
 # a201205detail.latte:11
 # @layout.latte:10
@@ -111,6 +135,18 @@ msgstr "Hra"
 # SkipFormComponent.php:100
 msgid "Hra ještě nezačala."
 msgstr "Hra ještě nezačala."
+
+# ReportAddFormComponent.php:52
+msgid "ID týmu musí být větší než %d."
+msgstr "ID týmu musí být větší než %d."
+
+# ReportAddFormComponent.php:56
+msgid "Jazyk reportu."
+msgstr "Jazyk reportu."
+
+# ReportAddFormComponent.php:63
+msgid "Je možné nahrát maximálně 10 fotek."
+msgstr "Je možné nahrát maximálně 10 fotek."
 
 # TeamFormComponent.php:148
 msgid "Je nutno si nejdříve přečíst pravidla."
@@ -174,6 +210,10 @@ msgstr "Možností přeskakovat neplýtvejte, snadno se může stát, že vám p
 msgid "Na zadaný úkol jste již takto jednou odpovídali."
 msgstr "Na zadaný úkol jste již takto jednou odpovídali."
 
+# ReportAddFormComponent.php:60
+msgid "Nadpis reportu."
+msgstr "Nadpis reportu."
+
 # SkipFormComponent.php:12
 # GamePresenter.php:16
 msgid "Nemáte dostatek bodů pro přeskočení úlohy."
@@ -234,6 +274,7 @@ msgid "Obsah příspěvku není vyplněn."
 msgstr "Obsah příspěvku není vyplněn."
 
 # NotificationFormComponent.php:35
+# ReportAddFormComponent.php:72
 msgid "Odeslat"
 msgstr "Odeslat"
 
@@ -256,6 +297,11 @@ msgstr "Odhlásit se"
 msgid "Odpověď"
 msgstr "Odpověď"
 
+# ArchivePresenter.php:59
+msgid "Ohlasy účastníků"
+msgstr "Ohlasy účastníků"
+
+# a201512results.latte:2668
 # a201212results.latte:2109
 # a201205results.latte:844
 # a201312results.latte:2148
@@ -268,7 +314,7 @@ msgstr "Open"
 msgid "Organizátoři"
 msgstr "Organizátoři"
 
-# OrgPresenter.php:25
+# OrgPresenter.php:28
 msgid "Orgovský rozcestník"
 msgstr "Orgovský rozcestník"
 
@@ -334,7 +380,7 @@ msgstr "Přidat příspěvek"
 
 # LoginFormComponent.php:53
 # DefaultPresenter.php:35
-# OrgPresenter.php:29
+# OrgPresenter.php:32
 # menu.latte:53
 # menu.latte:54
 msgid "Přihlásit se"
@@ -374,6 +420,14 @@ msgstr "Registrovat"
 msgid "Rozcvička"
 msgstr "Rozcvička"
 
+# ReportAddFormComponent.php:42
+msgid "Ročník"
+msgstr "Ročník"
+
+# ReportAddFormComponent.php:44
+msgid "Ročník musí být větší než %d."
+msgstr "Ročník musí být větší než %d."
+
 # TeamPresenter.php:46
 msgid "Seznam týmů"
 msgstr "Seznam týmů"
@@ -381,6 +435,10 @@ msgstr "Seznam týmů"
 # NoticeboardPresenter.php:40
 msgid "Sledujte prosím nástěnku."
 msgstr "Sledujte prosím nástěnku."
+
+# OrgPresenter.php:46
+msgid "Správa reportů"
+msgstr "Správa reportů"
 
 # AnswerFormComponent.php:49
 # AnswerFormComponent.php:59
@@ -404,7 +462,7 @@ msgstr "Statistiky"
 msgid "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 msgstr "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 
-# OrgPresenter.php:36
+# OrgPresenter.php:39
 msgid "Statistiky odpovědí"
 msgstr "Statistiky odpovědí"
 
@@ -417,6 +475,7 @@ msgstr "Statistiky úkolů"
 msgid "Středoškoláci"
 msgstr "Středoškoláci"
 
+# a201512results.latte:2
 # a201212results.latte:2
 # a201312results.latte:2
 # a201412results.latte:2
@@ -424,6 +483,7 @@ msgstr "Středoškoláci"
 msgid "Středoškoláci A"
 msgstr "Středoškoláci A"
 
+# a201512results.latte:493
 # a201212results.latte:376
 # a201312results.latte:363
 # a201412results.latte:480
@@ -431,12 +491,17 @@ msgstr "Středoškoláci A"
 msgid "Středoškoláci B"
 msgstr "Středoškoláci B"
 
+# a201512results.latte:1166
 # a201212results.latte:815
 # a201312results.latte:971
 # a201412results.latte:958
 # TeamsModel.php:118
 msgid "Středoškoláci C"
 msgstr "Středoškoláci C"
+
+# ReportAddFormComponent.php:61
+msgid "Text reportu."
+msgstr "Text reportu."
 
 # scoreList.latte:13
 # TeamFormComponent.php:124
@@ -458,6 +523,10 @@ msgstr "Tým musí mít alespoň jednoho člena."
 # TeamFormComponent.php:34
 msgid "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 msgstr "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
+
+# ReportAddFormComponent.php:54
+msgid "Tým, za který se vkládá."
+msgstr "Tým, za který se vkládá."
 
 # menu.latte:18
 # menu.latte:19
@@ -541,6 +610,7 @@ msgstr "Zadejte prosím kontatní adresu."
 msgid "Zadání"
 msgstr "Zadání"
 
+# a201512results.latte:2151
 # a201212results.latte:1488
 # a201312results.latte:1553
 # a201412results.latte:1449
@@ -583,6 +653,11 @@ msgid "b."
 msgstr "b."
 
 # results.latte:12
+# a201512results.latte:8
+# a201512results.latte:499
+# a201512results.latte:1172
+# a201512results.latte:2157
+# a201512results.latte:2674
 # a201212results.latte:8
 # a201212results.latte:382
 # a201212results.latte:821
@@ -604,6 +679,11 @@ msgid "bonusové body"
 msgstr "bonusové body"
 
 # results.latte:11
+# a201512results.latte:7
+# a201512results.latte:498
+# a201512results.latte:1171
+# a201512results.latte:2156
+# a201512results.latte:2673
 # a201212results.latte:7
 # a201212results.latte:381
 # a201212results.latte:820
@@ -674,6 +754,11 @@ msgid "střední škola"
 msgstr "střední škola"
 
 # results.latte:10
+# a201512results.latte:6
+# a201512results.latte:497
+# a201512results.latte:1170
+# a201512results.latte:2155
+# a201512results.latte:2672
 # a201212results.latte:6
 # a201212results.latte:380
 # a201212results.latte:819
@@ -703,6 +788,11 @@ msgid "zahraničí"
 msgstr "zahraničí"
 
 # results.latte:13
+# a201512results.latte:9
+# a201512results.latte:500
+# a201512results.latte:1173
+# a201512results.latte:2158
+# a201512results.latte:2675
 # a201212results.latte:9
 # a201212results.latte:383
 # a201212results.latte:822
@@ -757,6 +847,7 @@ msgstr "čas vzniku"
 msgid "Řešení"
 msgstr "Řešení"
 
+# a201512results.latte:1
 # a201212results.latte:1
 # a201205results.latte:1
 # a201312results.latte:1

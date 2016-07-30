@@ -56,6 +56,6 @@ class ArchivePresenter extends BasePresenter
                     'images' => $images
                 );
             }
-            $this->setPageTitle(_("Reporty"));
+            $this->setPageTitle(_("Ohlasy účastníků"));
         }
 }
