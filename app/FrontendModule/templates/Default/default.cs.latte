@@ -20,7 +20,7 @@
                 <p>Pokud si přejete být informováni, až bude registrace otevřena, <a href="https://docs.google.com/a/fykos.cz/forms/d/1IAMp-oGnuRjPx2Tf3Vvn4a3r2HYrfloT-hVnVYpGTNQ/viewform">vyplňte nám svůj e-mail</a>.</p>
                 {/if}
                 {if App\Model\Interlos::isRegistrationActive() && !$user->isLoggedIn()}
-                <p><a class="btn btn-primary btn-lg" href="{link :Frontend:Team:registration}" role="button">Registrace &raquo;</a></p>
+                <p><a class="btn btn-primary btn-warning btn-lg" href="{link :Frontend:Team:registration}" role="button">Registrace &raquo;</a></p>
                 {/if}
                 <p><a class="btn btn-primary btn-lg" href="{link :Frontend:Archive:reports 201512}" role="button">Ohlasy účastníků z minulého ročníku &raquo;</a></p>
             </div>
