@@ -41,6 +41,7 @@ CREATE VIEW `view_task` AS
 
 -- úlohy přístupné týmu jako zadání
 -- stornované úlohy jsou takto dostupné (stejně si je mohl už někdo stáhnout)
+-- TODO matoucí, zrušit
 DROP VIEW IF EXISTS `view_available_task`;
 CREATE VIEW `view_available_task` AS
 	SELECT
@@ -124,6 +125,7 @@ CREATE VIEW `view_incorrect_answer` AS
         INNER JOIN `task` USING(`id_task`)
 	WHERE (`task`.`cancelled` = 0) AND `answer`.`id_answer` NOT IN (SELECT `id_answer` FROM `view_correct_answer`);
 
+/*
 DROP FUNCTION IF EXISTS `task_points_with_discount`;
 delimiter //
 CREATE FUNCTION `task_points_with_discount`(maximum int(2), allow_zeroes tinyint(1), wrong_tries int(25))
@@ -177,6 +179,7 @@ delimiter ;
  	FROM (`view_available_task` AS `view_task`)
  	LEFT JOIN `view_correct_answer` AS `answer` USING(`id_task`, `id_team`)
         LEFT JOIN `view_group` USING(`id_group`);
+*/
 
 DROP VIEW IF EXISTS `view_bonus_help`;
 CREATE VIEW `view_bonus_help` AS
@@ -194,10 +197,10 @@ DROP VIEW IF EXISTS `view_bonus`;
 CREATE VIEW `view_bonus` AS
     SELECT
         `id_team`,
-        SUM(`view_task_result`.`score`) AS `score`
+        SUM(`task_state`.`points`) AS `score`
     FROM `view_bonus_help`
     LEFT JOIN `view_task` ON `view_task`.`number` = `view_bonus_help`.`number` AND `view_task`.`id_group` IN (2, 3, 4)
-    LEFT JOIN `view_task_result` USING (`id_task`, `id_team`)
+    LEFT JOIN `task_state` USING (`id_task`, `id_team`)
     WHERE `view_bonus_help`.`complete` = 3  -- vazba na data, skupiny ke kompletovani (hurry up) a jejich počet
     GROUP BY `id_team`;
 
@@ -218,20 +221,22 @@ CREATE VIEW `view_bonus` AS
  DROP VIEW IF EXISTS `view_total_result`;
  CREATE VIEW `view_total_result` AS
  	SELECT
- 		`team`.*,
- 		SUM(`view_task_result`.`score`)
+ 		`t`.*,
+ 		SUM(`ts`.`points`)
                     + IFNULL(`view_bonus`.`score`, 0) 
                     - IFNULL(`view_penality`.`score`, 0) AS `score`,
                 IF(
-                    (SELECT COUNT(`id_task`) FROM `task_state` WHERE `id_team` = `team`.`id_team` AND `skipped` = 1)
-                    + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `team`.`id_team`) > 0
+                    (SELECT COUNT(`ts2`.`id_task`) FROM `task_state` `ts2` WHERE `ts2`.`id_team` = `t`.`id_team` AND `ts2`.`skipped` = 1)
+                    + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `t`.`id_team`) > 0
                 , 1, 0) AS `activity`
- 	FROM `view_team` AS `team`
- 	LEFT JOIN `view_task_result` USING(`id_team`)
- 	LEFT JOIN `view_penality` USING(`id_team`)
- 	LEFT JOIN `view_bonus` USING(`id_team`)
-        LEFT JOIN `view_last_correct_answer` USING(`id_team`)
- 	GROUP BY `id_team`
+ 	FROM `view_team` `t`
+ 	LEFT JOIN `task_state` `ts` ON `ts`.`id_team` = `t`.`id_team`
+ 	LEFT JOIN `view_penality` ON `t`.`id_team`=`view_penality`.`id_team`
+ 	LEFT JOIN `view_bonus` ON `t`.`id_team`=`view_bonus`.`id_team`
+        LEFT JOIN `view_last_correct_answer` ON `t`.`id_team`=`view_last_correct_answer`.`id_team`
+        LEFT JOIN `view_task` ON `view_task`.`id_task` = `ts`.`id_task`
+        WHERE `view_task`.`cancelled` = 0
+ 	GROUP BY `t`.`id_team`
  	ORDER BY `activity` DESC, `score` DESC, `last_time` ASC;
 
 DROP VIEW IF EXISTS `view_task_stat`;
@@ -255,8 +260,10 @@ CREATE VIEW `view_task_stat` AS
 -- Views that read data from cached tables
 --
 
+/*
 DROP TABLE IF EXISTS `tmp_task_result`;
 CREATE TABLE `tmp_task_result` AS SELECT * FROM `view_task_result`;
+*/
 
 DROP TABLE IF EXISTS `tmp_bonus`;
 CREATE TABLE `tmp_bonus` AS SELECT * FROM `view_bonus`;
@@ -264,6 +271,7 @@ CREATE TABLE `tmp_bonus` AS SELECT * FROM `view_bonus`;
 DROP TABLE IF EXISTS `tmp_penality`;
 CREATE TABLE `tmp_penality` AS SELECT * FROM `view_penality`;
 
+/*
 DROP VIEW IF EXISTS `view_bonus_cached`;
 CREATE VIEW `view_bonus_cached` AS
     SELECT
@@ -274,24 +282,27 @@ CREATE VIEW `view_bonus_cached` AS
     LEFT JOIN `tmp_task_result` USING (`id_task`, `id_team`)
     WHERE `view_bonus_help`.`complete` = 3  -- vazba na data, skupiny ke kompletovani (hurry up) a jejich počet
     GROUP BY `id_team`;
+*/
 
 DROP VIEW IF EXISTS `view_total_result_cached`;
 CREATE VIEW `view_total_result_cached` AS
  	SELECT
- 		`team`.*,
- 		SUM(`tmp_task_result`.`score`)
+ 		`t`.*,
+ 		SUM(`ts`.`points`)
                     + IFNULL(`tmp_bonus`.`score`, 0) 
                     - IFNULL(`tmp_penality`.`score`, 0) AS `score`,
                 IF(
-                    (SELECT COUNT(`id_task`) FROM `task_state` WHERE `id_team` = `team`.`id_team` AND `skipped` = 1)
-                    + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `team`.`id_team`) > 0
+                    (SELECT COUNT(`ts2`.`id_task`) FROM `task_state` `ts2` WHERE `ts2`.`id_team` = `t`.`id_team` AND `ts2`.`skipped` = 1)
+                    + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `t`.`id_team`) > 0
                 , 1, 0) AS `activity`
- 	FROM `view_team` AS `team`
- 	LEFT JOIN `tmp_task_result` USING(`id_team`)
- 	LEFT JOIN `tmp_penality` USING(`id_team`)
- 	LEFT JOIN `tmp_bonus` USING(`id_team`)
-        LEFT JOIN `view_last_correct_answer` USING(`id_team`)
- 	GROUP BY `id_team`
+ 	FROM `view_team` `t`
+ 	LEFT JOIN `task_state` `ts` ON `ts`.`id_team` = `t`.`id_team`
+ 	LEFT JOIN `tmp_penality` ON `tmp_penality`.`id_team` = `t`.`id_team`
+ 	LEFT JOIN `tmp_bonus` ON `tmp_bonus`.`id_team` = `t`.`id_team`
+        LEFT JOIN `view_last_correct_answer` ON `view_last_correct_answer`.`id_team` = `t`.`id_team`
+        LEFT JOIN `view_task` ON `view_task`.`id_task` = `ts`.`id_task`
+        WHERE `view_task`.`cancelled` = 0
+ 	GROUP BY `t`.`id_team`
  	ORDER BY `activity` DESC, `score` DESC, `last_time` ASC;
  
 

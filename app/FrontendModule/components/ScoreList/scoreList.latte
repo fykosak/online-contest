@@ -1,7 +1,6 @@
 {cache "scoreList/".$presenter->lang}
 {var $teams => $teams->fetchAll()}
 {var $score => $score->fetchAssoc("id_team,id_task")}
-{var $skips => $skips->fetchAssoc("id_team,id_task")}
 {var $bonus => $bonus->fetchAssoc("id_team")}
 {var $penality => $penality->fetchAssoc("id_team")}
 
@@ -66,13 +65,15 @@
 			{foreach $tasks AS $task}
                                 {if $task->cancelled}
                                         {*<td class="empty" title="{_'Zrušená úloha'}">&nbsp;</td>*}
-				{elseif isset($skips[$team->id_team]) && isset($skips[$team->id_team][$task->id_task])}
-					<td class="skipped" title="{$skips[$team->id_team][$task->id_task]->inserted}">S</td>
-                                {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task]) || $score[$team->id_team][$task->id_task]->inserted == NULL}
+                                {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task])}
                                         <td class="empty">X</td>
                                 {else}
-                                        {var ratio => floor(round(9.9 * $score[$team->id_team][$task->id_task]->score / $task->points)/2)}
-					<td class="done ratio-{$ratio}" title="{$score[$team->id_team][$task->id_task]->inserted}">{$score[$team->id_team][$task->id_task]->score}</td>
+                                        {if $score[$team->id_team][$task->id_task]->skipped == 1}
+                                            <td class="skipped" title="{$score[$team->id_team][$task->id_task]->inserted}">S</td>
+                                        {else}
+                                            {var ratio => floor(round(9.9 * $score[$team->id_team][$task->id_task]->points / $task->points)/2)}
+                                            <td class="done ratio-{$ratio}" title="{$score[$team->id_team][$task->id_task]->inserted}">{$score[$team->id_team][$task->id_task]->points}</td>
+                                        {/if}    
 				{/if}                                
 			{/foreach}
 		</tr>

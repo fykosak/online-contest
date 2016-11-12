@@ -164,10 +164,10 @@ class Interlos extends Nette\Object {
         $result = 'tmp_'; // resulting cache
 
         $tables = array(
-            'task_result' => 'task_result',
+            //'task_result' => 'task_result',
             'task_stat' => 'task_stat',
             'penality' => 'penality',
-            'bonus_cached' => 'bonus',
+            'bonus' => 'bonus',
             'total_result_cached' => 'total_result',
         );
 

@@ -120,7 +120,8 @@ class TasksModel extends AbstractModel {
                     "id_team" => $team,
                     "id_task" => $task["id_task"],
                     "inserted" => new \DateTime(),
-                    "skipped" => 1))->execute();
+                    "skipped" => 1,
+                    "points" => null,))->execute();
 
         // Increase counter
         $sql = "INSERT INTO [group_state] ([id_group], [id_team], [task_counter])

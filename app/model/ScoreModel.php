@@ -21,7 +21,7 @@ class ScoreModel extends AbstractModel {
 
 	/** @return \DibiDataSource */
 	public function findAllTasks() {
-		return $this->getConnection()->dataSource("SELECT * FROM [tmp_task_result]");
+		return $this->getConnection()->dataSource("SELECT * FROM [task_state]");
 	}
 
 	/** @return \DibiDataSource */
@@ -48,19 +48,15 @@ class ScoreModel extends AbstractModel {
                 $hurry = ($task->id_group == 1)? false : true; //dle SQL id_group=2,3,4
             
                 $score = $this->getSingleTaskScore($teamId, $task, $group);
-            
+                $this->getConnection()->insert("task_state", array(
+                    "id_team" => $teamId,
+                    "id_task" => $task->id_task,
+                    "inserted" => new \DateTime(),
+                    "skipped" => 0,
+                    "points" => $score,))->execute();
+
+                /* vypocet bonusu */
                 if($hurry) {
-/*                    $count = $this->getConnection()->query("SELECT task_counter FROM [group_state] WHERE %and", [
-                        array('id_team = %i', $teamId),
-                        array('id_group = %i', $task->id_group),
-                    ])->fetchSingle();
-                    if($count == 5) {//TODO
-                        $groupTasks = Interlos::tasks()->findAll()->where("[id_group] = %i", $task->id_group)->fetchAll();
-                        foreach ($groupTasks as $groupTask) {
-                            $score += $this->getSingleTaskScore($teamId, $groupTask, $group);
-                        }
-                    }
-*/                    
                     $solvedTasks = Interlos::tasks()->findSolved($teamId);
                     $hurryTasks = Interlos::tasks()->findAll()
                             ->where("[id_task] IN %l", $solvedTasks)
