@@ -53,6 +53,18 @@ class TasksModel extends AbstractModel {
         }
         return $source;
     }
+    
+    /**
+     * Find missed tasks (after end of hurry up)
+     * 
+     * @return array id_task => id_task
+     */
+    public function findMissed($teamId) {
+        $source = $this->getConnection()->dataSource("SELECT `view_available_task`.* FROM [view_available_task]
+            RIGHT JOIN `period` ON `period`.`id_group` = `view_available_task`.`id_group`
+            AND (`period`.`begin` > NOW() OR `period`.`end` < NOW()) WHERE [id_team] = %i", $teamId);
+        return $source->fetchPairs("id_task", "id_task");
+    }
 
     /**
      * Find solved tasks
@@ -60,10 +72,8 @@ class TasksModel extends AbstractModel {
      * @return array id_task => id_task
      */
     public function findSolved($teamId) {
-        return Interlos::answers()
-                        ->findAllCorrect()
-                        ->where("[id_team] = %i", $teamId)
-                        ->fetchPairs("id_task", "id_task");
+        $source = $this->getConnection()->dataSource("SELECT id_task FROM [task_state] WHERE [id_team] = %i", $teamId, " and points IS NOT NULL");
+        return $source->fetchPairs("id_task", "id_task");
     }
 
     /**

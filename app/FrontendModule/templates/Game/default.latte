@@ -53,6 +53,17 @@
     {/foreach}
 </ul>
 {/if}
+
+<h3>{_'Promeškané'}</h3>
+{if count($missedTasks) == 0}
+<p>{_'Žádné úlohy.'}</p>
+{else}
+<ul>
+    {foreach $missedTasks as $task}
+    {include #task}
+    {/foreach}
+</ul>
+{/if}
 {*{/cache}*}
 
 {include @info.$lang.latte}

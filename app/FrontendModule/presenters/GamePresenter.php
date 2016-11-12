@@ -32,15 +32,19 @@ class GamePresenter extends BasePresenter {
         // tasks
         $solved = Interlos::tasks()->findSolved($team);
         $skipped = Interlos::tasks()->findSkipped($team);
+        $missed = Interlos::tasks()->findMissed($team);
         
         $unsolvedTasks = array();
         $skippedTasks = array();
         $solvedTasks = array();
+        $missedTasks = array();
         foreach(Interlos::tasks()->findProblemAvailable($team) as $task){
             if(isset($solved[$task->id_task])){
                 $solvedTasks[] = $task;
             }elseif(isset($skipped[$task->id_task])){
                 $skippedTasks[] = $task;
+            }elseif(isset($missed[$task->id_task])){
+                $missedTasks[] = $task;
             }else{
                 $unsolvedTasks[] = $task;
             }
@@ -48,6 +52,7 @@ class GamePresenter extends BasePresenter {
         $this->template->solvedTasks = $solvedTasks;
         $this->template->skippedTasks = $skippedTasks;
         $this->template->unsolvedTasks = $unsolvedTasks;
+        $this->template->missedTasks = $missedTasks;
         
     }
 
