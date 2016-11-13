@@ -43,7 +43,7 @@
         {if App\Model\Interlos::isRegistrationEnd()}
         <p>Registrace <strong>skončila</strong> {$year->registration_end|date:'%d. %#m. %Y %k.%M'}.</p>
         {else}
-        <p>Registrace otevřena {if !App\Model\Interlos::isRegistrationStarted()}od {$year->registration_start|date:'%d. %#m. %Y'} {/if}<a href="http://www.timeanddate.com/worldclock/fixedtime.html?msg=Online+Physics+Brawl+-+end+of+registration&iso={$year->registration_end|date:'%Y%m%d'}T{$year->game_start|date:'%H%i'}&p1=204">do {$year->registration_end|date:'%d. %#m. %Y %k.%M'}</a>.</p>
+        <p>Registrace otevřena {if !App\Model\Interlos::isRegistrationStarted()}od {$year->registration_start|date:'%d. %#m. %Y'} {/if}<a href="http://www.timeanddate.com/worldclock/fixedtime.html?msg=Online+Physics+Brawl+-+end+of+registration&iso={$year->registration_end|date:'%Y%m%d'}T{$year->game_start|date:'%H%M'}&p1=204">do {$year->registration_end|date:'%d. %#m. %Y %k.%M'}</a>.</p>
         {*<p>Pomozte nám propagovat šířením letáku.
             <a href="{$basePath}/download/2015-1/fol_2015-v1.compressed.pdf"><img src="{$basePath}/download/2015-1/letak-fol_2015.png" width="100px"></a>
         </p>*}
