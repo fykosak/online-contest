@@ -27,11 +27,11 @@ class AnswerFormComponent extends BaseComponent {
                 $this->log($team, "solution_tried", "The team tried to insert the solution of task [$task->id_task] with solution [$solution].");
                 throw new Nette\InvalidStateException("There is no active submit period.", AnswersModel::ERROR_OUT_OF_PERIOD);
             }
-
-            Interlos::answers()->insert($team, $task, $solution, $period);
+            $correct = TasksModel::checkAnswer($task, $solution);
+            Interlos::answers()->insert($team, $task, $solution, $period, $correct);
             //Environment::getCache()->clean(array(Cache::TAGS => array("problems/$team"))); // not used
 
-            if (TasksModel::checkAnswer($task, $solution)) {
+            if ($correct) {
                 $this->getPresenter()->flashMessage(_("Vaše odpověď je správně."), "success");
                 Interlos::tasks()->updateSingleCounter($team, $task);
                 Interlos::score()->updateAfterInsert($team, $task); //musi byt az po updatu counteru

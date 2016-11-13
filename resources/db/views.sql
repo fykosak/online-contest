@@ -95,11 +95,7 @@ CREATE VIEW `view_seemingly_correct_answer` AS
                 `view_task`.`cancelled`
 	FROM `view_answer` AS `answer`
 	INNER JOIN `view_task` USING(`id_task`)
-	WHERE 
-            (`view_task`.`answer_type` = 'str' AND `answer`.`answer_str` = `view_task`.`answer_str`)
-            OR (`view_task`.`answer_type` = 'int' AND `answer`.`answer_int` = `view_task`.`answer_int`)
-            OR (`view_task`.`answer_type` = 'real' AND `answer`.`answer_real` BETWEEN `view_task`.`answer_real` - `view_task`.`real_tolerance` AND `view_task`.`answer_real` + `view_task`.`real_tolerance`)
-	GROUP BY `id_answer`;
+	WHERE `answer`.`correct` = 1;
 
 DROP VIEW IF EXISTS `view_correct_answer`;
 CREATE VIEW `view_correct_answer` AS
@@ -122,8 +118,8 @@ CREATE VIEW `view_incorrect_answer` AS
 	SELECT
 		`answer`.*
 	FROM `view_answer` AS `answer`
-        INNER JOIN `task` USING(`id_task`)
-	WHERE (`task`.`cancelled` = 0) AND `answer`.`id_answer` NOT IN (SELECT `id_answer` FROM `view_correct_answer`);
+        INNER JOIN `view_task` USING(`id_task`)
+	WHERE `view_task`.`cancelled` = 0 AND `answer`.`correct` = 0;
 
 /*
 DROP FUNCTION IF EXISTS `task_points_with_discount`;

@@ -39,7 +39,7 @@ class AnswersModel extends AbstractModel {
         return $source;
     }
 
-    public function insert($team, $task, $solution, $period) {
+    public function insert($team, $task, $solution, $period, $correct) {
         $this->checkEmptiness($team, "team");
         $this->checkEmptiness($task, "task");
         $this->checkEmptiness($solution, "solution");
@@ -81,6 +81,7 @@ class AnswersModel extends AbstractModel {
         $return = $this->getConnection()->insert("answer", array(
                     "id_team" => $team,
                     "id_task" => $task["id_task"],
+                    "correct" => $correct,
                     "inserted" => new \DateTime()
                         ) + $answer)->execute();
         // Log the action
