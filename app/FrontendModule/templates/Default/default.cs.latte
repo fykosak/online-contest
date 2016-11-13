@@ -37,18 +37,13 @@
     <div class="col-md-4">        
         <h2>Kdy</h2>
         {if App\Model\Interlos::isGameEnd()}
-        <p>Proběhla ve <a href="{$year->eta_duration}" n:block='game_period'>{$year->game_start|date:'%A %e. %#m.'|lower} od {$year->game_start|date:'%k.%M'} do {$year->game_end|date:'%k.%M'}</a>.</p>
+        <p>Proběhla ve <a href="http://www.timeanddate.com/worldclock/fixedtime.html?msg=Online+Physics+Brawl&iso={$year->game_start|date:'%Y%m%d'}T{$year->game_start|date:'%H%i'}&p1=204&ah=3" n:block='game_period'>{$year->game_start|date:'%A %e. %#m.'|lower} od {$year->game_start|date:'%k.%M'} do {$year->game_end|date:'%k.%M'}</a>.</p>
         {else}
         <p>Proběhne ve {include #game_period}.</p>
         {if App\Model\Interlos::isRegistrationEnd()}
         <p>Registrace <strong>skončila</strong> {$year->registration_end|date:'%d. %#m. %Y %k.%M'}.</p>
         {else}
-        <p>Registrace otevřena {if !App\Model\Interlos::isRegistrationStarted()}od {$year->registration_start|date:'%d. %#m. %Y'} {/if}<a href="{$year->eta_registration_end}">do {$year->registration_end|date:'%d. %#m. %Y %k.%M'}</a>.</p>
-<!-- 
-    TODO: do db pridat linky na Event Time Announcer sutaze a konca registracie 
-    http://www.timeanddate.com/worldclock/fixedtime.html?msg=6th+Online+Physics+Brawl&iso=20161130T17&p1=204&ah=3
-    http://www.timeanddate.com/worldclock/fixedtime.html?msg=6th+Online+Physics+Brawl+-+end+of+registration&iso=20161128T12&p1=204
--->
+        <p>Registrace otevřena {if !App\Model\Interlos::isRegistrationStarted()}od {$year->registration_start|date:'%d. %#m. %Y'} {/if}<a href="http://www.timeanddate.com/worldclock/fixedtime.html?msg=Online+Physics+Brawl+-+end+of+registration&iso={$year->registration_end|date:'%Y%m%d'}T{$year->game_start|date:'%H%i'}&p1=204">do {$year->registration_end|date:'%d. %#m. %Y %k.%M'}</a>.</p>
         {*<p>Pomozte nám propagovat šířením letáku.
             <a href="{$basePath}/download/2015-1/fol_2015-v1.compressed.pdf"><img src="{$basePath}/download/2015-1/letak-fol_2015.png" width="100px"></a>
         </p>*}
