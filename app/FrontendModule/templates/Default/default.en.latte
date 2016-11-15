@@ -44,9 +44,9 @@
         <p>Registration <strong>was closed</strong> on {$year->registration_end|date:'%B %e, %Y %k:%M %Z'|replace:' C':' C'}.</p>
         {else}
         <p>Registration is open {if !App\Model\Interlos::isRegistrationStarted()}from {$year->registration_start|date:'%B %e, %Y'} {/if}<a href="http://www.timeanddate.com/worldclock/fixedtime.html?msg=Online+Physics+Brawl+-+end+of+registration&iso={$year->registration_end|date:'%Y%m%d'}T{$year->game_start|date:'%H%M'}&p1=204">until {$year->registration_end|date:'%B %e, %Y %k:%M %Z'|replace:' C':' C'}</a>.</p>
-        {*<p>Help us and spread the poster.
-            <a href="{$basePath}/download/2015-1/opb_2015-v2.compressed.pdf"><img src="{$basePath}/download/2015-1/letak-opb_2015.png" width="100px"></a>
-        </p>*}
+        <p>Help us and spread the poster.<br>
+            <a href="{$basePath}/download/2016-1/opb_2016-compressed.pdf"><img src="{$basePath}/download/2016-1/opb_2016.jpg" width="100px"></a>
+        </p>
         {/if}        
         {/if}
     </div>
