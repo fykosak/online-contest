@@ -17,7 +17,7 @@ class DefaultPresenter extends BasePresenter {
 
 	public function renderChat() {
 		$this->getComponent("chat")->setSource(Interlos::chat()->findAll($this->lang));
-		$this->setPageTitle(_("Diskuse"));
+		$this->setPageTitle(_("Diskuse (česká verze)"));
 	}
 
 	public function renderDefault() {
