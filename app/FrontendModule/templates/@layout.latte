@@ -6,6 +6,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
+        
+        {if $presenter->getOpenGraphLang() == 'cs_CZ'}
+            <meta property="og:locale" content="cs_CZ" />
+            <meta property="og:locale:alternate" content="en_US" />
+            <meta property="og:url" content="http://online.fyziklani.cz" />
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content="Týmová soutěž v řešení fyzikálních úloh" />
+            <meta property="og:description" content="Online týmová soutěž v řešení fyzikálních úloh." />
+            <meta property="og:image" content="http://online.fyziklani.cz/images/fyziklani-logo.png" />
+            <meta property="og:image:type" content="image/png" />
+        {else}
+            <meta property="og:locale" content="en_US" />
+            <meta property="og:locale:alternate" content="cs_CZ" />
+            <meta property="og:url" content="http://physicsbrawl.org" />
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content="Team competition in solving physics problems" />
+            <meta property="og:description" content="Online team competition in solving physics problems." />
+            <meta property="og:image" content="http://physicsbrawl.org/images/fyziklani-logo.png" />
+            <meta property="og:image:type" content="image/png" />
+        {/if}
+        
         <link href="{$basePath}/favicon.png" rel="icon" type="image/png" />
 
         <title>{_'Fyziklání online'}{ifset $pageTitle} &ndash; {$pageTitle}{/ifset}</title>

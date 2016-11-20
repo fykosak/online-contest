@@ -101,6 +101,10 @@ class BasePresenter extends Nette\Application\UI\Presenter {
             $this->lang = $i18nConf['defaultLang'];
         }
     }
+    
+    public function getOpenGraphLang(){
+        return $this->getHttpRequest()->getHeader('X-Facebook-Locale');
+    }
 
     protected function changeViewByLang() {
         $this->setView($this->getView() . '.' . $this->lang);
