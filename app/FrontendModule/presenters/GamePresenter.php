@@ -32,7 +32,6 @@ class GamePresenter extends BasePresenter {
         // tasks
         $solved = Interlos::tasks()->findSolved($team);
         $skipped = Interlos::tasks()->findSkipped($team);
-        $missed = Interlos::tasks()->findMissed($team);
         $unsolved = Interlos::tasks()->findUnsolved($team);
         
         $unsolvedTasks = array();
