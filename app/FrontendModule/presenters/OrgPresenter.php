@@ -34,11 +34,13 @@ class OrgPresenter extends BasePresenter {
 	$this->setPagetitle(_("Přihlásit se"));
     }
     
-    public function renderAnswerStats() {
+    public function renderAnswerStats($taskId = 1) {
         if (!$this->user->isInRole('org')) {
             $this->redirect('login');
         }
         $this->setPageTitle(_("Statistiky odpovědí"));
+        $this->template->taskId = $taskId;
+        $this->template->tasks = $this->tasksModel->findAll()->fetchAll();
     }
     
     public function renderReport() {

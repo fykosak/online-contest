@@ -8,12 +8,12 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.axislabels.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.symbol.min.js"></script>
 <script type="text/javascript">
-    var data = [{foreach $taskData['1-30']['answers'] as $answer}[{$answer['value']},{$answer['inserted']}],{/foreach}];
+    var data = [{foreach $taskData['answers'] as $answer}[{$answer['value']},{$answer['inserted']}],{/foreach}];
 </script>
 <script type="text/javascript" n:syntax="off">
     //var data = [[1, 130], [2, 40], [3, 80], [4, 160], [5, 159], [6, 370], [7, 330], [8, 350], [9, 370], [10, 400], [11, 330], [12, 350]];
  
-        var dataset = [{label: "line1",data: data}];
+        var dataset = [{data: data}];
  
         var options = {
             series: {
@@ -23,22 +23,18 @@
                     show: true
                 }
             },
+            /*xaxis: {
+                transform: function (v) { return Math.log(v); },
+                inverseTransform: function (v) { return Math.exp(v); }
+            },*/
             yaxis: {
-                mode: "time",
-                axisLabel: "time"
-            },
-            legend: {
-                noColumns: 0,
-                labelFormatter: function (label, series) {
-                    return "<font color=\"white\">" + label + "</font>";
-                },            
-                backgroundColor: "#000",
-                backgroundOpacity: 0.9,
-                labelBoxBorderColor: "#000000",
-                position: "nw"
+                mode: "time"
             },
             grid: {
-                markings: [{ color: "#000", lineWidth: 1, xaxis: { from: 1, to: 1 } }]
+                markings: [
+                    { color: "#000", lineWidth: 1, xaxis: { from: 1, to: 1 } }, 
+                    { color: "#000", lineWidth: 1, xaxis: { from: -1, to: -1 } }
+                ]
             }
         };
     

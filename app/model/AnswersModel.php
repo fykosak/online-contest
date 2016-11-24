@@ -15,6 +15,13 @@ class AnswersModel extends AbstractModel {
         $this->checkEmptiness($id, "id");
         return $this->findAll()->where("[id_answer] = %i", $id)->fetch();
     }
+    
+    /**
+     * @return DibiDataSource
+     */
+    public function findByTaskId($taskId) {
+        return $this->findAll()->where("[id_task] = %i", $taskId);
+    }
 
     /**
      * @return DibiDataSource
