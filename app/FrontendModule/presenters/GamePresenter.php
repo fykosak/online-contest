@@ -33,6 +33,7 @@ class GamePresenter extends BasePresenter {
         $solved = Interlos::tasks()->findSolved($team);
         $skipped = Interlos::tasks()->findSkipped($team);
         $missed = Interlos::tasks()->findMissed($team);
+        $unsolved = Interlos::tasks()->findUnsolved($team);
         
         $unsolvedTasks = array();
         $skippedTasks = array();
@@ -43,10 +44,10 @@ class GamePresenter extends BasePresenter {
                 $solvedTasks[] = $task;
             }elseif(isset($skipped[$task->id_task])){
                 $skippedTasks[] = $task;
-            }elseif(isset($missed[$task->id_task])){
-                $missedTasks[] = $task;
-            }else{
+            }elseif(isset($unsolved[$task->id_task])){
                 $unsolvedTasks[] = $task;
+            }else{
+                $missedTasks[] = $task;
             }
         }
         $this->template->solvedTasks = $solvedTasks;

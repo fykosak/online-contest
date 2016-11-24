@@ -173,7 +173,7 @@ CREATE TABLE `task_state` (
   `id_team` int(25) unsigned NOT NULL,
   `skipped` tinyint(1) NOT NULL COMMENT 'úloha byla přeskočena',
   `substitute` tinyint(1) NOT NULL COMMENT 'úloha vydána jako náhrada při přeskakování (not used)',
-  `points` int(25) DEFAULT NULL unsigned COMMENT 'body za úlohu (bez bonusu)',
+  `points` int(25) unsigned DEFAULT NULL COMMENT 'body za úlohu (bez bonusu)',
   `inserted` datetime NOT NULL COMMENT 'cas vlozeni zaznamu',
   PRIMARY KEY (`id_task`,`id_team`),
   KEY `id_task` (`id_task`),

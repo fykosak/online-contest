@@ -65,6 +65,15 @@ class TasksModel extends AbstractModel {
             AND (`period`.`begin` > NOW() OR `period`.`end` < NOW()) WHERE [id_team] = %i", $teamId);
         return $source->fetchPairs("id_task", "id_task");
     }
+    
+    /**
+     * Find unsolved tasks, which can be submitted (i.e. not hurry up after its end)
+     * 
+     * @return array id_task => id_task
+     */
+    public function findUnsolved($teamId) {
+        return $this->findSubmitAvailable($teamId)->fetchPairs("id_task", "id_task");
+    }
 
     /**
      * Find solved tasks
