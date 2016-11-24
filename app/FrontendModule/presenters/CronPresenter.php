@@ -22,18 +22,23 @@ class CronPresenter extends BasePresenter {
         $this->authenticator = $authenticator;
     }
 
-    public function renderDatabase($key) {
+    public function renderDatabase($freezed=false) {
         Interlos::resetTemporaryTables();
-        $this->invalidateCache();
+        $this->invalidateCache($freezed);
     }
 
-    public function renderCounters($key) {
+    public function renderCounters() {
         Interlos::tasks()->updateCounter(null, true);
     }
 
-    private function invalidateCache() {
+    private function invalidateCache($freezed) {
         //$cache = Environment::getCache('Nette.Template.Curly');
-        $this->cache->clean(array(Cache::ALL => true));
+        if($freezed){
+            $this->cache->clean(array(Cache::TAGS => [OrgPresenter::STATS_TAG]));
+        }
+        else{
+            $this->cache->clean(array(Cache::ALL => true));
+        }
     }
     
 //    private function isCronAccess() {

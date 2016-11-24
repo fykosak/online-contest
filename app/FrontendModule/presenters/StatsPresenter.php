@@ -5,6 +5,8 @@ namespace App\FrontendModule\Presenters;
 use App\Model\Interlos;
 
 class StatsPresenter extends BasePresenter {
+    
+    const STATS_TAG = 'ctStats';
 
     protected function beforeRender() {
         parent::beforeRender();
