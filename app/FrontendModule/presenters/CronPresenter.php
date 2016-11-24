@@ -35,6 +35,7 @@ class CronPresenter extends BasePresenter {
         //$cache = Environment::getCache('Nette.Template.Curly');
         if($freezed){
             $this->cache->clean(array(Cache::TAGS => [OrgPresenter::STATS_TAG]));
+            echo "<br>FREEZED<br>";
         }
         else{
             $this->cache->clean(array(Cache::ALL => true));
