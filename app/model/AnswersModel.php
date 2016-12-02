@@ -50,6 +50,7 @@ class AnswersModel extends AbstractModel {
         $this->checkEmptiness($team, "team");
         $this->checkEmptiness($task, "task");
         $this->checkEmptiness($solution, "solution");
+        $this->getConnection()->begin();
         // Correct answers of the team
         $correctAnswers = $this->findAllCorrect($team)
                 ->fetchPairs("id_answer", "id_answer");
@@ -66,6 +67,7 @@ class AnswersModel extends AbstractModel {
             $timestamp = strtotime($row['inserted']);
             $this->log($team, "solution_tried", "The team tried to insert the solution of task [$task->id_task] with code [$solution].");
             $remaining = $period["time_penalty"] - (time() - $timestamp);
+            $this->getConnection()->commit();
             throw new Nette\InvalidStateException($remaining, self::ERROR_TIME_LIMIT);
         }
         $answer = array(
@@ -93,6 +95,7 @@ class AnswersModel extends AbstractModel {
                         ) + $answer)->execute();
         // Log the action
         $this->log($team, "solution_inserted", "The team successfuly inserted the solution of task [$task->id_task] with code [$solution].");
+        $this->getConnection()->commit();
         return $return;
     }
 
