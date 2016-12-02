@@ -55,15 +55,19 @@ class GamePresenter extends BasePresenter {
         $this->template->missedTasks = $missedTasks;
         
     }
-
-    public function renderHistory() {
-        $this->setPageTitle(_("Historie odpovědí"));
+    
+    public function actionHistory() {
+        //has to be loaded in action due to pagination
         $this->getComponent("answerHistory")->setSource(
                 Interlos::answers()->findAll()
                         ->where("[id_team] = %i", Interlos::getLoggedTeam($this->user)->id_team)
                         ->orderBy("inserted", "DESC")
         );
         $this->getComponent("answerHistory")->setLimit(50);
+    }
+
+    public function renderHistory() {
+        $this->setPageTitle(_("Historie odpovědí"));
     }
 
     protected function startUp() {
