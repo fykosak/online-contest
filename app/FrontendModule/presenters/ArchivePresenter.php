@@ -22,7 +22,8 @@ class ArchivePresenter extends BasePresenter
         public function renderTasks($year) {
             if(!is_numeric($year)){
                 $this->error();
-            }
+            }            
+            $this->setPageTitle(_("Statistika úkolů"));
             $this->setView('a' . $year . 'tasks.' . $this->lang);
         }
         
