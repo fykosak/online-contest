@@ -231,7 +231,7 @@ CREATE VIEW `view_bonus` AS
  	LEFT JOIN `view_bonus` ON `t`.`id_team`=`view_bonus`.`id_team`
         LEFT JOIN `view_last_correct_answer` ON `t`.`id_team`=`view_last_correct_answer`.`id_team`
         LEFT JOIN `view_task` ON `view_task`.`id_task` = `ts`.`id_task`
-        WHERE `view_task`.`cancelled` = 0
+        WHERE `view_task`.`cancelled` = 0 OR `view_task`.`cancelled` IS NULL
  	GROUP BY `t`.`id_team`
  	ORDER BY `activity` DESC, `score` DESC, `last_time` ASC;
 
@@ -297,7 +297,7 @@ CREATE VIEW `view_total_result_cached` AS
  	LEFT JOIN `tmp_bonus` ON `tmp_bonus`.`id_team` = `t`.`id_team`
         LEFT JOIN `view_last_correct_answer` ON `view_last_correct_answer`.`id_team` = `t`.`id_team`
         LEFT JOIN `view_task` ON `view_task`.`id_task` = `ts`.`id_task`
-        WHERE `view_task`.`cancelled` = 0
+        WHERE `view_task`.`cancelled` = 0 OR `view_task`.`cancelled` IS NULL
  	GROUP BY `t`.`id_team`
  	ORDER BY `activity` DESC, `score` DESC, `last_time` ASC;
  
