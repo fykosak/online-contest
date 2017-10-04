@@ -8,7 +8,7 @@ CREATE VIEW `view_fksdb_event` AS
     SELECT *
     FROM fksdb.event f
     WHERE f.event_type_id = 9
-        AND f.year = 30; -- UPDATE HERE
+        AND f.year = 31; -- UPDATE HERE
 
 DROP VIEW IF EXISTS `view_current_year`;
 CREATE VIEW `view_current_year` AS
@@ -68,7 +68,7 @@ CREATE VIEW `view_competitor` AS
     LEFT JOIN fksdb.e_fyziklani_participant efp ON efp.event_participant_id = ep.event_participant_id
     LEFT JOIN view_team vt ON vt.id_team = efp.e_fyziklani_team_id
     LEFT JOIN fksdb.v_person p on p.person_id = ep.person_id
-    LEFT JOIN fksdb.person_history ph on ph.person_id = ep.person_id AND ph.ac_year = 2016 -- UPDATE HERE
+    LEFT JOIN fksdb.person_history ph on ph.person_id = ep.person_id AND ph.ac_year = 2017 -- UPDATE HERE
     LEFT JOIN fksdb.school s on s.school_id = ph.school_id
 ;
 
