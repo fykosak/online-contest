@@ -54,11 +54,11 @@ msgstr "The team does not exist."
 
 # ReportAddFormComponent.php:46
 msgid "Datum konání"
-msgstr "Datum konání"
+msgstr "Date of event"
 
 # ReportAddFormComponent.php:48
 msgid "Datum musí mít podobu YYYY-mm-dd."
-msgstr "Datum musí mít podobu YYYY-mm-dd."
+msgstr "Date must be in form YYYY-mm-dd."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:40
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:40
@@ -70,13 +70,17 @@ msgstr "Datum musí mít podobu YYYY-mm-dd."
 msgid "Diskuse"
 msgstr "Forum"
 
+# DefaultPresenter.php:20
+msgid "Diskuse (česká verze)"
+msgstr "Forum (English version)"
+
 # GamePresenter.php:35
 msgid "Do této sekce mají přístup pouze přihlášené týmy."
 msgstr "Only registered teams can see the contents of this section."
 
 # ReportAddFormComponent.php:35
 msgid "Děkujeme za vložení reportu"
-msgstr "Děkujeme za vložení reportu"
+msgstr "Thanks for inserting your report"
 
 # NoticeboardPresenter.php:18
 msgid "Důležitá oznámení"
@@ -98,7 +102,7 @@ msgstr "FAQ"
 
 # ReportAddFormComponent.php:50
 msgid "FKSDB ID týmu."
-msgstr "FKSDB ID týmu."
+msgstr "FKSDB ID of team."
 
 # TeamFormComponent.php:49
 msgid "FoL registrace"
@@ -106,11 +110,11 @@ msgstr "Online Physics Brawl registration"
 
 # ReportAddFormComponent.php:65
 msgid "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
-msgstr "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
+msgstr "Photo must be in format JPEG, GIF or PNG."
 
 # ReportAddFormComponent.php:64
 msgid "Fotografie nesmí být větší, než 500 kB."
-msgstr "Fotografie nesmí být větší, než 500 kB."
+msgstr "Photo has to be smaller than 500 kB."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:15
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:18
@@ -162,15 +166,15 @@ msgstr "Competition has not started yet."
 
 # ReportAddFormComponent.php:52
 msgid "ID týmu musí být větší než %d."
-msgstr "ID týmu musí být větší než %d."
+msgstr "Team ID has to be greater than %d."
 
 # ReportAddFormComponent.php:56
 msgid "Jazyk reportu."
-msgstr "Jazyk reportu."
+msgstr "Language of the report."
 
 # ReportAddFormComponent.php:63
 msgid "Je možné nahrát maximálně 10 fotek."
-msgstr "Je možné nahrát maximálně 10 fotek."
+msgstr "You can upload at most 10 photos."
 
 # TeamFormComponent.php:136
 msgid "Je nutno si nejdříve přečíst pravidla."
@@ -243,7 +247,7 @@ msgstr "You have already tried this answer before."
 
 # ReportAddFormComponent.php:60
 msgid "Nadpis reportu."
-msgstr "Nadpis reportu."
+msgstr "Caption of the report."
 
 # SkipFormComponent.php:12
 # GamePresenter.php:16
@@ -390,10 +394,14 @@ msgstr ""
 "For purposes of sending out possible prizes (the address must be Czech or "
 "Slovak)."
 
+# default.latte:56
+msgid "Promeškané"
+msgstr "Missed"
+
 # AnswerFormComponent.php:94
 msgid "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
 msgstr ""
-"Pi can be entered in any of the following forms: 3.14; 3,14; 314e-2 nebo "
+"Pi can be entered in any of the following forms: 3.14; 3,14; 314e-2 or "
 "0.314e1."
 
 # default.phtml:39
@@ -466,11 +474,11 @@ msgstr "Warm-up"
 
 # ReportAddFormComponent.php:42
 msgid "Ročník"
-msgstr "Ročník"
+msgstr "Year of the competition"
 
 # ReportAddFormComponent.php:44
 msgid "Ročník musí být větší než %d."
-msgstr "Ročník musí být větší než %d."
+msgstr "Year of the competition has to be greater than %d."
 
 # TeamPresenter.php:17
 msgid "Seznam týmů"
@@ -482,7 +490,7 @@ msgstr "Please check the noticeboard regularly."
 
 # OrgPresenter.php:46
 msgid "Správa reportů"
-msgstr "Správa reportů"
+msgstr "Manage reports"
 
 # SkipFormComponent.php:26
 # SkipFormComponent.php:32
@@ -539,7 +547,7 @@ msgstr "High school students C"
 
 # ReportAddFormComponent.php:61
 msgid "Text reportu."
-msgstr "Text reportu."
+msgstr "Text of the report."
 
 # TeamFormComponent.php:109
 msgid "Tým"
@@ -563,7 +571,7 @@ msgstr "Team with the same name or contact email address already exists"
 
 # ReportAddFormComponent.php:54
 msgid "Tým, za který se vkládá."
-msgstr "Tým, za který se vkládá."
+msgstr "Team that submitted the report."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
@@ -604,6 +612,10 @@ msgid ""
 msgstr ""
 "During the competition, the shown statistics are not instantaneous. We "
 "update them roughly every minute."
+
+# chat.latte:6
+msgid "V příspěvcích lze používat MathJax."
+msgstr "You can use MathJax in the discussion."
 
 # SkipFormComponent.php:20
 msgid "V tomto období není možno přeskakovat úlohy této série."
@@ -669,19 +681,19 @@ msgstr "Show navigation"
 
 # NotificationFormComponent.php:34
 msgid "Zpráva v angličtině musí být vyplněna."
-msgstr "Message in english has to be filled."
+msgstr "Message in English has to be filled."
 
 # NotificationFormComponent.php:33
 msgid "Zpráva v angličtině."
-msgstr "Message in english."
+msgstr "Message in English."
 
 # NotificationFormComponent.php:32
 msgid "Zpráva v češtině musí být vyplněna."
-msgstr "Message in czech has to be filled."
+msgstr "Message in Czech has to be filled."
 
 # NotificationFormComponent.php:31
 msgid "Zpráva v češtině."
-msgstr "Message in czech."
+msgstr "Message in Czech."
 
 # default.phtml:23
 # taskStats.phtml:15
