@@ -46,19 +46,19 @@ msgstr "Database error."
 
 # TeamFormComponent.php:96
 msgid "Daný tým již existuje."
-msgstr "The team already exists."
+msgstr "This team already exists."
 
 # LoginFormComponent.php:13
 msgid "Daný tým neexistuje."
-msgstr "The team does not exist."
+msgstr "This team does not exist."
 
 # ReportAddFormComponent.php:46
 msgid "Datum konání"
-msgstr "Date of event"
+msgstr "Date of the event"
 
 # ReportAddFormComponent.php:48
 msgid "Datum musí mít podobu YYYY-mm-dd."
-msgstr "Date must be in form YYYY-mm-dd."
+msgstr "Date must be in the form YYYY-mm-dd."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:40
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:40
@@ -88,7 +88,7 @@ msgstr "Important notifications"
 
 # TeamPresenter.php:28
 msgid "Editaci přihlášky provádějte po osobním přihlášení "
-msgstr "You can edit your application after personal login "
+msgstr "You can edit your application after your personal login "
 
 # TeamFormComponent.php:162
 msgid "Email"
@@ -102,7 +102,7 @@ msgstr "FAQ"
 
 # ReportAddFormComponent.php:50
 msgid "FKSDB ID týmu."
-msgstr "FKSDB ID of team."
+msgstr "FKSDB ID of the team."
 
 # TeamFormComponent.php:49
 msgid "FoL registrace"
@@ -110,11 +110,11 @@ msgstr "Online Physics Brawl registration"
 
 # ReportAddFormComponent.php:65
 msgid "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
-msgstr "Photo must be in format JPEG, GIF or PNG."
+msgstr "Photo must be in the formats JPEG, GIF or PNG."
 
 # ReportAddFormComponent.php:64
 msgid "Fotografie nesmí být větší, než 500 kB."
-msgstr "Photo has to be smaller than 500 kB."
+msgstr "The photo has to be smaller than 500 kB."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:15
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:18
@@ -136,7 +136,7 @@ msgstr "Password"
 
 # TeamFormComponent.php:118
 msgid "Heslo a kontrola hesla se neshodují."
-msgstr "Password and the password confirmation do not match."
+msgstr "The password and the password confirmation do not match."
 
 # LoginFormComponent.php:37
 msgid "Heslo musí být vyplněno."
@@ -207,7 +207,7 @@ msgstr ""
 
 # TeamFormComponent.php:79
 msgid "Kategorie zůstala stejná jako v průbehu registrace."
-msgstr "Category is the same as it was during the registration."
+msgstr "The category is the same as it was during the registration."
 
 # TeamFormComponent.php:126
 msgid "Kontaktní adresa"
@@ -239,7 +239,7 @@ msgstr "Recent years"
 msgid ""
 "Možností přeskakovat neplýtvejte, snadno se může stát, že vám pak dojdou "
 "příklady"
-msgstr "Be careful with skipping the problems or you will run out of them"
+msgstr "Be careful with skipping the problems, you might run out of problems to solve"
 
 # AnswerFormComponent.php:44
 msgid "Na zadaný úkol jste již takto jednou odpovídali."
@@ -247,12 +247,12 @@ msgstr "You have already tried this answer before."
 
 # ReportAddFormComponent.php:60
 msgid "Nadpis reportu."
-msgstr "Caption of the report."
+msgstr "A caption of the report."
 
 # SkipFormComponent.php:12
 # GamePresenter.php:16
 msgid "Nemáte dostatek bodů pro přeskočení úlohy."
-msgstr "You don't have enough points to skip task."
+msgstr "You don't have enough points to skip a task."
 
 # AnswerFormComponent.php:34
 msgid "Není aktuální žádné odpovídací období."
@@ -571,7 +571,7 @@ msgstr "Team with the same name or contact email address already exists"
 
 # ReportAddFormComponent.php:54
 msgid "Tým, za který se vkládá."
-msgstr "Team that submitted the report."
+msgstr "Team that submits the report."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:41
@@ -699,7 +699,7 @@ msgstr "Message in Czech."
 # taskStats.phtml:15
 # scoreList.phtml:68
 msgid "Zrušená úloha"
-msgstr "Cancelled task"
+msgstr "Cancelled problem"
 
 # TeamFormComponent.php:134
 msgid "ZŠ"
@@ -728,11 +728,11 @@ msgstr "on the application page"
 
 # taskStats.phtml:5
 msgid "nejhorší"
-msgstr "worst"
+msgstr "the worst"
 
 # taskStats.phtml:6
 msgid "nejlepší"
-msgstr "best"
+msgstr "the best"
 
 # taskStats.phtml:4
 msgid "název"
@@ -797,7 +797,7 @@ msgstr "Problem"
 
 # SkipFormComponent.php:16
 msgid "Úloha %s přeskočena."
-msgstr "Problem %s was skipped."
+msgstr "Problem %s has been skipped."
 
 # answerHistory.phtml:3
 msgid "úkol"
