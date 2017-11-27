@@ -2,14 +2,14 @@
 {foreach $reports as $report}
     <h2>{$report['team']}</h2>
     <h3>{$report['header']}</h3>
-    {$report['text']}
+    {!$report['text']|escape|nl2br}
     <br/>
     <div class="row">
     {foreach $report['images'] as $image}
         <div class="col-sm-6 col-md-4">
             <div class="img-thumbnail">
                 <a href="{$image['img-url']}">
-                    <img src="{$image['thumb-url']}">
+                    <img src="{$image['thumb-url']}" class="img-responsive">
                 </a>
                 <div class="caption">{$image['caption']}</div>
             </div>
