@@ -49,6 +49,10 @@ class DefaultPresenter extends BasePresenter {
 		$this->setPagetitle(_("Rozcvička"));
 	}
 
+	public function renderOtherEvents() {
+		$this->setPagetitle(_("Další soutěže"));
+	}
+
 	// ----- PROTECTED METHODS
         
         protected function createComponentChat($name) {
