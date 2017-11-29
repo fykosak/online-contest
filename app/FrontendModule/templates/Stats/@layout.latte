@@ -1,5 +1,17 @@
 {extends '../@layout.latte'}
 
+{block #title}
+<br>
+<div class="alert alert-info" role="alert">
+{if $lang == 'cs'}
+  Líbí se vám Fyziklání online? Pak se přihlašte i na <a href="https://fykos.cz/rocnik31/fyziklani/start" class="alert-link">FYKOSí Fyziklání</a> v Praze.
+{else}
+  Do you enjoy Online Physics Brawl? Then also take part in <a href="https://fykos.cz/year31/physicsbrawl/start" class="alert-link">Physics Brawl &ndash; Team Contest in Prague</a>.
+{/if}
+</div>
+{include parent}
+{/block}
+
 {block #subnavigation}            
 <ul class="nav">
     <li>
