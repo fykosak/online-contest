@@ -44,6 +44,10 @@ msgstr "4th year of high school"
 msgid "Chyba při práci s databází."
 msgstr "Database error."
 
+# DefaultPresenter.php:53
+msgid "Další soutěže"
+msgstr "Associated competitions"
+
 # TeamFormComponent.php:96
 msgid "Daný tým již existuje."
 msgstr "This team already exists."
@@ -239,7 +243,8 @@ msgstr "Recent years"
 msgid ""
 "Možností přeskakovat neplýtvejte, snadno se může stát, že vám pak dojdou "
 "příklady"
-msgstr "Be careful with skipping the problems, you might run out of problems to solve"
+msgstr ""
+"Be careful with skipping the problems, you might run out of problems to solve"
 
 # AnswerFormComponent.php:44
 msgid "Na zadaný úkol jste již takto jednou odpovídali."

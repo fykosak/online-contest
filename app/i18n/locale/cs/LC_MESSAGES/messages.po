@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2017-11-14T16:41:47+01:00
+# Created: 2017-11-30T12:26:06+01:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,6 +34,10 @@ msgstr "4. ročník SŠ"
 # ChatListComponent.php:43
 msgid "Chyba při práci s databází."
 msgstr "Chyba při práci s databází."
+
+# DefaultPresenter.php:53
+msgid "Další soutěže"
+msgstr "Další soutěže"
 
 # TeamFormComponent.php:111
 msgid "Daný tým již existuje."
@@ -175,7 +179,7 @@ msgstr "Jméno"
 msgid "Jméno prvního člena musí být vyplněno."
 msgstr "Jméno prvního člena musí být vyplněno."
 
-# default.latte:12
+# default.latte:10
 msgid "K dispozici máte zadání těchto úloh dle podmínek v zadání:"
 msgstr "K dispozici máte zadání těchto úloh dle podmínek v zadání:"
 
@@ -242,7 +246,7 @@ msgstr "Nesprávné heslo"
 msgid "Nevyplněno"
 msgstr "Nevyplněno"
 
-# default.latte:14
+# default.latte:12
 msgid "Nevyřešené"
 msgstr "Nevyřešené"
 
@@ -328,8 +332,8 @@ msgstr "Očekávaný počet platných cifer"
 
 # OrgPresenter.php:65
 # StatsPresenter.php:22
-# @layout.latte:12
-# @layout.latte:12
+# @layout.latte:24
+# @layout.latte:24
 msgid "Podrobné výsledky"
 msgstr "Podrobné výsledky"
 
@@ -355,7 +359,7 @@ msgstr "Pravidla"
 msgid "Pro zaslání případné odměny."
 msgstr "Pro zaslání případné odměny."
 
-# default.latte:56
+# default.latte:54
 msgid "Promeškané"
 msgstr "Promeškané"
 
@@ -363,7 +367,7 @@ msgstr "Promeškané"
 msgid "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
 msgstr "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
 
-# default.latte:45
+# default.latte:43
 msgid "Přeskočené"
 msgstr "Přeskočené"
 
@@ -479,8 +483,8 @@ msgstr "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k p�
 msgid "Statistiky odpovědí"
 msgstr "Statistiky odpovědí"
 
-# @layout.latte:13
-# @layout.latte:13
+# @layout.latte:25
+# @layout.latte:25
 msgid "Statistiky úkolů"
 msgstr "Statistiky úkolů"
 
@@ -603,7 +607,7 @@ msgstr "Vyberte prosím řešený úkol."
 msgid "Vyplňte prosím řešení úkolu."
 msgstr "Vyplňte prosím řešení úkolu."
 
-# default.latte:34
+# default.latte:32
 msgid "Vyřešené"
 msgstr "Vyřešené"
 
@@ -617,8 +621,8 @@ msgstr "Výsledek musí být reálné číslo."
 
 # OrgPresenter.php:57
 # StatsPresenter.php:17
-# @layout.latte:5
-# @layout.latte:5
+# @layout.latte:17
+# @layout.latte:17
 msgid "Výsledky"
 msgstr "Výsledky"
 
@@ -663,7 +667,7 @@ msgstr "Zpráva v češtině."
 
 # taskStats.latte:13
 # scoreList.latte:65
-# default.latte:21
+# default.latte:19
 msgid "Zrušená úloha"
 msgstr "Zrušená úloha"
 
@@ -671,7 +675,7 @@ msgstr "Zrušená úloha"
 msgid "ZŠ"
 msgstr "ZŠ"
 
-# default.latte:21
+# default.latte:19
 msgid "b."
 msgstr "b."
 
@@ -909,9 +913,9 @@ msgstr "Škola"
 msgid "špatně"
 msgstr "špatně"
 
-# default.latte:16
-# default.latte:36
-# default.latte:47
-# default.latte:58
+# default.latte:14
+# default.latte:34
+# default.latte:45
+# default.latte:56
 msgid "Žádné úlohy."
 msgstr "Žádné úlohy."
