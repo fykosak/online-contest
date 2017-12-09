@@ -38,7 +38,12 @@ class ArchivePresenter extends BasePresenter
             if(!is_numeric($year)){
                 $this->error();
             }
-            $reportData = $this->reportModel->findByYear($year,  $this->lang, TRUE);
+            if($this->lang == 'cs') {
+                $reportData = $this->reportModel->findByYear($year, null, TRUE)->orderBy("lang");
+            }
+            else {
+                $reportData = $this->reportModel->findByYear($year, $this->lang, TRUE);
+            }
             $this->template->reports = array();
             foreach($reportData as $report){
                 $imageData = $this->reportModel->findImages($report['id_report']);

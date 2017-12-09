@@ -36,11 +36,13 @@ class ReportModel extends AbstractModel {
 	}
         
         /** @return \DibiDataSource */
-        public function findByYear($year, $lang, $published=TRUE) {
-            $res = $this->findAll()->where("DATE_FORMAT([year_date],'%Y%m')=%i", $year)
-                    ->where("[lang]=%s", $lang);
-            if($published){
-                return $res->where("[published] IS NOT NULL");
+        public function findByYear($year, $lang=null, $published=TRUE) {
+            $res = $this->findAll()->where("DATE_FORMAT([year_date],'%Y%m')=%i", $year);
+            if (!is_null($lang)) {
+                $res = $res->where("[lang]=%s", $lang);
+            }
+            if($published) {
+                $res = $res->where("[published] IS NOT NULL");
             }
             return $res;
         }
