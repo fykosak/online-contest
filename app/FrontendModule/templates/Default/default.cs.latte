@@ -17,7 +17,7 @@
                     Soutěž pořádaná <a href="http://fykos.cz/" title="Fyzikální korespondenční seminář">Fyzikálním korespondenčním seminářem</a> <a href="http://www.mff.cuni.cz/">MFF UK</a>.
                 </p>
                 {if !App\Model\Interlos::isRegistrationStarted()}
-                <p>Pokud si přejete být informováni, až bude registrace otevřena, <a href="https://docs.google.com/a/fykos.cz/forms/d/e/1FAIpQLScE7BLBnFjLVmWiifhWHIQZ3kA8-jNPO2VlsCmHrzvjuu0Nxg/viewform">vyplňte nám svůj e-mail</a>.</p>
+                <p>Pokud si přejete být informováni, až bude registrace otevřena, <a href="https://docs.google.com/forms/d/e/1FAIpQLSevnkHDM6EzDOAOdhQgAbALA1BHhimLxPD66pSBLIFYKIiPOw/viewform">vyplňte nám svůj e-mail</a>.</p>
                 {/if}
                 {if App\Model\Interlos::isRegistrationActive() && !$user->isLoggedIn()}
                 <p><a class="btn btn-primary btn-warning btn-lg" href="{link :Frontend:Team:registration}" role="button">Registrace &raquo;</a></p>
@@ -46,7 +46,7 @@
         {else}
         <p>Registrace otevřena {if !App\Model\Interlos::isRegistrationStarted()}od {$year->registration_start|date:'%d. %#m. %Y'} {/if}<a href="http://www.timeanddate.com/worldclock/fixedtime.html?msg=Online+Physics+Brawl+-+end+of+registration&iso={$year->registration_end|date:'%Y%m%d'}T{$year->registration_end|date:'%H%M'}&p1=204">do {$year->registration_end|date:'%d. %#m. %Y %k.%M'}</a>.</p>
         <p>Pomozte nám propagovat šířením letáku.<br>
-            <a href="{$basePath}/download/2017-1/fol_2017.pdf"><img src="{$basePath}/download/2017-1/fol_2017.jpg" width="100px"></a>
+            <a href="{$basePath}/download/2018-1/fol_2018.pdf"><img src="{$basePath}/download/2018-1/fol_2018.png" width="100px"></a>
         </p>
         {/if}
         {/if}

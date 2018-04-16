@@ -17,7 +17,7 @@
                     Competition organized by <a href="http://fykos.org/" title="The internet physics competition">FYKOS</a> <a href="http://www.mff.cuni.cz/to.en/">MFF UK</a>.
                 </p>
                 {if !App\Model\Interlos::isRegistrationStarted()}
-                <p>If you wish to be informed when the registration opens <a href="https://docs.google.com/a/fykos.cz/forms/d/e/1FAIpQLSf47qx2eKt1ONo8gSck8xGuB0TIQx2xnxKN_nH9B2c4c0_hgg/viewform">fill in your e-mail</a>.</p>
+                <p>If you wish to be informed when the registration opens <a href="https://docs.google.com/forms/d/e/1FAIpQLSc9N1lp_xhYiJ7faioePowpMVX49KFs6bQZ8PwqeXMIRHqi8g/viewform">fill in your e-mail</a>.</p>
                 {/if}
                 {if App\Model\Interlos::isRegistrationActive() && !$user->isLoggedIn()}
                 <p><a class="btn btn-primary btn-warning btn-lg" href="{link :Frontend:Team:registration}" role="button">Registration &raquo;</a></p>
@@ -46,7 +46,7 @@
         {else}
         <p>Registration is open {if !App\Model\Interlos::isRegistrationStarted()}from {$year->registration_start|date:'%B %e, %Y'} {/if}<a href="http://www.timeanddate.com/worldclock/fixedtime.html?msg=Online+Physics+Brawl+-+end+of+registration&iso={$year->registration_end|date:'%Y%m%d'}T{$year->registration_end|date:'%H%M'}&p1=204">until {$year->registration_end|date:'%B %e, %Y %k:%M %Z'|replace:' C':' C'}</a>.</p>
         <p>Help us get more people involved. Distribute this poster:<br>
-            <a href="{$basePath}/download/2017-1/opb_2017.pdf"><img src="{$basePath}/download/2017-1/opb_2017.jpg" width="100px"></a>
+            <a href="{$basePath}/download/2018-1/opb_2018.pdf"><img src="{$basePath}/download/2018-1/opb_2018.png" width="100px"></a>
         </p>
         {/if}        
         {/if}
