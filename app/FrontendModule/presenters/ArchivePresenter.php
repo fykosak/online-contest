@@ -31,7 +31,12 @@ class ArchivePresenter extends BasePresenter
             if(!is_numeric($year)){
                 $this->error();
             }
-            $this->sendResponse(new TextResponse(readfile(__DIR__.'/../templates/Archive/a' . $year . 'detail.' . $this->lang . '.latte')));
+            
+            $success = @readfile(__DIR__.'/../templates/Archive/a' . $year . 'detail.' . $this->lang . '.latte');
+            if(!$success){
+                $this->error();
+            }
+            $this->terminate();
         }
         
         public function renderReports($year) {
