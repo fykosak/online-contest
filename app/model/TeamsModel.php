@@ -116,7 +116,7 @@ class TeamsModel extends AbstractModel {
             self::HIGH_SCHOOL_A => _("Středoškoláci A"),
             self::HIGH_SCHOOL_B => _("Středoškoláci B"),
             self::HIGH_SCHOOL_C => _("Středoškoláci C"),
-            self::ABROAD => _("Zahraniční SŠ"),
+            //self::ABROAD => _("Zahraniční SŠ"),
             self::OPEN => _("Open"),
         );
     }
