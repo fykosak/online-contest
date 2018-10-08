@@ -25,7 +25,7 @@ CREATE VIEW `view_group` AS
 
 DROP VIEW IF EXISTS `view_competitor`;
 CREATE VIEW `view_competitor` AS
-SELECT `competitor`.`id_competitor` AS `id_competitor`,`competitor`.`id_team` AS `id_team`,`competitor`.`id_school` AS `id_school`,`competitor`.`name` AS `name`,`competitor`.`email` AS `email`, `competitor`.`study_year` AS `study_year`, `competitor`.`inserted` AS `inserted`,`competitor`.`updated` AS `updated`,`school`.`name` AS `school_name`,`team`.`name` AS `team_name`,`team`.`category` AS `category` from ((`competitor` join `team` on((`competitor`.`id_team` = `team`.`id_team`))) left join `school` on((`competitor`.`id_school` = `school`.`id_school`))) order by `team`.`category`,`team`.`name`,`competitor`.`name`;
+SELECT `competitor`.`id_competitor` AS `id_competitor`,`competitor`.`id_team` AS `id_team`,`competitor`.`id_school` AS `id_school`,`competitor`.`name` AS `name`,`competitor`.`email` AS `email`, `competitor`.`study_year` AS `study_year`, `competitor`.`inserted` AS `inserted`,`competitor`.`updated` AS `updated`,`school`.`name` AS `school_name`,`school`.`country_iso` AS `country_iso`,`team`.`name` AS `team_name`,`team`.`category` AS `category` from ((`competitor` join `team` on((`competitor`.`id_team` = `team`.`id_team`))) left join `school` on((`competitor`.`id_school` = `school`.`id_school`))) order by `team`.`category`,`team`.`name`,`competitor`.`name`;
 
 DROP VIEW IF EXISTS `view_task`;
 CREATE VIEW `view_task` AS

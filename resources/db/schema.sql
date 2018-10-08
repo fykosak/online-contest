@@ -132,6 +132,7 @@ DROP TABLE IF EXISTS `school`;
 CREATE TABLE `school` (
   `id_school` int(25) unsigned NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
   `name` varchar(150) COLLATE utf8_czech_ci NOT NULL COMMENT 'nazev skoly',
+  `country_iso` char(2) COLLATE utf8_general_ci NOT NULL COMMENT 'ISO 3166-1 statu skoly',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
   PRIMARY KEY (`id_school`),

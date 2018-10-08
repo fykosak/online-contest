@@ -9,8 +9,8 @@ INSERT into team(id_team, id_year, name, password, category, email, address, ins
 SELECT id_team, id_year, name, password, category, email, address, inserted, updated from `view_team`;
 
 -- TRUNCATE TABLE `school`;
-INSERT into school(id_school, name)
-SELECT DISTINCT id_school, school_name from `view_competitor`;
+INSERT into school(id_school, name, country_iso)
+SELECT DISTINCT id_school, school_name, country_iso from `view_competitor`;
 
 TRUNCATE TABLE `competitor`;
 INSERT into competitor(id_competitor, id_team, id_school, name, email, study_year, inserted, updated)

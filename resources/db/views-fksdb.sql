@@ -61,6 +61,7 @@ CREATE VIEW `view_competitor` AS
         ep.created as `inserted`,
         null as `updated`,
         s.name_abbrev as `school_name`,
+        sr.country_iso as `country_iso`,
         vt.name as `team_name`,
         vt.category as `category`
     FROM fksdb.event_participant ep
@@ -70,6 +71,8 @@ CREATE VIEW `view_competitor` AS
     LEFT JOIN fksdb.v_person p on p.person_id = ep.person_id
     LEFT JOIN fksdb.person_history ph on ph.person_id = ep.person_id AND ph.ac_year = 2018 -- UPDATE HERE
     LEFT JOIN fksdb.school s on s.school_id = ph.school_id
+    LEFT JOIN fksdb.address sa on sa.address_id = s.address_id
+    LEFT JOIN fksdb.region sr on sr.region_id = sa.region_id
 ;
 
 DROP PROCEDURE IF EXISTS tmp_drop_foreign_key;
