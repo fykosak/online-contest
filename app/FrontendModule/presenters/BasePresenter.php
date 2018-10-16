@@ -82,6 +82,7 @@ class BasePresenter extends Nette\Application\UI\Presenter {
         $this->detectLang($i18nConf);
         $locale = isset(GettextTranslator::$locales[$this->lang]) ? GettextTranslator::$locales[$this->lang] : 'cs_CZ.utf-8';
 
+        putenv("LANGUAGE=$locale");
         setlocale(LC_MESSAGES, $locale);
         setlocale(LC_TIME, $locale);
         bindtextdomain('messages', $i18nConf['dir']);
