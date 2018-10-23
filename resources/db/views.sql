@@ -186,7 +186,12 @@ CREATE VIEW `view_bonus_help` AS
     FROM `view_team` AS `team`
     LEFT JOIN `view_correct_answer` USING (`id_team`)
     LEFT JOIN `view_task` USING (`id_task`)
+    LEFT JOIN `period` ON
+            `period`.`id_group` = `view_task`.`id_group`
+            AND `period`.`begin` <= `view_correct_answer`.`inserted`
+            AND `period`.`end` > `view_correct_answer`.`inserted`
     WHERE `view_task`.`id_group` IN (2, 3, 4) -- vazba na data, skupiny ke kompletovani (hurry up)
+            AND `period`.`has_bonus` = 1
     GROUP BY `id_team`, `number`;
 
 DROP VIEW IF EXISTS `view_bonus`;

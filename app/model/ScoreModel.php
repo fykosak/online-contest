@@ -62,7 +62,7 @@ class ScoreModel extends AbstractModel {
                             ->where("[id_task] IN %l", $solvedTasks)
                             ->where("[number] = %i", $task->number)
                             ->where("[id_group] <> 1")->fetchAll();
-                    if(count($hurryTasks) == 3) {
+                    if(count($hurryTasks) == 3 && Interlos::period()->findCurrent($task->id_group)->has_bonus == 1) {
                         foreach ($hurryTasks as $hurryTask) {
                             $curGroup = Interlos::groups()->find($hurryTask->id_group);
                             $score += $this->getSingleTaskScore($teamId, $hurryTask, $curGroup);

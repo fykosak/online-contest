@@ -120,6 +120,7 @@ CREATE TABLE `period` (
   `begin` datetime NOT NULL COMMENT 'začátek období',
   `end` datetime NOT NULL COMMENT 'konec období',
   `allow_skip` tinyint(1) NOT NULL COMMENT 'umožnit přeskočení úlohy a zisk další ze skupiny',
+  `has_bonus` tinyint(1) NOT NULL COMMENT 'při odevzdání úlohy v této periodě se započítá Hurry up bonus',
   `time_penalty` int(4) NOT NULL COMMENT 'počet trestných sekund za špatnou odpověď',
   `reserve_size` int(4) NOT NULL COMMENT 'počet úloh vydaných k řešení navíc',
   PRIMARY KEY (`id_period`),
