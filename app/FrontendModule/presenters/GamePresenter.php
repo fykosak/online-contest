@@ -13,7 +13,7 @@ class GamePresenter extends BasePresenter {
 
     public function renderSkip() {
         if (!$this->user->isAllowed('task', 'skip')) {
-            $this->flashMessage(_('Nemáte dostatek bodů pro přeskočení úlohy.'), "danger");
+            $this->flashMessage(_('Již jste vyčerpali svůj limit pro počet přeskočených úloh.'), "danger");
             $this->redirect("default");
         }
         

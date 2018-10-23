@@ -7,16 +7,24 @@ use Nette\Security\Permission;
 use Nette\Security\User;
 use Nette\Database\Context;
 use App\Model\TeamsModel;
+use App\Model\TasksModel;
 
 class SkipAssertion
 {
-    const MIN_SCORE = -7;
+    const MAX_SKIPPED = 10;
     
-    private $connection;
+    /**
+     * @var TasksModel 
+     */
+    private $tasksModel;
+    
+    /**
+     * @var User 
+     */
     private $user;
 
-    public function  __construct(\DibiConnection $connection) {
-        $this->connection = $connection;
+    public function  __construct(TasksModel $tasksModel) {
+        $this->tasksModel = $tasksModel;
     }
     
     public function setUser(User $user) {
@@ -32,8 +40,8 @@ class SkipAssertion
      * @param type $privilege
      * @return type
      */
-    public function canSkip(Permission $acl, $role, $resourceId, $privilege) {
-        $score = $this->connection->query("SELECT score_exp FROM [team] WHERE id_team = %i", $this->user->getIdentity()->id_team)->fetchSingle();
-        return ($score > self::MIN_SCORE); 
+    public function canSkip(Permission $acl, $role, $resourceId, $privilege) : bool {
+        $skipped = $this->tasksModel->findSkipped($this->user->getIdentity()->id_team);
+        return (count($skipped) < self::MAX_SKIPPED);
     }
 }

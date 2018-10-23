@@ -9,7 +9,7 @@ class SkipFormComponent extends BaseComponent {
 
     public function formSubmitted(Form $form) {
         if(!$this->getPresenter()->user->isAllowed('task', 'skip')) {
-            $this->getPresenter()->error(_('Nemáte dostatek bodů pro přeskočení úlohy.'), Nette\Http\Response::S403_FORBIDDEN);
+            $this->getPresenter()->error(_('Již jste vyčerpali svůj limit pro počet přeskočených úloh.'), Nette\Http\Response::S403_FORBIDDEN);
         }
         
         $values = $form->getValues();
