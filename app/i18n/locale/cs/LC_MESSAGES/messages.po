@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2017-11-30T12:26:06+01:00
+# Created: 2018-10-23T02:40:29+02:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,13 +98,9 @@ msgstr "FKSDB ID týmu."
 msgid "FoL registrace"
 msgstr "FoL registrace"
 
-# ReportAddFormComponent.php:65
+# ReportAddFormComponent.php:64
 msgid "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
 msgstr "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
-
-# ReportAddFormComponent.php:64
-msgid "Fotografie nesmí být větší, než 500 kB."
-msgstr "Fotografie nesmí být větší, než 500 kB."
 
 # a201205detail.latte:11
 # @layout.latte:31
@@ -171,6 +167,11 @@ msgstr "Jiná"
 msgid "Jiná škola"
 msgstr "Jiná škola"
 
+# SkipFormComponent.php:12
+# GamePresenter.php:16
+msgid "Již jste vyčerpali svůj limit pro počet přeskočených úloh."
+msgstr "Již jste vyčerpali svůj limit pro počet přeskočených úloh."
+
 # TeamFormComponent.php:171
 msgid "Jméno"
 msgstr "Jméno"
@@ -220,11 +221,6 @@ msgstr "Na zadaný úkol jste již takto jednou odpovídali."
 # ReportAddFormComponent.php:60
 msgid "Nadpis reportu."
 msgstr "Nadpis reportu."
-
-# SkipFormComponent.php:12
-# GamePresenter.php:16
-msgid "Nemáte dostatek bodů pro přeskočení úlohy."
-msgstr "Nemáte dostatek bodů pro přeskočení úlohy."
 
 # AnswerFormComponent.php:46
 msgid "Není aktuální žádné odpovídací období."
@@ -281,7 +277,7 @@ msgid "Obsah příspěvku není vyplněn."
 msgstr "Obsah příspěvku není vyplněn."
 
 # NotificationFormComponent.php:35
-# ReportAddFormComponent.php:72
+# ReportAddFormComponent.php:71
 msgid "Odeslat"
 msgstr "Odeslat"
 
@@ -304,7 +300,7 @@ msgstr "Odhlásit se"
 msgid "Odpověď"
 msgstr "Odpověď"
 
-# ArchivePresenter.php:60
+# ArchivePresenter.php:70
 msgid "Ohlasy účastníků"
 msgstr "Ohlasy účastníků"
 
@@ -313,6 +309,7 @@ msgstr "Ohlasy účastníků"
 # a201205results.latte:844
 # a201611results.latte:2746
 # a201312results.latte:2148
+# a201711results.latte:3097
 # a201412results.latte:1901
 # TeamsModel.php:120
 msgid "Open"
@@ -341,7 +338,7 @@ msgstr "Podrobné výsledky"
 msgid "Pokoušíte se vložit školu, která již existuje."
 msgstr "Pokoušíte se vložit školu, která již existuje."
 
-# @layout.latte:79
+# @layout.latte:80
 msgid "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu"
 msgstr "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu"
 
@@ -496,6 +493,7 @@ msgstr "Středoškoláci"
 # a201212results.latte:2
 # a201611results.latte:2
 # a201312results.latte:2
+# a201711results.latte:2
 # a201412results.latte:2
 # TeamsModel.php:116
 msgid "Středoškoláci A"
@@ -505,6 +503,7 @@ msgstr "Středoškoláci A"
 # a201212results.latte:376
 # a201611results.latte:493
 # a201312results.latte:363
+# a201711results.latte:571
 # a201412results.latte:480
 # TeamsModel.php:117
 msgid "Středoškoláci B"
@@ -514,6 +513,7 @@ msgstr "Středoškoláci B"
 # a201212results.latte:815
 # a201611results.latte:1075
 # a201312results.latte:971
+# a201711results.latte:1114
 # a201412results.latte:958
 # TeamsModel.php:118
 msgid "Středoškoláci C"
@@ -640,8 +640,8 @@ msgstr "Zadání"
 # a201212results.latte:1488
 # a201611results.latte:2047
 # a201312results.latte:1553
+# a201711results.latte:1748
 # a201412results.latte:1449
-# TeamsModel.php:119
 msgid "Zahraniční SŠ"
 msgstr "Zahraniční SŠ"
 
@@ -702,6 +702,11 @@ msgstr "b."
 # a201312results.latte:977
 # a201312results.latte:1559
 # a201312results.latte:2154
+# a201711results.latte:8
+# a201711results.latte:577
+# a201711results.latte:1120
+# a201711results.latte:1754
+# a201711results.latte:3103
 # a201412results.latte:8
 # a201412results.latte:486
 # a201412results.latte:964
@@ -733,6 +738,11 @@ msgstr "bonusové body"
 # a201312results.latte:976
 # a201312results.latte:1558
 # a201312results.latte:2153
+# a201711results.latte:7
+# a201711results.latte:576
+# a201711results.latte:1119
+# a201711results.latte:1753
+# a201711results.latte:3102
 # a201412results.latte:7
 # a201412results.latte:485
 # a201412results.latte:963
@@ -741,7 +751,7 @@ msgstr "bonusové body"
 msgid "celkem bodů"
 msgstr "celkem bodů"
 
-# teamList.latte:18
+# teamList.latte:19
 msgid "informace o členech týmu nejsou dostupné"
 msgstr "informace o členech týmu nejsou dostupné"
 
@@ -813,6 +823,11 @@ msgstr "střední škola"
 # a201312results.latte:975
 # a201312results.latte:1557
 # a201312results.latte:2152
+# a201711results.latte:6
+# a201711results.latte:575
+# a201711results.latte:1118
+# a201711results.latte:1752
+# a201711results.latte:3101
 # a201412results.latte:6
 # a201412results.latte:484
 # a201412results.latte:962
@@ -852,6 +867,11 @@ msgstr "zahraničí"
 # a201312results.latte:978
 # a201312results.latte:1560
 # a201312results.latte:2155
+# a201711results.latte:9
+# a201711results.latte:578
+# a201711results.latte:1121
+# a201711results.latte:1755
+# a201711results.latte:3104
 # a201412results.latte:9
 # a201412results.latte:487
 # a201412results.latte:965
@@ -899,6 +919,7 @@ msgstr "Řešení"
 # a201205results.latte:1
 # a201611results.latte:1
 # a201312results.latte:1
+# a201711results.latte:1
 # a201412results.latte:1
 # stats.latte:4
 # default.latte:4
