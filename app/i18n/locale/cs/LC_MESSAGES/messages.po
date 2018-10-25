@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2018-10-23T02:40:29+02:00
+# Created: 2018-10-25T02:41:28+02:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -328,7 +328,7 @@ msgid "Očekávaný počet platných cifer"
 msgstr "Očekávaný počet platných cifer"
 
 # OrgPresenter.php:65
-# StatsPresenter.php:22
+# StatsPresenter.php:23
 # @layout.latte:24
 # @layout.latte:24
 msgid "Podrobné výsledky"
@@ -462,7 +462,7 @@ msgstr "Stala se neočekávaná chyba."
 
 # ArchivePresenter.php:26
 # OrgPresenter.php:73
-# StatsPresenter.php:27
+# StatsPresenter.php:28
 msgid "Statistika úkolů"
 msgstr "Statistika úkolů"
 
@@ -472,7 +472,7 @@ msgid "Statistiky"
 msgstr "Statistiky"
 
 # OrgPresenter.php:106
-# StatsPresenter.php:48
+# StatsPresenter.php:49
 msgid "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 msgstr "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 
@@ -648,6 +648,14 @@ msgstr "Zahraniční SŠ"
 # menu.latte:4
 msgid "Zobrazit navigaci"
 msgstr "Zobrazit navigaci"
+
+# default.latte:8
+msgid "Zobrazit pouze CZ&SK výsledky"
+msgstr "Zobrazit pouze CZ&SK výsledky"
+
+# default.latte:6
+msgid "Zobrazit všechny výsledky"
+msgstr "Zobrazit všechny výsledky"
 
 # NotificationFormComponent.php:34
 msgid "Zpráva v angličtině musí být vyplněna."

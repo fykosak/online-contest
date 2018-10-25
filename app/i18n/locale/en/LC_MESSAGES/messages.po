@@ -681,6 +681,14 @@ msgstr "High school outside of the Czech Republic"
 msgid "Zobrazit navigaci"
 msgstr "Show navigation"
 
+# default.latte:8
+msgid "Zobrazit pouze CZ&SK výsledky"
+msgstr "Show only CZ&SK results"
+
+# default.latte:6
+msgid "Zobrazit všechny výsledky"
+msgstr "Show all results"
+
 # NotificationFormComponent.php:34
 msgid "Zpráva v angličtině musí být vyplněna."
 msgstr "Message in English has to be filled."

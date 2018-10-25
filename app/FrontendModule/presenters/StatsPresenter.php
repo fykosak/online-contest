@@ -13,9 +13,10 @@ class StatsPresenter extends BasePresenter {
         $this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
     }
 
-    public function renderDefault() {
+    public function renderDefault($display = 'all') {
         $this->setPageTitle(_("Výsledky"));
         $this->check("results");
+        $this->template->display = $display;
     }
 
     public function renderDetail() {
