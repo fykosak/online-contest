@@ -3,19 +3,18 @@
 		<thead>
 			<th>#</th>
 			<th>{_'název'}</th>
-			<th>{_'nejhorší'}</th>
 			<th>{_'nejlepší'}</th>
-			{*<th>průměrný</th>*}
-			<th>{_'správně'}</th>
-			<th>{_'špatně'}</th>
+			<th>{_'řešilo týmů'}</th>
+			<th>{_'správných odpovědí'}</th>
+			<th>{_'špatných odpovědí'}</th>
                         <th>{_'přeskočeno'}</th>
 		</thead>
 		{foreach $tasks AS $task}
 			<tr class="{if $task->cancelled == 1} text-muted{/if}" {if $task->cancelled == 1}title="{_'Zrušená úloha'}"{/if}>
 				<td>{$task->code_name}</td>
 				<td>{$task|i18n:'name',$control->getPresenter()->lang}</td>
-				<td>{$task->worst_time|timeOnly}</td>
 				<td>{$task->best_time|timeOnly}</td>
+				<td>{if $task->cancelled == 1}&mdash;{else}{$task->count_teams_seen}{/if}</td>
 				<td>{if $task->cancelled == 1}&mdash;{else}{$task->count_correct_answer}{/if}</td>
 				<td>{if $task->cancelled == 1}&mdash;{else}{$task->count_incorrect_answer}{/if}</td>
                                 <td>{$task->count_skipped}</td>
