@@ -19,6 +19,10 @@ class TeamsModel extends AbstractModel {
     public function findAll() {
         return $this->getConnection()->dataSource("SELECT * FROM [view_team] WHERE [id_year] = %i", Interlos::years()->findCurrent()->id_year);
     }
+    
+    public function findByEmail($email) {
+        return $this->getConnection()->dataSource("SELECT [wt].* FROM [view_team] [wt] JOIN [view_competitor] [wc] USING([id_team]) WHERE [wc].[email] = %s", $email)->fetch();
+    }
 
     /**
      * @return \DibiDataSource

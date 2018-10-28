@@ -3,12 +3,16 @@
 namespace App\FrontendModule\Presenters;
 
 use Nette,
+    Nette\Mail\IMailer,
     App\Model\Interlos;
 
 class DefaultPresenter extends BasePresenter {
     
         /** @var \App\Model\Authentication\TeamAuthenticator @inject*/
-        public $authenticator;
+	public $authenticator;
+	
+	/** @var  IMailer @inject*/
+	public $mailer;
 
 	public function actionLogout() {
                 $this->getUser()->logout();
@@ -34,6 +38,10 @@ class DefaultPresenter extends BasePresenter {
 	public function renderLogin() {
 		$this->setPagetitle(_("Přihlásit se"));
 	}
+        
+        public function renderRecover() {
+                $this->setPageTitle(_("Obnova hesla"));
+        }
 
 	public function renderRules() {
 		$this->setPagetitle(_("Pravidla"));
@@ -63,6 +71,10 @@ class DefaultPresenter extends BasePresenter {
 	
 	protected function createComponentLogin($name) {
 		return new \LoginFormComponent($this->authenticator, $this, $name);
+	}
+        
+        protected function createComponentRecover($name) {
+		return new \RecoverFormComponent($this->authenticator, $this->mailer, $this, $name);
 	}
 
 }

@@ -6,7 +6,7 @@ use Nette;
 
 abstract class AbstractAuthenticator extends Nette\Object {
     /** @var Nette\Security\User */
-    private $user;
+    protected $user;
 
     public function __construct(Nette\Security\User $user)
     {

@@ -9,6 +9,9 @@ use App\Model\Interlos,
 
 class TeamPresenter extends BasePresenter {
 
+    /** @var \App\Model\Authentication\TeamAuthenticator @inject*/
+	public $authenticator;
+
     public function actionRegistration() {
         if (!Interlos::isRegistrationActive()) {
             $this->flashMessage(_("Registrace není aktivní."), "danger");
@@ -18,6 +21,23 @@ class TeamPresenter extends BasePresenter {
             $uri->appendQuery(array('lang' => $this->lang));
             $this->redirectUrl($uri, Http\IResponse::S307_TEMPORARY_REDIRECT);
         }
+    }
+
+    public function renderChangePassword($token = null) {
+        if (!is_null($token)) {
+            try {
+                $this->authenticator->authenticateByToken($token);
+            }
+            catch(Security\AuthenticationException $e) {
+                $this->error(_("Chybný token."), Http\IResponse::S401_UNAUTHORIZED);
+            }
+        }
+        if (!$this->user->isAllowed('team', 'edit')) {
+            $this->flashMessage(_("Nejprve se prosím přihlaste."), "danger");
+            $this->redirect("Default:login");
+        }
+
+        $this->setPageTitle(_("Změna hesla"));
     }
 
     public function renderDefault() {
@@ -63,6 +83,10 @@ class TeamPresenter extends BasePresenter {
 
     protected function createComponentTeamList($name) {
         return new \TeamListComponent($this, $name);
+    }
+
+    protected function createComponentPasswordChangeForm($name) {
+        return new \PasswordChangeFormComponent($this, $name);
     }
 
     // ---- PRIVATE METHODS

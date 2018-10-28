@@ -1,6 +1,5 @@
 services:
     skipAssertion: App\Model\Authorization\SkipAssertion
-#    gossipPoolAssertion: App\Model\Authorization\GossipPoolAssertion
 
     acl:
         class: Nette\Security\Permission
@@ -18,14 +17,14 @@ services:
             - addResource(game)
             - addResource(task) #skip
             - addResource(report) #add
-#            - addResource(team) #edit
+            - addResource(team) #edit
 #            - addResource(stats) #show
 
             #ACL
-            #- allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])
             - allow(team, chat, add)
             - allow(team, game)
             - allow(team, task, skip, [@skipAssertion, 'canSkip'])
+            - allow(team, team)
 
             - allow(org, chat, add)
             - allow(org, noticeboard, add)
@@ -33,5 +32,4 @@ services:
 
             - allow(cron, cron)
 
-#            - allow(org, gossip)
 #            - allow(admin, Nette\Security\Permission::ALL)

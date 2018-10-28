@@ -202,6 +202,18 @@ CREATE TABLE `team` (
   CONSTRAINT `team_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Soutezni tymy';
 
+DROP TABLE IF EXISTS `token`;
+CREATE TABLE `token` (
+  `id_token` int(25) unsigned NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
+  `id_team` int(25) unsigned NOT NULL,
+  `token` char(10) COLLATE utf8_general_ci NOT NULL COMMENT 'token',
+  `not_before` datetime NOT NULL COMMENT 'cas zacatku platnosti zaznamu',
+  `not_after` datetime NOT NULL COMMENT 'cas expirace zaznamu',
+  PRIMARY KEY (`id_token`),
+  UNIQUE KEY `token` (`token`),
+  CONSTRAINT `token_ibfk_1` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Tokeny pro reset hesla';
+
 
 DROP TABLE IF EXISTS `year`;
 CREATE TABLE `year` (
