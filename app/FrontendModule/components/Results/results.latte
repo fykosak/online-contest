@@ -12,6 +12,13 @@
 			<th>{_'bonusové body'}</th>
 			<th>{_'záporné body'}</th>
 		</thead>
+		<tr class="text-muted">
+			<td></td>
+			<td>{_'Student Pilný'}</td>
+			<td>{$maxPoints}</td>
+			<td>{$maxBonus}</td>
+			<td>0</td>
+		</tr>
 		{if isset($teams[$category])}
                         {var $i = 1}
 			{foreach $teams[$category] AS $team}
