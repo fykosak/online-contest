@@ -142,8 +142,9 @@ class AnswerFormComponent extends BaseComponent {
     private $tasksInfo;
 
     private function initTasks() {
+        $teamId = Interlos::getLoggedTeam($this->getPresenter()->user)->id_team;
         $this->tasks = Interlos::tasks()
-                ->findSubmitAvailable(Interlos::getLoggedTeam($this->getPresenter()->user)->id_team)
+                ->findSubmitAvailable($teamId)
                 ->fetchAll();
 
         $this->tasksInfo = array();
@@ -152,6 +153,8 @@ class AnswerFormComponent extends BaseComponent {
                 "sig_digits" => $task["real_sig_digits"],
                 "unit" => $task["answer_unit"],
                 "type" => $task["answer_type"],
+                "maxPoints" => $task["points"],
+                "curPoints" => Interlos::score()->getSingleTaskScore($teamId, $task),
             );
         }
         $this->getTemplate()->tasksInfo = $this->tasksInfo;
@@ -161,6 +164,8 @@ class AnswerFormComponent extends BaseComponent {
         $this->getTemplate()->realHint = _("Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1.");
         $this->getTemplate()->expected = _("Očekávaný počet platných cifer");
         $this->getTemplate()->unit = _("Jednotka");
+        $this->getTemplate()->maxPoints = _("Maximum bodů");
+        $this->getTemplate()->curPoints = _("Aktuálně bodů");
     }
 
 }

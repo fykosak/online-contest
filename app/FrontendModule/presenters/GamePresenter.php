@@ -39,6 +39,7 @@ class GamePresenter extends BasePresenter {
         $solvedTasks = array();
         $missedTasks = array();
         foreach(Interlos::tasks()->findProblemAvailable($team) as $task){
+            $task->curPoints = Interlos::score()->getSingleTaskScore($team, $task);
             if(isset($solved[$task->id_task])){
                 $solvedTasks[] = $task;
             }elseif(isset($skipped[$task->id_task])){

@@ -12,6 +12,12 @@ $.fn.extend({
                 if(item['unit'] != null){
                     message.push(options['unit'] + ': <span class="unit">' + item['unit'] + '</span>.');
                 }
+                if(item['curPoints'] != null){
+                    message.push('<br/>' + options['curPoints'] + ': ' + item['curPoints']);
+                }
+                if(item['maxPoints'] != null){
+                    message.push('<br/>' + options['maxPoints'] + ': ' + item['maxPoints']);
+                }
                 if(item['type'] == 'real'){
                     message.push('<br/>' + options['realHint']);
                 }

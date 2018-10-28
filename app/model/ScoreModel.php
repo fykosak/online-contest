@@ -44,10 +44,9 @@ class ScoreModel extends AbstractModel {
         
         public function updateAfterInsert($teamId, $task) {
             try{
-                $group = Interlos::groups()->find($task->id_group);
                 $hurry = ($task->id_group == 1)? false : true; //dle SQL id_group=2,3,4
             
-                $score = $this->getSingleTaskScore($teamId, $task, $group);
+                $score = $this->getSingleTaskScore($teamId, $task);
                 $this->getConnection()->insert("task_state", array(
                     "id_team" => $teamId,
                     "id_task" => $task->id_task,
@@ -64,8 +63,7 @@ class ScoreModel extends AbstractModel {
                             ->where("[id_group] <> 1")->fetchAll();
                     if(count($hurryTasks) == 3 && Interlos::period()->findCurrent($task->id_group)->has_bonus == 1) {
                         foreach ($hurryTasks as $hurryTask) {
-                            $curGroup = Interlos::groups()->find($hurryTask->id_group);
-                            $score += $this->getSingleTaskScore($teamId, $hurryTask, $curGroup);
+                            $score += $this->getSingleTaskScore($teamId, $hurryTask);
                         }
                     }
                 }
@@ -77,13 +75,15 @@ class ScoreModel extends AbstractModel {
             }
         }
         
-        private function getSingleTaskScore($teamId, $task, $group) {
-            $answerCount = $this->getConnection()->query("SELECT COUNT(*) FROM [answer] WHERE %and", [
+        public function getSingleTaskScore($teamId, $task) {
+            $group = Interlos::groups()->find($task->id_group);
+            $wrongTries = $this->getConnection()->query("SELECT COUNT(*) FROM [answer] WHERE %and", [
                 array('id_team = %i', $teamId),
                 array('id_task = %i', $task->id_task),
+                array('correct = %i', 0),
             ])->fetchSingle();
             
-            return $this->getPointCount($task->points, $answerCount-1, $group->allow_zeroes);
+            return $this->getPointCount($task->points, $wrongTries, $group->allow_zeroes);
         }
         
         private function getPointCount($maxPoints, $wrongTries, $allowZeroes) {

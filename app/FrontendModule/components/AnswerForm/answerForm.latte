@@ -6,7 +6,7 @@
     <script type="text/javascript" src="{$basePath}/js/taskInfo.js"></script>
 
 <script type="text/javascript">
-    $('#'+{$tasksInfoElement}).infoElement($('#'+{$control['form']['task']->getHtmlId()}), {'data': {$tasksInfo}, 'realHint': {$realHint}, 'expected': {$expected}, 'unit': {$unit}});    
+    $('#'+{$tasksInfoElement}).infoElement($('#'+{$control['form']['task']->getHtmlId()}), {'data': {$tasksInfo}, 'realHint': {$realHint}, 'expected': {$expected}, 'unit': {$unit}, 'maxPoints': {$maxPoints}, 'curPoints':{$curPoints}});    
     $(function(){
         var timesecs = $('.timesec');
         var button = $('#'+{$control['form'][$submitElement]->getHtmlId()});
