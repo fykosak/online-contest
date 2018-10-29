@@ -38,11 +38,19 @@ msgstr "3rd year of high school"
 msgid "4. ročník SŠ"
 msgstr "4th year of high school"
 
+# AnswerFormComponent.php:168
+msgid "Aktuálně bodů"
+msgstr "Points currently"
+
 # TeamFormComponent.php:58
 # TeamFormComponent.php:99
 # ChatListComponent.php:18
 msgid "Chyba při práci s databází."
 msgstr "Database error."
+
+# TeamPresenter.php:32
+msgid "Chybný token."
+msgstr "Wrong token."
 
 # DefaultPresenter.php:53
 msgid "Další soutěže"
@@ -90,6 +98,22 @@ msgstr "Thanks for inserting your report"
 msgid "Důležitá oznámení"
 msgstr "Important notifications"
 
+# RecoverFormComponent.php:62
+msgid "E-mail libovolného člena týmu"
+msgstr "E-mail of any team member"
+
+# RecoverFormComponent.php:63
+msgid "E-mail musí být vyplněn."
+msgstr "E-mail must be set."
+
+# TeamFormComponent.php:124
+msgid "E-mail nemá správný formát."
+msgstr "Entered e-mail does not have a correct format."
+
+# RecoverFormComponent.php:53
+msgid "E-mail pro obnovu byl odeslán."
+msgstr "Recovery e-mail has been sent."
+
 # TeamPresenter.php:28
 msgid "Editaci přihlášky provádějte po osobním přihlášení "
 msgstr "You can edit your application after your personal login "
@@ -129,6 +153,10 @@ msgstr "Photo must be in the formats JPEG, GIF or PNG."
 msgid "Fyziklání online"
 msgstr "Online Physics Brawl"
 
+# PasswordChangeFormComponent.php:30
+msgid "Hesla se neshodují"
+msgstr "Passwords don't match"
+
 # LoginFormComponent.php:36
 # TeamFormComponent.php:115
 msgid "Heslo"
@@ -137,6 +165,10 @@ msgstr "Password"
 # TeamFormComponent.php:118
 msgid "Heslo a kontrola hesla se neshodují."
 msgstr "The password and the password confirmation do not match."
+
+# PasswordChangeFormComponent.php:17
+msgid "Heslo bylo změněno."
+msgstr "Password has been changed."
 
 # LoginFormComponent.php:37
 msgid "Heslo musí být vyplněno."
@@ -227,6 +259,10 @@ msgstr "Password confirmation"
 msgid "Lze odpovídat až za <span class='timesec'>%d</span> sekund."
 msgstr "You can answer in <span class='timesec'>%d</span> seconds."
 
+# AnswerFormComponent.php:167
+msgid "Maximum bodů"
+msgstr "Max points"
+
 # DefaultPresenter.php:15
 msgid "Mezinárodní soutež ve fyzice"
 msgstr "International physics competition"
@@ -256,6 +292,10 @@ msgstr "You have already tried this answer before."
 msgid "Nadpis reportu."
 msgstr "A caption of the report."
 
+# TeamPresenter.php:36
+msgid "Nejprve se prosím přihlaste."
+msgstr "Please log in first."
+
 # AnswerFormComponent.php:34
 msgid "Není aktuální žádné odpovídací období."
 msgstr "No answering period is active at this moment."
@@ -284,6 +324,14 @@ msgstr "Unsolved"
 msgid "Notifikace byla vložena"
 msgstr "Notification was inserted"
 
+# PasswordChangeFormComponent.php:26
+msgid "Nové heslo"
+msgstr "New password"
+
+# PasswordChangeFormComponent.php:29
+msgid "Nové heslo (pro kontrolu)"
+msgstr "New password (for check)"
+
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:55
 # _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:57
 # visualPaginator.phtml:53
@@ -308,6 +356,10 @@ msgstr "You must enter a team name"
 # LoginFormComponent.php:34
 msgid "Název týmu musí být vyplněn."
 msgstr "You must enter a team name."
+
+# DefaultPresenter.php:43
+msgid "Obnova hesla"
+msgstr "Password recovery"
 
 # ChatListComponent.php:37
 msgid "Obsah příspěvku není vyplněn."
@@ -370,6 +422,10 @@ msgstr "Detailed results"
 msgid "Pokoušíte se vložit školu, která již existuje."
 msgstr "You are trying to register a school that has already been registered."
 
+# RecoverFormComponent.php:66
+msgid "Pokračovat"
+msgstr "Continue"
+
 # layout.phtml:112
 msgid ""
 "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši "
@@ -390,6 +446,20 @@ msgstr "Confirmation e-mail could not be sent."
 # DefaultPresenter.php:27
 msgid "Pravidla"
 msgstr "Rules"
+
+# RecoverFormComponent.php:47
+msgid ""
+"Pro obnovu hesla přejděte na %s\n"
+"Vaši organizátoři\n"
+"\n"
+"Toto je automatická zpráva. Pokud jste o obnovu hesla nežádali, tento e-mail "
+"ignorujte."
+msgstr ""
+"To complete the password recovery, go to %s\n"
+"Your organizers\n"
+"\n"
+"This is automatic message. If you are not trying to recover your password, "
+"ignore this e-mail."
 
 msgid "Pro zaslání případné odměny."
 msgstr ""
@@ -531,6 +601,10 @@ msgstr "Answer statistics"
 msgid "Statistiky úkolů"
 msgstr "Problem statistics"
 
+# results.latte:16
+msgid "Student Pilný"
+msgstr ""
+
 # a201205results.latte:2
 msgid "Středoškoláci"
 msgstr "High school students"
@@ -566,6 +640,14 @@ msgstr "Team has been updated successfully."
 # TeamFormComponent.php:93
 msgid "Tým musí mít alespoň jednoho člena."
 msgstr "Team must consist of at least one member."
+
+# RecoverFormComponent.php:29
+msgid "Tým nenalezen."
+msgstr "Team not found."
+
+# RecoverFormComponent.php:37
+msgid "Tým se již pokouší o obnovu hesla."
+msgstr "The team is already trying to recover the password."
 
 # TeamFormComponent.php:25
 msgid "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
@@ -677,6 +759,10 @@ msgstr "Problem statement"
 msgid "Zahraniční SŠ"
 msgstr "High school outside of the Czech Republic"
 
+# TeamPresenter.php:40
+msgid "Změna hesla"
+msgstr "Password change"
+
 # layout.phtml:30
 msgid "Zobrazit navigaci"
 msgstr "Show navigation"
@@ -715,6 +801,10 @@ msgstr "Cancelled problem"
 msgid "ZŠ"
 msgstr "Elementary school"
 
+# RecoverFormComponent.php:46
+msgid "[Fyziklání online] obnova hesla"
+msgstr "[Online physics brawl] password recovery"
+
 # default.phtml:15
 msgid "b."
 msgstr "p."
@@ -735,10 +825,6 @@ msgstr "information about the team members are not available"
 # TeamPresenter.php:24
 msgid "na stránce přihlášky"
 msgstr "on the application page"
-
-# taskStats.phtml:5
-msgid "nejhorší"
-msgstr "the worst"
 
 # taskStats.phtml:6
 msgid "nejlepší"
@@ -769,9 +855,9 @@ msgstr "rules of the contest"
 msgid "přeskočeno"
 msgstr "skipped"
 
-# taskStats.phtml:8
-msgid "správně"
-msgstr "correct"
+# taskStats.latte:7
+msgid "správných odpovědí"
+msgstr "correct answers"
 
 # TeamFormComponent.php:141
 msgid "střední škola"
@@ -830,6 +916,10 @@ msgstr "time of creation"
 msgid "Řešení"
 msgstr "Solution"
 
+# taskStats.latte:6
+msgid "řešilo týmů"
+msgstr "teams trying to solve"
+
 # default.phtml:5
 msgid "Šedé jsou týmy, jež neprojevily během hry aktivitu."
 msgstr "The teams marked with grey were not active throughout the game"
@@ -838,13 +928,25 @@ msgstr "The teams marked with grey were not active throughout the game"
 msgid "Škola"
 msgstr "School"
 
-# taskStats.phtml:9
-msgid "špatně"
-msgstr "incorrect"
+# taskStats.latte:8
+msgid "špatných odpovědí"
+msgstr "wrong answers"
 
 # default.phtml:10
 msgid "Žádné úlohy."
 msgstr "No more problems."
+
+# taskStats.phtml:5
+#~ msgid "nejhorší"
+#~ msgstr "the worst"
+
+# taskStats.phtml:8
+#~ msgid "správně"
+#~ msgstr "correct"
+
+# taskStats.phtml:9
+#~ msgid "špatně"
+#~ msgstr "incorrect"
 
 # ReportAddFormComponent.php:64
 #~ msgid "Fotografie nesmí být větší, než 500 kB."
@@ -858,10 +960,6 @@ msgstr "No more problems."
 # TeamFormComponent.php:122
 #~ msgid "E-mail"
 #~ msgstr "E-mail"
-
-# TeamFormComponent.php:124
-#~ msgid "E-mail nemá správný formát."
-#~ msgstr "Entered e-mail does not have a correct format."
 
 # TeamFormComponent.php:166
 #~ msgid ""
