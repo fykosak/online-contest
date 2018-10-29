@@ -4,6 +4,7 @@ use Nette\Application\UI\Form,
     Nette\ComponentModel\IContainer,
     Nette\Security,
     App\Model\Authentication\AbstractAuthenticator;
+use App\Model\Interlos;
 
 class LoginFormComponent extends BaseComponent
 {
@@ -36,7 +37,13 @@ class LoginFormComponent extends BaseComponent
 	    Debug::processException($e);
 	    return;
 	}
-	$this->getPresenter()->redirect("Team:default");
+
+		if (Interlos::isGameActive()) {
+			$this->getPresenter()->redirect("Game:default");
+		}
+		else {
+			$this->getPresenter()->redirect("Team:default");
+		}
     }
 
     // ---- PROTECTED METHODS
