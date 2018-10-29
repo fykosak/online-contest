@@ -19,14 +19,18 @@ class TasksModel extends AbstractModel {
      * @return \DibiDataSource
      */
     public function findAll() {
-        return $this->getConnection()->dataSource("SELECT * FROM [view_task]");
+        return $this->getConnection()->dataSource("SELECT * FROM [view_task]")
+            ->orderBy('id_group')
+            ->orderBy('number');
     }
 
     /**
      * @return \DibiDataSource
      */
     public function findPossiblyAvailable($teamId = NULL) {
-        $source = $this->getConnection()->dataSource("SELECT * FROM [view_possibly_available_task]");
+        $source = $this->getConnection()->dataSource("SELECT * FROM [view_possibly_available_task]")
+            ->orderBy('id_group')
+            ->orderBy('number');
         return $source;
     }
 
@@ -34,7 +38,9 @@ class TasksModel extends AbstractModel {
      * @return \DibiDataSource
      */
     public function findProblemAvailable($teamId) {
-        $source = $this->getConnection()->dataSource("SELECT * FROM [view_available_task] WHERE [id_team] = %i", $teamId);
+        $source = $this->getConnection()->dataSource("SELECT * FROM [view_available_task] WHERE [id_team] = %i", $teamId)
+            ->orderBy('id_group')
+            ->orderBy('number');
         return $source;
     }
 
@@ -42,7 +48,9 @@ class TasksModel extends AbstractModel {
      * @return \DibiDataSource
      */
     public function findSubmitAvailable($teamId) {
-        $source = $this->getConnection()->dataSource("SELECT * FROM [view_submit_available_task] WHERE [id_team] = %i", $teamId);
+        $source = $this->getConnection()->dataSource("SELECT * FROM [view_submit_available_task] WHERE [id_team] = %i", $teamId)
+            ->orderBy('id_group')
+            ->orderBy('number');
 
 
         $solved = $this->findSolved($teamId);
@@ -96,7 +104,9 @@ class TasksModel extends AbstractModel {
     }
 
     public function findAllStats() {
-        return $this->getConnection()->dataSource("SELECT * FROM [tmp_task_stat]");
+        return $this->getConnection()->dataSource("SELECT * FROM [tmp_task_stat]")
+            ->orderBy('id_group')
+            ->orderBy('number');
     }
 
     public function insert($name, $number, $serie, $type, $code) {

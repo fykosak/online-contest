@@ -17,7 +17,9 @@ class TeamsModel extends AbstractModel {
     }
 
     public function findAll() {
-        return $this->getConnection()->dataSource("SELECT * FROM [view_team] WHERE [id_year] = %i", Interlos::years()->findCurrent()->id_year);
+        return $this->getConnection()->dataSource("SELECT * FROM [view_team] WHERE [id_year] = %i", Interlos::years()->findCurrent()->id_year)
+            ->orderBy('category')
+            ->orderBy('inserted');
     }
     
     public function findByEmail($email) {
@@ -28,7 +30,10 @@ class TeamsModel extends AbstractModel {
      * @return \DibiDataSource
      */
     public function findAllWithScore() {
-        return $this->getConnection()->dataSource("SELECT * FROM [tmp_total_result]");
+        return $this->getConnection()->dataSource("SELECT * FROM [tmp_total_result]")
+            ->orderBy('activity', 'DESC')
+            ->orderBy('score', 'DESC')
+            ->orderBy('last_time', 'ASC');
     }
 
     public function insert($name, $email, $category, $password, $address) {

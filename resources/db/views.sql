@@ -229,7 +229,8 @@ CREATE VIEW `view_bonus` AS
                 IF(
                     (SELECT COUNT(`ts2`.`id_task`) FROM `task_state` `ts2` WHERE `ts2`.`id_team` = `t`.`id_team` AND `ts2`.`skipped` = 1)
                     + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `t`.`id_team`) > 0
-                , 1, 0) AS `activity`
+                , 1, 0) AS `activity`,
+        `view_last_correct_answer`.`last_time`
  	FROM `view_team` `t`
  	LEFT JOIN `task_state` `ts` ON `ts`.`id_team` = `t`.`id_team`
  	LEFT JOIN `view_penality` ON `t`.`id_team`=`view_penality`.`id_team`
@@ -294,7 +295,8 @@ CREATE VIEW `view_total_result_cached` AS
                 IF(
                     (SELECT COUNT(`ts2`.`id_task`) FROM `task_state` `ts2` WHERE `ts2`.`id_team` = `t`.`id_team` AND `ts2`.`skipped` = 1)
                     + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `t`.`id_team`) > 0
-                , 1, 0) AS `activity`
+                , 1, 0) AS `activity`,
+        `view_last_correct_answer`.`last_time`
  	FROM `view_team` `t`
  	LEFT JOIN `task_state` `ts` ON `ts`.`id_team` = `t`.`id_team`
  	LEFT JOIN `tmp_penality` ON `tmp_penality`.`id_team` = `t`.`id_team`
