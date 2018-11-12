@@ -51,7 +51,12 @@ class DefaultPresenter extends BasePresenter {
         public function renderFaq() {
             $this->setPagetitle(_("FAQ"));
             $this->changeViewByLang();
-        }
+	}
+	
+	public function renderHowto() {
+		$this->setPagetitle(_("Rychlý grafický návod ke hře"));
+		$this->changeViewByLang();
+	}
 
 	public function renderTaskExamples() {
 		$this->setPagetitle(_("Rozcvička"));

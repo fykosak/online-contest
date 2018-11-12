@@ -344,6 +344,11 @@ msgstr "Next »"
 msgid "Nástěnka"
 msgstr "Noticeboard"
 
+# menu.latte:15
+# menu.latte:15
+msgid "Návod"
+msgstr "Guide"
+
 # LoginFormComponent.php:33
 # TeamFormComponent.php:112
 msgid "Název týmu"
@@ -551,6 +556,10 @@ msgstr "Year of the competition"
 # ReportAddFormComponent.php:44
 msgid "Ročník musí být větší než %d."
 msgstr "Year of the competition has to be greater than %d."
+
+# DefaultPresenter.php:57
+msgid "Rychlý grafický návod ke hře"
+msgstr "Quick visual guide"
 
 # TeamPresenter.php:17
 msgid "Seznam týmů"

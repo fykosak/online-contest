@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2018-10-29T21:53:10+01:00
+# Created: 2018-11-12T23:24:43+01:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +43,7 @@ msgstr "Chyba při práci s databází."
 msgid "Chybný token."
 msgstr "Chybný token."
 
-# DefaultPresenter.php:61
+# DefaultPresenter.php:66
 msgid "Další soutěže"
 msgstr "Další soutěže"
 
@@ -63,8 +63,8 @@ msgstr "Datum konání"
 msgid "Datum musí mít podobu YYYY-mm-dd."
 msgstr "Datum musí mít podobu YYYY-mm-dd."
 
-# menu.latte:17
-# menu.latte:17
+# menu.latte:18
+# menu.latte:18
 msgid "Diskuse"
 msgstr "Diskuse"
 
@@ -162,8 +162,8 @@ msgstr "Historie"
 msgid "Historie odpovědí"
 msgstr "Historie odpovědí"
 
-# menu.latte:32
 # menu.latte:33
+# menu.latte:34
 msgid "Hra"
 msgstr "Hra"
 
@@ -242,8 +242,8 @@ msgid "Mezinárodní soutež ve fyzice"
 msgstr "Mezinárodní soutež ve fyzice"
 
 # DefaultPresenter.php:34
-# menu.latte:15
-# menu.latte:15
+# menu.latte:16
+# menu.latte:16
 msgid "Minulé ročníky"
 msgstr "Minulé ročníky"
 
@@ -303,10 +303,15 @@ msgstr "Nové heslo (pro kontrolu)"
 msgid "Následující »"
 msgstr "Následující »"
 
-# menu.latte:27
 # menu.latte:28
+# menu.latte:29
 msgid "Nástěnka"
 msgstr "Nástěnka"
+
+# menu.latte:15
+# menu.latte:15
+msgid "Návod"
+msgstr "Návod"
 
 # LoginFormComponent.php:54
 # TeamFormComponent.php:127
@@ -345,8 +350,8 @@ msgstr "Odeslat řešení"
 msgid "Odevzdat řešení"
 msgstr "Odevzdat řešení"
 
-# menu.latte:58
 # menu.latte:59
+# menu.latte:60
 msgid "Odhlásit se"
 msgstr "Odhlásit se"
 
@@ -453,8 +458,8 @@ msgstr "Přidat příspěvek"
 # LoginFormComponent.php:60
 # DefaultPresenter.php:39
 # OrgPresenter.php:34
-# menu.latte:53
 # menu.latte:54
+# menu.latte:55
 msgid "Přihlásit se"
 msgstr "Přihlásit se"
 
@@ -471,8 +476,8 @@ msgid "Reagovat"
 msgstr "Reagovat"
 
 # TeamPresenter.php:74
-# menu.latte:45
 # menu.latte:46
+# menu.latte:47
 msgid "Registrace"
 msgstr "Registrace"
 
@@ -488,7 +493,7 @@ msgstr "Registrace nového týmu je možná jen přes FKSDB."
 msgid "Registrovat"
 msgstr "Registrovat"
 
-# DefaultPresenter.php:57
+# DefaultPresenter.php:62
 msgid "Rozcvička"
 msgstr "Rozcvička"
 
@@ -499,6 +504,10 @@ msgstr "Ročník"
 # ReportAddFormComponent.php:44
 msgid "Ročník musí být větší než %d."
 msgstr "Ročník musí být větší než %d."
+
+# DefaultPresenter.php:57
+msgid "Rychlý grafický návod ke hře"
+msgstr "Rychlý grafický návod ke hře"
 
 # TeamPresenter.php:66
 msgid "Seznam týmů"
@@ -528,8 +537,8 @@ msgstr "Stala se neočekávaná chyba."
 msgid "Statistika úkolů"
 msgstr "Statistika úkolů"
 
-# menu.latte:23
 # menu.latte:24
+# menu.latte:25
 msgid "Statistiky"
 msgstr "Statistiky"
 
@@ -622,8 +631,8 @@ msgstr "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 msgid "Tým, za který se vkládá."
 msgstr "Tým, za který se vkládá."
 
-# menu.latte:18
 # menu.latte:19
+# menu.latte:20
 msgid "Týmy"
 msgstr "Týmy"
 
