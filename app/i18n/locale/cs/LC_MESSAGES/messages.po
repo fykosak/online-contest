@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2018-11-12T23:24:43+01:00
+# Created: 2018-11-20T04:48:03+01:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +43,7 @@ msgstr "Chyba při práci s databází."
 msgid "Chybný token."
 msgstr "Chybný token."
 
-# DefaultPresenter.php:66
+# DefaultPresenter.php:70
 msgid "Další soutěže"
 msgstr "Další soutěže"
 
@@ -108,7 +108,7 @@ msgstr "Editaci přihlášky provádějte po osobním přihlášení "
 msgid "Email"
 msgstr "Email"
 
-# DefaultPresenter.php:52
+# DefaultPresenter.php:56
 # menu.latte:14
 # menu.latte:14
 msgid "FAQ"
@@ -409,7 +409,7 @@ msgstr "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám
 msgid "Potvrzovací e-mail se nepodařilo odeslat."
 msgstr "Potvrzovací e-mail se nepodařilo odeslat."
 
-# DefaultPresenter.php:47
+# DefaultPresenter.php:51
 # menu.latte:13
 # menu.latte:13
 msgid "Pravidla"
@@ -493,7 +493,7 @@ msgstr "Registrace nového týmu je možná jen přes FKSDB."
 msgid "Registrovat"
 msgstr "Registrovat"
 
-# DefaultPresenter.php:62
+# DefaultPresenter.php:66
 msgid "Rozcvička"
 msgstr "Rozcvička"
 
@@ -505,7 +505,7 @@ msgstr "Ročník"
 msgid "Ročník musí být větší než %d."
 msgstr "Ročník musí být větší než %d."
 
-# DefaultPresenter.php:57
+# DefaultPresenter.php:61
 msgid "Rychlý grafický návod ke hře"
 msgstr "Rychlý grafický návod ke hře"
 
@@ -728,9 +728,17 @@ msgstr "Zadání"
 msgid "Zahraniční SŠ"
 msgstr "Zahraniční SŠ"
 
+# loginForm.latte:1
+msgid "Zapomenuté heslo"
+msgstr "Zapomenuté heslo"
+
 # TeamPresenter.php:40
 msgid "Změna hesla"
 msgstr "Změna hesla"
+
+# DefaultPresenter.php:45
+msgid "Změnu hesla proveďte editací vaší přihlášky."
+msgstr "Změnu hesla proveďte editací vaší přihlášky."
 
 # menu.latte:4
 msgid "Zobrazit navigaci"

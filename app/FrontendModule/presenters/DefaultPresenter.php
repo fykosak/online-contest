@@ -40,7 +40,11 @@ class DefaultPresenter extends BasePresenter {
 	}
         
         public function renderRecover() {
-                $this->setPageTitle(_("Obnova hesla"));
+		$this->setPageTitle(_("Obnova hesla"));
+		if (!Interlos::isGameMigrated()) {
+			$this->flashMessage(_("Změnu hesla proveďte editací vaší přihlášky."), "danger");
+            		$this->redirect("default");
+		}
         }
 
 	public function renderRules() {

@@ -768,9 +768,17 @@ msgstr "Problem statement"
 msgid "Zahraniční SŠ"
 msgstr "High school outside of the Czech Republic"
 
+# loginForm.latte:1
+msgid "Zapomenuté heslo"
+msgstr "Forgotten password"
+
 # TeamPresenter.php:40
 msgid "Změna hesla"
 msgstr "Password change"
+
+# DefaultPresenter.php:45
+msgid "Změnu hesla proveďte editací vaší přihlášky."
+msgstr "You can change password by editing your application."
 
 # layout.phtml:30
 msgid "Zobrazit navigaci"

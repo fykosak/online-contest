@@ -56,7 +56,7 @@ class TeamAuthenticator extends AbstractAuthenticator
                 IAuthenticator::INVALID_CREDENTIAL
             );
         }
-        $this->connection->delete("token")->where("[id_token] = %i", $res['id_token']);
+        $this->connection->delete("token")->where("[id_token] = %i", $res['id_token'])->execute();
 
         $team = Interlos::teams()->find($res['id_team']);
         $identity = new Identity($team['name'], self::TEAM, array("id_team" => $team["id_team"], "role" => self::TEAM));

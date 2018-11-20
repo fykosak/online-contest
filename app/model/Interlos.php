@@ -141,6 +141,10 @@ class Interlos extends Nette\Object {
 //        }
     }
 
+    public static function isGameMigrated() {
+        return self::isRegistrationEnd() && (Interlos::getConnection()->dataSource("SELECT COUNT(*) FROM [team]")->fetchSingle() != 0);
+    }
+
 //    public static function prepareAdminProperties() {
 //        if (!self::isAdminAccess()) {
 //            return;

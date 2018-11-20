@@ -39,8 +39,8 @@ class RecoverFormComponent extends BaseComponent {
         }
 
         $message = new Message;
-        $prefs = $this->getPresenter()->getParameter('mail');
-        $recoveryUrl = $this->link("Default:recover", ['token' => $token]);
+        $prefs = $this->getPresenter()->context->parameters['mail'];
+        $recoveryUrl = $this->getPresenter()->link("//Team:changePassword", ['token' => $token]);
 
         $message->setFrom($prefs['info'], $prefs['name'])
             ->setSubject(_("[Fyziklání online] obnova hesla"))
