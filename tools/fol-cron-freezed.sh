@@ -7,6 +7,6 @@ PAUSE=30 # sec
 
 wget "$URL/cs/cron/counters?cron-key=$KEY" -O - >/dev/null
 sleep $PAUSE
-wget "$URL/cs/cron/database?freezed=0&cron-key=$KEY" -O - >/dev/null
+wget "$URL/cs/cron/database?freezed=1&cron-key=$KEY" -O - >/dev/null
 
 date >>"$LOG"
