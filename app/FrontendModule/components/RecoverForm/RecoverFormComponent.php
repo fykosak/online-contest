@@ -43,7 +43,7 @@ class RecoverFormComponent extends BaseComponent {
         
         //this way it works behind reverse proxy, but is ugly
         $requestUri = $this->getPresenter()->getHttpRequest()->getUrl();
-        $recoveryUrl = "https://".$requestUri->host.$this->getPresenter()->link("Team:changePassword", ['token' => $token]);
+        $recoveryUrl = "https://".$requestUri->remoteHost.$this->getPresenter()->link("Team:changePassword", ['token' => $token]);
 
         $message->setFrom($prefs['info'], $prefs['name'])
             ->setSubject(_("[Fyziklání online] obnova hesla"))
