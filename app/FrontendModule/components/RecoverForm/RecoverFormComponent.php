@@ -5,6 +5,7 @@ use Nette\Application\UI\Form,
     Nette\Security,
     Nette\Mail\Message,
     Nette\Mail\IMailer,
+    Nette\Http\IRequest,
     App\Model\Interlos,
     App\Model\Authentication\TeamAuthenticator;
 
@@ -16,10 +17,14 @@ class RecoverFormComponent extends BaseComponent {
     /** @var IMailer */
     private $mailer;
 
-    public function __construct(TeamAuthenticator $authenticator, IMailer $mailer, IContainer $parent = null, $name = null) {
+    /** @var IRequest */
+    private $httpRequest;
+
+    public function __construct(TeamAuthenticator $authenticator, IMailer $mailer, IRequest $httpRequest, IContainer $parent = null, $name = null) {
         parent::__construct($parent, $name);
         $this->authenticator = $authenticator;
         $this->mailer = $mailer;
+        $this->httpRequest = $httpRequest;
     }
 
     public function formSubmitted(Form $form) {
@@ -42,7 +47,7 @@ class RecoverFormComponent extends BaseComponent {
         $prefs = $this->getPresenter()->context->parameters['mail'];
         
         //this way it works behind reverse proxy, but is ugly
-        $requestUri = $this->getPresenter()->getHttpRequest()->getUrl();
+        $requestUri = $this->httpRequest->getUrl();
         $recoveryUrl = "https://".$requestUri->remoteHost.$this->getPresenter()->link("Team:changePassword", ['token' => $token]);
 
         $message->setFrom($prefs['info'], $prefs['name'])

@@ -83,7 +83,7 @@ class DefaultPresenter extends BasePresenter {
 	}
         
         protected function createComponentRecover($name) {
-		return new \RecoverFormComponent($this->authenticator, $this->mailer, $this, $name);
+		return new \RecoverFormComponent($this->authenticator, $this->mailer, $this->getHttpRequest(), $this, $name);
 	}
 
 }
