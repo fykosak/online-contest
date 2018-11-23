@@ -5,7 +5,8 @@ namespace App\FrontendModule\Presenters;
 use App\Model\Interlos,
     Nette\Http\Url,
     Nette\Utils,
-    Nette\Http;
+    Nette\Http,
+    Nette\Security\AuthenticationException;
 
 class TeamPresenter extends BasePresenter {
 
@@ -28,7 +29,7 @@ class TeamPresenter extends BasePresenter {
             try {
                 $this->authenticator->authenticateByToken($token);
             }
-            catch(Security\AuthenticationException $e) {
+            catch(AuthenticationException $e) {
                 $this->error(_("Chybný token."), Http\IResponse::S401_UNAUTHORIZED);
             }
         }
