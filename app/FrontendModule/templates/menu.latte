@@ -16,7 +16,10 @@
                 <li><a href="{link Default:howto}" title="{_'Návod'}">{_'Návod'}</a></li>
                 <li><a href="{link Default:lastYears}" title="{_'Minulé ročníky'}">{_'Minulé ročníky'}</a></li>
                 {if App\Model\Interlos::isRegistrationStarted()}
-                <li><a href="{link Default:chat}" title="{_'Diskuse'}">{_'Diskuse'}</a></li>
+                <li><a href="{link Default:chat}" title="{_'Diskuse'}">
+                        <span class="hidden-sm">{_'Diskuse'}</span>
+                        <span class="visible-sm-inline glyphicon glyphicon-comment" title="{_'Diskuse'}"/>
+                </a></li>
                 <li><a href="{link Team:list}" title="{_'Týmy'}">
                         <span class="hidden-sm">{_'Týmy'}</span>
                         <span class="visible-sm-inline glyphicon glyphicon-list"/>                                
@@ -57,12 +60,7 @@
                     </a></li>
                 {else}
                 <li><a href="{link Default:logout}">
-                        <span class="hidden-sm">{_'Odhlásit se'}</span>
-                        <span class="visible-sm-inline glyphicon glyphicon-log-out" title="{_'Odhlásit se'}"/>
-                    </a></li>
-                    <li><a href="{link Team:default}" title="{$user->id}">
-                            <span class="hidden-sm">{$user->id|truncate:15}</span>
-                            <span class="visible-sm-inline glyphicon glyphicon-user" title="{$user->id|truncate:15}"/>                                
+                        <span class="glyphicon glyphicon-log-out" title="{_'Odhlásit se'}"/>
                     </a></li>
                 {/if}
                 {/if}
