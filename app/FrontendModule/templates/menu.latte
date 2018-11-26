@@ -11,32 +11,44 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{link Default:rules}" title="{_'Pravidla'}">{_'Pravidla'}</a></li>
-                <li><a href="{link Default:faq}" title="{_'FAQ'}">{_'FAQ'}</a></li>
-                <li><a href="{link Default:howto}" title="{_'Návod'}">{_'Návod'}</a></li>
-                <li><a href="{link Default:lastYears}" title="{_'Minulé ročníky'}">{_'Minulé ročníky'}</a></li>
+                <li><a href="{link Default:lastYears}" title="{_'Archiv'}">
+                        <span class="hidden-sm">{_'Archiv'}</span>
+                        <span class="visible-sm-inline glyphicon glyphicon-compressed" title="{_'Archiv'}"/>
+                </a></li>
+                <li><a href="{link Default:rules}" title="{_'Pravidla'}">
+                        <span class="hidden-sm">{_'Pravidla'}</span>
+                        <span class="visible-sm-inline glyphicon glyphicon-exclamation-sign" title="{_'Pravidla'}"/>
+                </a></li>
+                <li><a href="{link Default:faq}" title="{_'FAQ'}">
+                        <span class="hidden-sm">{_'FAQ'}</span>
+                        <span class="visible-sm-inline glyphicon glyphicon-question-sign" title="{_'FAQ'}"/>
+                </a></li>
+                <li><a href="{link Default:howto}" title="{_'Návod'}">
+                        <span class="hidden-sm">{_'Návod'}</span>
+                        <span class="visible-sm-inline glyphicon glyphicon-info-sign" title="{_'FAQ'}"/>
+                </a></li>
                 {if App\Model\Interlos::isRegistrationStarted()}
-                <li><a href="{link Default:chat}" title="{_'Diskuse'}">
-                        <span class="hidden-sm">{_'Diskuse'}</span>
-                        <span class="visible-sm-inline glyphicon glyphicon-comment" title="{_'Diskuse'}"/>
+                <li><a href="{link Default:chat}" title="{_'Fórum'}">
+                        <span class="hidden-sm">{_'Fórum'}</span>
+                        <span class="visible-sm-inline glyphicon glyphicon-comment" title="{_'Fórum'}"/>
                 </a></li>
                 <li><a href="{link Team:list}" title="{_'Týmy'}">
                         <span class="hidden-sm">{_'Týmy'}</span>
-                        <span class="visible-sm-inline glyphicon glyphicon-list"/>                                
+                        <span class="visible-sm-inline glyphicon glyphicon-list" title="{_'Týmy'}"/>                                
                     </a></li>
                 {if App\Model\Interlos::isGameStarted()}
-                <li><a href="{link Stats:default}" title="{_'Statistiky'}">
-                        <span class="hidden-sm">{_'Statistiky'}</span>
-                        <span class="visible-sm-inline glyphicon glyphicon-stats"/>
+                <li><a href="{link Stats:default}" title="{_'Výsledky'}">
+                        <span class="hidden-sm">{_'Výsledky'}</span>
+                        <span class="visible-sm-inline glyphicon glyphicon-stats" title="{_'Výsledky'}"/>
                     </a></li>
                 <li><a href="{link Noticeboard:default}" title="{_'Nástěnka'}">
                         <span class="hidden-sm">{_'Nástěnka'}</span>
-                        <span class="visible-sm-inline glyphicon glyphicon-exclamation-sign"/>
+                        <span class="visible-sm-inline glyphicon glyphicon-pushpin" title="{_'Nástěnka'}"/>
                     </a></li>
                     {if $user->isLoggedIn()}
                 <li><a href="{link Game:default}" title="{_'Hra'}">
                         <span class="hidden-sm">{_'Hra'}</span>
-                        <span class="visible-sm-inline glyphicon glyphicon-globe"/>
+                        <span class="visible-sm-inline glyphicon glyphicon-tower" title="{_'Hra'}"/>
                     </a></li>
                 {/if}
                 {/if}

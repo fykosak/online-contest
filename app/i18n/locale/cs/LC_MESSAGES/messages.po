@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2018-11-20T04:48:03+01:00
+# Created: 2018-11-26T02:48:13+01:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,13 +33,18 @@ msgstr "4. ročník SŠ"
 msgid "Aktuálně bodů"
 msgstr "Aktuálně bodů"
 
+# menu.latte:13
+# menu.latte:13
+msgid "Archiv"
+msgstr "Archiv"
+
 # TeamFormComponent.php:72
 # TeamFormComponent.php:114
 # ChatListComponent.php:43
 msgid "Chyba při práci s databází."
 msgstr "Chyba při práci s databází."
 
-# TeamPresenter.php:32
+# TeamPresenter.php:33
 msgid "Chybný token."
 msgstr "Chybný token."
 
@@ -63,11 +68,6 @@ msgstr "Datum konání"
 msgid "Datum musí mít podobu YYYY-mm-dd."
 msgstr "Datum musí mít podobu YYYY-mm-dd."
 
-# menu.latte:18
-# menu.latte:18
-msgid "Diskuse"
-msgstr "Diskuse"
-
 # DefaultPresenter.php:24
 msgid "Diskuse (česká verze)"
 msgstr "Diskuse (česká verze)"
@@ -84,23 +84,23 @@ msgstr "Děkujeme za vložení reportu"
 msgid "Důležitá oznámení"
 msgstr "Důležitá oznámení"
 
-# RecoverFormComponent.php:62
+# RecoverFormComponent.php:69
 msgid "E-mail libovolného člena týmu"
 msgstr "E-mail libovolného člena týmu"
 
-# RecoverFormComponent.php:63
+# RecoverFormComponent.php:70
 msgid "E-mail musí být vyplněn."
 msgstr "E-mail musí být vyplněn."
 
-# RecoverFormComponent.php:64
+# RecoverFormComponent.php:71
 msgid "E-mail nemá správný formát."
 msgstr "E-mail nemá správný formát."
 
-# RecoverFormComponent.php:53
+# RecoverFormComponent.php:60
 msgid "E-mail pro obnovu byl odeslán."
 msgstr "E-mail pro obnovu byl odeslán."
 
-# TeamPresenter.php:55
+# TeamPresenter.php:56
 msgid "Editaci přihlášky provádějte po osobním přihlášení "
 msgstr "Editaci přihlášky provádějte po osobním přihlášení "
 
@@ -109,8 +109,10 @@ msgid "Email"
 msgstr "Email"
 
 # DefaultPresenter.php:56
-# menu.latte:14
-# menu.latte:14
+# menu.latte:15
+# menu.latte:16
+# menu.latte:17
+# menu.latte:21
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -131,6 +133,12 @@ msgstr "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
 # menu.latte:9
 msgid "Fyziklání online"
 msgstr "Fyziklání online"
+
+# menu.latte:24
+# menu.latte:25
+# menu.latte:26
+msgid "Fórum"
+msgstr "Fórum"
 
 # PasswordChangeFormComponent.php:30
 msgid "Hesla se neshodují"
@@ -162,8 +170,9 @@ msgstr "Historie"
 msgid "Historie odpovědí"
 msgstr "Historie odpovědí"
 
-# menu.latte:33
-# menu.latte:34
+# menu.latte:42
+# menu.latte:43
+# menu.latte:44
 msgid "Hra"
 msgstr "Hra"
 
@@ -242,8 +251,6 @@ msgid "Mezinárodní soutež ve fyzice"
 msgstr "Mezinárodní soutež ve fyzice"
 
 # DefaultPresenter.php:34
-# menu.latte:16
-# menu.latte:16
 msgid "Minulé ročníky"
 msgstr "Minulé ročníky"
 
@@ -259,7 +266,7 @@ msgstr "Na zadaný úkol jste již takto jednou odpovídali."
 msgid "Nadpis reportu."
 msgstr "Nadpis reportu."
 
-# TeamPresenter.php:36
+# TeamPresenter.php:37
 msgid "Nejprve se prosím přihlaste."
 msgstr "Nejprve se prosím přihlaste."
 
@@ -303,13 +310,14 @@ msgstr "Nové heslo (pro kontrolu)"
 msgid "Následující »"
 msgstr "Následující »"
 
-# menu.latte:28
-# menu.latte:29
+# menu.latte:37
+# menu.latte:38
+# menu.latte:39
 msgid "Nástěnka"
 msgstr "Nástěnka"
 
-# menu.latte:15
-# menu.latte:15
+# menu.latte:19
+# menu.latte:20
 msgid "Návod"
 msgstr "Návod"
 
@@ -350,8 +358,7 @@ msgstr "Odeslat řešení"
 msgid "Odevzdat řešení"
 msgstr "Odevzdat řešení"
 
-# menu.latte:59
-# menu.latte:60
+# menu.latte:68
 msgid "Odhlásit se"
 msgstr "Odhlásit se"
 
@@ -397,7 +404,7 @@ msgstr "Podrobné výsledky"
 msgid "Pokoušíte se vložit školu, která již existuje."
 msgstr "Pokoušíte se vložit školu, která již existuje."
 
-# RecoverFormComponent.php:66
+# RecoverFormComponent.php:73
 msgid "Pokračovat"
 msgstr "Pokračovat"
 
@@ -410,12 +417,12 @@ msgid "Potvrzovací e-mail se nepodařilo odeslat."
 msgstr "Potvrzovací e-mail se nepodařilo odeslat."
 
 # DefaultPresenter.php:51
-# menu.latte:13
-# menu.latte:13
+# menu.latte:14
+# menu.latte:14
 msgid "Pravidla"
 msgstr "Pravidla"
 
-# RecoverFormComponent.php:47
+# RecoverFormComponent.php:54
 msgid "Pro obnovu hesla přejděte na %s\nVaši organizátoři\n\nToto je automatická zpráva. Pokud jste o obnovu hesla nežádali, tento e-mail ignorujte."
 msgstr "Pro obnovu hesla přejděte na %s\nVaši organizátoři\n\nToto je automatická zpráva. Pokud jste o obnovu hesla nežádali, tento e-mail ignorujte."
 
@@ -458,8 +465,8 @@ msgstr "Přidat příspěvek"
 # LoginFormComponent.php:60
 # DefaultPresenter.php:39
 # OrgPresenter.php:34
-# menu.latte:54
-# menu.latte:55
+# menu.latte:63
+# menu.latte:64
 msgid "Přihlásit se"
 msgstr "Přihlásit se"
 
@@ -475,17 +482,17 @@ msgstr "Příspěvek byl vložen."
 msgid "Reagovat"
 msgstr "Reagovat"
 
-# TeamPresenter.php:74
-# menu.latte:46
-# menu.latte:47
+# TeamPresenter.php:75
+# menu.latte:55
+# menu.latte:56
 msgid "Registrace"
 msgstr "Registrace"
 
-# TeamPresenter.php:17
+# TeamPresenter.php:18
 msgid "Registrace není aktivní."
 msgstr "Registrace není aktivní."
 
-# TeamPresenter.php:75
+# TeamPresenter.php:76
 msgid "Registrace nového týmu je možná jen přes FKSDB."
 msgstr "Registrace nového týmu je možná jen přes FKSDB."
 
@@ -509,7 +516,7 @@ msgstr "Ročník musí být větší než %d."
 msgid "Rychlý grafický návod ke hře"
 msgstr "Rychlý grafický návod ke hře"
 
-# TeamPresenter.php:66
+# TeamPresenter.php:67
 msgid "Seznam týmů"
 msgstr "Seznam týmů"
 
@@ -536,11 +543,6 @@ msgstr "Stala se neočekávaná chyba."
 # StatsPresenter.php:28
 msgid "Statistika úkolů"
 msgstr "Statistika úkolů"
-
-# menu.latte:24
-# menu.latte:25
-msgid "Statistiky"
-msgstr "Statistiky"
 
 # OrgPresenter.php:106
 # StatsPresenter.php:49
@@ -615,11 +617,11 @@ msgstr "Tým byl úspěšně aktualizován."
 msgid "Tým musí mít alespoň jednoho člena."
 msgstr "Tým musí mít alespoň jednoho člena."
 
-# RecoverFormComponent.php:29
+# RecoverFormComponent.php:34
 msgid "Tým nenalezen."
 msgstr "Tým nenalezen."
 
-# RecoverFormComponent.php:37
+# RecoverFormComponent.php:42
 msgid "Tým se již pokouší o obnovu hesla."
 msgstr "Tým se již pokouší o obnovu hesla."
 
@@ -631,8 +633,9 @@ msgstr "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 msgid "Tým, za který se vkládá."
 msgstr "Tým, za který se vkládá."
 
-# menu.latte:19
-# menu.latte:20
+# menu.latte:28
+# menu.latte:29
+# menu.latte:30
 msgid "Týmy"
 msgstr "Týmy"
 
@@ -706,6 +709,9 @@ msgstr "Výsledek musí být reálné číslo."
 # StatsPresenter.php:17
 # @layout.latte:17
 # @layout.latte:17
+# menu.latte:33
+# menu.latte:34
+# menu.latte:35
 msgid "Výsledky"
 msgstr "Výsledky"
 
@@ -732,7 +738,7 @@ msgstr "Zahraniční SŠ"
 msgid "Zapomenuté heslo"
 msgstr "Zapomenuté heslo"
 
-# TeamPresenter.php:40
+# TeamPresenter.php:41
 msgid "Změna hesla"
 msgstr "Změna hesla"
 
@@ -778,7 +784,7 @@ msgstr "Zrušená úloha"
 msgid "ZŠ"
 msgstr "ZŠ"
 
-# RecoverFormComponent.php:46
+# RecoverFormComponent.php:53
 msgid "[Fyziklání online] obnova hesla"
 msgstr "[Fyziklání online] obnova hesla"
 
@@ -863,7 +869,7 @@ msgstr "celkem bodů"
 msgid "informace o členech týmu nejsou dostupné"
 msgstr "informace o členech týmu nejsou dostupné"
 
-# TeamPresenter.php:53
+# TeamPresenter.php:54
 msgid "na stránce přihlášky"
 msgstr "na stránce přihlášky"
 
