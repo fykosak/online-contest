@@ -31,6 +31,7 @@ class TeamsModel extends AbstractModel {
      */
     public function findAllWithScore() {
         return $this->getConnection()->dataSource("SELECT * FROM [tmp_total_result]")
+            ->orderBy('disqualified', 'ASC')
             ->orderBy('activity', 'DESC')
             ->orderBy('score', 'DESC')
             ->orderBy('last_time', 'ASC');

@@ -239,7 +239,7 @@ CREATE VIEW `view_bonus` AS
         LEFT JOIN `view_task` ON `view_task`.`id_task` = `ts`.`id_task`
         WHERE `view_task`.`cancelled` = 0 OR `view_task`.`cancelled` IS NULL
  	GROUP BY `t`.`id_team`
- 	ORDER BY `activity` DESC, `score` DESC, `last_time` ASC;
+ 	ORDER BY `disqualified` ASC, `activity` DESC, `score` DESC, `last_time` ASC;
 
 DROP VIEW IF EXISTS `view_task_stat`;
 CREATE VIEW `view_task_stat` AS
@@ -305,7 +305,7 @@ CREATE VIEW `view_total_result_cached` AS
         LEFT JOIN `view_task` ON `view_task`.`id_task` = `ts`.`id_task`
         WHERE `view_task`.`cancelled` = 0 OR `view_task`.`cancelled` IS NULL
  	GROUP BY `t`.`id_team`
- 	ORDER BY `activity` DESC, `score` DESC, `last_time` ASC;
+ 	ORDER BY `disqualified` ASC, `activity` DESC, `score` DESC, `last_time` ASC;
  
 
 

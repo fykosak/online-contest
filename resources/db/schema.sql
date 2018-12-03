@@ -194,6 +194,7 @@ CREATE TABLE `team` (
   `category` enum('high_school','open','abroad','hs_a','hs_b','hs_c') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
   `email` varchar(150) COLLATE utf8_czech_ci NOT NULL COMMENT 'e-mailova adresa',
   `address` text COLLATE utf8_czech_ci NOT NULL COMMENT 'kontaktni adresa',
+  `disqualified` tinyint(1) NOT NULL COMMENT 'tym diskvalifikovan',
   `inserted` datetime NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
   `score_exp` int(25) NOT NULL DEFAULT '0' COMMENT 'zive skore, experimental hotfix feature',

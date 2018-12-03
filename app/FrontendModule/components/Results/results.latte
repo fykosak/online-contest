@@ -23,28 +23,28 @@
                         {var $i = 1}
 			{foreach $teams[$category] AS $team}
                           {continueIf $display == 'czsk' && count(array_diff($teamCountries[$team->id_team], ['cz','sk'])) != 0}
- 			<tr class="{if $team->activity == 0}text-muted{/if}">
-				<td>{$i++}</td>
+ 			<tr n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted">
+				<td>{if $team->disqualified == 0}{$i++}{else}DNF{/if}</td>
 				<td>
                                     {$team->name}
-                                    ({foreach array_count_values($teamCountries[$team->id_team]) as $country => $countryCount}{$countryCount}&thinsp;&times;&thinsp;<span class="flag-icon flag-icon-{$country|lower}"></span>{sep}, {/sep}{/foreach})
+                                    ({foreach array_count_values($teamCountries[$team->id_team]) as $country => $countryCount}{$countryCount}&times;&thinsp;<span class="flag-icon flag-icon-{$country|lower}"></span>{sep}, {/sep}{/foreach})
                                 </td>
 				<td>
-					{if !empty($team->score)}
+					{if !empty($team->score) && $team->disqualified == 0}
 						{$team->score}
 					{else}
 						0
 					{/if}
 				</td>
 				<td>
-					{if isset($bonus[$team->id_team])}
+					{if isset($bonus[$team->id_team]) && $team->disqualified == 0}
 						{$bonus[$team->id_team]->score}
 					{else}
 						0
 					{/if}
 				</td>
 				<td>
-					{if isset($penality[$team->id_team])}
+					{if isset($penality[$team->id_team]) && $team->disqualified == 0}
 						{$penality[$team->id_team]->score}
 					{else}
 						0

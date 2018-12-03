@@ -41,6 +41,7 @@ CREATE VIEW `view_team` AS
         END as `category`,
         NULL as `email`,
         t.note as `address`,
+        IF(t.status = 'disqualified', '1', '0') as `disqualified`,
         t.created as `inserted`,
         null as `updated`,
         '0' as `score_exp`

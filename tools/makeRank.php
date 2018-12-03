@@ -13,7 +13,7 @@ $teams = $teamsModel->findAllWithScore()->fetchAll();
 $rank = [];
 $rankTotal = 1;
 foreach ($teams as $team){
-    if($team->activity != 1) {
+    if($team->activity != 1 || $team->disqualified == 1) {
         continue;
     }
     

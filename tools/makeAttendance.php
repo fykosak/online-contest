@@ -15,6 +15,9 @@ $teams = $teamsModel->findAllWithScore()->fetchAll();
 foreach ($teams as $team){
     $teamId = $team->id_team;
     $status = $team->activity == 1 ? 'participated' : 'missed';
+    if($team->disqualified == 1) {
+        $status = 'disqualified';
+    }
     echo "UPDATE e_fyziklani_team SET status='$status' WHERE e_fyziklani_team_id=$teamId;\n";
 }
 

@@ -16,28 +16,28 @@
 			</tr>
 		{/if}
 		{if $iterator->getCounter() % 10 == 1 }
-			<tr {if $team->activity == 0}class="text-muted"{/if}>
+			<tr n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted">
 		{else}
-			<tr class="line{if $team->activity == 0} text-muted{/if}">
+			<tr class="line{if $team->activity == 0 || $team->disqualified == 1} text-muted{/if}">
 		{/if}
-			<td>{$iterator->getCounter()}</td>
+			<td>{if $team->disqualified == 0}{$iterator->getCounter()}{else}DNF{/if}</td>
                         <td class="team" title="{$team->name}, {$categories[$team->category]}">{$team->name|truncate:15|replace:' ':' '}</td>{* Unicode non-breaking space*}
 			<td>
-				{if !empty($team->score)}
+				{if !empty($team->score) && $team->disqualified == 0}
 					{$team->score}
 				{else}
 					0
 				{/if}
 			</td>
 			<td>
-				{if isset($bonus[$team->id_team])}
+				{if isset($bonus[$team->id_team]) && $team->disqualified == 0}
 					{$bonus[$team->id_team]->score}
 				{else}
 					0
 				{/if}
 			</td>
 			<td>
-				{if isset($penality[$team->id_team])}
+				{if isset($penality[$team->id_team]) && $team->disqualified == 0}
 					{$penality[$team->id_team]->score}
 				{else}
 					0
@@ -52,19 +52,19 @@
 		{if $iterator->getCounter() % 10 == 1}
 			<tr>
 				{foreach $tasks AS $task}
-                                    <th n:if="!$task->cancelled" title="{$task|i18n:'name',$lang}">{$task->code_name}</th>
+                                    <th n:if="!$task->cancelled" title="{$task|i18n:'name',$lang}">{$task->code_name|replace:'FoL'}</th>
 				{/foreach}
 			</tr>
 		{/if}
 		{if $iterator->getCounter() % 10 == 1 }
-			<tr {if $team->activity == 0}class="text-muted"{/if}>
+			<tr n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted">
 		{else}
-			<tr class="line{if $team->activity == 0} text-muted{/if}">
+			<tr class="line{if $team->activity == 0 || $team->disqualified == 1} text-muted{/if}">
 		{/if}
 			{foreach $tasks AS $task}
                                 {if $task->cancelled}
                                         {*<td class="empty" title="{_'Zrušená úloha'}">&nbsp;</td>*}
-                                {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task])}
+                                {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task]) || $team->disqualified == 1}
                                         <td class="empty">X</td>
                                 {else}
                                         {if $score[$team->id_team][$task->id_task]->skipped == 1}
