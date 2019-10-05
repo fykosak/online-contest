@@ -89,7 +89,7 @@ class ScoreModel extends AbstractModel {
         private function getPointCount($maxPoints, $wrongTries, $allowZeroes) {
             $score = 0;
             
-            if($maxPoints >= 4) {
+            if(!$this->isHurryUp($allowZeroes)) {
                 switch ($wrongTries) {
                     case 0:
                         $score = $maxPoints;
@@ -116,5 +116,15 @@ class ScoreModel extends AbstractModel {
             }
             
             return ($allowZeroes)?max(0,$score):max(1,$score);
+        }
+        
+        /**
+         * Checks if task belongs to hurry up
+         * 
+         * @param bool $allowZeroes
+         * @return bool
+         */
+        private function isHurryUp($allowZeroes) {
+            return $allowZeroes;
         }
 }
