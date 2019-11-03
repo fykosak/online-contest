@@ -10,6 +10,9 @@ class StatsPresenter extends BasePresenter {
 
     protected function beforeRender() {
         parent::beforeRender();
+        if (!Interlos::isGameStarted()) {
+            $this->error("Statistiky nejsou dostupné.");
+        }
         $this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
     }
 
