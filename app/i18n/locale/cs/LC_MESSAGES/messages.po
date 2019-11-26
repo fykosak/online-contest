@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2018-11-26T02:48:13+01:00
+# Created: 2019-11-26T22:10:26+01:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +34,8 @@ msgid "Aktuálně bodů"
 msgstr "Aktuálně bodů"
 
 # menu.latte:13
-# menu.latte:13
+# menu.latte:14
+# menu.latte:15
 msgid "Archiv"
 msgstr "Archiv"
 
@@ -49,8 +50,8 @@ msgid "Chybný token."
 msgstr "Chybný token."
 
 # DefaultPresenter.php:70
-msgid "Další soutěže"
-msgstr "Další soutěže"
+msgid "Další akce"
+msgstr "Další akce"
 
 # TeamFormComponent.php:111
 msgid "Daný tým již existuje."
@@ -109,10 +110,10 @@ msgid "Email"
 msgstr "Email"
 
 # DefaultPresenter.php:56
-# menu.latte:15
-# menu.latte:16
-# menu.latte:17
 # menu.latte:21
+# menu.latte:22
+# menu.latte:23
+# menu.latte:27
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -134,9 +135,9 @@ msgstr "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
 msgid "Fyziklání online"
 msgstr "Fyziklání online"
 
-# menu.latte:24
-# menu.latte:25
-# menu.latte:26
+# menu.latte:30
+# menu.latte:31
+# menu.latte:32
 msgid "Fórum"
 msgstr "Fórum"
 
@@ -170,9 +171,9 @@ msgstr "Historie"
 msgid "Historie odpovědí"
 msgstr "Historie odpovědí"
 
-# menu.latte:42
-# menu.latte:43
-# menu.latte:44
+# menu.latte:48
+# menu.latte:49
+# menu.latte:50
 msgid "Hra"
 msgstr "Hra"
 
@@ -310,14 +311,14 @@ msgstr "Nové heslo (pro kontrolu)"
 msgid "Následující »"
 msgstr "Následující »"
 
-# menu.latte:37
-# menu.latte:38
-# menu.latte:39
+# menu.latte:43
+# menu.latte:44
+# menu.latte:45
 msgid "Nástěnka"
 msgstr "Nástěnka"
 
-# menu.latte:19
-# menu.latte:20
+# menu.latte:25
+# menu.latte:26
 msgid "Návod"
 msgstr "Návod"
 
@@ -358,7 +359,7 @@ msgstr "Odeslat řešení"
 msgid "Odevzdat řešení"
 msgstr "Odevzdat řešení"
 
-# menu.latte:68
+# menu.latte:74
 msgid "Odhlásit se"
 msgstr "Odhlásit se"
 
@@ -370,6 +371,7 @@ msgstr "Odpověď"
 msgid "Ohlasy účastníků"
 msgstr "Ohlasy účastníků"
 
+# a201811results.latte:4448
 # a201512results.latte:2668
 # a201212results.latte:2109
 # a201205results.latte:844
@@ -377,7 +379,7 @@ msgstr "Ohlasy účastníků"
 # a201312results.latte:2148
 # a201711results.latte:3097
 # a201412results.latte:1901
-# TeamsModel.php:129
+# TeamsModel.php:130
 msgid "Open"
 msgstr "Open"
 
@@ -394,7 +396,7 @@ msgid "Očekávaný počet platných cifer"
 msgstr "Očekávaný počet platných cifer"
 
 # OrgPresenter.php:65
-# StatsPresenter.php:23
+# StatsPresenter.php:26
 # @layout.latte:24
 # @layout.latte:24
 msgid "Podrobné výsledky"
@@ -408,7 +410,7 @@ msgstr "Pokoušíte se vložit školu, která již existuje."
 msgid "Pokračovat"
 msgstr "Pokračovat"
 
-# @layout.latte:80
+# @layout.latte:90
 msgid "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu"
 msgstr "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu"
 
@@ -417,8 +419,9 @@ msgid "Potvrzovací e-mail se nepodařilo odeslat."
 msgstr "Potvrzovací e-mail se nepodařilo odeslat."
 
 # DefaultPresenter.php:51
-# menu.latte:14
-# menu.latte:14
+# menu.latte:17
+# menu.latte:18
+# menu.latte:19
 msgid "Pravidla"
 msgstr "Pravidla"
 
@@ -465,8 +468,8 @@ msgstr "Přidat příspěvek"
 # LoginFormComponent.php:60
 # DefaultPresenter.php:39
 # OrgPresenter.php:34
-# menu.latte:63
-# menu.latte:64
+# menu.latte:69
+# menu.latte:70
 msgid "Přihlásit se"
 msgstr "Přihlásit se"
 
@@ -483,8 +486,8 @@ msgid "Reagovat"
 msgstr "Reagovat"
 
 # TeamPresenter.php:75
-# menu.latte:55
-# menu.latte:56
+# menu.latte:61
+# menu.latte:62
 msgid "Registrace"
 msgstr "Registrace"
 
@@ -540,12 +543,12 @@ msgstr "Stala se neočekávaná chyba."
 
 # ArchivePresenter.php:26
 # OrgPresenter.php:73
-# StatsPresenter.php:28
+# StatsPresenter.php:31
 msgid "Statistika úkolů"
 msgstr "Statistika úkolů"
 
 # OrgPresenter.php:106
-# StatsPresenter.php:49
+# StatsPresenter.php:52
 msgid "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 msgstr "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 
@@ -566,33 +569,36 @@ msgstr "Student Pilný"
 msgid "Středoškoláci"
 msgstr "Středoškoláci"
 
+# a201811results.latte:2
 # a201512results.latte:2
 # a201212results.latte:2
 # a201611results.latte:2
 # a201312results.latte:2
 # a201711results.latte:2
 # a201412results.latte:2
-# TeamsModel.php:125
+# TeamsModel.php:126
 msgid "Středoškoláci A"
 msgstr "Středoškoláci A"
 
+# a201811results.latte:1708
 # a201512results.latte:493
 # a201212results.latte:376
 # a201611results.latte:493
 # a201312results.latte:363
 # a201711results.latte:571
 # a201412results.latte:480
-# TeamsModel.php:126
+# TeamsModel.php:127
 msgid "Středoškoláci B"
 msgstr "Středoškoláci B"
 
+# a201811results.latte:3014
 # a201512results.latte:1166
 # a201212results.latte:815
 # a201611results.latte:1075
 # a201312results.latte:971
 # a201711results.latte:1114
 # a201412results.latte:958
-# TeamsModel.php:127
+# TeamsModel.php:128
 msgid "Středoškoláci C"
 msgstr "Středoškoláci C"
 
@@ -633,9 +639,9 @@ msgstr "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 msgid "Tým, za který se vkládá."
 msgstr "Tým, za který se vkládá."
 
-# menu.latte:28
-# menu.latte:29
-# menu.latte:30
+# menu.latte:34
+# menu.latte:35
+# menu.latte:36
 msgid "Týmy"
 msgstr "Týmy"
 
@@ -706,12 +712,12 @@ msgid "Výsledek musí být reálné číslo."
 msgstr "Výsledek musí být reálné číslo."
 
 # OrgPresenter.php:57
-# StatsPresenter.php:17
+# StatsPresenter.php:20
 # @layout.latte:17
 # @layout.latte:17
-# menu.latte:33
-# menu.latte:34
-# menu.latte:35
+# menu.latte:39
+# menu.latte:40
+# menu.latte:41
 msgid "Výsledky"
 msgstr "Výsledky"
 
@@ -734,7 +740,7 @@ msgstr "Zadání"
 msgid "Zahraniční SŠ"
 msgstr "Zahraniční SŠ"
 
-# loginForm.latte:1
+# loginForm.latte:2
 msgid "Zapomenuté heslo"
 msgstr "Zapomenuté heslo"
 
@@ -794,6 +800,10 @@ msgid "b."
 msgstr "b."
 
 # results.latte:11
+# a201811results.latte:8
+# a201811results.latte:1714
+# a201811results.latte:3020
+# a201811results.latte:4454
 # a201512results.latte:8
 # a201512results.latte:499
 # a201512results.latte:1172
@@ -830,6 +840,10 @@ msgid "bonusové body"
 msgstr "bonusové body"
 
 # results.latte:10
+# a201811results.latte:7
+# a201811results.latte:1713
+# a201811results.latte:3019
+# a201811results.latte:4453
 # a201512results.latte:7
 # a201512results.latte:498
 # a201512results.latte:1171
@@ -911,6 +925,10 @@ msgid "střední škola"
 msgstr "střední škola"
 
 # results.latte:9
+# a201811results.latte:6
+# a201811results.latte:1712
+# a201811results.latte:3018
+# a201811results.latte:4452
 # a201512results.latte:6
 # a201512results.latte:497
 # a201512results.latte:1170
@@ -955,6 +973,10 @@ msgid "zahraničí"
 msgstr "zahraničí"
 
 # results.latte:12
+# a201811results.latte:9
+# a201811results.latte:1715
+# a201811results.latte:3021
+# a201811results.latte:4455
 # a201512results.latte:9
 # a201512results.latte:500
 # a201512results.latte:1173
@@ -1028,6 +1050,7 @@ msgstr "Řešení"
 msgid "řešilo týmů"
 msgstr "řešilo týmů"
 
+# a201811results.latte:1
 # a201512results.latte:1
 # a201212results.latte:1
 # a201205results.latte:1

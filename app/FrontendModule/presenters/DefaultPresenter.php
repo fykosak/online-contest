@@ -67,7 +67,7 @@ class DefaultPresenter extends BasePresenter {
 	}
 
 	public function renderOtherEvents() {
-		$this->setPagetitle(_("Další soutěže"));
+		$this->setPagetitle(_("Další akce"));
 		$this->changeViewByLang();
 	}
 

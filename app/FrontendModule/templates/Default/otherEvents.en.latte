@@ -1,15 +1,26 @@
-{*{block title}{/block}*}
-
+{block head}
+<style>
+    .img-thumbnail {
+        height: 50vh;
+    }
+</style>
+{/block}
 {block bigcontent}
 <div class="container-fluid">
 <div class="row">
   <div class="col-md-6">
-    <h2>FYKOS competition</h2>
-    <a href="{$basePath}/download/2017-1/fykos_2017-3-en.pdf"><img src="{$basePath}/download/2017-1/fykos_2017-3-en.jpg" class="img-responsive img-thumbnail"></a>
+    <h2>FYKOS</h2>
+    <a href="https://fykos.org/en"><img src="{$basePath}/images/events/Fykos.jpg" class="img-responsive img-thumbnail"></a>
   </div>
   <div class="col-md-6">
-    <h2>Physics Brawl in Prague</h2>
-    <a href="{$basePath}/download/2017-1/pb_2017.pdf"><img src="{$basePath}/download/2017-1/pb_2017.jpg" class="img-responsive img-thumbnail"></a>
+    <h2>Fyziklani 2020</h2>
+    <a href="https://fyziklani.org/en"><img src="{$basePath}/images/events/Fyziklani.jpg" class="img-responsive img-thumbnail"></a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Physics Náboj</h2>
+    <a href="https://physics.naboj.org/"><img src="{$basePath}/images/events/Naboj_fyzikalni.svg" class="img-responsive img-thumbnail"></a>
   </div>
 </div>
 </div>
