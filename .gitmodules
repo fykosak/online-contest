@@ -6,5 +6,5 @@
 	url = https://github.com/karelklima/gettext-extractor.git
 [submodule "resources/design/fol-bootstrap"]
 	path = resources/design/fol-bootstrap
-	url = https://github.com/Werkov/fol-bootstrap.git
+	url = https://github.com/fykosak/fol-bootstrap.git
 
