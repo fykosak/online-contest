@@ -1,6 +1,7 @@
 {extends '../@layout.latte'}
 
 {block #title}
+{if App\Model\Interlos::isGameEnd()}
 <br>
 <div class="alert alert-info" role="alert">
 {if $lang == 'cs'}
@@ -9,6 +10,7 @@
   Do you enjoy Online Physics Brawl? Then also take part in <a href="https://fyziklani.org/en" class="alert-link">Fyziklani 2020 &ndash; Team Contest in Prague</a>.
 {/if}
 </div>
+{/if}
 {include parent}
 {/block}
 
