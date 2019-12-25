@@ -24,7 +24,7 @@
 			{foreach $teams[$category] AS $team}
                           {continueIf $display == 'czsk' && count(array_diff($teamCountries[$team->id_team], ['cz','sk'])) != 0}
  			<tr n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted">
-				<td>{if $team->disqualified == 0}{$i++}{else}DNF{/if}</td>
+				<td>{if $team->disqualified == 0}{$i++}{else}DSQ{/if}</td>
 				<td>
                                     {$team->name}
                                     ({foreach array_count_values($teamCountries[$team->id_team]) as $country => $countryCount}{$countryCount}&times;&thinsp;<span class="flag-icon flag-icon-{$country|lower}"></span>{sep}, {/sep}{/foreach})
