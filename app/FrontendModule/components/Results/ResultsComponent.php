@@ -2,16 +2,15 @@
 
 use App\Model\Interlos;
 
-class ResultsComponent extends BaseComponent
-{
+class ResultsComponent extends BaseComponent {
     private $display;
 
-    public function render($display = 'all') {
+    public function render($display = 'all'): void {
         $this->display = $display;
         parent::render();
     }
 
-    protected function beforeRender() {
+    protected function beforeRender(): void {
         $this->getTemplate()->display = $this->display;
 
         $this->getTemplate()->teams = Interlos::teams()

@@ -1,23 +1,31 @@
 {control flashMessages}
 {if $valid}
-{control form}
+    {control form}
 
-{capture $script}
-    <script type="text/javascript" src="{$basePath}/js/taskInfo.js"></script>
+    {capture $script}
+        <script type="text/javascript" src="{$basePath}/js/taskInfo.js"></script>
 
-<script type="text/javascript">
-    $('#'+{$tasksInfoElement}).infoElement($('#'+{$control['form']['task']->getHtmlId()}), {'data': {$tasksInfo}, 'realHint': {$realHint}, 'expected': {$expected}, 'unit': {$unit}, 'maxPoints': {$maxPoints}, 'curPoints':{$curPoints}});    
-    $(function(){
-        var timesecs = $('.timesec');
-        var button = $('#'+{$control['form'][$submitElement]->getHtmlId()});
-        if(timesecs.length){
-            button.attr('disabled', 'disabled');
-        }
-        timesecs.timeElement({'handler': function(){
-                button.removeAttr('disabled');
-        }});
-    });
-</script>
-{/capture}
-{? $presenter->addCustomScript($script)}
+        <script type="text/javascript">
+            $('#' +{$tasksInfoElement}).infoElement($('#' +{$control['form']['task']->getHtmlId()}), {
+                'data': {$tasksInfo},
+                'realHint': {$realHint},
+                'expected': {$expected},
+                'unit': {$unit},
+                'maxPoints': {$maxPoints},
+                'curPoints':{$curPoints}});
+            $(function () {
+                var timesecs = $('.timesec');
+                var button = $('#' +{$control['form'][$submitElement]->getHtmlId()});
+                if (timesecs.length) {
+                    button.attr('disabled', 'disabled');
+                }
+                timesecs.timeElement({
+                    'handler': function () {
+                        button.removeAttr('disabled');
+                    }
+                });
+            });
+        </script>
+    {/capture}
+    {? $presenter->addCustomScript($script)}
 {/if}

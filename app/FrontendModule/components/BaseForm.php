@@ -1,12 +1,12 @@
 <?php
 
-use Nette\Application\UI,
-    App\Model\Interlos;
+use Nette\Application\UI;
+use App\Model\Interlos;
 
 class BaseForm extends UI\Form {
 
-    public function __construct(Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
-        parent::__construct($parent, $name);
+    public function __construct() {
+        parent::__construct();
         $this->setTranslator(Interlos::getTranslator());
         $this->setRenderer($this->createRenderer());
     }
@@ -22,21 +22,21 @@ class BaseForm extends UI\Form {
         return $renderer;
     }
 
-    public function addSelect($name, $label = NULL, array $items = NULL, $size = NULL) {
+    public function addSelect($name, $label = null, array $items = null, $size = null) {
         $result = parent::addSelect($name, $label, $items, $size);
         $result->getControlPrototype()->class = 'form-control';
         $result->getLabelPrototype()->class = 'col-md-2 control-label';
         return $result;
     }
 
-    public function addText($name, $label = NULL, $cols = NULL, $maxLength = NULL) {
+    public function addText($name, $label = null, $cols = null, $maxLength = null) {
         $result = parent::addText($name, $label, $cols, $maxLength);
         $result->getControlPrototype()->class = 'form-control';
         $result->getLabelPrototype()->class = 'col-md-2 control-label';
         return $result;
     }
 
-    public function addTextArea($name, $label = NULL, $cols = 40, $rows = 10) {
+    public function addTextArea($name, $label = null, $cols = 40, $rows = 10) {
         $result = parent::addTextArea($name, $label, $cols, $rows);
         $result->getControlPrototype()->class = 'form-control';
         if (!$label) {
@@ -48,7 +48,7 @@ class BaseForm extends UI\Form {
         return $result;
     }
 
-    public function addPassword($name, $label = NULL, $cols = NULL, $maxLength = NULL) {
+    public function addPassword($name, $label = null, $cols = null, $maxLength = null) {
         $result = parent::addPassword($name, $label, $cols, $maxLength);
         $result->getControlPrototype()->class = 'form-control';
         $result->getLabelPrototype()->class = 'col-md-2 control-label';

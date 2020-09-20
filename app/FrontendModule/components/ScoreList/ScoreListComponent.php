@@ -4,18 +4,18 @@ use App\Model\Interlos;
 
 class ScoreListComponent extends BaseComponent {
 
-    protected function beforeRender() {
+    protected function beforeRender(): void {
         parent::beforeRender();
         $this->getTemplate()->teams = Interlos::teams()
-                ->findAllWithScore();
+            ->findAllWithScore();
         $this->getTemplate()->score = Interlos::score()
-                ->findAllTasks();
+            ->findAllTasks();
         $this->getTemplate()->tasks = Interlos::tasks()
-                ->findPossiblyAvailable();
+            ->findPossiblyAvailable();
         $this->getTemplate()->bonus = Interlos::score()
-                ->findAllBonus();
+            ->findAllBonus();
         $this->getTemplate()->penality = Interlos::score()
-                ->findAllPenality();
+            ->findAllPenality();
         $this->template->lang = $this->presenter->lang;
         $this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
     }

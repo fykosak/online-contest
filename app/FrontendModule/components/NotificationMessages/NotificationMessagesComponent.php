@@ -1,13 +1,9 @@
 <?php
 
-use Nette\Application\UI\Form,
-    Nette\ComponentModel\IContainer,
-    App\Model\Interlos,
-    Nette\Http\Request;
+use App\Model\Interlos;
 
-class NotificationMessagesComponent extends BaseComponent
-{
-    public function beforeRender() {
+class NotificationMessagesComponent extends BaseComponent {
+    public function beforeRender(): void {
         parent::beforeRender();
         $this->template->gameEnd = Interlos::getCurrentYear()->game_end->getTimestamp();
     }

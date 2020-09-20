@@ -1,93 +1,88 @@
 <?php
 
-use App\Model\AnswersModel,
-    App\Model\TeamsModel,
-    App\Model\TasksModel,
-    Nette\ComponentModel\IContainer;
+use App\Model\AnswersModel;
+use App\Model\TeamsModel;
+use App\Model\TasksModel;
+use Nette\NotSupportedException;
 
 class AnswerStatsComponent extends BaseComponent {
-    
-    /** @var AnswersModel */
-    private $answersModel;
-    
-    /** @var TasksModel */
-    private $tasksModel;
-    
-    /** @var TeamsModel */
-    private $teamsModel;
-    
+
+    private AnswersModel $answersModel;
+
+    private TasksModel $tasksModel;
+
+    private TeamsModel $teamsModel;
+
     private $taskId;
 
-    public function __construct(AnswersModel $answersModel, TeamsModel $teamsModel, TasksModel $tasksModel, IContainer $parent = NULL, $name = NULL) {
-        parent::__construct($parent, $name);
+    public function __construct(AnswersModel $answersModel, TeamsModel $teamsModel, TasksModel $tasksModel) {
+        parent::__construct();
         $this->answersModel = $answersModel;
         $this->teamsModel = $teamsModel;
         $this->tasksModel = $tasksModel;
     }
-    
-    public function render($taskId = null) {
+
+    public function render($taskId = null): void {
         if (!is_numeric($taskId)) {
-            throw new \Nette\NotSupportedException;
+            throw new NotSupportedException();
         }
         $this->taskId = $taskId;
-	$this->beforeRender();
-	$this->getTemplate()->render();
+        $this->beforeRender();
+        $this->getTemplate()->render();
     }
-    
-    protected function beforeRender() {
+
+    protected function beforeRender(): void {
         $answers = $this->answersModel->findByTaskId($this->taskId)->fetchAll();
         //$tasks = $this->tasksModel->findAll()->fetchAssoc('id_task');
         $task = $this->tasksModel->find($this->taskId);
         $teams = $this->teamsModel->findAll()->fetchAssoc('id_team');
-        
-        
+
+
         //$taskNo = $task['id_group'].'_'.$task['number'];
-        
-        if($task['answer_type'] == 'int'){
+
+        if ($task['answer_type'] == 'int') {
             $correctValue = $task['answer_int'];
-        }
-        else{
+        } else {
             $correctValue = $task['answer_real'];
             $tolerance = $task['real_tolerance'];
         }
-        
-        $taskData = array();
-        
+
+        $taskData = [];
+
         foreach ($answers as $answer) {
-            
-            if(isset($answer->answer_int)) {
+
+            if (isset($answer->answer_int)) {
                 $trueValue = $answer->answer_int;
-                $value = $trueValue-$correctValue;
-            }
-            else {
-                $trueValue = $answer->answer_real;                
-                $value = (($correctValue-$trueValue > 0)?1:-1)*log(1.0+abs($trueValue-$correctValue)/$tolerance, 2.0);
+                $value = $trueValue - $correctValue;
+            } else {
+                $trueValue = $answer->answer_real;
+                $value = (($correctValue - $trueValue > 0) ? 1 : -1) * log(1.0 + abs($trueValue - $correctValue) / $tolerance, 2.0);
             }
 
-            $taskData['answers'][]=array(
+            $taskData['answers'][] = [
                 'value' => $value,
-                'trueValue'=> $trueValue,
+                'trueValue' => $trueValue,
                 'team' => $teams[$answer->id_team]['name'],
-                'inserted' => $answer->inserted->getTimestamp()
-            );
+                'inserted' => $answer->inserted->getTimestamp(),
+            ];
         }
-        
+
         $count = count($taskData['answers']);
-            
+
         $sum = 0;
         foreach ($taskData['answers'] as $answer) {
             $sum += $answer['value'];
         }
-        $mu = $sum/$count;
-            
+        $mu = $sum / $count;
+
         $sum = 0;
         foreach ($taskData['answers'] as $answer) {
-            $sum += ($answer['value']-$mu)*($answer['value']-$mu);
+            $sum += ($answer['value'] - $mu) * ($answer['value'] - $mu);
         }
-        $sigma = sqrt($sum/($count-1));
-            
-        $taskData['mu']=$mu;
-        $taskData['sigma']=$sigma;
+        $sigma = sqrt($sum / ($count - 1));
+
+        $taskData['mu'] = $mu;
+        $taskData['sigma'] = $sigma;
 
         $this->getTemplate()->taskData = $taskData;
     }

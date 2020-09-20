@@ -2,20 +2,26 @@
 
 namespace App\Model;
 
-use Nette,
-    Tracy\Debugger;
+use dibi;
+use Dibi\Connection;
+use Dibi\Row;
+use ExtraArray;
+use Nette\InvalidStateException;
+use Tracy\Debugger;
+use Nette\SmartObject;
 
-class Interlos extends Nette\Object {
+class Interlos {
+    use SmartObject;
 
     //private static $adminMessages = FALSE;
-    private static $connection;
+    private static Connection $connection;
     private static $currentYear;
     private static $loggedTeam;
     private static $translator;
-    private static $models = array();
-    
-    public function __construct(\DibiConnection $connection) {
-	self::$connection = $connection;
+    private static $models = [];
+
+    public function __construct(Connection $connection) {
+        self::$connection = $connection;
     }
 
     /** @return AnswersModel */
@@ -59,30 +65,27 @@ class Interlos extends Nette\Object {
 //        self::$adminMessages = TRUE;
 //    }
 
-    /** @return \DibiConnection */
-    public static function getConnection() {
+    public static function getConnection(): Connection {
         if (empty(self::$connection)) {
-            return \dibi::getConnection(); //TODO throw exception
+            return dibi::getConnection(); //TODO throw exception
         } else {
             return self::$connection;
         }
     }
 
-    /** @return \DibiRow */
-    public static function getCurrentYear() {
+    public static function getCurrentYear(): Row {
         if (!isset(self::$currentYear)) {
             self::$currentYear = self::years()->findCurrent();
         }
         return self::$currentYear;
     }
 
-    /** @return \DibiRow */
-    public static function getLoggedTeam($user) {
+    public static function getLoggedTeam($user): Row {
         if (!isset(self::$loggedTeam)) {
             if ($user->isLoggedIn()) {
                 self::$loggedTeam = Interlos::teams()->find($user->getIdentity()->id_team);
             } else {
-                self::$loggedTeam = NULL;
+                self::$loggedTeam = null;
             }
         }
         return self::$loggedTeam;
@@ -109,7 +112,7 @@ class Interlos extends Nette\Object {
 //        if (self::loadAdminProperty("game-end")) {
 //            return self::loadAdminProperty("game-end");
 //        } else {
-            return self::getCurrentTime() > strtotime(Interlos::getCurrentYear()->game_end);
+        return self::getCurrentTime() > strtotime(Interlos::getCurrentYear()->game_end);
 //        }
     }
 
@@ -117,7 +120,7 @@ class Interlos extends Nette\Object {
 //        if (self::loadAdminProperty("game-started") !== null) {
 //            return self::loadAdminProperty("game-started");
 //        } else {
-            return strtotime(Interlos::getCurrentYear()->game_start) < self::getCurrentTime();
+        return strtotime(Interlos::getCurrentYear()->game_start) < self::getCurrentTime();
 //        }
     }
 
@@ -129,7 +132,7 @@ class Interlos extends Nette\Object {
 //        if (self::loadAdminProperty("registration-end")) {
 //            return self::loadAdminProperty("game-end");
 //        } else {
-            return strtotime(Interlos::getCurrentYear()->registration_end) < self::getCurrentTime();
+        return strtotime(Interlos::getCurrentYear()->registration_end) < self::getCurrentTime();
 //        }
     }
 
@@ -137,7 +140,7 @@ class Interlos extends Nette\Object {
 //        if (self::loadAdminProperty("registration-started")) {
 //            return self::loadAdminProperty("game-started");
 //        } else {
-            return strtotime(Interlos::getCurrentYear()->registration_start) < self::getCurrentTime();
+        return strtotime(Interlos::getCurrentYear()->registration_start) < self::getCurrentTime();
 //        }
     }
 
@@ -167,13 +170,13 @@ class Interlos extends Nette\Object {
         $src = 'view_'; // view
         $result = 'tmp_'; // resulting cache
 
-        $tables = array(
+        $tables = [
             //'task_result' => 'task_result',
             'task_stat' => 'task_stat',
             'penality' => 'penality',
             'bonus' => 'bonus',
             'total_result_cached' => 'total_result',
-        );
+        ];
 
         foreach ($tables as $view => $table) {
             Debugger::timer();
@@ -204,7 +207,7 @@ class Interlos extends Nette\Object {
         return self::getModel("score");
     }
 
-    public static function setConnection(\DibiConnection $connection) {
+    public static function setConnection(Connection $connection) {
         self::$connection = $connection;
     }
 
@@ -230,12 +233,12 @@ class Interlos extends Nette\Object {
         $className = $namespace . ucfirst($name) . "Model";
         // Check whether the model class exist
         if (!class_exists($className)) {
-            throw new Nette\InvalidStateException("The class [$className] does not exists.");
+            throw new InvalidStateException("The class [$className] does not exists.");
         }
         // Check whether the class is really the model class
-        $key = \ExtraArray::keysOf(class_implements($className), $namespace."InterlosModel");
+        $key = ExtraArray::keysOf(class_implements($className), $namespace . "InterlosModel");
         if (empty($key)) {
-            throw new Nette\InvalidStateException("The class [$className] does not implement interface [InterlosModel]");
+            throw new InvalidStateException("The class [$className] does not implement interface [InterlosModel]");
         }
         // Return new instance of model class
         return new $className(self::getConnection());
@@ -245,7 +248,7 @@ class Interlos extends Nette\Object {
 //        if (self::loadAdminProperty("time") !== NULL) {
 //            return strtotime(self::loadAdminProperty("time"));
 //        } else {
-            return time();
+        return time();
 //        }
     }
 

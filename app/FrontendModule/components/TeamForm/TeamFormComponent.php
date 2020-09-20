@@ -6,13 +6,13 @@
  * @author Jan Papousek
  */
 
-use App\Model\Interlos,
-    App\Tools\InterlosTemplate,
-    App\FrontendModule\FrontendModule,
-    Nette\Application\UI\Form,
-    Nette\Utils\Html,
-    App\Model\Authentication\TeamAuthenticator,
-    Tracy\Debugger;
+use App\Model\Interlos;
+use App\FrontendModule\FrontendModule;
+use Nette\Application\UI\Form;
+use Nette\Utils\Html;
+use App\Model\Authentication\TeamAuthenticator;
+use Tracy\Debugger;
+use Dibi\DriverException;
 
 class TeamFormComponent extends BaseComponent {
 
@@ -21,7 +21,7 @@ class TeamFormComponent extends BaseComponent {
 
     /* SUBMITTED FORMS */
 
-    public function insertSubmitted(Form $form) {
+    public function insertSubmitted(Form $form): void {
         $values = $form->getValues();
         $competitors = $this->loadCompetitorsFromValues($values);
         if (!$competitors) {
@@ -42,7 +42,7 @@ class TeamFormComponent extends BaseComponent {
             $this->getPresenter()->flashMessage(sprintf(_("Přiřazena kategorie %s."), $names[$values["category"]]));
             // Insert team
             $insertedTeam = Interlos::teams()->insert(
-                    $values["team_name"], $values["email"], $values["category"], $values["password"], $values["address"]
+                $values["team_name"], $values["email"], $values["category"], $values["password"], $values["address"]
             );
             // Send e-mail
             $template = $this->createTemplate();
@@ -50,8 +50,8 @@ class TeamFormComponent extends BaseComponent {
             $template->team_name = $values["team_name"];
             $template->password = $values["password"];
             $template->category = $names[$values["category"]];
-            
-            $mailConfig = $this->getPresenter()->context->parameters['mail'];            
+
+            $mailConfig = $this->getPresenter()->context->parameters['mail'];
             $mail = new Nette\Mail\Message();
             $mail->setHtmlBody($template);
             $mail->addTo($values["email"]);
@@ -68,23 +68,22 @@ class TeamFormComponent extends BaseComponent {
             dibi::commit();
             $this->getPresenter()->flashMessage(sprintf(_("Tým %s byl úspěšně zaregistrován."), $values["team_name"]), "success");
             $this->getPresenter()->redirect("Default:login");
-        } catch (DibiDriverException $e) {
+        } catch (DriverException $e) {
             $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "danger");
             //Debug::processException($e);
             Debugger::log($e);
             throw $e; //TODO neccessary?
-            return;
         }
     }
 
-    public function updateSubmitted(Form $form) {
+    public function updateSubmitted(Form $form): void {
         $values = $form->getValues();
         try {
             // Update the team
-            $changes = array(
+            $changes = [
                 "email" => null,
                 "address" => $values["address"],
-            );
+            ];
 
             if (Interlos::isRegistrationActive()) {
                 $changes["category"] = Interlos::teams()->getCategory($this->loadCompetitorsFromValues($values));
@@ -110,7 +109,7 @@ class TeamFormComponent extends BaseComponent {
         } catch (DuplicityException $e) {
             $this->getPresenter()->flashMessage(_("Daný tým již existuje."), "danger");
             Debugger::log($e);
-        } catch (DibiDriveException $e) {
+        } catch (DriverException $e) {
             $this->getPresenter()->flashMessage(_("Chyba při práci s databází."), "danger");
             Debugger::log($e);
         }
@@ -118,8 +117,8 @@ class TeamFormComponent extends BaseComponent {
 
     /* PROTECTED METHODS */
 
-    protected function createComponentTeamForm($name) {
-        $form = new BaseForm($this, $name);
+    protected function createComponentTeamForm(): BaseForm {
+        $form = new BaseForm();
 
         $form->addGroup("Tým");
 
@@ -129,65 +128,65 @@ class TeamFormComponent extends BaseComponent {
         // Password
         $form->addPassword("password", "Heslo");
         $form->addPassword("password_check", "Kontrola hesla")
-                ->addConditionOn($form["password"], Form::FILLED)
-                ->addRule(Form::EQUAL, "Heslo a kontrola hesla se neshodují.", $form["password"]);
+            ->addConditionOn($form["password"], Form::FILLED)
+            ->addRule(Form::EQUAL, "Heslo a kontrola hesla se neshodují.", $form["password"]);
 
 
         // Contatcs
 
         $form->addTextArea("address", "Kontaktní adresa", 35, 4)
-                ->addRule(Form::FILLED, "Zadejte prosím kontatní adresu.")
-                ->setOption("description", _("Pro zaslání případné odměny."));
+            ->addRule(Form::FILLED, "Zadejte prosím kontatní adresu.")
+            ->setOption("description", _("Pro zaslání případné odměny."));
         if (!$this->getPresenter()->user->isLoggedIn()) {
             $desc = Html::el();
-            $desc->add(_('Přečetl jsem si '));
-            $desc->add(Html::el('a')->href($this->getPresenter()->link('Default:rules'))->setText(_('pravidla soutěže')));
-            $desc->add('.');
+            $desc->addText(_('Přečetl jsem si '));
+            $desc->addHtml(Html::el('a')->href($this->getPresenter()->link('Default:rules'))->setText(_('pravidla soutěže')));
+            $desc->addText('.');
 
             $form->addCheckbox('understand', null)
-                    ->addRule(Form::EQUAL, 'Je nutno si nejdříve přečíst pravidla.', true)
-                    ->setOption("description", $desc);
+                ->addRule(Form::EQUAL, 'Je nutno si nejdříve přečíst pravidla.', true)
+                ->setOption("description", $desc);
         }
 
         $schools = Interlos::schools()->findAll()->orderBy("name")->fetchPairs("id_school", "name");
-        $schools = array(NULL => _("Nevyplněno")) + $schools + array(self::OTHER_SCHOOL => _("Jiná"));
-        $study_years = array(
-            _("ČR/SR") => array(
+        $schools = [null => _("Nevyplněno")] + $schools + [self::OTHER_SCHOOL => _("Jiná")];
+        $study_years = [
+            _("ČR/SR") => [
                 "0" => _("ZŠ"),
                 "1" => _("1. ročník SŠ"),
                 "2" => _("2. ročník SŠ"),
                 "3" => _("3. ročník SŠ"),
                 "4" => _("4. ročník SŠ"),
-                "5" => _("ostatní")),
-            _("zahraničí") => array(
+                "5" => _("ostatní")],
+            _("zahraničí") => [
                 "10" => _("střední škola"),
-                "11" => _("ostatní")
-            )
-        );
+                "11" => _("ostatní"),
+            ],
+        ];
 
         // Members
         for ($i = 1; $i <= self::NUMBER_OF_MEMBERS; $i++) {
             $form->addGroup(sprintf(_("%d. člen"), $i));
             $form->addText("competitor_name_" . $i, "Jméno");
             $form->addSelect("school_" . $i, "Škola", $schools)
-                    ->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
-                    ->addRule(~Form::EQUAL, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."), $i), NULL)
-                    ->endCondition()
-                    ->addCondition(Form::EQUAL, self::OTHER_SCHOOL)
-                    ->toggle("frm" . $name . "-" . "otherschool_$i")
-                    ->toggle("frm" . $name . "-" . "otherschool_$i-label");
+                ->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
+                ->addRule(~Form::EQUAL, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."), $i), null)
+                ->endCondition()
+                ->addCondition(Form::EQUAL, self::OTHER_SCHOOL)
+                ->toggle("frm" . $name . "-" . "otherschool_$i")
+                ->toggle("frm" . $name . "-" . "otherschool_$i-label");
             $form->addText("otherschool_" . $i, "Jiná škola")
-                    ->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
-                    ->addConditionOn($form["school_" . $i], Form::EQUAL, self::OTHER_SCHOOL)
-                    ->addRule(Form::FILLED, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."), $i))
-                    ->addRule(Form::MIN_LENGTH, sprintf(_("U %d. člena musí být název školy alespoň %d znaků."), $i, 5), 5);
+                ->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
+                ->addConditionOn($form["school_" . $i], Form::EQUAL, self::OTHER_SCHOOL)
+                ->addRule(Form::FILLED, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."), $i))
+                ->addRule(Form::MIN_LENGTH, sprintf(_("U %d. člena musí být název školy alespoň %d znaků."), $i, 5), 5);
             $form["otherschool_" . $i]->getLabelPrototype()->id = "frm" . $name . "-" . "otherschool_$i-label";
             $email = $form->addText("email_$i", "Email");
             $email->addCondition(~Form::EQUAL, "")
-                    ->addRule(Form::EMAIL, sprintf(_("U %d. člena není platná e-mailová adresa."), $i));
+                ->addRule(Form::EMAIL, sprintf(_("U %d. člena není platná e-mailová adresa."), $i));
             $email->addConditionOn($form["competitor_name_" . $i], Form::FILLED)
-                    ->addRule(Form::FILLED, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněn e-mail."), $i));
-            
+                ->addRule(Form::FILLED, sprintf(_("U %d. člena je vyplněno jméno, ale není u něj vyplněn e-mail."), $i));
+
             $schoolElement = $form->addHidden("study_year_$i");
             if (!Interlos::isRegistrationActive()) {
                 $schoolElement->setDisabled();
@@ -198,40 +197,40 @@ class TeamFormComponent extends BaseComponent {
             }
         }
 
-        $defaults = array();
+        $defaults = [];
 
         $form->addGroup();
 
         if ($this->getPresenter()->user->isLoggedIn()) {
             $loggedTeam = Interlos::getLoggedTeam($this->getPresenter()->user);
-            $defaults += array(
+            $defaults += [
                 "team_name" => $loggedTeam->name,
                 "email" => $loggedTeam->email,
                 "address" => $loggedTeam->address,
                 "category" => $loggedTeam->category,
-                "id_team" => $loggedTeam->id_team
-            );
+                "id_team" => $loggedTeam->id_team,
+            ];
             $competitors = Interlos::competitors()->findAllByTeam($loggedTeam->id_team)->orderBy("id_competitor")->fetchAll();
             $counter = 1;
-            foreach ($competitors AS $competitor) {
-                $defaults += array(
+            foreach ($competitors as $competitor) {
+                $defaults += [
                     "competitor_name_" . $counter => $competitor->name,
                     "school_" . $counter => $competitor->id_school,
                     "email_" . $counter => $competitor->email,
                     "study_year_" . $counter => $competitor->study_year,
                     "study_year_hid_" . $counter => $competitor->study_year,
-                );
+                ];
                 $counter++;
             }
             $form["team_name"]->setDisabled();
             $form->addHidden("id_team");
             $form->addSubmit("update", "Upravit");
-            $form->onSubmit[] = array($this, "updateSubmitted");
+            $form->onSubmit[] = [$this, "updateSubmitted"];
         } else {
 
             $form["password"]->addRule(Form::FILLED, "Není vyplněno heslo týmu.");
             $form->addSubmit("insert", "Registrovat");
-            $form->onSubmit[] = array($this, "insertSubmitted");
+            $form->onSubmit[] = [$this, "insertSubmitted"];
         }
 
         $form->setDefaults($defaults);
@@ -242,8 +241,8 @@ class TeamFormComponent extends BaseComponent {
 
     private function insertCompetitorsFromValues($team, $values) {
         $competitors = $this->loadCompetitorsFromValues($values);
-        $insertedSchools = array();
-        foreach ($competitors AS $competitor) {
+        $insertedSchools = [];
+        foreach ($competitors as $competitor) {
             if ($competitor['school'] == self::OTHER_SCHOOL && !empty($competitor['otherschool'])) {
                 if (array_key_exists($competitor['otherschool'], $insertedSchools)) {
                     $competitor['school'] = $insertedSchools[$competitor["otherschool"]];
@@ -257,11 +256,11 @@ class TeamFormComponent extends BaseComponent {
     }
 
     private function loadCompetitorsFromValues($values) {
-        $competitors = array();
-        $schoolsToInsert = array();
+        $competitors = [];
+        $schoolsToInsert = [];
         for ($i = 1; $i <= self::NUMBER_OF_MEMBERS; $i++) {
             if (!empty($values["competitor_name_" . $i])) {
-                $competitor = array();
+                $competitor = [];
                 $competitor["name"] = $values["competitor_name_" . $i];
                 $competitor["school"] = $values["school_" . $i];
                 $competitor["otherschool"] = $values["otherschool_" . $i];
@@ -276,7 +275,7 @@ class TeamFormComponent extends BaseComponent {
         $schoolsToInsert = array_keys($schoolsToInsert);
         $schoolExists = Interlos::schools()->findAll()->where("[name] IN %l", $schoolsToInsert)->count();
         if ($schoolExists) {
-            return FALSE;
+            return false;
         } else {
             return $competitors;
         }

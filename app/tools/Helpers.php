@@ -7,14 +7,18 @@
 
 namespace App\Tools;
 
-use Nette;
+use DataNotFoundException;
+use Nette\SmartObject;
+use NullPointerException;
+use Texy\Texy;
 
-final class Helpers extends Nette\Object {
+final class Helpers {
+    use SmartObject;
 
-    /** @var \Texy */
+    /** @var Texy */
     private static $texy;
 
-    final private function  __construct() {
+    final private function __construct() {
 
     }
 
@@ -26,22 +30,23 @@ final class Helpers extends Nette\Object {
      * @throws DataNotFoundException if the helper does not exist.
      */
     public static function getHelper($helper) {
-	if (empty($helper)) {
-	    throw new \NullPointerException("helper");
-	}
-	switch ($helper) {
-	    case "date": return array(get_class(), 'dateFormatHelper');
-		break;
-	    case "time": return array(get_class(), 'timeFormatHelper');
-		break;
-	    case "translate": return array(get_class(), 'translateHelper');
-		break;
-	    case "timeOnly": return array(get_class(), "timeOnlyHelper");
-		break;
-	    case 'texy': return array(get_class(), "texyHelper");
-	    default:
-		throw new \DataNotFoundException("helper: $helper");
-	}
+        if (empty($helper)) {
+            throw new NullPointerException("helper");
+        }
+        switch ($helper) {
+            case "date":
+                return [get_class(), 'dateFormatHelper'];
+            case "time":
+                return [get_class(), 'timeFormatHelper'];
+            case "translate":
+                return [get_class(), 'translateHelper'];
+            case "timeOnly":
+                return [get_class(), "timeOnlyHelper"];
+            case 'texy':
+                return [get_class(), "texyHelper"];
+            default:
+                throw new DataNotFoundException("helper: $helper");
+        }
     }
 
     /**
@@ -51,11 +56,11 @@ final class Helpers extends Nette\Object {
      * @return string Formated date.
      */
     public static function dateFormatHelper($date) {
-	return preg_replace(
-		"/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
-		"\\3. \\2. \\1",
-		$date
-	);
+        return preg_replace(
+            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
+            "\\3. \\2. \\1",
+            $date
+        );
     }
 
     /**
@@ -65,35 +70,35 @@ final class Helpers extends Nette\Object {
      * @return string Formated time.
      */
     public static function timeFormatHelper($time) {
-	return preg_replace(
-		"/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
-		"\\3. \\2. \\1, \\4:\\5",
-		$time
-	);
+        return preg_replace(
+            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
+            "\\3. \\2. \\1, \\4:\\5",
+            $time
+        );
     }
 
     public static function timeOnlyHelper($time) {
 
-	return preg_replace(
-		"/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
-		"\\4:\\5:\\6",
-		$time
-	);
+        return preg_replace(
+            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
+            "\\4:\\5:\\6",
+            $time
+        );
     }
 
     public static function texyHelper($text) {
-	return self::getTexy()->process($text);
+        return self::getTexy()->process($text);
     }
 
 
     // ---- PRIVATE METHODS
 
-    /** @return \Texy */
+    /** @return Texy */
     private static function getTexy() {
-	if (!isset(self::$texy)) {
-	    self::$texy = new \Texy();
-	    self::$texy->encoding = 'utf8';
-	}
-	return self::$texy;
+        if (!isset(self::$texy)) {
+            self::$texy = new Texy();
+            self::$texy->encoding = 'utf8';
+        }
+        return self::$texy;
     }
 }

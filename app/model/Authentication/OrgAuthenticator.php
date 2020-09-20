@@ -2,40 +2,39 @@
 
 namespace App\Model\Authentication;
 
-use Nette\Security\IAuthenticator,
-    Nette\Security\Identity,
-    Nette\Security\AuthenticationException;
+use Nette\Security\IAuthenticator;
+use Nette\Security\Identity;
+use Nette\Security\AuthenticationException;
+use Nette\Security\User;
 
-class OrgAuthenticator extends AbstractAuthenticator
-{
+class OrgAuthenticator extends AbstractAuthenticator {
 
     const ROLE = 'org';
-    
-    /** @var array */
-    private $userlist;
-    
-    public function __construct(array $userlist, \Nette\Security\User $user) {
+
+    private array $userlist;
+
+    public function __construct(array $userlist, User $user) {
         parent::__construct($user);
         $this->userlist = $userlist;
     }
 
     protected function authenticate(array $credentials) {
-	list($username, $password) = $credentials;
+        [$username, $password] = $credentials;
         foreach ($this->userlist as $name => $pass) {
             if (strcasecmp($name, $username) === 0) {
-		if ((string) $pass === (string) $password) {
+                if ((string)$pass === (string)$password) {
                     return new Identity($name, self::ROLE);
-		} else {
+                } else {
                     throw new AuthenticationException(
-			"Heslo se neshoduje.",
-			IAuthenticator::INVALID_CREDENTIAL
+                        "Heslo se neshoduje.",
+                        IAuthenticator::INVALID_CREDENTIAL
                     );
-		}
+                }
             }
-	}
+        }
         throw new AuthenticationException(
             "Org '$username' neexistuje.",
             IAuthenticator::IDENTITY_NOT_FOUND
-	);
+        );
     }
 }

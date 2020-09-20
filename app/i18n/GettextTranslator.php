@@ -11,18 +11,18 @@ use Nette\Localization\ITranslator;
 
 class GettextTranslator implements ITranslator {
 
-    public static $supportedLangs = array('cs', 'en');
-    public static $locales = array(
+    public static $supportedLangs = ['cs', 'en'];
+    public static $locales = [
         'cs' => 'cs_CZ.utf-8',
         'en' => 'en_US.utf-8',
-    );
+    ];
 
-    public function translate($message, $count = NULL) {
+    public function translate($message, $count = null) {
         if ($message === "" || $message === null) {
             return "";
         }
         if ($count !== null) {
-            return ngettext($message, $message, (int) $count);
+            return ngettext($message, $message, (int)$count);
         } else {
             return gettext($message);
         }

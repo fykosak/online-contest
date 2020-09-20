@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Dibi\DataSource;
+
 class NotificationModel extends AbstractModel {
 
     public function find($id) {
@@ -9,48 +11,40 @@ class NotificationModel extends AbstractModel {
         return $this->findAll()->where("[id_notification] = %i", $id)->fetch();
     }
 
-    /**
-     * @return \DibiDataSource
-     */
-    public function findAll($lang = NULL) {
+    public function findAll($lang = null): DataSource {
         $dataSource = $this->getConnection()->dataSource("SELECT * FROM [notification]");
-        
-        if($lang !== NULL){
+
+        if ($lang !== null) {
             return $dataSource->where("[lang] = %s", $lang);
         }
         return $dataSource;
     }
-    
-    /**
-     * @return \DibiDataSource
-     */
-    public function findActive($lang = NULL) {
+
+
+    public function findActive($lang = null): DataSource {
         return $this->findAll($lang)->where("[created] < NOW()")->orderBy('created', 'DESC');
     }
-    
-    /**
-     * @return \DibiDataSource
-     */
-    public function findNew($timestamp, $lang = NULL) {
+
+    public function findNew($timestamp, $lang = null): DataSource {
         return $this->findActive($lang)->where("[created] > %t", $timestamp)->orderBy('created');
     }
-    
+
     public function insert($message, $lang) {
-        $this->getConnection()->insert("notification", array(
+        $this->getConnection()->insert("notification", [
             'message' => $message,
-            'lang' => $lang
-        ))->execute();
+            'lang' => $lang,
+        ])->execute();
     }
-    
+
     public function insertNotification($messageCs, $messageEn) {
         $connection = $this->getConnection();
-        $connection->insert("notification", array(
+        $connection->insert("notification", [
             'message' => $messageCs,
-            'lang' => 'cs'
-        ))->execute();
-        $connection->insert("notification", array(
+            'lang' => 'cs',
+        ])->execute();
+        $connection->insert("notification", [
             'message' => $messageEn,
-            'lang' => 'en'
-        ))->execute();
+            'lang' => 'en',
+        ])->execute();
     }
 }

@@ -2,6 +2,10 @@
 
 namespace App\Model;
 
+use DateTime;
+use Dibi\DataSource;
+use Dibi\Fluent;
+
 class TeamsModel extends AbstractModel {
 
     const HIGH_SCHOOL = 'high_school';
@@ -16,20 +20,17 @@ class TeamsModel extends AbstractModel {
         return $this->findAll()->where("[id_team] = %i", $id)->fetch();
     }
 
-    public function findAll() {
+    public function findAll(): DataSource {
         return $this->getConnection()->dataSource("SELECT * FROM [view_team] WHERE [id_year] = %i", Interlos::years()->findCurrent()->id_year)
             ->orderBy('category')
             ->orderBy('inserted');
     }
-    
+
     public function findByEmail($email) {
         return $this->getConnection()->dataSource("SELECT [wt].* FROM [view_team] [wt] JOIN [view_competitor] [wc] USING([id_team]) WHERE [wc].[email] = %s", $email)->fetch();
     }
 
-    /**
-     * @return \DibiDataSource
-     */
-    public function findAllWithScore() {
+    public function findAllWithScore(): DataSource {
         return $this->getConnection()->dataSource("SELECT * FROM [tmp_total_result]")
             ->orderBy('disqualified', 'ASC')
             ->orderBy('activity', 'DESC')
@@ -44,22 +45,22 @@ class TeamsModel extends AbstractModel {
         $this->checkEmptiness($password, "password");
         $this->checkEmptiness($address, "address");
         $passwordHash = Authentication\TeamAuthenticator::passwordHash($password);
-        $this->getConnection()->insert("team", array(
+        $this->getConnection()->insert("team", [
             "name" => $name,
             "email" => $email,
             "category" => $category,
             "password" => $passwordHash,
             "address" => $address,
-            "inserted" => new \DateTime(),
-            "id_year" => Interlos::years()->findCurrent()->id_year
-        ))->execute();
+            "inserted" => new DateTime(),
+            "id_year" => Interlos::years()->findCurrent()->id_year,
+        ])->execute();
         $return = $this->getConnection()->insertId();
         $this->log($return, "team_inserted", "The team [$name] has been inserted.");
         return $return;
     }
 
-    /** @return \DibiFluent */
-    public function update(array $changes) {
+
+    public function update(array $changes): Fluent {
         return $this->getConnection()->update("team", $changes);
     }
 
@@ -73,7 +74,7 @@ class TeamsModel extends AbstractModel {
     public function getCategory($competitors) {
         // init stats
         $olds = 0;
-        $year = array(0, 0, 0, 0, 0); //0 - ZŠ, 1..4 - SŠ
+        $year = [0, 0, 0, 0, 0]; //0 - ZŠ, 1..4 - SŠ
         $abroad = 0;
         // calculate stats
         foreach ($competitors as $competitor) {
@@ -83,7 +84,7 @@ class TeamsModel extends AbstractModel {
                 case 2:
                 case 3:
                 case 4:
-                    $year[(int) $competitor["study_year"]] += 1;
+                    $year[(int)$competitor["study_year"]] += 1;
                     break;
                 case 5:
                     $olds += 1;
@@ -121,14 +122,14 @@ class TeamsModel extends AbstractModel {
     }
 
     public function getCategoryNames() {
-        return array(
+        return [
             //self::HIGH_SCHOOL => "Středoškoláci",
             self::HIGH_SCHOOL_A => _("Středoškoláci A"),
             self::HIGH_SCHOOL_B => _("Středoškoláci B"),
             self::HIGH_SCHOOL_C => _("Středoškoláci C"),
             //self::ABROAD => _("Zahraniční SŠ"),
             self::OPEN => _("Open"),
-        );
+        ];
     }
 
 }

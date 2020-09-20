@@ -2,34 +2,40 @@
 
 namespace App\FrontendModule\Presenters;
 
-use App\Model\Interlos,
-    Nette\Http\Url,
-    Nette\Utils,
-    Nette\Http,
-    Nette\Security\AuthenticationException;
+use App\Model\Authentication\TeamAuthenticator;
+use App\Model\Interlos;
+use Nette\Http\Url;
+use Nette\Utils;
+use Nette\Http;
+use Nette\Security\AuthenticationException;
+use PasswordChangeFormComponent;
+use TeamFormComponent;
+use TeamListComponent;
 
 class TeamPresenter extends BasePresenter {
 
-    /** @var \App\Model\Authentication\TeamAuthenticator @inject*/
-	public $authenticator;
+    protected TeamAuthenticator $authenticator;
 
-    public function actionRegistration() {
+    public function injectSecondary(TeamAuthenticator $teamAuthenticator): void {
+        $this->authenticator = $teamAuthenticator;
+    }
+
+    public function actionRegistration(): void {
         if (!Interlos::isRegistrationActive()) {
             $this->flashMessage(_("Registrace není aktivní."), "danger");
             $this->redirect("Default:default");
-        } else if ($url = $this->getRegistrationValue('url')) {
+        } elseif ($url = $this->getRegistrationValue('url')) {
             $uri = new Url($url);
-            $uri->appendQuery(array('lang' => $this->lang));
+            $uri->appendQuery(['lang' => $this->lang]);
             $this->redirectUrl($uri, Http\IResponse::S307_TEMPORARY_REDIRECT);
         }
     }
 
-    public function renderChangePassword($token = null) {
+    public function renderChangePassword($token = null): void {
         if (!is_null($token)) {
             try {
                 $this->authenticator->authenticateByToken($token);
-            }
-            catch(AuthenticationException $e) {
+            } catch (AuthenticationException $e) {
                 $this->error(_("Chybný token."), Http\IResponse::S401_UNAUTHORIZED);
             }
         }
@@ -41,7 +47,7 @@ class TeamPresenter extends BasePresenter {
         $this->setPageTitle(_("Změna hesla"));
     }
 
-    public function renderDefault() {
+    public function renderDefault(): void {
         $team = Interlos::getLoggedTeam($this->user);
         if (!$team) {
             $this->redirect("Default:default");
@@ -50,12 +56,12 @@ class TeamPresenter extends BasePresenter {
         $url = $this->getRegistrationValue('editUrl');
         if ($url) {
             $uri = new Url(sprintf($url, $team->id_team));
-            $uri->appendQuery(array('lang' => $this->lang));
+            $uri->appendQuery(['lang' => $this->lang]);
             $link = Utils\Html::el('a', _('na stránce přihlášky'))->href($uri);
             $message = Utils\Html::el();
-            $message->add(_('Editaci přihlášky provádějte po osobním přihlášení '));
-            $message->add($link);
-            $message->add('.');
+            $message->addText(_('Editaci přihlášky provádějte po osobním přihlášení '));
+            $message->addHtml($link);
+            $message->addText('.');
             $this->flashMessage($message);
             $this->getTemplate()->external = true;
         } else {
@@ -63,31 +69,31 @@ class TeamPresenter extends BasePresenter {
         }
     }
 
-    public function renderList() {
+    public function renderList(): void {
         $this->setPageTitle(_("Seznam týmů"));
         $this->getComponent("teamList")->setSource(
-                Interlos::teams()->findAll()
+            Interlos::teams()->findAll()
         );
         $this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
     }
 
-    public function renderRegistration() {
+    public function renderRegistration(): void {
         $this->setPageTitle(_("Registrace"));
         $this->flashMessage(_('Registrace nového týmu je možná jen přes FKSDB.'), 'warning');
     }
 
     // ---- PROTECTED METHODS
 
-    protected function createComponentTeamForm($name) {
-        return new \TeamFormComponent($this, $name);
+    protected function createComponentTeamForm(): TeamFormComponent {
+        return new TeamFormComponent();
     }
 
-    protected function createComponentTeamList($name) {
-        return new \TeamListComponent($this, $name);
+    protected function createComponentTeamList(): TeamListComponent {
+        return new TeamListComponent();
     }
 
-    protected function createComponentPasswordChangeForm($name) {
-        return new \PasswordChangeFormComponent($this, $name);
+    protected function createComponentPasswordChangeForm(): PasswordChangeFormComponent {
+        return new PasswordChangeFormComponent();
     }
 
     // ---- PRIVATE METHODS

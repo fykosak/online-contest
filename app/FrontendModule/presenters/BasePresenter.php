@@ -2,41 +2,48 @@
 
 namespace App\FrontendModule\Presenters;
 
-use Nette,
-    App\Model\Translator\GettextTranslator,
-    App\Model\Interlos,
-    App\Tools\InterlosTemplate;
+use ClockComponent;
+use FlashMessagesComponent;
+use App\Model\Translator\GettextTranslator;
+use App\Model\Interlos;
+use App\Tools\InterlosTemplate;
+use Nette\Application\UI\ITemplate;
+use Nette\Application\UI\Presenter;
+use NotificationMessagesComponent;
 
-class BasePresenter extends Nette\Application\UI\Presenter {
+class BasePresenter extends Presenter {
 
     /** @persistent */
     public $lang; // = 'cs';
-    
-    /** @var string */
-    private $customScript = '';
-    
-    /** @var \App\Model\Interlos */
-    private $interlos;
 
-    public function setPageTitle($pageTitle) {
+    private string $customScript = '';
+
+    private Interlos $interlos;
+
+    public function __construct(Interlos $interlos) {
+        parent::__construct();
+        $this->interlos = $interlos;
+    }
+
+    public function setPageTitle($pageTitle): void {
         $this->getTemplate()->pageTitle = $pageTitle;
     }
 
 // ----- PROTECTED METHODS
 
-    protected function createComponentClock($name) {
-        return new \ClockComponent($this, $name);
+    protected function createComponentClock(): ClockComponent {
+        return new ClockComponent();
     }
 
-    protected function createComponentFlashMessages($name) {
-        return new \FlashMessagesComponent($this, $name);
-    }
-    
-    protected function createComponentNotificationMessages($name) {
-        return new \NotificationMessagesComponent($this, $name);
+    protected function createComponentFlashMessages(): FlashMessagesComponent {
+        return new FlashMessagesComponent();
     }
 
-    protected function createTemplate() {
+    protected function createComponentNotificationMessages(): NotificationMessagesComponent {
+        return new NotificationMessagesComponent();
+    }
+
+    protected function createTemplate(): ITemplate {
         //$this->oldLayoutMode = false;
 
         $template = parent::createTemplate();
@@ -44,24 +51,21 @@ class BasePresenter extends Nette\Application\UI\Presenter {
         $template->lang = $this->lang;
         $template->customScript = '';
         $template->setTranslator(Interlos::getTranslator());
-        $template->registerHelper('i18n', '\App\Model\Translator\GettextTranslator::i18nHelper');
+        $template->getLatte()->addFilter('i18n', '\App\Model\Translator\GettextTranslator::i18nHelper');
 
         return InterlosTemplate::loadTemplate($template);
     }
-    
-    public function addCustomScript($script) {
+
+    public function addCustomScript(string $script): void {
         $this->customScript .= $script;
     }
-    
-    public function getCustomScript(){
+
+    public function getCustomScript(): string {
         return $this->customScript;
     }
-    
+
     /* temporary hack for DI */
-    public function __construct(\App\Model\Interlos $interlos) {
-        parent::__construct();
-        $this->interlos = $interlos;
-    }
+
 
     protected function startUp() {
         parent::startup();
@@ -77,7 +81,7 @@ class BasePresenter extends Nette\Application\UI\Presenter {
 
 // -------------- l12n ------------------
 
-    protected function localize() {
+    protected function localize(): void {
         $i18nConf = $this->context->parameters['i18n'];
         $this->detectLang($i18nConf);
         $locale = isset(GettextTranslator::$locales[$this->lang]) ? GettextTranslator::$locales[$this->lang] : 'cs_CZ.utf-8';
@@ -90,7 +94,7 @@ class BasePresenter extends Nette\Application\UI\Presenter {
         textdomain('messages');
     }
 
-    protected function detectLang($i18nConf) {
+    protected function detectLang($i18nConf): void {
         if ($this->lang === null) {
             if (array_search($this->getHttpRequest()->getUrl()->host, explode(',', $i18nConf['en']['hosts'])) !== false) {
                 $this->lang = 'en';
@@ -102,18 +106,18 @@ class BasePresenter extends Nette\Application\UI\Presenter {
             $this->lang = $i18nConf['defaultLang'];
         }
     }
-    
-    public function getOpenGraphLang(){
+
+    public function getOpenGraphLang(): ?string {
         return $this->getHttpRequest()->getHeader('X-Facebook-Locale');
     }
 
-    protected function changeViewByLang() {
+    protected function changeViewByLang(): void {
         $this->setView($this->getView() . '.' . $this->lang);
     }
 
     // -------------- game server ------------------
-    private function machineRedirect() {
-        $machine=$this->context->parameters['machine'];
+    private function machineRedirect(): void {
+        $machine = $this->context->parameters['machine'];
         if (!$machine['game']) {
             $this->redirectUrl($machine['url']);
         }

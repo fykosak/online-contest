@@ -2,11 +2,10 @@
 
 use App\Model\Interlos;
 
-class TaskStatsComponent extends BaseComponent
-{
+class TaskStatsComponent extends BaseComponent {
 
-	public function beforeRender() {
-		$this->getTemplate()->tasks = Interlos::tasks()->findAllStats();
-	}
+    public function beforeRender(): void {
+        $this->getTemplate()->tasks = Interlos::tasks()->findAllStats();
+    }
 
 }

@@ -2,51 +2,53 @@
 
 namespace App\FrontendModule\Presenters;
 
+use AnswerFormComponent;
+use AnswerHistoryComponent;
 use App\Model\Interlos;
-use Nette;
+use SkipFormComponent;
 
 class GamePresenter extends BasePresenter {
 
-    public function renderAnswer() {
+    public function renderAnswer(): void {
         $this->setPageTitle(_("Odevzdat řešení"));
     }
 
-    public function renderSkip() {
+    public function renderSkip(): void {
         if (!$this->user->isAllowed('task', 'skip')) {
             $this->flashMessage(_('Již jste vyčerpali svůj limit pro počet přeskočených úloh.'), "danger");
             $this->redirect("default");
         }
-        
+
         $this->setPageTitle(_("Přeskočit úkol"));
     }
 
-    public function renderDefault() {
+    public function renderDefault(): void {
         $this->setPageTitle(_("Zadání"));
         $team = Interlos::getLoggedTeam($this->user)->id_team;
         $this->getTemplate()->id_team = $team;
-        
-        $mirrors = (array) $this->context->parameters["tasks"]["mirrors"];
+
+        $mirrors = (array)$this->context->parameters["tasks"]["mirrors"];
         shuffle($mirrors);
         $this->getTemplate()->mirrors = $mirrors;
-        
+
         // tasks
         $solved = Interlos::tasks()->findSolved($team);
         $skipped = Interlos::tasks()->findSkipped($team);
         $unsolved = Interlos::tasks()->findUnsolved($team);
-        
-        $unsolvedTasks = array();
-        $skippedTasks = array();
-        $solvedTasks = array();
-        $missedTasks = array();
-        foreach(Interlos::tasks()->findProblemAvailable($team) as $task){
+
+        $unsolvedTasks = [];
+        $skippedTasks = [];
+        $solvedTasks = [];
+        $missedTasks = [];
+        foreach (Interlos::tasks()->findProblemAvailable($team) as $task) {
             $task->curPoints = Interlos::score()->getSingleTaskScore($team, $task);
-            if(isset($solved[$task->id_task])){
+            if (isset($solved[$task->id_task])) {
                 $solvedTasks[] = $task;
-            }elseif(isset($skipped[$task->id_task])){
+            } elseif (isset($skipped[$task->id_task])) {
                 $skippedTasks[] = $task;
-            }elseif(isset($unsolved[$task->id_task])){
+            } elseif (isset($unsolved[$task->id_task])) {
                 $unsolvedTasks[] = $task;
-            }else{
+            } else {
                 $missedTasks[] = $task;
             }
         }
@@ -54,24 +56,24 @@ class GamePresenter extends BasePresenter {
         $this->template->skippedTasks = $skippedTasks;
         $this->template->unsolvedTasks = $unsolvedTasks;
         $this->template->missedTasks = $missedTasks;
-        
+
     }
-    
-    public function actionHistory() {
+
+    public function actionHistory(): void {
         //has to be loaded in action due to pagination
         $this->getComponent("answerHistory")->setSource(
-                Interlos::answers()->findAll()
-                        ->where("[id_team] = %i", Interlos::getLoggedTeam($this->user)->id_team)
-                        ->orderBy("inserted", "DESC")
+            Interlos::answers()->findAll()
+                ->where("[id_team] = %i", Interlos::getLoggedTeam($this->user)->id_team)
+                ->orderBy("inserted", "DESC")
         );
         $this->getComponent("answerHistory")->setLimit(50);
     }
 
-    public function renderHistory() {
+    public function renderHistory(): void {
         $this->setPageTitle(_("Historie odpovědí"));
     }
 
-    protected function startUp() {
+    protected function startUp(): void {
         parent::startUp();
         if (Interlos::getLoggedTeam($this->user) == null) {
             $this->flashMessage(_("Do této sekce mají přístup pouze přihlášené týmy."), "danger");
@@ -79,16 +81,16 @@ class GamePresenter extends BasePresenter {
         }
     }
 
-    protected function createComponentAnswerForm($name) {
-        return new \AnswerFormComponent($this, $name);
+    protected function createComponentAnswerForm(): AnswerFormComponent {
+        return new AnswerFormComponent();
     }
 
-    protected function createComponentAnswerHistory($name) {
-        return new \AnswerHistoryComponent($this, $name);
+    protected function createComponentAnswerHistory(): AnswerHistoryComponent {
+        return new AnswerHistoryComponent();
     }
 
-    protected function createComponentSkipForm($name) {
-        return new \SkipFormComponent($this, $name);
+    protected function createComponentSkipForm(): SkipFormComponent {
+        return new SkipFormComponent();
     }
 
 }

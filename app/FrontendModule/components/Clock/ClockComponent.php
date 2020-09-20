@@ -1,7 +1,6 @@
 <?php
-class ClockComponent extends BaseComponent
-{
 
-    
+class ClockComponent extends BaseComponent {
+
 
 }

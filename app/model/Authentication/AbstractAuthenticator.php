@@ -2,25 +2,28 @@
 
 namespace App\Model\Authentication;
 
-use Nette;
+use Nette\Security\AuthenticationException;
+use Nette\Security\IIdentity;
+use Nette\Security\User;
+use Nette\SmartObject;
 
-abstract class AbstractAuthenticator extends Nette\Object {
-    /** @var Nette\Security\User */
-    protected $user;
+abstract class AbstractAuthenticator {
+    use SmartObject;
 
-    public function __construct(Nette\Security\User $user)
-    {
+    protected User $user;
+
+    public function __construct(User $user) {
         $this->user = $user;
     }
-    
-    public function login($id = NULL, $password = NULL) {
+
+    public function login($id = null, $password = null): void {
         $identity = $this->authenticate(func_get_args());
         $this->user->login($identity);
     }
-    
+
     /**
-     * @return Nette\Security\IIdentity
-     * @throws Nette\Security\AuthenticationException
+     * @return IIdentity
+     * @throws AuthenticationException
      */
     protected abstract function authenticate(array $credentials);
 }

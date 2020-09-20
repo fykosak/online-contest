@@ -2,60 +2,57 @@
 
 namespace App\FrontendModule\Presenters;
 
-use App\Model\Interlos,
-    Nette,
-    Nette\Caching\Cache,
-    Nette\Caching\IStorage,
-    App\Model\Authentication\CronAuthenticator;
+use App\Model\Interlos;
+use Nette\Caching\Cache;
+use Nette\Caching\IStorage;
+use App\Model\Authentication\CronAuthenticator;
+use Nette\Http\IResponse;
 
 class CronPresenter extends BasePresenter {
-    
-    /** @var Nette\Caching\Cache */
-    private $cache;
-    
-    /** @var App\Model\Authentication\CronAuthenticator */
-    private $authenticator;
-    
+
+    private Cache $cache;
+
+    private CronAuthenticator $authenticator;
+
     public function __construct(Interlos $interlos, IStorage $storage, CronAuthenticator $authenticator) {
         parent::__construct($interlos);
         $this->cache = new Cache($storage);
         $this->authenticator = $authenticator;
     }
 
-    public function renderDatabase($freezed=false) {
+    public function renderDatabase($freezed = false): void {
         Interlos::resetTemporaryTables();
         $this->invalidateCache($freezed);
     }
 
-    public function renderCounters() {
+    public function renderCounters(): void {
         Interlos::tasks()->updateCounter(null, true);
     }
 
-    private function invalidateCache($freezed) {
+    private function invalidateCache($freezed): void {
         //$cache = Environment::getCache('Nette.Template.Curly');
-        if($freezed){
-            $this->cache->clean(array(Cache::TAGS => [OrgPresenter::STATS_TAG]));
+        if ($freezed) {
+            $this->cache->clean([Cache::TAGS => [OrgPresenter::STATS_TAG]]);
             echo "<br>FREEZED<br>";
-        }
-        else{
-            $this->cache->clean(array(Cache::ALL => true));
+        } else {
+            $this->cache->clean([Cache::ALL => true]);
         }
     }
-    
+
 //    private function isCronAccess() {
 //        $keyGet = $this->getHttpRequest()->getQuery("cron-key");
 //        $keyConf = $this->context->parameters['cron']['key'];
 //        return isset($keyGet) && $keyConf == $keyGet;
 //    }
 
-    protected function startup() {
+    protected function startup(): void {
         parent::startup();
         $key = $this->getHttpRequest()->getQuery("cron-key");
         $this->authenticator->login($key);
 //        if (!$this->isCronAccess()) {
-        if (!$this->user->isAllowed('cron')){
+        if (!$this->user->isAllowed('cron')) {
             //die("PERMISSION DENIED");
-            $this->error("PERMISSION DENIED", Nette\Http\IResponse::S403_FORBIDDEN);
+            $this->error("PERMISSION DENIED", IResponse::S403_FORBIDDEN);
         }
     }
 

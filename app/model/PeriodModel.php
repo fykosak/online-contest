@@ -2,16 +2,16 @@
 
 namespace App\Model;
 
-use Nette;
+use Nette\NotSupportedException;
 
 class PeriodModel extends AbstractModel {
 
     public function find($id) {
-        throw new Nette\NotSupportedException();
+        throw new NotSupportedException();
     }
 
     public function findAll() {
-        throw new Nette\NotSupportedException();
+        throw new NotSupportedException();
     }
 
     public function findCurrent($groupId) {
@@ -20,5 +20,5 @@ class PeriodModel extends AbstractModel {
         $source->where("[begin] <= NOW() AND [end] > NOW()");
         return $source->fetch();
     }
-    
+
 }

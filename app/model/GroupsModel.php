@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Dibi\DataSource;
+
 class GroupsModel extends AbstractModel {
 
     public function find($id) {
@@ -9,24 +11,15 @@ class GroupsModel extends AbstractModel {
         return $this->findAll()->where("[id_group] = %i", $id)->fetch();
     }
 
-    /**
-     * @return \DibiDataSource
-     */
-    public function findAll() {
+    public function findAll(): DataSource {
         return $this->getConnection()->dataSource("SELECT * FROM [view_group]");
     }
 
-    /**
-     * @return \DibiDataSource
-     */
-    public function findAllAvailable() {
+    public function findAllAvailable(): DataSource {
         return $this->getConnection()->dataSource("SELECT * FROM [view_group] WHERE [to_show] < NOW() ORDER BY [id_group]");
     }
 
-    /**
-     * @return \DibiDataSource
-     */
-    public function findAllSkippable() {
+    public function findAllSkippable(): DataSource {
         $source = $this->getConnection()->dataSource("
                     SELECT [view_group].*
                     FROM [view_group]

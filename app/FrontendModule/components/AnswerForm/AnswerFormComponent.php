@@ -1,11 +1,12 @@
 <?php
 
-use Nette\Application\UI\Form,
-    Nette\Utils\Html,
-    App\Model\Interlos,
-    App\Model\AnswersModel,
-    App\Model\TasksModel,
-    Tracy\Debugger;
+use Dibi\DriverException;
+use Nette\Application\UI\Form;
+use Nette\Utils\Html;
+use App\Model\Interlos;
+use App\Model\AnswersModel;
+use App\Model\TasksModel;
+use Tracy\Debugger;
 
 class AnswerFormComponent extends BaseComponent {
 
@@ -13,7 +14,7 @@ class AnswerFormComponent extends BaseComponent {
     const TASK_INFO_ELEMENT = 'answer-info';
     const SUBMIT_ELEMENT = 'solution_submit';
 
-    public function formSubmitted(Form $form) {
+    private function formSubmitted(Form $form) {
         $values = $form->getValues();
 
         try {
@@ -42,7 +43,7 @@ class AnswerFormComponent extends BaseComponent {
             if ($e->getCode() == AnswersModel::ERROR_TIME_LIMIT) {
                 $this->getPresenter()->flashMessage(sprintf(_("Lze odpovídat až za <span class='timesec'>%d</span> sekund."), $e->getMessage()), "!warning");
                 return;
-            } else if ($e->getCode() == AnswersModel::ERROR_OUT_OF_PERIOD) {
+            } elseif ($e->getCode() == AnswersModel::ERROR_OUT_OF_PERIOD) {
                 $this->getPresenter()->flashMessage(_("Není aktuální žádné odpovídací období."), "danger");
                 return;
             } else {
@@ -52,7 +53,7 @@ class AnswerFormComponent extends BaseComponent {
                 //error_log($e->getTraceAsString());
                 return;
             }
-        } catch (DibiDriverException $e) {
+        } catch (DriverException $e) {
             if ($e->getCode() == 1062) {
                 $this->getPresenter()->flashMessage(_("Na zadaný úkol jste již takto jednou odpovídali."), "danger");
             } else {
@@ -72,17 +73,17 @@ class AnswerFormComponent extends BaseComponent {
         $this->getPresenter()->redirect("this");
     }
 
-    protected function createComponentForm($name) {
-        $form = new BaseForm($this, $name);
+    protected function createComponentForm(): BaseForm {
+        $form = new BaseForm();
 
         // Tasks
 
-        $options = array();
-        $rules = array(
-            TasksModel::TYPE_STR => array(),
-            TasksModel::TYPE_INT => array(),
-            TasksModel::TYPE_REAL => array(),
-        );
+        $options = [];
+        $rules = [
+            TasksModel::TYPE_STR => [],
+            TasksModel::TYPE_INT => [],
+            TasksModel::TYPE_REAL => [],
+        ];
 
         foreach ($this->tasks as $task) {
             $options[$task["id_task"]] = $task["code_name"] . ': ' . $task["name_" . $this->getPresenter()->lang];
@@ -90,50 +91,51 @@ class AnswerFormComponent extends BaseComponent {
         }
         $tasks = $options;
         $select = $form->addSelect(self::TASK_ELEMENT, "Úkol", $tasks)
-                ->setPrompt(" ---- Vybrat ---- ")
-                ->addRule(Form::FILLED, "Vyberte prosím řešený úkol.");
+            ->setPrompt(" ---- Vybrat ---- ")
+            ->addRule(Form::FILLED, "Vyberte prosím řešený úkol.");
 
         // Solution
         $text = $form->addText("solution", "Odpověď")
-                ->addRule(Form::FILLED, "Vyplňte prosím řešení úkolu.");
+            ->addRule(Form::FILLED, "Vyplňte prosím řešení úkolu.");
 
         if (count($rules[TasksModel::TYPE_INT])) {
             $text->addConditionOn($select, Form::IS_IN, $rules[TasksModel::TYPE_INT])
-                    ->addRule(Form::INTEGER, "Výsledek musí být celé číslo.");
+                ->addRule(Form::INTEGER, "Výsledek musí být celé číslo.");
         }
         if (count($rules[TasksModel::TYPE_REAL])) {
             $text->addConditionOn($select, Form::IS_IN, $rules[TasksModel::TYPE_REAL])
-                    ->addRule(Form::PATTERN, "Výsledek musí být reálné číslo.", '[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?');
+                ->addRule(Form::PATTERN, "Výsledek musí být reálné číslo.", '[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?');
         }
 
         $desc = Html::el('span');
-        $desc->id(self::TASK_INFO_ELEMENT);
+        $desc->addAttributes(['id' => self::TASK_INFO_ELEMENT]);
         $text->setOption("description", $desc);
-
 
 
         $submit = $form->addSubmit(self::SUBMIT_ELEMENT, "Odeslat řešení");
         if (count($options) == 0) {
             $submit->setDisabled(true);
         }
-        $form->onSuccess[] = array($this, "formSubmitted");
+        $form->onSuccess[] = function (Form $form) {
+            $this->formSubmitted($form);
+        };
 
         return $form;
     }
 
-    protected function startUp() {
+    protected function startUp(): void {
         parent::startUp();
         if (!$this->getPresenter()->user->isLoggedIn()) {
             throw new Nette\InvalidStateException("There is no logged team.");
         }
         if (Interlos::isGameEnd()) {
             $this->flashMessage(_("Čas vypršel."), "danger");
-            $this->getTemplate()->valid = FALSE;
-        } else if (!Interlos::isGameStarted()) {
+            $this->getTemplate()->valid = false;
+        } elseif (!Interlos::isGameStarted()) {
             $this->flashMessage(_("Hra ještě nezačala."), "danger");
-            $this->getTemplate()->valid = FALSE;
+            $this->getTemplate()->valid = false;
         } else {
-            $this->getTemplate()->valid = TRUE;
+            $this->getTemplate()->valid = true;
             $this->initTasks();
         }
     }
@@ -141,21 +143,21 @@ class AnswerFormComponent extends BaseComponent {
     private $tasks;
     private $tasksInfo;
 
-    private function initTasks() {
+    private function initTasks(): void {
         $teamId = Interlos::getLoggedTeam($this->getPresenter()->user)->id_team;
         $this->tasks = Interlos::tasks()
-                ->findSubmitAvailable($teamId)
-                ->fetchAll();
+            ->findSubmitAvailable($teamId)
+            ->fetchAll();
 
-        $this->tasksInfo = array();
+        $this->tasksInfo = [];
         foreach ($this->tasks as $task) {
-            $this->tasksInfo[$task["id_task"]] = array(
+            $this->tasksInfo[$task["id_task"]] = [
                 "sig_digits" => $task["real_sig_digits"],
                 "unit" => $task["answer_unit"],
                 "type" => $task["answer_type"],
                 "maxPoints" => $task["points"],
                 "curPoints" => Interlos::score()->getSingleTaskScore($teamId, $task),
-            );
+            ];
         }
         $this->getTemplate()->tasksInfo = $this->tasksInfo;
         $this->getTemplate()->tasksInfoElement = self::TASK_INFO_ELEMENT;
@@ -167,5 +169,4 @@ class AnswerFormComponent extends BaseComponent {
         $this->getTemplate()->maxPoints = _("Maximum bodů");
         $this->getTemplate()->curPoints = _("Aktuálně bodů");
     }
-
 }

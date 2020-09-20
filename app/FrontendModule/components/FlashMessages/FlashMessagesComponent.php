@@ -1,5 +1,5 @@
 <?php
-class FlashMessagesComponent extends BaseComponent
-{
+
+class FlashMessagesComponent extends BaseComponent {
 
 }

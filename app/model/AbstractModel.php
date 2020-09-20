@@ -2,42 +2,44 @@
 
 namespace App\Model;
 
-use Tracy\Debugger,
-    Nette;
+use DateTime;
+use Dibi\Connection;
+use Exception;
+use Nette\SmartObject;
+use Tracy\Debugger;
 
-abstract class AbstractModel extends Nette\Object implements InterlosModel {
+abstract class AbstractModel implements InterlosModel {
+    use SmartObject;
 
-	private $connection;
+    private Connection $connection;
 
-	public function  __construct(\DibiConnection $connection) {
-		$this->connection = $connection;
-	}
+    public function __construct(Connection $connection) {
+        $this->connection = $connection;
+    }
 
-	// ----- PROTECTED METHODS
+    // ----- PROTECTED METHODS
 
-	protected final function checkEmptiness($var, $name) {
+    protected final function checkEmptiness($var, $name): void {
 //		if (empty($var)) {
 //			throw new NullPointerException("The parameter [$name] is empty.");
 //		}
-	}
+    }
 
-	/** @return \DibiConnection */
-	protected final function getConnection() {
-		return $this->connection;
-	}
+    protected final function getConnection(): Connection {
+        return $this->connection;
+    }
 
-	protected final function log($team, $type, $text) {
-		try {
-			$this->getConnection()->insert("log", array(
-					"id_team"	=> $team,
-					"type"	=> $type,
-					"text"	=> $text,
-					"inserted"	=> new \DateTime()
-					))->execute();
-		}
-		catch(\Exception $e) {
-                        Debugger::log($e);
-		}
-	}
+    protected final function log($team, $type, $text) {
+        try {
+            $this->getConnection()->insert("log", [
+                "id_team" => $team,
+                "type" => $type,
+                "text" => $text,
+                "inserted" => new DateTime(),
+            ])->execute();
+        } catch (Exception $e) {
+            Debugger::log($e);
+        }
+    }
 
 }

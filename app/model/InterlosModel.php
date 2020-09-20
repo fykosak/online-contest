@@ -2,8 +2,7 @@
 
 namespace App\Model;
 
-interface InterlosModel
-{
+interface InterlosModel {
 
     function find($id);
 

@@ -2,7 +2,9 @@
 
 namespace App\Model;
 
-use Nette;
+use DateTime;
+use Dibi\DataSource;
+use Nette\InvalidStateException;
 
 class TasksModel extends AbstractModel {
 
@@ -15,39 +17,25 @@ class TasksModel extends AbstractModel {
         return $this->findAll()->where("[id_task] = %i", $id)->fetch();
     }
 
-    /**
-     * @return \DibiDataSource
-     */
-    public function findAll() {
+    public function findAll(): DataSource {
         return $this->getConnection()->dataSource("SELECT * FROM [view_task]")
             ->orderBy('id_group')
             ->orderBy('number');
     }
 
-    /**
-     * @return \DibiDataSource
-     */
-    public function findPossiblyAvailable($teamId = NULL) {
-        $source = $this->getConnection()->dataSource("SELECT * FROM [view_possibly_available_task]")
+    public function findPossiblyAvailable($teamId = null): DataSource {
+        return $this->getConnection()->dataSource("SELECT * FROM [view_possibly_available_task]")
             ->orderBy('id_group')
             ->orderBy('number');
-        return $source;
     }
 
-    /**
-     * @return \DibiDataSource
-     */
-    public function findProblemAvailable($teamId) {
-        $source = $this->getConnection()->dataSource("SELECT * FROM [view_available_task] WHERE [id_team] = %i", $teamId)
+    public function findProblemAvailable($teamId): DataSource {
+        return $this->getConnection()->dataSource("SELECT * FROM [view_available_task] WHERE [id_team] = %i", $teamId)
             ->orderBy('id_group')
             ->orderBy('number');
-        return $source;
     }
 
-    /**
-     * @return \DibiDataSource
-     */
-    public function findSubmitAvailable($teamId) {
+    public function findSubmitAvailable($teamId): DataSource {
         $source = $this->getConnection()->dataSource("SELECT * FROM [view_submit_available_task] WHERE [id_team] = %i", $teamId)
             ->orderBy('id_group')
             ->orderBy('number');
@@ -61,22 +49,22 @@ class TasksModel extends AbstractModel {
         }
         return $source;
     }
-    
+
     /**
      * Find missed tasks (after end of hurry up)
-     * 
+     *
      * @return array id_task => id_task
      */
-    public function findMissed($teamId) {
+    public function findMissed($teamId): array {
         $source = $this->getConnection()->dataSource("SELECT `view_available_task`.* FROM [view_available_task]
             RIGHT JOIN `period` ON `period`.`id_group` = `view_available_task`.`id_group`
             AND (`period`.`begin` > NOW() OR `period`.`end` < NOW()) WHERE [id_team] = %i", $teamId);
         return $source->fetchPairs("id_task", "id_task");
     }
-    
+
     /**
      * Find unsolved tasks, which can be submitted (i.e. not hurry up after its end)
-     * 
+     *
      * @return array id_task => id_task
      */
     public function findUnsolved($teamId) {
@@ -85,7 +73,7 @@ class TasksModel extends AbstractModel {
 
     /**
      * Find solved tasks
-     * 
+     *
      * @return array id_task => id_task
      */
     public function findSolved($teamId) {
@@ -95,7 +83,7 @@ class TasksModel extends AbstractModel {
 
     /**
      * Find skipped tasks
-     * 
+     *
      * @return array id_task => id_task
      */
     public function findSkipped($teamId) {
@@ -115,15 +103,15 @@ class TasksModel extends AbstractModel {
         $this->checkEmptiness($serie, "serie");
         $this->checkEmptiness($type, "type");
         $this->checkEmptiness($code, "code");
-        $return = $this->getConnection()->insert("task", array(
-                    "name" => $name,
-                    "number" => $number,
-                    "serie" => $serie,
-                    "type" => $type,
-                    "code" => $code,
-                    "inserted" => new \DateTime()
-                ))->execute();
-        $this->log(NULL, "task_inserted", "The task [$name] has been inserted.");
+        $return = $this->getConnection()->insert("task", [
+            "name" => $name,
+            "number" => $number,
+            "serie" => $serie,
+            "type" => $type,
+            "code" => $code,
+            "inserted" => new DateTime(),
+        ])->execute();
+        $this->log(null, "task_inserted", "The task [$name] has been inserted.");
         return $return;
     }
 
@@ -135,22 +123,22 @@ class TasksModel extends AbstractModel {
         $answers = Interlos::answers()->findAllCorrect($team)->where("[id_task] = %i", $task->id_task);
         if ($answers->count() > 0) {
             $this->log($team, "skip_tried", "The team tried to skip the task [$task->id_task].");
-            throw new Nette\InvalidStateException("Skipping not allowed for the task [$task->id_task].", AnswersModel::ERROR_SKIP_OF_ANSWERED);
+            throw new InvalidStateException("Skipping not allowed for the task [$task->id_task].", AnswersModel::ERROR_SKIP_OF_ANSWERED);
         }
 
         // Check that skip is allowed in period
         $skippableGroups = Interlos::groups()->findAllSkippable()->fetchPairs('id_group', 'id_group');
         if (!array_key_exists($task["id_group"], $skippableGroups)) {
             $this->log($team, "skip_tried", "The team tried to skip the task [$task->id_task].");
-            throw new Nette\InvalidStateException("Skipping not allowed during this period.", AnswersModel::ERROR_SKIP_OF_PERIOD);
+            throw new InvalidStateException("Skipping not allowed during this period.", AnswersModel::ERROR_SKIP_OF_PERIOD);
         }
         // Insert a skip record
-        $return = $this->getConnection()->insert("task_state", array(
-                    "id_team" => $team,
-                    "id_task" => $task["id_task"],
-                    "inserted" => new \DateTime(),
-                    "skipped" => 1,
-                    "points" => null,))->execute();
+        $return = $this->getConnection()->insert("task_state", [
+            "id_team" => $team,
+            "id_task" => $task["id_task"],
+            "inserted" => new DateTime(),
+            "skipped" => 1,
+            "points" => null,])->execute();
 
         // Increase counter
         $sql = "INSERT INTO [group_state] ([id_group], [id_team], [task_counter])
@@ -233,17 +221,14 @@ class TasksModel extends AbstractModel {
         $this->getConnection()->query($sql, $task['id_group'], $teamId);
     }
 
-    public static function checkAnswer($task, $solution) {
+    public static function checkAnswer($task, $solution): bool {
         switch ($task->answer_type) {
             case self::TYPE_STR:
                 return $solution == $task->answer_str;
-                break;
             case self::TYPE_INT:
                 return $solution == $task->answer_int;
-                break;
             case self::TYPE_REAL:
                 return ($task->answer_real - $task->real_tolerance <= $solution) && ($solution <= $task->answer_real + $task->real_tolerance);
-                break;
         }
     }
 
