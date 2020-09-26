@@ -1,4 +1,8 @@
 <?php
+
+use Nette\Application\Routers\CliRouter;
+use Nette\Loaders\RobotLoader;
+
 define('LIBS_DIR', '../libs');
 define('APP_DIR', '../app');
 
@@ -20,14 +24,14 @@ Environment::loadConfig(APP_DIR . '/config/config.local.ini');
 
 // Step 5: Get the front controller
 $application = Environment::getApplication();
-$application->allowedMethods = FALSE;
+$application->allowedMethods = false;
 
 // Step 6: Setup application router
 $router = $application->getRouter();
 //$router[] = FrontendModule::createRouter();
-$router[] = new CliRouter(array(
-	'action' => 'Cli:default'
-));
+$router[] = new CliRouter([
+    'action' => 'Cli:default',
+]);
 
 // Step 7: Connect to the database
 dibi::connect(Environment::getConfig("database"));

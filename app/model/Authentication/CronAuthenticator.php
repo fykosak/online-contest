@@ -19,7 +19,7 @@ class CronAuthenticator extends AbstractAuthenticator {
         $this->cronKey = $cronKey;
     }
 
-    protected function authenticate(array $credentials) {
+    protected function authenticate(array $credentials): Identity {
         [$key] = $credentials;
         if ((string)$key === (string)$this->cronKey) {
             return new Identity('cron', self::ROLE);

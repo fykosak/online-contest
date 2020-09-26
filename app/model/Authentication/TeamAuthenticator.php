@@ -10,11 +10,13 @@ use DateInterval;
 use DateTime;
 use Dibi\Connection;
 use Dibi\DataSource;
+use Dibi\Exception;
+use FOL\Model\ORM\TeamsService;
 use Nette\Security\IAuthenticator;
 use Nette\Security\Identity;
 use Nette\Security\AuthenticationException;
+use Nette\Security\IIdentity;
 use Nette\Utils\Random;
-use App\Model\Interlos;
 use Nette\Security\User;
 
 class TeamAuthenticator extends AbstractAuthenticator {
@@ -25,15 +27,24 @@ class TeamAuthenticator extends AbstractAuthenticator {
 
     protected Connection $connection;
 
-    public function __construct(User $user, Connection $connection) {
+    protected TeamsService $teamsService;
+
+    public function __construct(User $user, Connection $connection, TeamsService $teamsService) {
         parent::__construct($user);
         $this->connection = $connection;
+        $this->teamsService = $teamsService;
     }
 
-    protected function authenticate(array $credentials) {
+    /**
+     * @param array $credentials
+     * @return Identity|IIdentity
+     * @throws AuthenticationException
+     * @throws Exception
+     */
+    protected function authenticate(array $credentials): Identity {
         $name = $credentials[IAuthenticator::USERNAME];
         $password = self::passwordHash($credentials[IAuthenticator::PASSWORD]);
-        $row = Interlos::teams()->findAll()->where("[name] = %s", $name)->fetch();
+        $row = $this->teamsService->findAll()->where("[name] = %s", $name)->fetch();
         if (empty($row)) {
             throw new AuthenticationException(
                 "Tým '$name' neexistuje.",
@@ -49,7 +60,13 @@ class TeamAuthenticator extends AbstractAuthenticator {
         return new Identity($name, self::TEAM, ["id_team" => $row["id_team"], "role" => self::TEAM]);
     }
 
-    public function authenticateByToken($token) {
+    /**
+     * @param $token
+     * @return void
+     * @throws AuthenticationException
+     * @throws Exception
+     */
+    public function authenticateByToken($token): void {
         $res = $this->findValidRecoveryTokens()->where("[token] = %s", $token)->fetch();
         if (empty($res)) {
             throw new AuthenticationException(
@@ -59,12 +76,17 @@ class TeamAuthenticator extends AbstractAuthenticator {
         }
         $this->connection->delete("token")->where("[id_token] = %i", $res['id_token'])->execute();
 
-        $team = Interlos::teams()->find($res['id_team']);
+        $team = $this->teamsService->find($res['id_team']);
         $identity = new Identity($team['name'], self::TEAM, ["id_team" => $team["id_team"], "role" => self::TEAM]);
         $this->user->login($identity);
     }
 
-    public function createRecoveryToken($teamId) {
+    /**
+     * @param $teamId
+     * @return string|null
+     * @throws Exception
+     */
+    public function createRecoveryToken($teamId): ?string {
         $token = Random::generate(self::TOKEN_LENGTH);
         if ($this->findValidRecoveryTokens()->where("[id_team] = %i", $teamId)->fetch()) {
             return null;
@@ -79,10 +101,14 @@ class TeamAuthenticator extends AbstractAuthenticator {
         return $token;
     }
 
-    public static function passwordHash($password) {
+    public static function passwordHash(string $password): string {
         return sha1($password);
     }
 
+    /**
+     * @return DataSource
+     * @throws Exception
+     */
     private function findValidRecoveryTokens(): DataSource {
         return $this->connection->dataSource("SELECT * FROM [token] WHERE [not_before] <= NOW() AND [not_after] >= NOW()");
     }

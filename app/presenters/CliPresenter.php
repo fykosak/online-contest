@@ -15,6 +15,10 @@ class CliPresenter extends Presenter {
     private $year;
     private $teams;
 
+    /**
+     * @return void
+     * @throws \Dibi\Exception
+     */
     public function actionDefault() {
         $this->year = $this->getParameter('year', 1);
         $teams = $this->getParameter('teams', 10);
@@ -39,6 +43,11 @@ class CliPresenter extends Presenter {
         return null;
     }
 
+    /**
+     * @param $n
+     * @return void
+     * @throws \Dibi\Exception
+     */
     private function generateTeams($n) {
         $words = ['world', 'super', 'class', 'team', 'of', 'brutus', 'cup', 'over', 'star', 'medieval', 'portal', 'quantum', 'physics', 'porn'];
 
@@ -70,6 +79,10 @@ class CliPresenter extends Presenter {
         }
     }
 
+    /**
+     * @return void
+     * @throws \Dibi\Exception
+     */
     private function loadTeams() {
         $teams = dibi::fetchAll('SELECT * FROM [view_team]');
         $this->teams = [];
@@ -78,6 +91,12 @@ class CliPresenter extends Presenter {
         }
     }
 
+    /**
+     * @param $n
+     * @param int $sleep
+     * @return void
+     * @throws \Dibi\Exception
+     */
     private function generateAnswers($n, $sleep = 0) {
         $tasks = dibi::fetchAll('SELECT * FROM [view_task]');
         $teamIds = array_keys($this->teams);

@@ -3,8 +3,16 @@
 // Uncomment this line if you must temporarily take down your site for maintenance.
 // require __DIR__ . '/.maintenance.php';
 
+use FOL\Bootstrap;
 use Nette\Application\Application;
 
-$container = require __DIR__ . '/../app/bootstrap.php';
+require __DIR__ . '/../app/bootstrap.php';
 
-$container->getByType(Application::class)->run();
+// inicializace prostředí + získání objektu Nette\Configurator
+$configurator = Bootstrap::boot();
+// vytvoření DI kontejneru
+$container = $configurator->createContainer();
+// DI kontejner vytvoří objekt Nette\Application\Application
+$application = $container->getByType(Application::class);
+// spuštění Nette aplikace
+$application->run();

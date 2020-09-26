@@ -2,18 +2,19 @@
 
 namespace App\Model\Authorization;
 
+use Dibi\Exception;
+use FOL\Model\ORM\TasksService;
 use Nette\Security\Permission;
 use Nette\Security\User;
-use App\Model\TasksModel;
 
 class SkipAssertion {
     const MAX_SKIPPED = 10;
 
-    private TasksModel $tasksModel;
+    private TasksService $tasksModel;
 
     private User $user;
 
-    public function __construct(TasksModel $tasksModel) {
+    public function __construct(TasksService $tasksModel) {
         $this->tasksModel = $tasksModel;
     }
 
@@ -29,6 +30,7 @@ class SkipAssertion {
      * @param mixed $resourceId
      * @param mixed $privilege
      * @return bool
+     * @throws Exception
      */
     public function canSkip(Permission $acl, $role, $resourceId, $privilege): bool {
         $skipped = $this->tasksModel->findSkipped($this->user->getIdentity()->id_team);
