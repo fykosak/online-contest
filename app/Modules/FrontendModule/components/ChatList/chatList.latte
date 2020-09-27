@@ -4,7 +4,7 @@
         <div id="chat-form0" class="chat-form">
             {control chatForm0}
         </div>
-        <button class="hideChatForm btn btn-default">{_'Přidat příspěvek'}</button>
+        <button class="hideChatForm btn btn-default btn-sm btn-secondary">{_'Přidat příspěvek'}</button>
     </div>
     {/if}
 
@@ -20,7 +20,7 @@
                 <div id="chat-form{$post['id_chat']}" class="chat-form">
                     {control 'chatForm' . $post['id_chat']}
                 </div>
-                <button class="hideChatForm btn btn-default">{_'Reagovat'}</button>
+                <button class="hideChatForm btn-sm  btn btn-default btn-secondary">{_'Reagovat'}</button>
             </div>
             {/if}
         </div>

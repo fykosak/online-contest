@@ -8,7 +8,9 @@ use FOL\Model\ORM\TasksService;
 use FOL\Model\ORM\YearsService;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
+use Nette\DI\Container;
 use Nette\InvalidStateException;
+use Nette\Security\User;
 use Nette\Utils\Html;
 use Tracy\Debugger;
 
@@ -24,18 +26,29 @@ class AnswerFormComponent extends BaseComponent {
     protected ScoreService $scoreService;
     protected YearsService $yearsService;
 
+    protected User $user;
+
+    protected int $teamId;
+
+    public function __construct(Container $container, int $teamId) {
+        $this->teamId = $teamId;
+        parent::__construct($container);
+    }
+
     public function injectSecondary(
         TasksService $tasksService,
         PeriodService $periodService,
         AnswersService $answersService,
         ScoreService $scoreService,
-        YearsService $yearsService
+        YearsService $yearsService,
+        User $user
     ): void {
         $this->tasksService = $tasksService;
         $this->periodService = $periodService;
         $this->answersService = $answersService;
         $this->scoreService = $scoreService;
         $this->yearsService = $yearsService;
+        $this->user = $user;
     }
 
     /**
@@ -48,35 +61,35 @@ class AnswerFormComponent extends BaseComponent {
 
         try {
             $task = $this->tasksService->find($values[self::TASK_ELEMENT]);
-            $period = $this->periodService->findCurrent($task["id_group"]);
-            $solution = trim($values["solution"], " ");
-            $solution = strtr($solution, ",", ".");
+            $period = $this->periodService->findCurrent($task['id_group']);
+            $solution = trim($values['solution'], ' ');
+            $solution = strtr($solution, ',', '.');
             $team = $this->getPresenter()->getLoggedTeam()->id_team;
 
             if (!$period) {
-                $this->log($team, "solution_tried", "The team tried to insert the solution of task [$task->id_task] with solution [$solution].");
-                throw new InvalidStateException("There is no active submit period.", AnswersService::ERROR_OUT_OF_PERIOD);
+                $this->log($team, 'solution_tried', 'The team tried to insert the solution of task [$task->id_task] with solution [$solution].');
+                throw new InvalidStateException('There is no active submit period.', AnswersService::ERROR_OUT_OF_PERIOD);
             }
             $correct = TasksService::checkAnswer($task, $solution);
             $this->answersService->insert($team, $task, $solution, $period, $correct);
-            //Environment::getCache()->clean(array(Cache::TAGS => array("problems/$team"))); // not used
+            //Environment::getCache()->clean(array(Cache::TAGS => array('problems/$team'))); // not used
 
             if ($correct) {
-                $this->getPresenter()->flashMessage(_("Vaše odpověď je správně."), "success");
+                $this->getPresenter()->flashMessage(_('Vaše odpověď je správně.'), 'success');
                 $this->tasksService->updateSingleCounter($team, $task);
                 $this->scoreService->updateAfterInsert($team, $task); //musi byt az po updatu counteru
             } else {
-                $this->getPresenter()->flashMessage(_("Vaše odpověď je špatně."), "danger");
+                $this->getPresenter()->flashMessage(_('Vaše odpověď je špatně.'), 'danger');
             }
         } catch (InvalidStateException $e) {
             if ($e->getCode() == AnswersService::ERROR_TIME_LIMIT) {
-                $this->getPresenter()->flashMessage(sprintf(_("Lze odpovídat až za <span class='timesec'>%d</span> sekund."), $e->getMessage()), "!warning");
+                $this->getPresenter()->flashMessage(sprintf(_('Lze odpovídat až za <span class="timesec">%d</span> sekund.'), $e->getMessage()), '!warning');
                 return;
             } elseif ($e->getCode() == AnswersService::ERROR_OUT_OF_PERIOD) {
-                $this->getPresenter()->flashMessage(_("Není aktuální žádné odpovídací období."), "danger");
+                $this->getPresenter()->flashMessage(_('Není aktuální žádné odpovídací období.'), 'danger');
                 return;
             } else {
-                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
+                $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
                 //Debug::processException($e, TRUE);
                 Debugger::log($e);
                 //error_log($e->getTraceAsString());
@@ -84,22 +97,22 @@ class AnswerFormComponent extends BaseComponent {
             }
         } catch (DriverException $e) {
             if ($e->getCode() == 1062) {
-                $this->getPresenter()->flashMessage(_("Na zadaný úkol jste již takto jednou odpovídali."), "danger");
+                $this->getPresenter()->flashMessage(_('Na zadaný úkol jste již takto jednou odpovídali.'), 'danger');
             } else {
-                $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
+                $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
                 //Debug::processException($e, TRUE);
                 Debugger::log($e);
                 //error_log($e->getTraceAsString());
             }
             return;
         } catch (Exception $e) {
-            $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
+            $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
             //Debug::processException($e, TRUE);
             Debugger::log($e);
             //error_log($e->getTraceAsString());
             return;
         }
-        $this->getPresenter()->redirect("this");
+        $this->getPresenter()->redirect('this');
     }
 
     protected function createComponentForm(): BaseForm {
@@ -115,33 +128,33 @@ class AnswerFormComponent extends BaseComponent {
         ];
 
         foreach ($this->tasks as $task) {
-            $options[$task["id_task"]] = $task["code_name"] . ': ' . $task["name_" . $this->getPresenter()->lang];
-            $rules[$task["answer_type"]][] = $task["id_task"];
+            $options[$task['id_task']] = $task['code_name'] . ': ' . $task['name_' . $this->getPresenter()->lang];
+            $rules[$task['answer_type']][] = $task['id_task'];
         }
         $tasks = $options;
-        $select = $form->addSelect(self::TASK_ELEMENT, "Úkol", $tasks)
-            ->setPrompt(" ---- Vybrat ---- ")
-            ->addRule(Form::FILLED, "Vyberte prosím řešený úkol.");
+        $select = $form->addSelect(self::TASK_ELEMENT, 'Úkol', $tasks)
+            ->setPrompt(' ---- Vybrat ---- ')
+            ->addRule(Form::FILLED, 'Vyberte prosím řešený úkol.');
 
         // Solution
-        $text = $form->addText("solution", "Odpověď")
-            ->addRule(Form::FILLED, "Vyplňte prosím řešení úkolu.");
+        $text = $form->addText('solution', _('Odpověď'))
+            ->addRule(Form::FILLED, _('Vyplňte prosím řešení úkolu.'));
 
         if (count($rules[TasksService::TYPE_INT])) {
             $text->addConditionOn($select, Form::IS_IN, $rules[TasksService::TYPE_INT])
-                ->addRule(Form::INTEGER, "Výsledek musí být celé číslo.");
+                ->addRule(Form::INTEGER, 'Výsledek musí být celé číslo.');
         }
         if (count($rules[TasksService::TYPE_REAL])) {
             $text->addConditionOn($select, Form::IS_IN, $rules[TasksService::TYPE_REAL])
-                ->addRule(Form::PATTERN, "Výsledek musí být reálné číslo.", '[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?');
+                ->addRule(Form::PATTERN, 'Výsledek musí být reálné číslo.', '[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?');
         }
 
         $desc = Html::el('span');
         $desc->addAttributes(['id' => self::TASK_INFO_ELEMENT]);
-        $text->setOption("description", $desc);
+        $text->setOption('description', $desc);
 
 
-        $submit = $form->addSubmit(self::SUBMIT_ELEMENT, "Odeslat řešení");
+        $submit = $form->addSubmit(self::SUBMIT_ELEMENT, 'Odeslat řešení');
         if (count($options) == 0) {
             $submit->setDisabled(true);
         }
@@ -158,51 +171,54 @@ class AnswerFormComponent extends BaseComponent {
      */
     protected function startUp(): void {
         parent::startUp();
-        if (!$this->getPresenter()->user->isLoggedIn()) {
-            throw new InvalidStateException("There is no logged team.");
+        if (!$this->user->isLoggedIn()) {
+            throw new InvalidStateException('There is no logged team.');
         }
         if ($this->yearsService->isGameEnd()) {
-            $this->flashMessage(_("Čas vypršel."), "danger");
-            $this->getTemplate()->valid = false;
+            $this->flashMessage(_('Čas vypršel.'), 'danger');
+            $this->valid = false;
         } elseif (!$this->yearsService->isGameStarted()) {
-            $this->flashMessage(_("Hra ještě nezačala."), "danger");
-            $this->getTemplate()->valid = false;
+            $this->flashMessage(_('Hra ještě nezačala.'), 'danger');
+            $this->valid = false;
         } else {
-            $this->getTemplate()->valid = true;
+            $this->valid = true;
             $this->initTasks();
         }
     }
 
-    private $tasks;
-    private $tasksInfo;
+    private bool $valid;
+
+    private ?array $tasks = null;
+    private array $tasksInfo;
 
     /**
      * @return void
      * @throws \Dibi\Exception
      */
     private function initTasks(): void {
-        $teamId = $this->getPresenter()->getLoggedTeam()->id_team;
-        $this->tasks = $this->tasksService->findSubmitAvailable($teamId)
-            ->fetchAll();
+
+        $this->tasks = $this->tasksService->findSubmitAvailable($this->teamId)->fetchAll();
 
         $this->tasksInfo = [];
         foreach ($this->tasks as $task) {
-            $this->tasksInfo[$task["id_task"]] = [
-                "sig_digits" => $task["real_sig_digits"],
-                "unit" => $task["answer_unit"],
-                "type" => $task["answer_type"],
-                "maxPoints" => $task["points"],
-                "curPoints" => $this->scoreService->getSingleTaskScore($teamId, $task),
+            $this->tasksInfo[$task['id_task']] = [
+                'sig_digits' => $task['real_sig_digits'],
+                'unit' => $task['answer_unit'],
+                'type' => $task['answer_type'],
+                'maxPoints' => $task['points'],
+                'curPoints' => $this->scoreService->getSingleTaskScore($this->teamId, $task),
             ];
         }
-        $this->getTemplate()->tasksInfo = $this->tasksInfo;
-        $this->getTemplate()->tasksInfoElement = self::TASK_INFO_ELEMENT;
-        $this->getTemplate()->submitElement = self::SUBMIT_ELEMENT;
+    }
 
-        $this->getTemplate()->realHint = _("Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1.");
-        $this->getTemplate()->expected = _("Očekávaný počet platných cifer");
-        $this->getTemplate()->unit = _("Jednotka");
-        $this->getTemplate()->maxPoints = _("Maximum bodů");
-        $this->getTemplate()->curPoints = _("Aktuálně bodů");
+    public function render(): void {
+        $this->template->tasks = $this->tasks;
+        $this->template->valid = $this->valid;
+        $this->template->tasksInfo = $this->tasksInfo;
+        $this->template->tasksInfoElement = self::TASK_INFO_ELEMENT;
+        $this->template->submitElement = self::SUBMIT_ELEMENT;
+
+        $this->template->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'answerForm.latte');
+        parent::render();
     }
 }

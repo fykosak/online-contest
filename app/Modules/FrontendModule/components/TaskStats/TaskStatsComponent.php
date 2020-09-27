@@ -17,4 +17,10 @@ class TaskStatsComponent extends BaseComponent {
     public function beforeRender(): void {
         $this->getTemplate()->tasks = $this->tasksService->findAllStats();
     }
+
+
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'taskStats.latte');
+        parent::render();
+    }
 }

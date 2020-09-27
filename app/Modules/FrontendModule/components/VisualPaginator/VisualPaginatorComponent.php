@@ -32,13 +32,14 @@ class VisualPaginatorComponent extends BaseComponent {
     public $page = 1;
 
     public function getPaginator(): Paginator {
-        if (!$this->paginator) {
-            $this->paginator = new Paginator;
+        if (!isset($this->paginator)) {
+            $this->paginator = new Paginator();
         }
         return $this->paginator;
     }
 
     public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'visualPaginator.latte');
         $paginator = $this->getPaginator();
         $page = $paginator->page;
         if ($paginator->pageCount < 2) {
@@ -71,5 +72,4 @@ class VisualPaginatorComponent extends BaseComponent {
         parent::loadState($params);
         $this->getPaginator()->page = $this->page;
     }
-
 }

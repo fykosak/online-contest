@@ -36,4 +36,9 @@ class ScoreListComponent extends BaseComponent {
         $this->getTemplate()->categories = $this->teamsService->getCategoryNames();
     }
 
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'scoreList.latte');
+        parent::render();
+    }
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\FrontendModule\Presenters;
+namespace FOL\Modules\PublicModule\Presenters;
 
 use App\Model\Authentication\TeamAuthenticator;
 use Dibi\Exception;

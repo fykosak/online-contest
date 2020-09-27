@@ -1,15 +1,12 @@
 <?php
 
-namespace App\FrontendModule\Presenters;
+namespace FOL\Modules\PublicModule\Presenters;
 
 use App\Model\Authentication\TeamAuthenticator;
 use ChatListComponent;
 use Dibi\Exception;
 use FOL\Model\ORM\ChatService;
-use LoginFormComponent;
-use Nette\Application\AbortException;
 use Nette\Mail\IMailer;
-use RecoverFormComponent;
 
 class DefaultPresenter extends BasePresenter {
 
@@ -25,23 +22,13 @@ class DefaultPresenter extends BasePresenter {
         $this->chatService = $chatService;
     }
 
-    /**
-     * @return void
-     * @throws AbortException
-     */
-    public function actionLogout(): void {
-        $this->getUser()->logout();
-        $this->redirect("default");
+    protected function startUp(): void {
+        parent::startUp();
+        if ($this->getAction() === 'chat') {
+            $this->forward(':Game:Chat:default');
+        }
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
-    public function renderChat(): void {
-        $this->getComponent("chat")->setSource($this->chatService->findAll($this->lang));
-        $this->setPageTitle(_("Diskuse (česká verze)"));
-    }
 
     /**
      * @return void
@@ -58,22 +45,6 @@ class DefaultPresenter extends BasePresenter {
         $this->changeViewByLang();
     }
 
-    public function renderLogin(): void {
-        $this->setPagetitle(_("Přihlásit se"));
-    }
-
-    /**
-     * @return void
-     * @throws Exception
-     * @throws AbortException
-     */
-    public function renderRecover(): void {
-        $this->setPageTitle(_("Obnova hesla"));
-        if (!$this->yearsService->isGameMigrated()) {
-            $this->flashMessage(_("Změnu hesla proveďte editací vaší přihlášky."), "danger");
-            $this->redirect("default");
-        }
-    }
 
     public function renderRules(): void {
         $this->setPagetitle(_("Pravidla"));
@@ -97,19 +68,5 @@ class DefaultPresenter extends BasePresenter {
     public function renderOtherEvents(): void {
         $this->setPagetitle(_("Další akce"));
         $this->changeViewByLang();
-    }
-
-    // ----- PROTECTED METHODS
-
-    protected function createComponentChat(): ChatListComponent {
-        return new ChatListComponent($this->getContext());
-    }
-
-    protected function createComponentLogin(): LoginFormComponent {
-        return new LoginFormComponent($this->getContext(),$this->authenticator);
-    }
-
-    protected function createComponentRecover(): RecoverFormComponent {
-        return new RecoverFormComponent($this->getContext());
     }
 }

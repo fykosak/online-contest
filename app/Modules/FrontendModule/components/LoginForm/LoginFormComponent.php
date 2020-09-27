@@ -50,9 +50,9 @@ class LoginFormComponent extends BaseComponent {
         }
 
         if ($this->yearsService->isGameActive()) {
-            $this->getPresenter()->redirect("Game:default");
+            $this->getPresenter()->redirect(":Game:Game:default");
         } else {
-            $this->getPresenter()->redirect("Team:default");
+            $this->getPresenter()->redirect(":Public:Team:default");
         }
     }
 
@@ -75,4 +75,8 @@ class LoginFormComponent extends BaseComponent {
         return $form;
     }
 
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'loginForm.latte');
+        parent::render();
+    }
 }

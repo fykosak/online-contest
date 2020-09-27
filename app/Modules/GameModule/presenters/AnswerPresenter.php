@@ -1,11 +1,11 @@
 <?php
 
-namespace App\GameModule\Presenters;
+namespace FOL\Modules\GameModule\Presenters;
 
-use FOL\Model\AnswerValidation\Factory\IValidationFactory;
-use FOL\Model\Task\Factory\TaskFactory;
+use Dibi\Exception;
+use FOL\Components\SingleAnswerComponent;
+use FOL\Model\ORM\AnswersService;
 use Nette\Application\BadRequestException;
-use Nette\Application\UI\Form;
 
 class AnswerPresenter extends BasePresenter {
     /**
@@ -14,30 +14,59 @@ class AnswerPresenter extends BasePresenter {
      */
     public $id;
 
-    private TaskFactory $factory;
+    private AnswersService $answersService;
+
+    public function injectSecondary(AnswersService $answersService): void {
+        $this->answersService = $answersService;
+    }
 
     /**
      * @return void
      * @throws BadRequestException
      */
     public function actionEntry(): void {
-        $factory = $this->getContext()->getService('tasks.fol2020.' . $this->id);
-        if (!$factory instanceof TaskFactory) {
-            throw new BadRequestException();
-        }
-        $this->factory = $factory;
+        throw new BadRequestException();
     }
 
-    protected function createComponentEntryForm(): Form {
-        $control = new Form();
-        $control->addComponent($this->factory->createContainer('cs'), 'answer');
-        $control->addSubmit('submit', _('Submit'));
-
-        $control->onSuccess[] = function (Form $form) {
-            $status = $this->factory->getAnswerFactory()->validate($form->getValues(true)['answer']);
-            $this->flashMessage($status, 'info');
-        };
-        return $control;
+    /**
+     * @return void
+     * @throws Exception
+     */
+    public function actionHistory(): void {
+        //has to be loaded in action due to pagination
+        $this->getComponent("answerHistory")->setSource(
+            $this->answersService->findAll()
+                ->where("[id_team] = %i", $this->getLoggedTeam()->id_team)
+                ->orderBy("inserted", "DESC")
+        );
+        $this->getComponent("answerHistory")->setLimit(50);
     }
 
+    public function renderDefault(): void {
+        $this->setPageTitle(_("Odevzdat řešení"));
+    }
+
+    public function renderEntry(): void {
+        $this->setPageTitle(_("Odevzdat řešení"));
+    }
+
+    public function renderHistory(): void {
+        $this->setPageTitle(_("Historie odpovědí"));
+    }
+
+    /**
+     * @return SingleAnswerComponent
+     * @throws BadRequestException
+     */
+    protected function createComponentEntryForm(): SingleAnswerComponent {
+        return new SingleAnswerComponent($this->getContext(), $this->id);
+    }
+
+    protected function createComponentAnswerForm(): \AnswerFormComponent {
+        return new \AnswerFormComponent($this->getContext(), $this->getLoggedTeam()->id_team);
+    }
+
+    protected function createComponentAnswerHistory(): \AnswerHistoryComponent {
+        return new \AnswerHistoryComponent($this->getContext());
+    }
 }

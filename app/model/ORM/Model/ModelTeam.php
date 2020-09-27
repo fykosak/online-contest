@@ -2,7 +2,7 @@
 
 namespace FOL\Model\ORM\Model;
 
-use FOL\Model\AnswerValidation\Factory\IValidationFactory;
+use FOL\Model\Task\Validation\Factory\IValidationFactory;
 
 /**
  * Class ModelTeam

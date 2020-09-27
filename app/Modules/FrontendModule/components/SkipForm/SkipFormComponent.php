@@ -4,11 +4,13 @@ use FOL\Model\ORM\AnswersService;
 use FOL\Model\ORM\GroupsService;
 use FOL\Model\ORM\ScoreService;
 use FOL\Model\ORM\TasksService;
+use FOL\Model\ORM\YearsService;
 use Nette\Application\AbortException;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
 use Nette\Http\Response;
 use Nette\InvalidStateException;
+use Nette\Security\User;
 use Tracy\Debugger;
 
 class SkipFormComponent extends BaseComponent {
@@ -17,17 +19,23 @@ class SkipFormComponent extends BaseComponent {
     protected GroupsService $groupsService;
     protected TasksService $tasksService;
     protected ScoreService $scoreService;
+    protected YearsService $yearsService;
+    protected User $user;
 
     public function injectPrimary(
         AnswersService $answersService,
         GroupsService $groupsService,
         TasksService $tasksService,
-        ScoreService $scoreService
+        ScoreService $scoreService,
+        YearsService $yearsService,
+        User $user
     ): void {
         $this->answersService = $answersService;
         $this->groupsService = $groupsService;
         $this->tasksService = $tasksService;
         $this->scoreService = $scoreService;
+        $this->yearsService = $yearsService;
+        $this->user = $user;
     }
 
     /**
@@ -72,6 +80,7 @@ class SkipFormComponent extends BaseComponent {
             $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
             //Debug::processException($e, TRUE);
             Debugger::log($e);
+            Debugger::barDump($e);
             //error_log($e->getTraceAsString());
             return;
         }
@@ -121,11 +130,12 @@ class SkipFormComponent extends BaseComponent {
         return $form;
     }
 
-    protected function startUp(): void {
-        parent::startUp();
-        if (!$this->getPresenter()->user->isLoggedIn()) {
-            throw new InvalidStateException("There is no logged team.");
-        }
+    /**
+     * @return void
+     * @throws \Dibi\Exception
+     */
+    protected function beforeRender(): void {
+        parent::beforeRender();
         if ($this->yearsService->isGameEnd()) {
             $this->flashMessage(_("Čas vypršel."), "danger");
             $this->getTemplate()->valid = false;
@@ -135,5 +145,18 @@ class SkipFormComponent extends BaseComponent {
         } else {
             $this->getTemplate()->valid = true;
         }
+    }
+
+    protected function startUp(): void {
+        parent::startUp();
+        if (!$this->user->isLoggedIn()) {
+            throw new InvalidStateException("There is no logged team.");
+        }
+    }
+
+
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'skipForm.latte');
+        parent::render();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\FrontendModule\Presenters;
+namespace FOL\Modules\PublicModule\Presenters;
 
 use Dibi\Exception;
 use FOL\Model\ORM\ReportService;

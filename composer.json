@@ -23,7 +23,7 @@
     "nette/safe-stream": "v2.4.1",
     "nette/security": "v2.4.4",
     "nette/utils": "v2.5.4",
-    "latte/latte": "v2.4.8",
+    "latte/latte": "v2.7.1",
     "tracy/tracy": "v2.6.8",
     "dg/adminer-custom": ">= 1.6",
     "dibi/dibi": "v3.2.4",

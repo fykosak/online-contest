@@ -1,5 +1,6 @@
 <?php
 
+use App\Model\Translator\GettextTranslator;
 use App\Tools\InterlosTemplate;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\ITemplate;
@@ -24,7 +25,7 @@ abstract class BaseComponent extends Control {
         return $this->container;
     }
 
-    public function injectTranslator(ITranslator $translator) {
+    public function injectTranslator(ITranslator $translator): void {
         $this->translator = $translator;
     }
 
@@ -36,28 +37,15 @@ abstract class BaseComponent extends Control {
     /**
      * @return ITemplate
      * @throws DataNotFoundException
-     * @throws NullPointerException
      */
     protected function createTemplate(): ITemplate {
         /** @var Template $template */
         $template = parent::createTemplate();
-
-        $componentName = strtr($this->getReflection()->getName(), ["Component" => ""]);
-
-        $template->setFile(
-            dirname(__FILE__) . "/" .
-            $componentName . "/" .
-            ExtraString::lowerFirst($componentName) . ".latte"
-        );
         $template->setTranslator($this->translator);
-        $template->getLatte()->addFilter('i18n', '\App\Model\Translator\GettextTranslator::i18nHelper');
-
+        $template->getLatte()->addFilter('i18n', function (...$args) {
+            return GettextTranslator::i18nHelper(...$args);
+        });
         return InterlosTemplate::loadTemplate($template);
-    }
-
-    protected function getPath(): string {
-        $componentName = strtr($this->getReflection()->getName(), ["Component" => ""]);
-        return dirname(__FILE__) . "/" . $componentName . "/";
     }
 
     protected function beforeRender(): void {

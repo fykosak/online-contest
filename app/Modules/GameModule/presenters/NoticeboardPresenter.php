@@ -1,6 +1,6 @@
 <?php
 
-namespace App\FrontendModule\Presenters;
+namespace FOL\Modules\GameModule\Presenters;
 
 use Dibi\Exception;
 use FOL\Model\ORM\NotificationService;

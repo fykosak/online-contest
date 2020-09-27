@@ -44,4 +44,9 @@ class NotificationFormComponent extends BaseComponent {
         };
         return $form;
     }
+
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'notificationForm.latte');
+        parent::render();
+    }
 }

@@ -27,6 +27,7 @@ class AnswerStatsComponent extends BaseComponent {
      * @throws \Dibi\Exception
      */
     public function render($taskId = null): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'answerStats.latte');
         if (!is_numeric($taskId)) {
             throw new NotSupportedException();
         }

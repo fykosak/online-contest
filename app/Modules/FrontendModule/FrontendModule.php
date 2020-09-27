@@ -1,6 +1,6 @@
 <?php
 
-namespace App\FrontendModule;
+namespace FOL\Modules\FrontendModule;
 
 use Nette\Application\IRouter;
 use Nette\Application\Routers\RouteList;
@@ -16,15 +16,21 @@ class FrontendModule {
             'presenter' => 'Default',
             'action' => 'default',
         ], Route::ONE_WAY);
-        $router[] = new Route('<lang>/<presenter>/<action>', [
+        $router[] = new Route('<lang>/frontend/<presenter>/<action>', [
             'module' => 'Frontend',
-            'presenter' => 'Default',
             'action' => 'default',
             'lang' => null,
         ]);
 
-        $router[] = new Route('<lang>/game/<presenter>/<action>/<id>', [
+        $router[] = new Route('<lang>/game/[<presenter>[/<action>[/<id>]]]', [
             'module' => 'Game',
+            'action' => 'default',
+            'lang' => null,
+        ]);
+
+        $router[] = new Route('<lang>/[<presenter>/[<action>/[<id>]]]', [
+            'module' => 'Public',
+            'presenter' => 'Default',
             'action' => 'default',
             'lang' => null,
         ]);

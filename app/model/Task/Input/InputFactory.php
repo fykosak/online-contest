@@ -37,6 +37,6 @@ class InputFactory {
     }
 
     public function createInput(string $lang): IComponent {
-        return new TextInput($this->getName($lang));
+        return new AnswerInputControl($this->getName($lang));
     }
 }

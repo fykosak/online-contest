@@ -27,6 +27,7 @@ class ResultsComponent extends BaseComponent {
 
     public function render($display = 'all'): void {
         $this->display = $display;
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'results.latte');
         parent::render();
     }
 
@@ -66,6 +67,5 @@ class ResultsComponent extends BaseComponent {
         $this->getTemplate()->maxPoints = $maxPoints;
         $this->getTemplate()->maxBonus = $maxBonus;
     }
-
 }
 

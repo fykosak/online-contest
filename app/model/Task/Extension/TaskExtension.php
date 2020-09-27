@@ -15,7 +15,6 @@ use FOL\Model\Task\Factory\TaskFactory;
 use Nette\DI\CompilerExtension;
 use Nette\DI\ServiceDefinition;
 use Nette\DI\Statement;
-use Tracy\Debugger;
 
 /**
  * Class AnswerExtension
@@ -59,7 +58,6 @@ class TaskExtension extends CompilerExtension {
             ->addSetup('setAnswerFactory', [$answerFactory]);
 
         foreach ($taskData['inputs'] as $index => $inputData) {
-            Debugger::barDump($inputData);
             $inputFactory = $this->createInputFactory($uid . '.' . $index, $inputData);
             $factory->addSetup('addInputFactory', [$index, $inputFactory]);
         }

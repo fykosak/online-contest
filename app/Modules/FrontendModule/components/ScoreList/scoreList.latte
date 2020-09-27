@@ -1,7 +1,7 @@
-{var $teams => $teams->fetchAll()}
-{var $score => $score->fetchAssoc("id_team,id_task")}
-{var $bonus => $bonus->fetchAssoc("id_team")}
-{var $penality => $penality->fetchAssoc("id_team")}
+{var $teams = $teams->fetchAll()}
+{var $score = $score->fetchAssoc("id_team,id_task")}
+{var $bonus = $bonus->fetchAssoc("id_team")}
+{var $penality = $penality->fetchAssoc("id_team")}
 
 <div id="score-stats-wrapper">
     <div id="score-left">
@@ -75,7 +75,7 @@
                         {if $score[$team->id_team][$task->id_task]->skipped == 1}
                             <td class="skipped" title="{$score[$team->id_team][$task->id_task]->inserted}">S</td>
                         {else}
-                        {var ratio => floor(round(9 . 9 * $score[$team->id_team][$task->id_task]->points / $task->points) / 2)}
+                        {var $ratio = floor(round(9 . 9 * $score[$team->id_team][$task->id_task]->points / $task->points) / 2)}
                             <td class="done ratio-{$ratio}"
                                 title="{$score[$team->id_team][$task->id_task]->inserted}">{$score[$team->id_team][$task->id_task]->points}</td>
                         {/if}

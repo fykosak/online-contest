@@ -49,8 +49,8 @@ abstract class BaseListComponent extends BaseComponent {
 
     protected function createComponentPaginator(): VisualPaginatorComponent {
         $paginator = new VisualPaginatorComponent($this->getContext());
-        $paginator->paginator->itemsPerPage = $this->getLimit();
-        $paginator->paginator->itemCount = $this->getSource()->count();
+        $paginator->getPaginator()->itemsPerPage = $this->getLimit();
+        $paginator->getPaginator()->itemCount = $this->getSource()->count();
         return $paginator;
     }
 

@@ -28,4 +28,9 @@ class AnswerHistoryComponent extends BaseListComponent {
         $this->getTemplate()->tasks = $this->tasksService->findAll()->fetchAssoc("id_task");
     }
 
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'answerHistory.latte');
+        parent::render();
+    }
+
 }

@@ -6,7 +6,7 @@
  * @author Jan Papousek
  */
 
-use App\FrontendModule\FrontendModule;
+use FOL\Modules\FrontendModule\FrontendModule;
 use FOL\Model\ORM\CompetitorsService;
 use FOL\Model\ORM\SchoolsService;
 use FOL\Model\ORM\TeamsService;
@@ -45,7 +45,6 @@ class TeamFormComponent extends BaseComponent {
      * @throws AbortException
      * @throws DataNotFoundException
      * @throws DriverException
-     * @throws NullPointerException
      * @throws \Dibi\Exception
      */
     public function insertSubmitted(Form $form): void {
@@ -327,6 +326,12 @@ class TeamFormComponent extends BaseComponent {
         } else {
             return $competitors;
         }
+    }
+
+
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'teamForm.latte');
+        parent::render();
     }
 
 }

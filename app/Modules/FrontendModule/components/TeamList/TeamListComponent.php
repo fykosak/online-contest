@@ -31,4 +31,10 @@ class TeamListComponent extends BaseListComponent {
         }
         $this->getTemplate()->categories = $this->teamsService->getCategoryNames();
     }
+
+
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'teamList.latte');
+        parent::render();
+    }
 }

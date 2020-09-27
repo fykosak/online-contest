@@ -7,11 +7,11 @@ php:
 application:
     errorPresenter: Frontend:Error
     mapping:
-        *: App\*Module\Presenters\*Presenter
+        *: FOL\Modules\*Module\Presenters\*Presenter
 
 session:
     expiration: 14 days
-    cookie_secure: true
+    #cookie_secure: true
 
 services:
     - App\Model\Authentication\TeamAuthenticator
@@ -19,7 +19,7 @@ services:
     - App\Model\Authentication\CronAuthenticator(%cron.key%)
     - App\Model\Translator\GettextTranslator
 
-    router: App\FrontendModule\FrontendModule::createRouter
+    router: FOL\Modules\FrontendModule\FrontendModule::createRouter
     - FOL\Model\ORM\AnswersService
     - FOL\Model\ORM\ChatService
     - FOL\Model\ORM\CompetitorsService
@@ -32,6 +32,8 @@ services:
     - FOL\Model\ORM\TasksService
     - FOL\Model\ORM\TeamsService
     - FOL\Model\ORM\YearsService
+
+    - FOL\Model\ORM\Service\ServiceInstance
     nette.userStorage:
         setup:
             - setNamespace("olfyziklani")

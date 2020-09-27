@@ -88,8 +88,8 @@ class ChatListComponent extends BaseListComponent {
      */
     protected function createComponentPaginator(): VisualPaginatorComponent {
         $paginator = new VisualPaginatorComponent($this->getContext());
-        $paginator->paginator->itemsPerPage = $this->getLimit();
-        $paginator->paginator->itemCount = $this->chatService->findAllRoot($this->getPresenter()->lang)->count();
+        $paginator->getPaginator()->itemsPerPage = $this->getLimit();
+        $paginator->getPaginator()->itemCount = $this->chatService->findAllRoot($this->getPresenter()->lang)->count();
         return $paginator;
     }
 
@@ -131,4 +131,9 @@ class ChatListComponent extends BaseListComponent {
 //		return $form;
 //	}
 
+
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'chatList.latte');
+        parent::render();
+    }
 }

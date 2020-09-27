@@ -18,4 +18,9 @@ class NotificationMessagesComponent extends BaseComponent {
         parent::beforeRender();
         $this->template->gameEnd = $this->yearsService->findCurrent()->game_end->getTimestamp();
     }
+
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'notificationMessages.latte');
+        parent::render();
+    }
 }

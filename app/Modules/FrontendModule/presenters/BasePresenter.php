@@ -1,24 +1,24 @@
 <?php
 
-namespace App\FrontendModule\Presenters;
+namespace FOL\Modules\FrontendModule\Presenters;
 
-use ClockComponent;
 use DataNotFoundException;
 use Dibi\Exception;
 use Dibi\Row;
 use FlashMessagesComponent;
 use App\Model\Translator\GettextTranslator;
 use App\Tools\InterlosTemplate;
+use FOL\Components\Navigation\Navigation;
+use FOL\Components\Navigation\NavItem;
 use FOL\Model\ORM\TeamsService;
 use FOL\Model\ORM\YearsService;
 use Nette\Application\AbortException;
 use Nette\Application\UI\ITemplate;
-use Nette\Application\UI\Presenter;
 use Nette\Localization\ITranslator;
 use NotificationMessagesComponent;
-use NullPointerException;
+use Tracy\Debugger;
 
-abstract class BasePresenter extends Presenter {
+abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
 
     /** @persistent */
     public $lang; // = 'cs';
@@ -45,10 +45,6 @@ abstract class BasePresenter extends Presenter {
 
 // ----- PROTECTED METHODS
 
-    protected function createComponentClock(): ClockComponent {
-        return new ClockComponent($this->getContext());
-    }
-
     protected function createComponentFlashMessages(): FlashMessagesComponent {
         return new FlashMessagesComponent($this->getContext());
     }
@@ -60,7 +56,6 @@ abstract class BasePresenter extends Presenter {
     /**
      * @return ITemplate
      * @throws DataNotFoundException
-     * @throws NullPointerException
      */
     protected function createTemplate(): ITemplate {
         //$this->oldLayoutMode = false;
@@ -88,11 +83,45 @@ abstract class BasePresenter extends Presenter {
     /**
      * @return void
      * @throws AbortException
+     * @throws Exception
      */
     protected function startUp(): void {
         parent::startup();
         $this->machineRedirect();
         $this->localize();
+
+        /** @var Navigation $navigation */
+        $navigation = $this->getComponent('navigation');
+
+        $navigation->addNavItem(new NavItem(':Public:Default:lastYears', [], _('Archiv'), 'visible-sm-inline glyphicon glyphicon-compressed'));
+        $navigation->addNavItem(new NavItem(':Public:Default:rules', [], _('Pravidla'), 'visible-sm-inline glyphicon glyphicon-exclamation-sign'));
+        $navigation->addNavItem(new NavItem(':Public:Default:faq', [], _('FAQ'), 'visible-sm-inline glyphicon glyphicon-question-sign'));
+        $navigation->addNavItem(new NavItem(':Public:Default:howto', [], _('Návod'), 'visible-sm-inline glyphicon glyphicon-info-sign'));
+
+        if ($this->yearsService->isRegistrationStarted()) {
+            $navigation->addNavItem(new NavItem(':Public:Default:chat', [], _('Fórum'), 'visible-sm-inline glyphicon glyphicon-comment'));
+            $navigation->addNavItem(new NavItem(':Public:Team:list', [], _('Týmy'), 'visible-sm-inline glyphicon glyphicon-list'));
+            if ($this->yearsService->isGameStarted()) {
+                $navigation->addNavItem(new NavItem(':Public:Stats:default', [], _('Výsledky'), 'visible-sm-inline glyphicon glyphicon-stats'));
+                $navigation->addNavItem(new NavItem(':Frontend:Noticeboard:default', [], _('Nástěnka'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
+                if ($this->getUser()->isLoggedIn()) {
+                    $navigation->addNavItem(new NavItem(':Game:Game:default', [], _('Hra'), 'visible-sm-inline glyphicon glyphicon-tower'));
+                }
+            }
+        }
+
+        if ($this->yearsService->isRegistrationActive()) {
+            if (!$this->getUser()->isLoggedIn()) {
+                $navigation->addNavItem(new NavItem(':Public:Team:registration', [], _('Registrace'), 'visible - sm - inline glyphicon glyphicon-edit'));
+            }
+        }
+        if ($this->yearsService->isRegistrationStarted()) {
+            if (!$this->getUser()->isLoggedIn()) {
+                $navigation->addNavItem(new NavItem(':Public:Auth:login', [], _('Přihlásit se'), 'visible-sm-inline glyphicon glyphicon-log-in'));
+            } else {
+                $navigation->addNavItem(new NavItem(':Public:Auth:logout', [], _('Odhlásit se'), 'visible-sm-inline glyphicon glyphicon-log-out'));
+            }
+        }
     }
 
 // -------------- l12n ------------------
@@ -157,5 +186,9 @@ abstract class BasePresenter extends Presenter {
             }
         }
         return $this->loggedTeam;
+    }
+
+    protected function createComponentNavigation(): Navigation {
+        return new Navigation($this->getContext());
     }
 }

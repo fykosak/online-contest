@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="{$presenter->lang}">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     {if $presenter->getOpenGraphLang() == 'cs_CZ'}
         <meta property="og:locale" content="cs_CZ"/>
         <meta property="og:locale:alternate" content="en_US"/>
@@ -26,20 +25,13 @@
         <meta property="og:image" content="http://physicsbrawl.org/images/fyziklani-logo.png"/>
         <meta property="og:image:type" content="image/png"/>
     {/if}
-
-
-
     <link href="{$basePath}/favicon.png" rel="icon" type="image/png" />
-
-        <title>{_'Fyziklání online'}{ifset $pageTitle} &ndash; {$pageTitle}{/ifset}</title>
-
+    <title>{_'Fyziklání online'}{ifset $pageTitle} &ndash; {$pageTitle}{/ifset}</title>
 <!-- Bootstrap core CSS -->
 <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
     <link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet">
 
-
     <link href="{$basePath}/css/bootstrap-theme.min.css" rel="stylesheet">
-
 
     <link href="{$basePath}/css/flag-icon/flag-icon.min.css" rel="stylesheet">
 

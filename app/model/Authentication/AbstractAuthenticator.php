@@ -7,6 +7,7 @@ use Nette\Security\Identity;
 use Nette\Security\IIdentity;
 use Nette\Security\User;
 use Nette\SmartObject;
+use Tracy\Debugger;
 
 abstract class AbstractAuthenticator {
     use SmartObject;
