@@ -11,10 +11,9 @@ class CronAuthenticator extends AbstractAuthenticator {
 
     const ROLE = 'cron';
 
-    /** @var array */
-    private $cronKey;
+    private string $cronKey;
 
-    public function __construct($cronKey, User $user) {
+    public function __construct(string $cronKey, User $user) {
         parent::__construct($user);
         $this->cronKey = $cronKey;
     }

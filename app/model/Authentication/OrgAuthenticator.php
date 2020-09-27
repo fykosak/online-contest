@@ -11,11 +11,11 @@ class OrgAuthenticator extends AbstractAuthenticator {
 
     const ROLE = 'org';
 
-    private array $userlist;
+    private array $userList;
 
-    public function __construct(array $userlist, User $user) {
+    public function __construct(array $userList, User $user) {
         parent::__construct($user);
-        $this->userlist = $userlist;
+        $this->userList = $userList;
     }
 
     protected function authenticate(array $credentials): Identity {

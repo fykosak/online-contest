@@ -26,43 +26,23 @@
         <meta property="og:image" content="http://physicsbrawl.org/images/fyziklani-logo.png"/>
         <meta property="og:image:type" content="image/png"/>
     {/if}
-
-
-
-
     <link href="{$basePath}/favicon.png" rel="icon" type="image/png"/>
     <title>{_'Fyziklání online'}{ifset $pageTitle} &ndash; {$pageTitle}{/ifset}</title>
-
 <!-- Bootstrap core CSS -->
 <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
-
-
-
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-
-
-
-
     <link href="{$basePath}/css/flag-icon/flag-icon.min.css" rel="stylesheet"/>
-
-
 
     <link href="{$basePath}/css/main.css" rel="stylesheet"/>
 
@@ -74,10 +54,6 @@
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-27814405-2"></script>
-
-
-
-
 
 <script n:syntax="off">
     window.dataLayer = window.dataLayer || [];
@@ -94,29 +70,23 @@
 <body onload="fixNavbarIssue()">
 {block body}
 {control navigation}
-
-<div class="container" style="margin-top: 5rem">
-    <!-- PAGE TITLE -->
+<main class="container">
     {block #title}<h1 n:ifset="$pageTitle">{$pageTitle}</h1>{/block}
-        <!-- FLASH MESSAGES -->
-    {control flashMessages}
-    {if $control->yearsService->isGameActive()}
+        {control flashMessages}
+        {if $control->yearsService->isGameActive()}
         {control notificationMessages}
     {/if}
-        <!-- CONTENT -->
+        {include content}
+</main>
+<footer class="container text-center border-top">
+    <p class="pull-right small">{_'Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu'}
+        <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>.
+    </p>
+    <p>{if $presenter->lang == 'cs'}<a href="http://fykos.cz/">FYKOS.cz</a>{else}<a
+                href="http://fykos.org/">FYKOS.org</a>{/if}
+    </p>
+</footer>
 
-    {block content}{/block}
-
-    <hr>
-
-    <footer>
-        <p class="pull-right small">{_'Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu'}
-            <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>.
-        </p>
-        <p>{if $presenter->lang == 'cs'}<a href="http://fykos.cz/">FYKOS.cz</a>{else}<a href="http://fykos.org/">FYKOS.org</a>{/if}
-        </p>
-    </footer>
-</div> <!-- /container -->
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -124,7 +94,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
 <script src="{$basePath}/js/bootstrap.min.js"></script>
+
 <script src="{$basePath}/js/fix-navbar-issue.js"></script>
+
 <script src="{$basePath}/js/clock.js"></script>
 {$presenter->getCustomScript()|noescape}
 {block #scripts}{/block}

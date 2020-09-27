@@ -33,7 +33,6 @@ services:
     - FOL\Model\ORM\TeamsService
     - FOL\Model\ORM\YearsService
 
-    - FOL\Model\ORM\Service\ServiceInstance
     nette.userStorage:
         setup:
             - setNamespace("olfyziklani")

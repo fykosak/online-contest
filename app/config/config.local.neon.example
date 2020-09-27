@@ -52,7 +52,13 @@ parameters:
         imageHeight: 1024
         thumbnailHeight: 256
         jpgQuality: 80
-
+    competition:
+        name:
+            cs: FOL
+            en: FOL.en
+        link:
+            cs: http://online.fykos.local/cs/
+            en: http://online.fykos.local/en/
 #TODO not reimplemented yet
 #[common]
 #debug.enable = TRUE

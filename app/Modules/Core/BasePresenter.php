@@ -8,6 +8,7 @@ use Dibi\Row;
 use FlashMessagesComponent;
 use App\Model\Translator\GettextTranslator;
 use App\Tools\InterlosTemplate;
+use FOL\Components\Navigation\Navigation;
 use FOL\Model\ORM\TeamsService;
 use FOL\Model\ORM\YearsService;
 use Nette\Application\AbortException;
@@ -15,7 +16,6 @@ use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Localization\ITranslator;
 use NotificationMessagesComponent;
-use Tracy\Debugger;
 
 abstract class BasePresenter extends Presenter {
 
@@ -105,7 +105,7 @@ abstract class BasePresenter extends Presenter {
     }
 
     protected function detectLang($i18nConf): void {
-        if ($this->lang === null) {
+        if (!isset($this->lang)) {
             if (array_search($this->getHttpRequest()->getUrl()->host, explode(',', $i18nConf['en']['hosts'])) !== false) {
                 $this->lang = 'en';
             } else {
@@ -152,4 +152,9 @@ abstract class BasePresenter extends Presenter {
         }
         return $this->loggedTeam;
     }
+
+    protected function createComponentNavigation(): Navigation {
+        return new Navigation($this->getContext());
+    }
+
 }

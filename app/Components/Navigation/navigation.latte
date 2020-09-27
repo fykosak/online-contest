@@ -4,7 +4,7 @@
 {varType array $competition}
 {varType string $lang}
 {block content}
-    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-fol" role="navigation">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-fol" role="navigation">
         <div class="container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,9 +26,9 @@
                     {/foreach}
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item  mr-3"><span class="nav-text real-clock" data-timestamp="{1000 * time()}"></span></li>
+                    <span class="navbar-text real-clock" data-timestamp="{1000 * time()}"></span>
                     <li class="nav-item" n:if="$control->getPresenter()->lang == 'cs'">
-                        <a href="{plink this, lang => 'en'}">
+                        <a class="nav-link" href="{plink this, lang => 'en'}">
                             <img src="{$basePath}/images/icons/us-icon.png" alt="English" title="Switch to English"/>
                         </a>
                     </li>

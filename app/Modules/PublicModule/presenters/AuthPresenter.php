@@ -15,13 +15,14 @@ class AuthPresenter extends BasePresenter {
     public function injectSecondary(TeamAuthenticator $authenticator): void {
         $this->authenticator = $authenticator;
     }
+
     /**
      * @return void
      * @throws AbortException
      */
     public function actionLogout(): void {
         $this->getUser()->logout();
-        $this->redirect('default');
+        $this->redirect(':Public:Default:default');
     }
 
     public function renderLogin(): void {
@@ -37,7 +38,7 @@ class AuthPresenter extends BasePresenter {
         $this->setPageTitle(_('Obnova hesla'));
         if (!$this->yearsService->isGameMigrated()) {
             $this->flashMessage(_('Změnu hesla proveďte editací vaší přihlášky.'), 'danger');
-            $this->redirect('default');
+            $this->redirect(':Public:Default:default');
         }
     }
 
