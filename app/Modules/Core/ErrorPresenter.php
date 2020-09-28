@@ -15,7 +15,6 @@ class ErrorPresenter extends BasePresenter {
         $this->logger = $logger;
     }
 
-
     /**
      * @param Exception
      * @return void
@@ -39,5 +38,4 @@ class ErrorPresenter extends BasePresenter {
             $this->terminate();
         }
     }
-
 }

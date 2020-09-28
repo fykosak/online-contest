@@ -11,7 +11,6 @@ use Nette\Localization\ITranslator;
 abstract class BaseComponent extends Control {
 
     protected Container $container;
-
     protected ITranslator $translator;
 
     public function __construct(Container $container) {

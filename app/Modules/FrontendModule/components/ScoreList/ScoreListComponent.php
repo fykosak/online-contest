@@ -40,5 +40,4 @@ class ScoreListComponent extends BaseComponent {
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'scoreList.latte');
         parent::render();
     }
-
 }

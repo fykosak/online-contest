@@ -98,5 +98,4 @@ class RecoverFormComponent extends BaseComponent {
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'recoverForm.latte');
         parent::render();
     }
-
 }

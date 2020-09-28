@@ -10,7 +10,6 @@ class ChatPresenter extends BasePresenter {
     protected ChatService $chatService;
 
     public function injectSecondary(ChatService $chatService): void {
-
         $this->chatService = $chatService;
     }
 

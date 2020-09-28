@@ -61,7 +61,6 @@ class VisualPaginatorComponent extends BaseComponent {
         parent::render();
     }
 
-
     /**
      * Loads state informations.
      * @param array

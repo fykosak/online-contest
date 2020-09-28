@@ -118,20 +118,6 @@ class ChatListComponent extends BaseListComponent {
         return $form;
     }
 
-//	protected function createComponentChatForm($name) {
-//            //throw new Exception;
-//		$form = new BaseForm($this, $name);
-//
-//		$form->addTextArea("content")
-//				->addRule(Form::FILLED, "Obsah příspěvku není vyplněn.");
-//
-//		$form->addSubmit("chatSubmit","Přidat příspěvek");
-//		$form->onSubmit[] = array($this, "chatSubmitted");
-//
-//		return $form;
-//	}
-
-
     public function render(): void {
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'chatList.latte');
         parent::render();

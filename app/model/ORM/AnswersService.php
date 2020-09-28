@@ -51,13 +51,13 @@ class AnswersService extends AbstractService {
     }
 
     /**
-     * @param null $team
+     * @param int|null $team
      * @return DataSource
      * @throws Exception
      */
-    public function findAllCorrect($team = null): DataSource {
+    public function findAllCorrect(?int $team = null): DataSource {
         $source = $this->getDibiConnection()->dataSource("SELECT * FROM [view_correct_answer]");
-        if (!empty($team)) {
+        if (!is_null($team)) {
             $source->where("[id_team] = %i", $team);
         }
         return $source;
@@ -72,7 +72,7 @@ class AnswersService extends AbstractService {
      * @return Result|int
      * @throws Exception
      */
-    public function insert($team, $task, $solution, $period, $correct) {
+    public function insert(int $team, $task, $solution, $period, $correct) {
 
         $this->getDibiConnection()->begin();
         // Correct answers of the team

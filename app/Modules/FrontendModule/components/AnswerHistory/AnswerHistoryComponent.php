@@ -32,5 +32,4 @@ class AnswerHistoryComponent extends BaseListComponent {
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'answerHistory.latte');
         parent::render();
     }
-
 }

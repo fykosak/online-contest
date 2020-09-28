@@ -3,7 +3,6 @@
 namespace FOL;
 
 use Nette\Configurator;
-use Nette\Utils\Finder;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -23,9 +22,6 @@ class Bootstrap {
 
         $configurator->addConfig(__DIR__ . '/config/config.neon');
         $configurator->addConfig(__DIR__ . '/config/config.local.neon');
-        foreach (Finder::findFiles('*.neon')->from(__DIR__ . '/data/') as $file) {
-            $configurator->addConfig($file->getRealPath());
-        }
         return $configurator;
     }
 }

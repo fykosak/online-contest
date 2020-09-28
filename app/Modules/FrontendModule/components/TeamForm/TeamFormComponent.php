@@ -328,10 +328,8 @@ class TeamFormComponent extends BaseComponent {
         }
     }
 
-
     public function render(): void {
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'teamForm.latte');
         parent::render();
     }
-
 }

@@ -19,9 +19,7 @@ class CronPresenter extends BasePresenter {
     private Cache $cache;
 
     private CronAuthenticator $authenticator;
-
     private TasksService $tasksService;
-
     protected Connection $connection;
 
     public function injectSecondary(IStorage $storage, CronAuthenticator $authenticator, TasksService $tasksService, Connection $connection): void {
@@ -83,11 +81,6 @@ class CronPresenter extends BasePresenter {
         }
     }
 
-//    private function isCronAccess() {
-//        $keyGet = $this->getHttpRequest()->getQuery("cron-key");
-//        $keyConf = $this->context->parameters['cron']['key'];
-//        return isset($keyGet) && $keyConf == $keyGet;
-//    }
     /**
      * @return void
      * @throws AbortException

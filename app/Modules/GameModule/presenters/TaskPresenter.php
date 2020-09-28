@@ -55,6 +55,5 @@ class TaskPresenter extends BasePresenter {
         $this->template->skippedTasks = $skippedTasks;
         $this->template->unsolvedTasks = $unsolvedTasks;
         $this->template->missedTasks = $missedTasks;
-
     }
 }

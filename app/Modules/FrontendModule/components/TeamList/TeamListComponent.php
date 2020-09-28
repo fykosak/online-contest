@@ -6,7 +6,6 @@ use FOL\Model\ORM\TeamsService;
 class TeamListComponent extends BaseListComponent {
 
     protected TeamsService $teamsService;
-
     protected CompetitorsService $competitorsService;
 
     public function injectPrimary(CompetitorsService $competitorsService, TeamsService $teamsService): void {
@@ -31,7 +30,6 @@ class TeamListComponent extends BaseListComponent {
         }
         $this->getTemplate()->categories = $this->teamsService->getCategoryNames();
     }
-
 
     public function render(): void {
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'teamList.latte');

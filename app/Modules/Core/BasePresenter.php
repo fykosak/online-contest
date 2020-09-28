@@ -156,5 +156,4 @@ abstract class BasePresenter extends Presenter {
     protected function createComponentNavigation(): Navigation {
         return new Navigation($this->getContext());
     }
-
 }

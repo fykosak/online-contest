@@ -12,7 +12,6 @@ use Tracy\Debugger;
 class LoginFormComponent extends BaseComponent {
 
     protected AbstractAuthenticator $authenticator;
-
     public YearsService $yearsService;
 
     public function __construct(Container $container, AbstractAuthenticator $authenticator) {

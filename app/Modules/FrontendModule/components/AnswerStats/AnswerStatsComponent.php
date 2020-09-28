@@ -8,9 +8,7 @@ use Nette\NotSupportedException;
 class AnswerStatsComponent extends BaseComponent {
 
     private AnswersService $answersModel;
-
     private TasksService $tasksModel;
-
     private TeamsService $teamsModel;
 
     private $taskId;

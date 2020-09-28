@@ -41,7 +41,6 @@ database:
     conventions: 'discovered'
 extensions:
     dibi: Dibi\Bridges\Nette\DibiExtension22
-    tasks: FOL\Model\Task\Extension\TaskExtension
 
 includes:
         - acl.neon

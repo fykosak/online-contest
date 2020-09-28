@@ -19,7 +19,7 @@ class CliPresenter extends Presenter {
      * @return void
      * @throws \Dibi\Exception
      */
-    public function actionDefault() {
+    public function actionDefault(): void {
         $this->year = $this->getParameter('year', 1);
         $teams = $this->getParameter('teams', 10);
         $answers = $this->getParameter('answers', 100);
