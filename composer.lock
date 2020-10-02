@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "b8ec5f4fa6899086691bf538ba985951",
@@ -155,16 +155,16 @@
         },
         {
             "name": "nette/application",
-            "version": "v2.3.13",
+            "version": "v2.3.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/application.git",
-                "reference": "ab1ed67f4b85e1be7af5d13bf00de61391544be6"
+                "reference": "cb1ff62a74dd415092904179cd2d488ffc7215d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/application/zipball/ab1ed67f4b85e1be7af5d13bf00de61391544be6",
-                "reference": "ab1ed67f4b85e1be7af5d13bf00de61391544be6",
+                "url": "https://api.github.com/repos/nette/application/zipball/cb1ff62a74dd415092904179cd2d488ffc7215d6",
+                "reference": "cb1ff62a74dd415092904179cd2d488ffc7215d6",
                 "shasum": ""
             },
             "require": {
@@ -183,7 +183,8 @@
                 "nette/di": "~2.3",
                 "nette/forms": "~2.2",
                 "nette/robot-loader": "~2.2",
-                "nette/tester": "~1.3"
+                "nette/tester": "~1.3",
+                "nette/utils": ">2.2 <2.5"
             },
             "suggest": {
                 "latte/latte": "Allows using Latte in templates",
@@ -213,7 +214,7 @@
             ],
             "description": "Nette Application MVC Component",
             "homepage": "https://nette.org",
-            "time": "2016-06-17T17:40:16+00:00"
+            "time": "2020-08-25T01:50:08+00:00"
         },
         {
             "name": "nette/bootstrap",
@@ -864,6 +865,7 @@
             ],
             "description": "Nette PHP Reflection Component",
             "homepage": "https://nette.org",
+            "abandoned": true,
             "time": "2016-03-12T14:57:07+00:00"
         },
         {
@@ -1270,5 +1272,6 @@
     "platform": {
         "php": ">= 5.3.7"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
