@@ -1,14 +1,26 @@
 <?php
 
-use Nette\Application\UI\Form,
-    Nette\ComponentModel\IContainer,
-    App\Model\Interlos,
-    Nette\Http\Request;
+use FOL\Model\ORM\YearsService;
 
-class NotificationMessagesComponent extends BaseComponent
-{
-    public function beforeRender() {
+class NotificationMessagesComponent extends BaseComponent {
+
+    protected YearsService $yearsService;
+
+    public function injectYearsService(YearsService $yearsService): void {
+        $this->yearsService = $yearsService;
+    }
+
+    /**
+     * @return void
+     * @throws \Dibi\Exception
+     */
+    public function beforeRender(): void {
         parent::beforeRender();
-        $this->template->gameEnd = Interlos::getCurrentYear()->game_end->getTimestamp();
+        $this->template->gameEnd = $this->yearsService->findCurrent()->game_end->getTimestamp();
+    }
+
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'notificationMessages.latte');
+        parent::render();
     }
 }

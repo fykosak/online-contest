@@ -7,41 +7,49 @@
 
 namespace App\Tools;
 
-use Nette;
+use App\Model\Translator\GettextTranslator;
+use DataNotFoundException;
+use Nette\SmartObject;
+use Texy\Texy;
 
-final class Helpers extends Nette\Object {
+final class Helpers {
+    use SmartObject;
 
-    /** @var \Texy */
-    private static $texy;
-
-    final private function  __construct() {
-
-    }
+    /** @var Texy */
+    private static Texy $texy;
 
     /**
      * It returns the callback for helper with given name
      * @param string $helper The name of helper.
      * @return callback The callback to the helper.
-     * @throws NullPointerException if the $helper is empty.
      * @throws DataNotFoundException if the helper does not exist.
      */
-    public static function getHelper($helper) {
-	if (empty($helper)) {
-	    throw new \NullPointerException("helper");
-	}
-	switch ($helper) {
-	    case "date": return array(get_class(), 'dateFormatHelper');
-		break;
-	    case "time": return array(get_class(), 'timeFormatHelper');
-		break;
-	    case "translate": return array(get_class(), 'translateHelper');
-		break;
-	    case "timeOnly": return array(get_class(), "timeOnlyHelper");
-		break;
-	    case 'texy': return array(get_class(), "texyHelper");
-	    default:
-		throw new \DataNotFoundException("helper: $helper");
-	}
+    public static function getHelper(string $helper): callable {
+        switch ($helper) {
+            case 'date':
+                return function (...$args) {
+                    return self::dateFormatHelper(...$args);
+                };
+            case 'time':
+                return function (...$args) {
+                    return self::timeFormatHelper(...$args);
+                };
+            case 'translate':
+            case 'i18n':
+                return function (...$args) {
+                    return GettextTranslator::i18nHelper(...$args);
+                };
+            case 'timeOnly':
+                return function (...$args) {
+                    return self::timeOnlyHelper(...$args);
+                };
+            case 'texy':
+                return function (...$args) {
+                    return self::texyHelper(...$args);
+                };
+            default:
+                throw new DataNotFoundException("helper: $helper");
+        }
     }
 
     /**
@@ -50,12 +58,12 @@ final class Helpers extends Nette\Object {
      * @param $date string Time in format 'YYYY-MM-DD HH:mm:ms'
      * @return string Formated date.
      */
-    public static function dateFormatHelper($date) {
-	return preg_replace(
-		"/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
-		"\\3. \\2. \\1",
-		$date
-	);
+    public static function dateFormatHelper(string $date): string {
+        return preg_replace(
+            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
+            "\\3. \\2. \\1",
+            $date
+        );
     }
 
     /**
@@ -64,36 +72,31 @@ final class Helpers extends Nette\Object {
      * @param $time string Time in format 'YYYY-MM-DD HH:mm:ms'
      * @return string Formated time.
      */
-    public static function timeFormatHelper($time) {
-	return preg_replace(
-		"/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
-		"\\3. \\2. \\1, \\4:\\5",
-		$time
-	);
+    public static function timeFormatHelper(string $time): string {
+        return preg_replace(
+            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
+            "\\3. \\2. \\1, \\4:\\5",
+            $time
+        );
     }
 
-    public static function timeOnlyHelper($time) {
-
-	return preg_replace(
-		"/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
-		"\\4:\\5:\\6",
-		$time
-	);
+    public static function timeOnlyHelper(string $time): string {
+        return preg_replace(
+            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
+            "\\4:\\5:\\6",
+            $time
+        );
     }
 
-    public static function texyHelper($text) {
-	return self::getTexy()->process($text);
+    public static function texyHelper(string $text): string {
+        return self::getTexy()->process($text);
     }
 
-
-    // ---- PRIVATE METHODS
-
-    /** @return \Texy */
-    private static function getTexy() {
-	if (!isset(self::$texy)) {
-	    self::$texy = new \Texy();
-	    self::$texy->encoding = 'utf8';
-	}
-	return self::$texy;
+    private static function getTexy(): Texy {
+        if (!isset(self::$texy)) {
+            self::$texy = new Texy();
+            self::$texy->encoding = 'utf8';
+        }
+        return self::$texy;
     }
 }

@@ -1,0 +1,13 @@
+{block content}
+<table class="table table-condensed table-striped small">
+    <thead>
+    <th>{_'oznámení'}</th>
+    <th>{_'čas vzniku'}</th>
+    </thead>
+    {foreach $notifications as $notification}
+        <tr>
+            <td>{$notification['message']}</td>
+            <td>{$notification['created']|time}</td>
+        </tr>
+    {/foreach}
+</table>

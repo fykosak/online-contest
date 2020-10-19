@@ -1,40 +1,65 @@
 <?php
 
-namespace App\FrontendModule\Presenters;
+namespace FOL\Modules\FrontendModule\Presenters;
 
-use App\Model\Interlos;
+use AnswerStatsComponent;
+use App\Model\Authentication\OrgAuthenticator;
+use Exception;
+use FOL\Model\ORM\AnswersService;
+use FOL\Model\ORM\ReportService;
+use FOL\Model\ORM\TasksService;
+use FOL\Model\ORM\TeamsService;
+use LoginFormComponent;
+use Nette\Application\AbortException;
+use ReportAddFormComponent;
+use ResultsComponent;
+use ScoreListComponent;
+use TaskStatsComponent;
 
 class OrgPresenter extends BasePresenter {
-    
-    /** @var \App\Model\Authentication\OrgAuthenticator @inject*/
-    public $authenticator;
-    
-    /** @var \App\Model\AnswersModel @inject*/
-    public $answersModel;
-    
-    /** @var \App\Model\TasksModel @inject*/
-    public $tasksModel;
-    
-    /** @var \App\Model\TeamsModel @inject*/
-    public $teamsModel;
-    
-    /** @var \App\Model\ReportModel @inject*/
-    public $reportModel;
-    
+
     const STATS_TAG = 'orgStats';
-    
-    public function renderDefault() {
+
+    protected OrgAuthenticator $authenticator;
+
+    protected AnswersService $answersModel;
+
+    protected TasksService $tasksModel;
+
+    protected TeamsService $teamsModel;
+
+    protected ReportService $reportModel;
+
+    public function injectSecondary(ReportService $reportModel, TeamsService $teamsModel, TasksService $tasksModel, AnswersService $answersModel, OrgAuthenticator $authenticator) {
+        $this->reportModel = $reportModel;
+        $this->teamsModel = $teamsModel;
+        $this->tasksModel = $tasksModel;
+        $this->authenticator = $authenticator;
+        $this->answersModel = $answersModel;
+    }
+
+    /**
+     * @return void
+     * @throws AbortException
+     */
+    public function renderDefault(): void {
         if (!$this->user->isInRole('org')) {
             $this->redirect('login');
         }
         $this->setPageTitle(_("Orgovský rozcestník"));
     }
-    
-    public function renderLogin() {
-	$this->setPagetitle(_("Přihlásit se"));
+
+    public function renderLogin(): void {
+        $this->setPagetitle(_("Přihlásit se"));
     }
-    
-    public function renderAnswerStats($taskId = 1) {
+
+    /**
+     * @param int $taskId
+     * @return void
+     * @throws AbortException
+     * @throws \Dibi\Exception
+     */
+    public function renderAnswerStats($taskId = 1): void {
         if (!$this->user->isInRole('org')) {
             $this->redirect('login');
         }
@@ -42,15 +67,23 @@ class OrgPresenter extends BasePresenter {
         $this->template->taskId = $taskId;
         $this->template->tasks = $this->tasksModel->findAll()->fetchAll();
     }
-    
-    public function renderReport() {
+
+    /**
+     * @return void
+     * @throws AbortException
+     */
+    public function renderReport(): void {
         if (!$this->user->isInRole('org')) {
             $this->redirect('login');
         }
         $this->setPageTitle(_("Správa reportů"));
     }
-    
-    public function renderStats() {
+
+    /**
+     * @return void
+     * @throws AbortException
+     */
+    public function renderStats(): void {
         if (!$this->user->isInRole('org')) {
             $this->redirect('login');
         }
@@ -58,7 +91,11 @@ class OrgPresenter extends BasePresenter {
         $this->check("results");
     }
 
-    public function renderStatsDetail() {
+    /**
+     * @return void
+     * @throws AbortException
+     */
+    public function renderStatsDetail(): void {
         if (!$this->user->isInRole('org')) {
             $this->redirect('login');
         }
@@ -66,45 +103,49 @@ class OrgPresenter extends BasePresenter {
         $this->check("scoreList");
     }
 
-    public function renderStatsTasks() {
+    /**
+     * @return void
+     * @throws AbortException
+     */
+    public function renderStatsTasks(): void {
         if (!$this->user->isInRole('org')) {
             $this->redirect('login');
         }
         $this->setPageTitle(_("Statistika úkolů"));
         $this->check("taskStats");
     }
-    
-    protected function createComponentLogin($name) {
-	return new \LoginFormComponent($this->authenticator, $this, $name);
-    }
-    
-    protected function createComponentAnswerStats($name) {
-	return new \AnswerStatsComponent($this->answersModel, $this->teamsModel, $this->tasksModel, $this, $name);
-    }
-    
-    protected function createComponentReportAdd($name) {
-        return new \ReportAddFormComponent($this->reportModel, $this, $name);
-    }
-    
-    protected function createComponentResults($name) {
-        return new \ResultsComponent($this, $name);
+
+    protected function createComponentLogin(): LoginFormComponent {
+        return new LoginFormComponent($this->getContext(), $this->authenticator);
     }
 
-    protected function createComponentScoreList($name) {
-        return new \ScoreListComponent($this, $name);
+    protected function createComponentAnswerStats(): AnswerStatsComponent {
+        return new AnswerStatsComponent($this->getContext());
     }
 
-    protected function createComponentTaskStats($name) {
-        return new \TaskStatsComponent($this, $name);
+    protected function createComponentReportAdd(): ReportAddFormComponent {
+        return new ReportAddFormComponent($this->getContext());
     }
-    
-    private function check($componentName) {
+
+    protected function createComponentResults(): ResultsComponent {
+        return new ResultsComponent($this->getContext());
+    }
+
+    protected function createComponentScoreList(): ScoreListComponent {
+        return new ScoreListComponent($this->getContext());
+    }
+
+    protected function createComponentTaskStats(): TaskStatsComponent {
+        return new TaskStatsComponent($this->getContext());
+    }
+
+    private function check($componentName): void {
         try {
             $this->getComponent($componentName);
-            $this->getTemplate()->available = TRUE;
-        } catch (\Exception $e) {
+            $this->getTemplate()->available = true;
+        } catch (Exception $e) {
             $this->flashMessage(_("Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."), "danger");
-            $this->getTemplate()->available = FALSE;
+            $this->getTemplate()->available = false;
         }
     }
 }

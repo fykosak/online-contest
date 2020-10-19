@@ -1,12 +1,25 @@
 <?php
 
-use App\Model\Interlos;
+use FOL\Model\ORM\TasksService;
 
-class TaskStatsComponent extends BaseComponent
-{
+class TaskStatsComponent extends BaseComponent {
 
-	public function beforeRender() {
-		$this->getTemplate()->tasks = Interlos::tasks()->findAllStats();
-	}
+    private TasksService $tasksService;
 
+    public function injectTasksService(TasksService $tasksService): void {
+        $this->tasksService = $tasksService;
+    }
+
+    /**
+     * @return void
+     * @throws \Dibi\Exception
+     */
+    public function beforeRender(): void {
+        $this->getTemplate()->tasks = $this->tasksService->findAllStats();
+    }
+
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'taskStats.latte');
+        parent::render();
+    }
 }

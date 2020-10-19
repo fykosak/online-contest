@@ -1,122 +1,49 @@
 <?php
 
-namespace App\FrontendModule\Presenters;
+namespace FOL\Modules\FrontendModule\Presenters;
 
-use Nette,
-    App\Model\Translator\GettextTranslator,
-    App\Model\Interlos,
-    App\Tools\InterlosTemplate;
+use Dibi\Exception;
+use FOL\Components\Navigation\Navigation;
+use FOL\Components\Navigation\NavItem;
 
-class BasePresenter extends Nette\Application\UI\Presenter {
+abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
 
-    /** @persistent */
-    public $lang; // = 'cs';
-    
-    /** @var string */
-    private $customScript = '';
-    
-    /** @var \App\Model\Interlos */
-    private $interlos;
+    /**
+     * @return Navigation
+     * @throws Exception
+     */
+    protected function createComponentNavigation(): Navigation {
+        $navigation = parent::createComponentNavigation();
 
-    public function setPageTitle($pageTitle) {
-        $this->getTemplate()->pageTitle = $pageTitle;
-    }
+        $navigation->addNavItem(new NavItem(':Public:Default:lastYears', [], _('Archiv'), 'visible-sm-inline glyphicon glyphicon-compressed'));
+        $navigation->addNavItem(new NavItem(':Public:Default:rules', [], _('Pravidla'), 'visible-sm-inline glyphicon glyphicon-exclamation-sign'));
+        $navigation->addNavItem(new NavItem(':Public:Default:faq', [], _('FAQ'), 'visible-sm-inline glyphicon glyphicon-question-sign'));
+        $navigation->addNavItem(new NavItem(':Public:Default:howto', [], _('Návod'), 'visible-sm-inline glyphicon glyphicon-info-sign'));
 
-// ----- PROTECTED METHODS
-
-    protected function createComponentClock($name) {
-        return new \ClockComponent($this, $name);
-    }
-
-    protected function createComponentFlashMessages($name) {
-        return new \FlashMessagesComponent($this, $name);
-    }
-    
-    protected function createComponentNotificationMessages($name) {
-        return new \NotificationMessagesComponent($this, $name);
-    }
-
-    protected function createTemplate() {
-        //$this->oldLayoutMode = false;
-
-        $template = parent::createTemplate();
-        $template->today = date("Y-m-d H:i:s");
-        $template->lang = $this->lang;
-        $template->customScript = '';
-        $template->setTranslator(Interlos::getTranslator());
-        $template->registerHelper('i18n', '\App\Model\Translator\GettextTranslator::i18nHelper');
-
-        return InterlosTemplate::loadTemplate($template);
-    }
-    
-    public function addCustomScript($script) {
-        $this->customScript .= $script;
-    }
-    
-    public function getCustomScript(){
-        return $this->customScript;
-    }
-    
-    /* temporary hack for DI */
-    public function __construct(\App\Model\Interlos $interlos) {
-        parent::__construct();
-        $this->interlos = $interlos;
-    }
-
-    protected function startUp() {
-        parent::startup();
-        $this->machineRedirect();
-
-        $this->localize();
-
-
-        //Interlos::prepareAdminProperties();
-        //Interlos::createAdminMessages();
-        //$this->oldModuleMode = FALSE;
-    }
-
-// -------------- l12n ------------------
-
-    protected function localize() {
-        $i18nConf = $this->context->parameters['i18n'];
-        $this->detectLang($i18nConf);
-        $locale = isset(GettextTranslator::$locales[$this->lang]) ? GettextTranslator::$locales[$this->lang] : 'cs_CZ.utf-8';
-
-        putenv("LANGUAGE=$locale");
-        setlocale(LC_MESSAGES, $locale);
-        setlocale(LC_TIME, $locale);
-        bindtextdomain('messages', $i18nConf['dir']);
-        bind_textdomain_codeset('messages', "utf-8");
-        textdomain('messages');
-    }
-
-    protected function detectLang($i18nConf) {
-        if ($this->lang === null) {
-            if (array_search($this->getHttpRequest()->getUrl()->host, explode(',', $i18nConf['en']['hosts'])) !== false) {
-                $this->lang = 'en';
-            } else {
-                $this->lang = $this->getHttpRequest()->detectLanguage(GettextTranslator::$supportedLangs);
+        if ($this->yearsService->isRegistrationStarted()) {
+            $navigation->addNavItem(new NavItem(':Public:Default:chat', [], _('Fórum'), 'visible-sm-inline glyphicon glyphicon-comment'));
+            $navigation->addNavItem(new NavItem(':Public:Team:list', [], _('Týmy'), 'visible-sm-inline glyphicon glyphicon-list'));
+            if ($this->yearsService->isGameStarted()) {
+                $navigation->addNavItem(new NavItem(':Public:Stats:default', [], _('Výsledky'), 'visible-sm-inline glyphicon glyphicon-stats'));
+                $navigation->addNavItem(new NavItem(':Frontend:Noticeboard:default', [], _('Nástěnka'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
+                if ($this->getUser()->isLoggedIn()) {
+                    $navigation->addNavItem(new NavItem(':Game:Game:default', [], _('Hra'), 'visible-sm-inline glyphicon glyphicon-tower'));
+                }
             }
         }
-        if (array_search($this->lang, GettextTranslator::$supportedLangs) === false) {
-            $this->lang = $i18nConf['defaultLang'];
+
+        if ($this->yearsService->isRegistrationActive()) {
+            if (!$this->getUser()->isLoggedIn()) {
+                $navigation->addNavItem(new NavItem(':Public:Team:registration', [], _('Registrace'), 'visible - sm - inline glyphicon glyphicon-edit'));
+            }
         }
-    }
-    
-    public function getOpenGraphLang(){
-        return $this->getHttpRequest()->getHeader('X-Facebook-Locale');
-    }
-
-    protected function changeViewByLang() {
-        $this->setView($this->getView() . '.' . $this->lang);
-    }
-
-    // -------------- game server ------------------
-    private function machineRedirect() {
-        $machine=$this->context->parameters['machine'];
-        if (!$machine['game']) {
-            $this->redirectUrl($machine['url']);
+        if ($this->yearsService->isRegistrationStarted()) {
+            if (!$this->getUser()->isLoggedIn()) {
+                $navigation->addNavItem(new NavItem(':Public:Auth:login', [], _('Přihlásit se'), 'visible-sm-inline glyphicon glyphicon-log-in'));
+            } else {
+                $navigation->addNavItem(new NavItem(':Public:Auth:logout', [], _('Odhlásit se'), 'visible-sm-inline glyphicon glyphicon-log-out'));
+            }
         }
+        return $navigation;
     }
-
 }

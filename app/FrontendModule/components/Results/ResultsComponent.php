@@ -1,23 +1,46 @@
 <?php
 
-use App\Model\Interlos;
+use FOL\Model\ORM\CompetitorsService;
+use FOL\Model\ORM\ScoreService;
+use FOL\Model\ORM\TasksService;
+use FOL\Model\ORM\TeamsService;
 
-class ResultsComponent extends BaseComponent
-{
+class ResultsComponent extends BaseComponent {
     private $display;
 
-    public function render($display = 'all') {
+    protected TasksService $tasksService;
+    protected TeamsService $teamsService;
+    protected ScoreService $scoreService;
+    protected CompetitorsService $competitorsService;
+
+    public function injectPrimary(
+        TasksService $tasksService,
+        TeamsService $teamsService,
+        ScoreService $scoreService,
+        CompetitorsService $competitorsService
+    ): void {
+        $this->tasksService = $tasksService;
+        $this->teamsService = $teamsService;
+        $this->scoreService = $scoreService;
+        $this->competitorsService = $competitorsService;
+    }
+
+    public function render($display = 'all'): void {
         $this->display = $display;
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'results.latte');
         parent::render();
     }
 
-    protected function beforeRender() {
+    /**
+     * @return void
+     * @throws \Dibi\Exception
+     */
+    protected function beforeRender(): void {
         $this->getTemplate()->display = $this->display;
 
-        $this->getTemplate()->teams = Interlos::teams()
-            ->findAllWithScore();
+        $this->getTemplate()->teams = $this->teamsService->findAllWithScore();
 
-        $competitors = Interlos::competitors()->findAll();
+        $competitors = $this->competitorsService->findAll();
         $teamCountries = [];
         foreach ($competitors as $competitor) {
             if (!array_key_exists($competitor->id_team, $teamCountries)) {
@@ -26,16 +49,11 @@ class ResultsComponent extends BaseComponent
             $teamCountries[$competitor->id_team][] = $competitor->country_iso;
         }
         $this->getTemplate()->teamCountries = $teamCountries;
+        $this->getTemplate()->categories = $this->teamsService->getCategoryNames();
+        $this->getTemplate()->bonus = $this->scoreService->findAllBonus();
+        $this->getTemplate()->penality = $this->scoreService->findAllPenality();
 
-        $this->getTemplate()->categories = Interlos::teams()->getCategoryNames();
-
-        $this->getTemplate()->bonus = Interlos::score()
-            ->findAllBonus();
-
-        $this->getTemplate()->penality = Interlos::score()
-            ->findAllPenality();
-
-        $tasks = Interlos::tasks()->findAll();
+        $tasks = $this->tasksService->findAll();
         $maxBonus = 0;
         $maxPoints = 0;
         foreach ($tasks as $task) {
@@ -49,6 +67,5 @@ class ResultsComponent extends BaseComponent
         $this->getTemplate()->maxPoints = $maxPoints;
         $this->getTemplate()->maxBonus = $maxBonus;
     }
-
 }
 

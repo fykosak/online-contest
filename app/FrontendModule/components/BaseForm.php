@@ -1,42 +1,55 @@
 <?php
 
-use Nette\Application\UI,
-    App\Model\Interlos;
+use Nette\Application\UI\Form;
+use Nette\DI\Container;
+use Nette\Forms\Controls\SelectBox;
+use Nette\Forms\Controls\TextArea;
+use Nette\Forms\Controls\TextInput;
+use Nette\Forms\IFormRenderer;
+use Nette\Forms\Rendering\DefaultFormRenderer;
+use Nette\Localization\ITranslator;
 
-class BaseForm extends UI\Form {
+class BaseForm extends Form {
 
-    public function __construct(Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
-        parent::__construct($parent, $name);
-        $this->setTranslator(Interlos::getTranslator());
+    protected ITranslator $translator;
+
+    public function __construct(Container $container) {
+        parent::__construct();
+        $container->callInjects($this);
+        $this->setTranslator($this->translator);
         $this->setRenderer($this->createRenderer());
     }
 
-    private function createRenderer() {
+    public function injectTranslator(ITranslator $translator): void {
+        $this->translator = $translator;
+    }
+
+    private function createRenderer(): IFormRenderer {
         $this->getElementPrototype()->class = 'form-horizontal';
-        $renderer = new Nette\Forms\Rendering\DefaultFormRenderer();
+        $renderer = new DefaultFormRenderer();
         $renderer->wrappers['controls']['container'] = 'div';
         $renderer->wrappers['pair']['container'] = 'div class="form-group"';
         $renderer->wrappers['label']['container'] = '';
         $renderer->wrappers['control']['container'] = 'div class="col-md-5"';
-        $renderer->wrappers['control']['.submit'] = 'btn btn-default';
+        $renderer->wrappers['control']['.submit'] = 'btn btn-primary';
         return $renderer;
     }
 
-    public function addSelect($name, $label = NULL, array $items = NULL, $size = NULL) {
+    public function addSelect($name, $label = null, array $items = null, $size = null): SelectBox {
         $result = parent::addSelect($name, $label, $items, $size);
         $result->getControlPrototype()->class = 'form-control';
         $result->getLabelPrototype()->class = 'col-md-2 control-label';
         return $result;
     }
 
-    public function addText($name, $label = NULL, $cols = NULL, $maxLength = NULL) {
+    public function addText($name, $label = null, $cols = null, $maxLength = null): TextInput {
         $result = parent::addText($name, $label, $cols, $maxLength);
         $result->getControlPrototype()->class = 'form-control';
         $result->getLabelPrototype()->class = 'col-md-2 control-label';
         return $result;
     }
 
-    public function addTextArea($name, $label = NULL, $cols = 40, $rows = 10) {
+    public function addTextArea($name, $label = null, $cols = 40, $rows = 10): TextArea {
         $result = parent::addTextArea($name, $label, $cols, $rows);
         $result->getControlPrototype()->class = 'form-control';
         if (!$label) {
@@ -48,11 +61,10 @@ class BaseForm extends UI\Form {
         return $result;
     }
 
-    public function addPassword($name, $label = NULL, $cols = NULL, $maxLength = NULL) {
+    public function addPassword($name, $label = null, $cols = null, $maxLength = null): TextInput {
         $result = parent::addPassword($name, $label, $cols, $maxLength);
         $result->getControlPrototype()->class = 'form-control';
         $result->getLabelPrototype()->class = 'col-md-2 control-label';
         return $result;
     }
-
 }

@@ -1,7 +1,0 @@
-{block #content}
-	{if $available}
-                {cache "taskStats/".$presenter->lang, tags => [$presenter::STATS_TAG]}
-		{control taskStats}                
-                {/cache}
-	{/if}
-{/block}

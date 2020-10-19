@@ -1,50 +1,59 @@
 <?php
 
-//namespace App\FrontendModule\Components;
+use App\Model\Translator\GettextTranslator;
+use App\Tools\InterlosTemplate;
+use Nette\Application\UI\Control;
+use Nette\Application\UI\ITemplate;
+use Nette\Bridges\ApplicationLatte\Template;
+use Nette\DI\Container;
+use Nette\Localization\ITranslator;
 
-use App\Model\Interlos,
-    App\Tools\InterlosTemplate;
+abstract class BaseComponent extends Control {
 
-abstract class BaseComponent extends Nette\Application\UI\Control {
-	public function __construct(Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
-		parent::__construct($parent, $name);
-		$this->startUp();
-	}
+    protected Container $container;
+    protected ITranslator $translator;
 
-	public function render() {
-		$this->beforeRender();
-		$this->getTemplate()->render();
+    public function __construct(Container $container) {
+        parent::__construct();
+        $this->container = $container;
+        $container->callInjects($this);
+        $this->startUp();
+    }
 
-	}
+    protected function getContext(): Container {
+        return $this->container;
+    }
 
-	protected function createTemplate() {
-		$template = parent::createTemplate();
+    public function injectTranslator(ITranslator $translator): void {
+        $this->translator = $translator;
+    }
 
-		$componentName = strtr($this->getReflection()->getName(), array("Component" => ""));
+    public function render(): void {
+        $this->beforeRender();
+        $this->getTemplate()->render();
+    }
 
-		$template->setFile(
-				dirname(__FILE__) . "/" .
-				$componentName . "/" .
-				\ExtraString::lowerFirst($componentName) . ".latte"
-		);
-                $template->setTranslator(Interlos::getTranslator());
-                $template->registerHelper('i18n', '\App\Model\Translator\GettextTranslator::i18nHelper');
+    /**
+     * @return ITemplate
+     * @throws DataNotFoundException
+     */
+    protected function createTemplate(): ITemplate {
+        /** @var Template $template */
+        $template = parent::createTemplate();
+        $template->setTranslator($this->translator);
+        $template->getLatte()->addFilter('i18n', function (...$args) {
+            return GettextTranslator::i18nHelper(...$args);
+        });
+        return InterlosTemplate::loadTemplate($template);
+    }
 
-		return InterlosTemplate::loadTemplate($template);
-	}
+    protected function beforeRender(): void {
+    }
 
-	protected function getPath() {
-		$componentName = strtr($this->getReflection()->getName(), array("Component" => ""));
-		return dirname(__FILE__) . "/" . $componentName . "/";
-	}
+    protected function createComponentFlashMessages(): FlashMessagesComponent {
+        return new FlashMessagesComponent($this->getContext());
+    }
 
-	protected function beforeRender() {
-
-	}
-
-	protected function createComponentFlashMessages($name) {
-		return new FlashMessagesComponent($this, $name);
-	}
-
-	protected function startUp() {}
+    protected function startUp(): void {
+    }
 }

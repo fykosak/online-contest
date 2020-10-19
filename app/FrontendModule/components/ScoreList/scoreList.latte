@@ -1,81 +1,88 @@
-{var $teams => $teams->fetchAll()}
-{var $score => $score->fetchAssoc("id_team,id_task")}
-{var $bonus => $bonus->fetchAssoc("id_team")}
-{var $penality => $penality->fetchAssoc("id_team")}
+{var $teams = $teams->fetchAll()}
+{var $score = $score->fetchAssoc("id_team,id_task")}
+{var $bonus = $bonus->fetchAssoc("id_team")}
+{var $penality = $penality->fetchAssoc("id_team")}
 
 <div id="score-stats-wrapper">
-        <div id="score-left"><table class="score-stats" cellspacing="0">
-	{foreach $teams AS $team}
-		{if $iterator->getCounter() % 10 == 1}
-			<tr>
-				<th>#</th>
-				<th>{_'Tým'}</th>
-				<th>&sum;</th>
-				<th>+</th>
-				<th>-</th>
-			</tr>
-		{/if}
-		{if $iterator->getCounter() % 10 == 1 }
-			<tr n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted">
-		{else}
-			<tr class="line{if $team->activity == 0 || $team->disqualified == 1} text-muted{/if}">
-		{/if}
-			<td>{if $team->disqualified == 0}{$iterator->getCounter()}{else}DSQ{/if}</td>
-                        <td class="team" title="{$team->name}, {$categories[$team->category]}">{$team->name|truncate:15|replace:' ':' '}</td>{* Unicode non-breaking space*}
-			<td>
-				{if !empty($team->score) && $team->disqualified == 0}
-					{$team->score}
-				{else}
-					0
-				{/if}
-			</td>
-			<td>
-				{if isset($bonus[$team->id_team]) && $team->disqualified == 0}
-					{$bonus[$team->id_team]->score}
-				{else}
-					0
-				{/if}
-			</td>
-			<td>
-				{if isset($penality[$team->id_team]) && $team->disqualified == 0}
-					{$penality[$team->id_team]->score}
-				{else}
-					0
-				{/if}
-			</td>
-		</tr>
-	{/foreach}
-	</table></div>
-    
-        <div id="score-right"><table class="score-stats" cellspacing="0">
-	{foreach $teams AS $team}
-		{if $iterator->getCounter() % 10 == 1}
-			<tr>
-				{foreach $tasks AS $task}
-                                    <th n:if="!$task->cancelled" title="{$task|i18n:'name',$lang}">{$task->code_name|replace:'FoL'}</th>
-				{/foreach}
-			</tr>
-		{/if}
-		{if $iterator->getCounter() % 10 == 1 }
-			<tr n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted">
-		{else}
-			<tr class="line{if $team->activity == 0 || $team->disqualified == 1} text-muted{/if}">
-		{/if}
-			{foreach $tasks AS $task}
-                                {if $task->cancelled}
-                                        {*<td class="empty" title="{_'Zrušená úloha'}">&nbsp;</td>*}
-                                {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task]) || $team->disqualified == 1}
-                                        <td class="empty">X</td>
-                                {else}
-                                        {if $score[$team->id_team][$task->id_task]->skipped == 1}
-                                            <td class="skipped" title="{$score[$team->id_team][$task->id_task]->inserted}">S</td>
-                                        {else}
-                                            {var ratio => floor(round(9.9 * $score[$team->id_team][$task->id_task]->points / $task->points)/2)}
-                                            <td class="done ratio-{$ratio}" title="{$score[$team->id_team][$task->id_task]->inserted}">{$score[$team->id_team][$task->id_task]->points}</td>
-                                        {/if}    
-				{/if}                                
-			{/foreach}
-		</tr>
-	{/foreach}
-            </table></div>
+    <div id="score-left">
+        <table class="score-stats" cellspacing="0">
+            {foreach $teams AS $team}
+                {if $iterator->getCounter() % 10 == 1}
+                    <tr>
+                    <th>#</th>
+                    <th>{_'Tým'}</th>
+                <th>&sum;</th>
+                <th>+</th>
+                <th>-</th>
+                </tr>
+                {/if}
+                {if $iterator->getCounter() % 10 == 1}
+                    <tr n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted">
+                        {else}
+                    <tr class="line{if $team->activity == 0 || $team->disqualified == 1} text-muted{/if}">
+                {/if}
+                <td>{if $team->disqualified == 0}{$iterator->getCounter()}{else}DSQ{/if}</td>
+                <td class="team"
+                    title="{$team->name}, {$categories[$team->category]}">{$team->name|truncate:15|replace:' ':' '}</td>{* Unicode non-breaking space*}
+                <td>
+                    {if !empty($team->score) && $team->disqualified == 0}
+                        {$team->score}
+                    {else}
+                        0
+                    {/if}
+                </td>
+                <td>
+                    {if isset($bonus[$team->id_team]) && $team->disqualified == 0}
+                        {$bonus[$team->id_team]->score}
+                    {else}
+                        0
+                    {/if}
+                </td>
+                <td>
+                    {if isset($penality[$team->id_team]) && $team->disqualified == 0}
+                        {$penality[$team->id_team]->score}
+                    {else}
+                        0
+                    {/if}
+                </td>
+                </tr>
+            {/foreach}
+        </table>
+    </div>
+
+    <div id="score-right">
+        <table class="score-stats" cellspacing="0">
+            {foreach $teams AS $team}
+                {if $iterator->getCounter() % 10 == 1}
+                    <tr>
+                        {foreach $tasks AS $task}
+                            <th n:if="!$task->cancelled"
+                                    title="{$task|i18n:'name',$lang}">{$task->code_name|replace:'FoL'}</th>
+                        {/foreach}
+                    </tr>
+                {/if}
+                {if $iterator->getCounter() % 10 == 1}
+                    <tr n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted">
+                        {else}
+                    <tr class="line{if $team->activity == 0 || $team->disqualified == 1} text-muted{/if}">
+                {/if}
+                {foreach $tasks AS $task}
+                    {if $task->cancelled}
+                        {*<td class="empty" title="{_'Zrušená úloha'}">&nbsp;</td>*}
+                    {elseif !isset($score[$team->id_team]) || !isset($score[$team->id_team][$task->id_task]) || $team->disqualified == 1}
+                        <td class="empty">X</td>
+                    {else}
+                        {if $score[$team->id_team][$task->id_task]->skipped == 1}
+                            <td class="skipped" title="{$score[$team->id_team][$task->id_task]->inserted}">S</td>
+                        {else}
+                        {var $ratio = floor(round(9 . 9 * $score[$team->id_team][$task->id_task]->points / $task->points) / 2)}
+                            <td class="done ratio-{$ratio}"
+                                title="{$score[$team->id_team][$task->id_task]->inserted}">{$score[$team->id_team][$task->id_task]->points}</td>
+                        {/if}
+                    {/if}
+                {/foreach}
+                </tr>
+            {/foreach}
+        </table>
+    </div>
 </div>

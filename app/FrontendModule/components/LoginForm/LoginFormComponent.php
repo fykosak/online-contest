@@ -1,66 +1,81 @@
 <?php
 
-use Nette\Application\UI\Form,
-    Nette\ComponentModel\IContainer,
-    Nette\Security,
-    App\Model\Authentication\AbstractAuthenticator;
-use App\Model\Interlos;
+use FOL\Model\ORM\YearsService;
+use Nette\Application\AbortException;
+use Nette\Application\UI\Form;
+use App\Model\Authentication\AbstractAuthenticator;
+use Nette\DI\Container;
+use Nette\Security\AuthenticationException;
+use Nette\Security\IAuthenticator;
+use Tracy\Debugger;
 
-class LoginFormComponent extends BaseComponent
-{
-    /** @var App\Model\Authentication\AbstractAuthenticator */
-    private $authenticator;
-            
-    public function __construct(AbstractAuthenticator $authenticator, IContainer $parent = NULL, $name = NULL) {
-        parent::__construct($parent, $name);
+class LoginFormComponent extends BaseComponent {
+
+    protected AbstractAuthenticator $authenticator;
+    public YearsService $yearsService;
+
+    public function __construct(Container $container, AbstractAuthenticator $authenticator) {
+        parent::__construct($container);
         $this->authenticator = $authenticator;
     }
 
-    public function formSubmitted(Form $form) {
-	$values = $form->getValues();
+    public function injectPrimary(YearsService $yearsService): void {
+        $this->yearsService = $yearsService;
+    }
 
-	try {
-	    //$this->getPresenter()->user->login($values['name'], $values['password']);
+    /**
+     * @param Form $form
+     * @return void
+     * @throws AbortException
+     * @throws \Dibi\Exception
+     */
+    private function formSubmitted(Form $form): void {
+        $values = $form->getValues();
+
+        try {
+            //$this->getPresenter()->user->login($values['name'], $values['password']);
             $this->authenticator->login($values['name'], $values['password']);
-	}
-	catch(Security\AuthenticationException $e) {
-	    if ($e->getCode() == Security\IAuthenticator::IDENTITY_NOT_FOUND) {
-		$this->getPresenter()->flashMessage(_("Daný tým neexistuje."), "danger");
-	    }
-	    else {
-		$this->getPresenter()->flashMessage(_("Nesprávné heslo"), "danger");
-	    }
-	    return;
-	}
-	catch(Exception $e) {
-	    $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
-	    Debug::processException($e);
-	    return;
-	}
+        } catch (AuthenticationException $e) {
+            if ($e->getCode() == IAuthenticator::IDENTITY_NOT_FOUND) {
+                $this->getPresenter()->flashMessage(_("Daný tým neexistuje."), "danger");
+            } else {
+                $this->getPresenter()->flashMessage(_("Nesprávné heslo"), "danger");
+            }
+            return;
+        } catch (Exception $e) {
+            $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
+            Debugger::exceptionHandler($e); // TODO WTF?
+            return;
+        }
 
-		if (Interlos::isGameActive()) {
-			$this->getPresenter()->redirect("Game:default");
-		}
-		else {
-			$this->getPresenter()->redirect("Team:default");
-		}
+        if ($this->yearsService->isGameActive()) {
+            $this->getPresenter()->redirect(":Game:Game:default");
+        } else {
+            $this->getPresenter()->redirect(":Public:Team:default");
+        }
     }
 
     // ---- PROTECTED METHODS
 
-    protected function createComponentForm($name) {
-	$form = new BaseForm($this, $name);
+    protected function createComponentForm(): BaseForm {
+        $form = new BaseForm($this->getContext());
 
-	$form->addText("name", "Název týmu")
-	    ->addRule(Form::FILLED, "Název týmu musí být vyplněn.");
+        $form->addText("name", "Název týmu")
+            ->addRule(Form::FILLED, "Název týmu musí být vyplněn.");
 
-	$form->addPassword("password", "Heslo")
-	    ->addRule(Form::FILLED, "Heslo musí být vyplněno.");
+        $form->addPassword("password", "Heslo")
+            ->addRule(Form::FILLED, "Heslo musí být vyplněno.");
 
-	$form->addSubmit("login", "Přihlásit se");
-	$form->onSuccess[] = array($this, "formSubmitted");
+        $form->addSubmit("login", "Přihlásit se");
+        $form->onSuccess[] = function (Form $form) {
+            $this->formSubmitted($form);
+        };
 
-	return $form;
+        return $form;
     }
 
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'loginForm.latte');
+        parent::render();
+    }
 }

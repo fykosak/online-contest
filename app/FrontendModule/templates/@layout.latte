@@ -1,110 +1,112 @@
 <!DOCTYPE html>
 <html lang="{$presenter->lang}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        
-        {if $presenter->getOpenGraphLang() == 'cs_CZ'}
-            <meta property="og:locale" content="cs_CZ" />
-            <meta property="og:locale:alternate" content="en_US" />
-            <meta property="og:url" content="http://online.fyziklani.cz/cs/" />
-            <meta property="og:type" content="website" />
-            <meta property="og:title" content="Týmová soutěž v řešení fyzikálních úloh" />
-            <meta property="og:description" content="Online týmová soutěž v řešení fyzikálních úloh." />
-            <meta property="og:image" content="http://online.fyziklani.cz/images/fyziklani-logo.png" />
-            <meta property="og:image:type" content="image/png" />
-        {else}
-            <meta property="og:locale" content="en_US" />
-            <meta property="og:locale:alternate" content="cs_CZ" />
-            <meta property="og:url" content="http://physicsbrawl.org/en/" />
-            <meta property="og:type" content="website" />
-            <meta property="og:title" content="Team competition in solving physics problems" />
-            <meta property="og:description" content="Online team competition in solving physics problems." />
-            <meta property="og:image" content="http://physicsbrawl.org/images/fyziklani-logo.png" />
-            <meta property="og:image:type" content="image/png" />
-        {/if}
-        
-        <link href="{$basePath}/favicon.png" rel="icon" type="image/png" />
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    {if $presenter->getOpenGraphLang() == 'cs_CZ'}
+        <meta property="og:locale" content="cs_CZ"/>
+        <meta property="og:locale:alternate" content="en_US"/>
+        <meta property="og:url" content="http://online.fyziklani.cz/cs/"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Týmová soutěž v řešení fyzikálních úloh"/>
+        <meta property="og:description" content="Online týmová soutěž v řešení fyzikálních úloh."/>
+        <meta property="og:image" content="http://online.fyziklani.cz/images/fyziklani-logo.png"/>
+        <meta property="og:image:type" content="image/png"/>
+    {else}
+        <meta property="og:locale" content="en_US"/>
+        <meta property="og:locale:alternate" content="cs_CZ"/>
+        <meta property="og:url" content="http://physicsbrawl.org/en/"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Team competition in solving physics problems"/>
+        <meta property="og:description" content="Online team competition in solving physics problems."/>
+        <meta property="og:image" content="http://physicsbrawl.org/images/fyziklani-logo.png"/>
+        <meta property="og:image:type" content="image/png"/>
+    {/if}
+    <link href="{$basePath}/favicon.png" rel="icon" type="image/png" />
+    <title>{_'Fyziklání online'}{ifset $pageTitle} &ndash; {$pageTitle}{/ifset}</title>
+<!-- Bootstrap core CSS -->
+<!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet">
 
-        <title>{_'Fyziklání online'}{ifset $pageTitle} &ndash; {$pageTitle}{/ifset}</title>
+    <link href="{$basePath}/css/bootstrap-theme.min.css" rel="stylesheet">
 
-        <!-- Bootstrap core CSS -->
-        <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
-        <link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet">
-        <link href="{$basePath}/css/bootstrap-theme.min.css" rel="stylesheet">
-        <link href="{$basePath}/css/flag-icon/flag-icon.min.css" rel="stylesheet">
+    <link href="{$basePath}/css/flag-icon/flag-icon.min.css" rel="stylesheet">
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-27814405-2"></script>
-        <script n:syntax="off">
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-27814405-2"></script>
 
-          gtag('config', 'UA-27814405-2', { 'anonymize_ip': true });
-        </script>
-        
+
+<script n:syntax="off">
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-27814405-2', {'anonymize_ip': true});
+</script>
+
         {block #head}{/block}
-    </head>
+</head>
 
-    <body onload="fixNavbarIssue()">
-        {block body}
-        {include 'menu.latte'}
+<body onload="fixNavbarIssue()">
+{block body}
+{include 'menu.latte'}
 
-        {block #jumbotron}{/block}
+{block #jumbotron}{/block}
 
-        <div class="container">
-            <!-- PAGE TITLE -->
-            {block #title}<h1 n:ifset="$pageTitle">{$pageTitle}</h1>{/block}
-            <!-- FLASH MESSAGES -->
-            {control flashMessages}
-            {if \App\Model\Interlos::isGameActive()}
-            {control notificationMessages}
-            {/if}
-            <!-- CONTENT -->
-            
-            {block #bigcontent}
-            <div class="row">
-                <div class="col-sm-3 col-sm-push-9">
-                    <div class="hidden-print affix-sm">
-                        {block #subnavigation}{/block}
-                    </div>
-                </div>
-                <div class="col-sm-9 col-sm-pull-3">
-                    {block #content}{/block}
-                </div>
+<div class="container">
+    <!-- PAGE TITLE -->
+    {block #title}<h1 n:ifset="$pageTitle">{$pageTitle}</h1>{/block}
+    <!-- FLASH MESSAGES -->
+    {control flashMessages}
+    {if $control->yearsService->isGameActive()}
+    {control notificationMessages}
+    {/if}
+    <!-- CONTENT -->
+
+    {block #bigcontent}
+    <div class="row">
+        <div class="col-sm-3 col-sm-push-9">
+            <div class="hidden-print affix-sm">
+                {block #subnavigation}{/block}
             </div>
-            {/block}
+        </div>
+        <div class="col-sm-9 col-sm-pull-3">
+            {block #content}{/block}
+        </div>
+    </div>
+    {/block}
 
-            <hr>
+    <hr>
 
-            <footer>
-                <p class="pull-right small">{_'Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu'}
-                    <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>.
-                </p>
-                <p>{if $presenter->lang == 'cs'}<a href="http://fykos.cz/">FYKOS.cz</a>{else}<a href="http://fykos.org/">FYKOS.org</a>{/if}</p>
-            </footer>
-        </div> <!-- /container -->
+    <footer>
+        <p class="pull-right small">{_'Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu'}
+            <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>.
+        </p>
+        <p>{if $presenter->lang == 'cs'}<a href="http://fykos.cz/">FYKOS.cz</a>{else}<a href="http://fykos.org/">FYKOS.org</a>{/if}
+        </p>
+    </footer>
+</div> <!-- /container -->
 
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
-        <script src="{$basePath}/js/bootstrap.min.js"></script>
-        <script src="{$basePath}/js/fix-navbar-issue.js"></script>
-        <script src="{$basePath}/js/clock.js"></script>
-        {!$presenter->getCustomScript()}
-        {block #scripts}{/block}
-        {/block}
-    </body>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
+<script src="{$basePath}/js/bootstrap.min.js"></script>
+<script src="{$basePath}/js/fix-navbar-issue.js"></script>
+<script src="{$basePath}/js/clock.js"></script>
+{$presenter->getCustomScript()|noescape}
+{block #scripts}{/block}
+{/block}
+</body>
 </html>

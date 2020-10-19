@@ -14,10 +14,7 @@
  * @version    $Id: VisualPaginator.php 4 2009-07-14 15:22:02Z david@grudl.com $
  */
 
-/*use Nette\Application\Control;*/
-
-/*use Nette\Paginator;*/
-
+use Nette\Application\BadRequestException;
 use Nette\Utils\Paginator;
 
 /**
@@ -27,67 +24,51 @@ use Nette\Utils\Paginator;
  * @copyright  Copyright (c) 2009 David Grudl
  * @package    Nette Extras
  */
-class VisualPaginatorComponent extends BaseComponent
-{
-	/** @var Paginator */
-	private $paginator;
+class VisualPaginatorComponent extends BaseComponent {
 
-	/** @persistent */
-	public $page = 1;
+    private Paginator $paginator;
 
+    /** @persistent */
+    public $page = 1;
 
+    public function getPaginator(): Paginator {
+        if (!isset($this->paginator)) {
+            $this->paginator = new Paginator();
+        }
+        return $this->paginator;
+    }
 
-	/**
-	 * @return Nette\Utils\Paginator
-	 */
-	public function getPaginator()
-	{
-		if (!$this->paginator) {
-			$this->paginator = new Paginator;
-		}
-		return $this->paginator;
-	}
+    public function render(): void {
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'visualPaginator.latte');
+        $paginator = $this->getPaginator();
+        $page = $paginator->page;
+        if ($paginator->pageCount < 2) {
+            $steps = [$page];
 
+        } else {
+            $arr = range(max($paginator->firstPage, $page - 3), min($paginator->lastPage, $page + 3));
+            $count = 4;
+            $quotient = ($paginator->pageCount - 1) / $count;
+            for ($i = 0; $i <= $count; $i++) {
+                $arr[] = round($quotient * $i) + $paginator->firstPage;
+            }
+            sort($arr);
+            $steps = array_values(array_unique($arr));
+        }
 
+        $this->template->steps = $steps;
+        $this->template->paginator = $paginator;
+        parent::render();
+    }
 
-	/**
-	 * Renders paginator.
-	 * @return void
-	 */
-	public function render()
-	{
-		$paginator = $this->getPaginator();
-		$page = $paginator->page;
-		if ($paginator->pageCount < 2) {
-			$steps = array($page);
-
-		} else {
-			$arr = range(max($paginator->firstPage, $page - 3), min($paginator->lastPage, $page + 3));
-			$count = 4;
-			$quotient = ($paginator->pageCount - 1) / $count;
-			for ($i = 0; $i <= $count; $i++) {
-				$arr[] = round($quotient * $i) + $paginator->firstPage;
-			}
-			sort($arr);
-			$steps = array_values(array_unique($arr));
-		}
-
-		$this->template->steps = $steps;
-		$this->template->paginator = $paginator;
-		parent::render();
-	}
-
-
-
-	/**
-	 * Loads state informations.
-	 * @param  array
-	 * @return void
-	 */
-	public function loadState(array $params)
-	{
-		parent::loadState($params);
-		$this->getPaginator()->page = $this->page;
-	}
-
+    /**
+     * Loads state informations.
+     * @param array
+     * @return void
+     * @throws BadRequestException
+     */
+    public function loadState(array $params): void {
+        parent::loadState($params);
+        $this->getPaginator()->page = $this->page;
+    }
 }

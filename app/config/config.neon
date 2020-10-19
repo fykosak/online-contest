@@ -7,49 +7,40 @@ php:
 application:
     errorPresenter: Frontend:Error
     mapping:
-        *: App\*Module\Presenters\*Presenter
+        *: FOL\Modules\*Module\Presenters\*Presenter
 
 session:
     expiration: 14 days
-    cookie_secure: true
+    #cookie_secure: true
 
 services:
     - App\Model\Authentication\TeamAuthenticator
     - App\Model\Authentication\OrgAuthenticator(%orgs%)
     - App\Model\Authentication\CronAuthenticator(%cron.key%)
-    #Nette\Security\IAuthorizator: SimpleAuthorizator
-    router: App\FrontendModule\FrontendModule::createRouter
-    - App\Model\Interlos
-    - App\Model\AnswersModel
-    - App\Model\ChatModel
-    - App\Model\CompetitorsModel
-    - App\Model\GroupsModel
-    - App\Model\NotificationModel
-    - App\Model\PeriodModel
-    - App\Model\ReportModel
-    - App\Model\SchoolsModel
-    - App\Model\ScoreModel
-    - App\Model\TasksModel
-    - App\Model\TeamsModel
-    - App\Model\YearsModel
+    - App\Model\Translator\GettextTranslator
+
+    router: FOL\Modules\FrontendModule\FrontendModule::createRouter
+    - FOL\Model\ORM\AnswersService
+    - FOL\Model\ORM\ChatService
+    - FOL\Model\ORM\CompetitorsService
+    - FOL\Model\ORM\GroupsService
+    - FOL\Model\ORM\NotificationService
+    - FOL\Model\ORM\PeriodService
+    - FOL\Model\ORM\ReportService
+    - FOL\Model\ORM\SchoolsService
+    - FOL\Model\ORM\ScoreService
+    - FOL\Model\ORM\TasksService
+    - FOL\Model\ORM\TeamsService
+    - FOL\Model\ORM\YearsService
+
     nette.userStorage:
         setup:
             - setNamespace("olfyziklani")
 
+database:
+    conventions: 'discovered'
 extensions:
     dibi: Dibi\Bridges\Nette\DibiExtension22
 
 includes:
         - acl.neon
-#TODO not reimplemented yet
-#[common]
-#service.Nette-Security-IAuthorizator = SimpleAuthorizator
-#
-#[common.set!]
-#short_open_tag = Off
-#
-#[development < common]
-#
-#[production < common]
-#
-#[console < common]

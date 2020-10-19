@@ -3,16 +3,27 @@
  * @param Paginator $paginator
  * @param array     $steps
  *}
+{varType Nette\Utils\Paginator $paginator}
+{varType array $steps}
 
 {if $paginator->pageCount > 1}
-<ul class="pagination">
-	<li{if $paginator->isFirst()} class="disabled"{/if}><a href="{link this, 'page' => $paginator->page - 1}">{_'« Předchozí'}</a></li>
+    <ul class="pagination">
+    <li class="{($paginator->isFirst()?'disabled ':'') . 'page-item'}">
+        <a class="page-link" href="{link this, 'page' => $paginator->page - 1}">{_'« Previous'}</a>
+    </li>
 
-	{foreach $steps as $step}
-        <li{if $step == $paginator->page} class="active"{/if}><a href="{link this, 'page' => $step}">{$step}</a></li>
-        {if $iterator->nextValue > $step + 1}<li><span>…</span></li>{/if}
-	{/foreach}
+    {foreach $steps as $step}
+        <li class="{($step == $paginator->page?'active ':'') . 'page-item'}">
+            <a class="page-link" href="{link this, 'page' => $step}">{$step}</a>
+        </li>
+        {if $iterator->nextValue > $step + 1}
+            <li class="page-item">
+                <span class="page-link">…</span>
+            </li>{/if}
+    {/foreach}
 
-	<li{if $paginator->isLast()} class="disabled"{/if}><a href="{link this, 'page' => $paginator->page + 1}">{_'Následující »'}</a></li>
+<li class="{($paginator->isLast()?'disabled ') . 'page-item'}">
+    <a class="page-link" href="{link this, 'page' => $paginator->page + 1}">{_'Next »'}</a>
+</li>
 </ul>
 {/if}

@@ -1,0 +1,10 @@
+{block content}
+    <div>
+        {foreach $flashes as $flash}
+            <p class="alert alert-{$flash->type}">
+                {$flash->message}
+            </p>
+        {/foreach}
+    </div>
+    {control entryForm}
+{/block}
