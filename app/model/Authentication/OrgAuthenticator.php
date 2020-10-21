@@ -20,7 +20,7 @@ class OrgAuthenticator extends AbstractAuthenticator {
 
     protected function authenticate(array $credentials): Identity {
         [$username, $password] = $credentials;
-        foreach ($this->userlist as $name => $pass) {
+        foreach ($this->userList as $name => $pass) {
             if (strcasecmp($name, $username) === 0) {
                 if ((string)$pass === (string)$password) {
                     return new Identity($name, self::ROLE);

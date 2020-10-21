@@ -22,7 +22,6 @@ class ChatPresenter extends BasePresenter {
         $this->setPageTitle(_("Diskuse (česká verze)"));
     }
 
-
     protected function createComponentChat(): ChatListComponent {
         return new ChatListComponent($this->getContext());
     }

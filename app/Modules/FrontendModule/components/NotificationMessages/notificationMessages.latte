@@ -2,17 +2,20 @@
 
 {capture $script}
     <script>
-        var ajaxURL = {plink Noticeboard:ajax};
-        var gameEnd = new Date({$gameEnd}* 1000
+        const ajaxURL = {plink :Game:Noticeboard:ajax};
+        const gameEnd = new Date({$gameEnd}* 1000
         )
         ;
     </script>
     <script n:syntax="off">
         function pollNotifications(lastAsked) {
             $.get(ajaxURL, {lastAsked : lastAsked}, function (data) {
+                if (data.redirect) {
+                    return;
+                }
                 renderNotifications(data['html']);
                 //var now = Date.now(); //TODO better take from server?
-                var now = data['lastAsked'];
+                const now = data['lastAsked'];
                 document.cookie = "lastAsked=" + now + "; expires=" + gameEnd.toUTCString();
                 window.setTimeout(function () {
                     pollNotifications(now);

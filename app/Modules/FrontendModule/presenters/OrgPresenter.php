@@ -21,13 +21,9 @@ class OrgPresenter extends BasePresenter {
     const STATS_TAG = 'orgStats';
 
     protected OrgAuthenticator $authenticator;
-
     protected AnswersService $answersModel;
-
     protected TasksService $tasksModel;
-
     protected TeamsService $teamsModel;
-
     protected ReportService $reportModel;
 
     public function injectSecondary(ReportService $reportModel, TeamsService $teamsModel, TasksService $tasksModel, AnswersService $answersModel, OrgAuthenticator $authenticator) {

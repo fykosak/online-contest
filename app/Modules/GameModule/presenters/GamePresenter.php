@@ -25,5 +25,4 @@ class GamePresenter extends BasePresenter {
                 $this->redirect(':Game:Answer:history');
         }
     }
-
 }

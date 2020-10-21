@@ -16,24 +16,18 @@ class FrontendModule {
             'presenter' => 'Default',
             'action' => 'default',
         ], Route::ONE_WAY);
-        $router[] = new Route('<lang>/frontend-module/<presenter>/<action>', [
+        $router[] = new Route('<lang>/<presenter cron|org>/<action>', [
             'module' => 'Frontend',
             'action' => 'default',
-            'lang' => null,
+            'lang' => 'en',
         ]);
-        $router[] = new Route('[<lang>[/public-module/[<presenter>/[<action>/[<id>]]]]]', [
+
+        $router[] = new Route('<lang>/[<module>/[<presenter>/[<action>/[<id>]]]]', [
             'module' => 'Public',
             'presenter' => 'Default',
             'action' => 'default',
             'lang' => 'en',
         ]);
-        $router[] = new Route('<lang>/game-module/[<presenter>[/<action>[/<id>]]]', [
-            'module' => 'Game',
-            'presenter' => 'Game',
-            'action' => 'default',
-            'lang' => null,
-        ]);
-
 
         return $router;
     }

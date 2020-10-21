@@ -9,7 +9,6 @@ use FOL\Model\ORM\TasksService;
 class TaskPresenter extends BasePresenter {
 
     private TasksService $tasksService;
-
     private ScoreService $scoreService;
 
     public function injectSecondary(TasksService $tasksService, ScoreService $scoreService): void {
