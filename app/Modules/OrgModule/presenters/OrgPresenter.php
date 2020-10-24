@@ -10,7 +10,6 @@ use FOL\Model\ORM\ReportService;
 use FOL\Model\ORM\TasksService;
 use FOL\Model\ORM\TeamsService;
 use LoginFormComponent;
-use Nette\Application\AbortException;
 use ReportAddFormComponent;
 use ResultsComponent;
 use ScoreListComponent;
@@ -34,14 +33,14 @@ class OrgPresenter extends BasePresenter {
         $this->answersModel = $answersModel;
     }
 
-    /**
-     * @return void
-     * @throws AbortException
-     */
-    public function renderDefault(): void {
-        if (!$this->user->isInRole('org')) {
+    protected function startUp(): void {
+        if (!$this->user->isInRole('org') && $this->getAction() !== 'login') {
             $this->redirect('login');
         }
+        parent::startUp();
+    }
+
+    public function renderDefault(): void {
         $this->setPageTitle(_("Orgovský rozcestník"));
     }
 
@@ -52,61 +51,29 @@ class OrgPresenter extends BasePresenter {
     /**
      * @param int $taskId
      * @return void
-     * @throws AbortException
      * @throws \Dibi\Exception
      */
     public function renderAnswerStats($taskId = 1): void {
-        if (!$this->user->isInRole('org')) {
-            $this->redirect('login');
-        }
         $this->setPageTitle(_("Statistiky odpovědí"));
         $this->template->taskId = $taskId;
         $this->template->tasks = $this->tasksModel->findAll()->fetchAll();
     }
 
-    /**
-     * @return void
-     * @throws AbortException
-     */
     public function renderReport(): void {
-        if (!$this->user->isInRole('org')) {
-            $this->redirect('login');
-        }
         $this->setPageTitle(_("Správa reportů"));
     }
 
-    /**
-     * @return void
-     * @throws AbortException
-     */
     public function renderStats(): void {
-        if (!$this->user->isInRole('org')) {
-            $this->redirect('login');
-        }
         $this->setPageTitle(_("Výsledky"));
         $this->check("results");
     }
 
-    /**
-     * @return void
-     * @throws AbortException
-     */
     public function renderStatsDetail(): void {
-        if (!$this->user->isInRole('org')) {
-            $this->redirect('login');
-        }
         $this->setPageTitle(_("Podrobné výsledky"));
         $this->check("scoreList");
     }
 
-    /**
-     * @return void
-     * @throws AbortException
-     */
     public function renderStatsTasks(): void {
-        if (!$this->user->isInRole('org')) {
-            $this->redirect('login');
-        }
         $this->setPageTitle(_("Statistika úkolů"));
         $this->check("taskStats");
     }

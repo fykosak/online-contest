@@ -16,7 +16,7 @@ class FrontendModule {
             'presenter' => 'Default',
             'action' => 'default',
         ], Route::ONE_WAY);
-        $router[] = new Route('<lang>/<presenter cron|org>/<action>', [
+        $router[] = new Route('<lang>/<presenter cron>/<action>', [
             'module' => 'Frontend',
             'action' => 'default',
             'lang' => 'en',

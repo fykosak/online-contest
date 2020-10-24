@@ -30,17 +30,6 @@ class NoticeboardPresenter extends BasePresenter {
 
     /**
      * @return void
-     * @throws BadRequestException
-     */
-    public function renderAdd(): void {
-        if (!$this->user->isAllowed('noticeboard', 'add')) {
-            $this->error('Nemáte oprávnění pro přidání notifikace.', Response::S403_FORBIDDEN);
-        }
-        $this->setPageTitle(_("Přidat notifikaci"));
-    }
-
-    /**
-     * @return void
      * @throws Exception
      * @throws AbortException
      */
@@ -73,9 +62,5 @@ class NoticeboardPresenter extends BasePresenter {
             'pollInterval' => $pollInterval,
         ];
         $this->sendResponse(new JsonResponse($payload));
-    }
-
-    protected function createComponentNotificationForm(): NotificationFormComponent {
-        return new NotificationFormComponent($this->getContext());
     }
 }

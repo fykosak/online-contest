@@ -58,26 +58,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                {if $control->yearsService->isRegistrationActive()}
-                    {if !$user->isLoggedIn()}
-                        <li><a href="{link :Public:Team:registration}">
-                        <span class="hidden-sm">{_'Registrace'}</span>
-                        <span class="visible-sm-inline glyphicon glyphicon-edit" title="{_'Registrace'}"/>
-                    </a></li>
-                    {/if}
-                {/if}
-                {if $control->yearsService->isRegistrationStarted()}
-                    {if !$user->isLoggedIn()}
-                        <li><a href="{link :Public:Auth:login}">
-                                <span class="hidden-sm">{_'Přihlásit se'}</span>
-                                <span class="visible-sm-inline glyphicon glyphicon-log-in" title="{_'Přihlásit se'}"/>
-                            </a></li>
-                    {else}
-                        <li><a href="{link :Public:Auth:logout}">
-                        <span class="glyphicon glyphicon-log-out" title="{_'Odhlásit se'}"/>
-                    </a></li>
-                    {/if}
-                {/if}
+
                 <li n:if="$control->lang == 'cs'"><a href="{link this, lang => 'en'}"><img
                                 src="{$basePath}/images/icons/us-icon.png" alt="English" title="Switch to English"/></a>
                 </li>
