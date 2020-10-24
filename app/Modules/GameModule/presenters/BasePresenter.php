@@ -18,7 +18,7 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
         parent::startUp();
         if (is_null($this->getLoggedTeam())) {
             $this->flashMessage(_('Do této sekce mají přístup pouze přihlášené týmy.'), 'danger');
-            $this->redirect(':Public:Default:default');
+            $this->redirect(':Game:Auth:login');
         }
     }
 
@@ -32,12 +32,13 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
         $navigation->addNavItem(new NavItem(':Game:Noticeboard:default', [], _('Nástěnka'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
         $navigation->addNavItem(new NavItem(':Game:Chat:default', [], _('Chat'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
         $navigation->addNavItem(new NavItem(':Game:Game:history', [], _('Historie'), ''));
+        $navigation->addNavItem(new NavItem(':Game:Results:detail', [], _('Results'), ''));
 
         if ($this->yearsService->isGameEnd()) {
             //  $navigation->addNavItem(new NavItem('{$basePath}/download/2019-1/ulohy/reseni.{$lang}.pdf', [], _('Historie'), ''));
         }
         //    <a href="{$basePath}/download/2019-1/ulohy/reseni.{$lang}.pdf">{_'Řešení'}</a>
-        $navigation->addNavItem(new NavItem(':Public:Auth:logout', [], _('Odhlásit se'), 'visible-sm-inline glyphicon glyphicon-log-out'));
+        $navigation->addNavItem(new NavItem(':Game:Auth:logout', [], _('Odhlásit se'), 'visible-sm-inline glyphicon glyphicon-log-out'));
 
         return $navigation;
     }

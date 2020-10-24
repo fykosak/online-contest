@@ -1,6 +1,6 @@
 <?php
 
-namespace FOL\Modules\FrontendModule\Presenters;
+namespace FOL\Modules\OrgModule\Presenters;
 
 use AnswerStatsComponent;
 use App\Model\Authentication\OrgAuthenticator;

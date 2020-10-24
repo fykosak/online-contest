@@ -1,0 +1,248 @@
+
+#answer-info .unit, #answer-info .sigdigits {
+    font-weight: bold;
+}
+
+/************************ SCORE STATS *****************************************/
+#score-stats-wrapper {
+    /*overflow: auto;*/
+}
+
+.score-stats td, .score-stats th {
+    min-width: 40px;
+    text-align: center;
+}
+
+.score-stats th {
+    background: #094c77;
+    color: #c1e2f8;
+    padding: 2px;
+}
+
+.score-stats td.team {
+    font-weight: bolder;
+    width: 140px;
+}
+
+.score-stats td.done {
+    color: white;
+}
+
+.ratio-0 {
+    background-color: #7ea !important;
+}
+
+.ratio-1 {
+    background-color: #4d4 !important;
+}
+
+.ratio-2 {
+    background-color: #4b4 !important;
+}
+
+.ratio-3 {
+    background-color: #392 !important;
+}
+
+.ratio-5 {
+    background-color: #148800 !important;
+}
+
+.score-stats td.skipped {
+    background-color: lightgray;
+}
+
+.score-stats tr.line td {
+    border-top: 1px dotted #dddddd;
+}
+
+#score-left {
+    float: left;
+    overflow: auto;
+    width: 25%;
+    margin-top: -50px;
+}
+
+#score-left table {
+    width: 100%;
+}
+
+#score-right {
+    float: left;
+    overflow: auto;
+    width: 75%;
+    margin-top: -50px;
+}
+
+
+#flashes .error, ul.error li {
+    color: #7B0404;
+    background-color: #ffeedd;
+    background-image: url(../images/icons/flash-error.png);
+}
+
+#flashes .success {
+    color: #1E3712;
+    background-color: #ddffdd;
+    background-image: url(../images/icons/flash-success.png);
+}
+
+#flashes .info {
+    color: #0D58A6;
+    background-color: #eeeeff;
+    background-image: url(../images/icons/flash-info.png);
+}
+
+
+/***************************** SPECIAL FORMS **********************************/
+#chat form, #chat form table {
+    width: 100%;
+}
+
+#chat form label {
+    visibility: hidden;
+}
+
+#chat form textarea {
+    width: 100%;
+}
+
+
+/******************* BASIC ELEMENTS *******************************************/
+h1, h2, h3, h4, h5, h6, strong, a {
+    color: #448fda;
+}
+
+a img {
+    border: 0;
+}
+
+ul li, ol li {
+    margin-top: 5px;
+}
+
+blockquote {
+    border-left: 5px solid #c1e2f8;
+    font-style: italic;
+    padding: 10px;
+}
+
+span.unimportant {
+    color: #888;
+}
+
+/******************** CLASSES AND IDS *****************************************/
+#logos {
+    padding: 10px;
+}
+
+#logos a {
+    margin: 0;
+    margin-right: 50px;
+    display: inline;
+    text-decoration: none;
+}
+
+#banners {
+    padding: 10px;
+}
+
+h3.solution {
+    background-image: url('../images/icons/plus.png');
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+h3.unpacked {
+    background-image: url('../images/icons/minus.png');
+}
+
+table tr.even {
+    background: #FDF7CD;
+}
+
+table tr.inactive {
+    color: #888;
+}
+
+/************************ SCORE STATS *****************************************/
+.score-stats-wrapper {
+    /*overflow: auto;*/
+}
+
+.score-stats td, .score-stats th {
+    min-width: 40px;
+    text-align: center;
+}
+
+.score-stats th {
+    background: #094c77;
+    color: #c1e2f8;
+    padding: 2px;
+}
+
+.score-stats td.team {
+    font-weight: bolder;
+    width: 140px;
+}
+
+.score-stats td.done {
+    background-color: #3b3;
+    color: white;
+}
+
+.score-stats td.done.full {
+    background-color: #080;
+    color: white;
+}
+
+.score-stats td.skipped {
+    background-color: lightgray;
+}
+
+.score-stats tr.line td {
+    border-top: 1px dotted #dddddd;
+}
+
+#score-left {
+    float: left;
+    overflow: auto;
+    max-width: 25%;
+}
+
+#score-right {
+    float: left;
+    overflow: auto;
+    width: 75%;
+}
+
+/************************ ANSWER HISTORY **************************************/
+#answer-history th {
+    background: #094c77;
+    color: #c1e2f8;
+    text-align: left;
+}
+
+#answer-history th, #answer-history td {
+    padding: 2px 10px;
+}
+
+#answer-history {
+    width: 100%;
+}
+
+#answer-history tr.correct {
+    background-color: green;
+    color: white;
+}
+
+
+/************************ ANSWER FORM *****************************************/
+#answer-info {
+    font-size: 80%;
+}
+
+#answer-info .unit, #answer-info .sigdigits {
+    font-weight: bold;
+}

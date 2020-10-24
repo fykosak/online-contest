@@ -1,6 +1,6 @@
 <?php
 
-namespace FOL\Modules\PublicModule\Presenters;
+namespace FOL\Modules\GameModule\Presenters;
 
 use App\Model\Authentication\TeamAuthenticator;
 use Dibi\Exception;
@@ -8,7 +8,11 @@ use LoginFormComponent;
 use Nette\Application\AbortException;
 use RecoverFormComponent;
 
-class AuthPresenter extends BasePresenter {
+/**
+ * Class AuthPresenter
+ * TODO Take care thi presenter is not child of GameModule/BasePresenter
+ */
+class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
 
     protected TeamAuthenticator $authenticator;
 

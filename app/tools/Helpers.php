@@ -72,7 +72,7 @@ final class Helpers {
      * @param $time string Time in format 'YYYY-MM-DD HH:mm:ms'
      * @return string Formated time.
      */
-    public static function timeFormatHelper(string $time): string {
+    public static function timeFormatHelper(?string $time): string {
         return preg_replace(
             "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
             "\\3. \\2. \\1, \\4:\\5",
@@ -80,7 +80,7 @@ final class Helpers {
         );
     }
 
-    public static function timeOnlyHelper(string $time): string {
+    public static function timeOnlyHelper(?string $time): string {
         return preg_replace(
             "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
             "\\4:\\5:\\6",
@@ -88,7 +88,7 @@ final class Helpers {
         );
     }
 
-    public static function texyHelper(string $text): string {
+    public static function texyHelper(?string $text): string {
         return self::getTexy()->process($text);
     }
 

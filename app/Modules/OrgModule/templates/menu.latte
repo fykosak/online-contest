@@ -47,14 +47,14 @@
                                 <span class="visible-sm-inline glyphicon glyphicon-stats" title="{_'Výsledky'}"/>
                             </a>
                         </li>
+                        {if $user->isLoggedIn()}
+                            <li><a href="{link :Game:Game:default}" title="{_'Hra'}">
+                            <span class="hidden-sm">{_'Hra'}</span>
+                            <span class="visible-sm-inline glyphicon glyphicon-tower" title="{_'Hra'}"/>
+                        </a></li>
+                        {/if}
                     {/if}
                 {/if}
-                <li>
-                    <a href="{link :Game:Game:default}" title="{_'Hra'}">
-                        <span class="hidden-sm">{_'Hra'}</span>
-                        <span class="visible-sm-inline glyphicon glyphicon-tower" title="{_'Hra'}"/>
-                    </a>
-                </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -68,12 +68,12 @@
                 {/if}
                 {if $control->yearsService->isRegistrationStarted()}
                     {if !$user->isLoggedIn()}
-                        <li><a href="{link :Game:Auth:login}">
+                        <li><a href="{link :Public:Auth:login}">
                                 <span class="hidden-sm">{_'Přihlásit se'}</span>
                                 <span class="visible-sm-inline glyphicon glyphicon-log-in" title="{_'Přihlásit se'}"/>
                             </a></li>
                     {else}
-                        <li><a href="{link :Game:Auth:logout}">
+                        <li><a href="{link :Public:Auth:logout}">
                         <span class="glyphicon glyphicon-log-out" title="{_'Odhlásit se'}"/>
                     </a></li>
                     {/if}
