@@ -1,12 +1,15 @@
+    {block task}
+    <li><del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}">
+    <strong>{$task->code_name}</strong>&nbsp;({$task->curPoints} {_'b.'}, max. {$task->points} {_'b.'})</del>
+        <ul><li>
+            {foreach $mirrors as $mirror}
+            <a href="{$mirror}{$task->filename_cs.'.'.$lang.'.pdf'}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
+            {/foreach}
+            </li>
+        </ul>
+    </li>
+    {/block}
 {block content}
-
-{*{cache "problems/$id_team", "problems"}*}
-
-{*{if $lang == 'cs'}
-<p><b>Věnujte prosím pár minut vyplnění <a href="https://forms.gle/Tyxoq5TETdcHqLPq6">ankety</a> o letošním FoLu.</b></p>
-{else}
-<p><b>Please, spend a few moments filling a <a href="https://forms.gle/5uJHPEgpC6x4vBYW9">survey</a> about this year's competition.</b></p>
-{/if}*}
 
 <p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
 
@@ -16,16 +19,7 @@
 {else}
 <ul>
     {foreach $unsolvedTasks as $task}
-    {block task}
-    <li><del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}"><strong>{$task->code_name}</strong>&nbsp;{$task|i18n:'name',$lang} ({$task->curPoints} {_'b.'}, max. {$task->points} {_'b.'})</del>
-        <ul><li>
-            {foreach $mirrors as $mirror}
-            <a href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
-            {/foreach}
-            </li>
-        </ul>
-    </li>
-    {/block}
+    {include task}
     {/foreach}
 </ul>
 {/if}
@@ -62,8 +56,6 @@
     {/foreach}
 </ul>
 {/if}
-{*{/cache}*}
-
 {include @info.$lang.latte}
 
 {/block}

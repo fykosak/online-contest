@@ -47,7 +47,6 @@ abstract class BaseComponent extends Control {
         $template->getLatte()->addFilter("time", Helpers::getHelper('time'));
         $template->getLatte()->addFilter("timeOnly", Helpers::getHelper('timeOnly'));
         $template->getLatte()->addFilter("texy", Helpers::getHelper('texy'));
-        $template->getLatte()->addFilter("i18n", Helpers::getHelper('i18n'));
         return $template;
     }
 

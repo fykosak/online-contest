@@ -41,9 +41,6 @@ abstract class BaseComponent extends Control {
         /** @var Template $template */
         $template = parent::createTemplate();
         $template->setTranslator($this->translator);
-        $template->getLatte()->addFilter('i18n', function (...$args) {
-            return GettextTranslator::i18nHelper(...$args);
-        });
         return InterlosTemplate::loadTemplate($template);
     }
 
