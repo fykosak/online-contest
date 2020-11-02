@@ -48,11 +48,8 @@ class LoginFormComponent extends BaseComponent {
             return;
         }
 
-        if ($this->yearsService->isGameActive()) {
-            $this->getPresenter()->redirect(":Game:Game:default");
-        } else {
-            $this->getPresenter()->redirect(":Public:Team:default");
-        }
+        $this->getPresenter()->redirect(":Game:Game:default");
+
     }
 
     // ---- PROTECTED METHODS

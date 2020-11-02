@@ -1,7 +1,7 @@
-{extends '../@layout.latte'}
+{extends '../../../GameModule/templates/@layout.latte'}
 
 {block #title}
-{if $control->yearsService->isGameEnd()}
+{if $control->yearsService->isGameEnd() && false}
 <br>
 <div class="alert alert-info" role="alert">
 {if $lang == 'cs'}
@@ -15,7 +15,7 @@
 {/block}
 
 {block #subnavigation}
-<ul class="nav">
+<ul>
     <li>
         <a href="{plink Stats:default}" title="{_'Výsledky'}">{_'Výsledky'}</a>
         <ul>

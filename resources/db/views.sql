@@ -220,26 +220,6 @@ CREATE VIEW `view_bonus` AS
 
  
  DROP VIEW IF EXISTS `view_total_result`;
- CREATE VIEW `view_total_result` AS
- 	SELECT
- 		`t`.*,
- 		SUM(`ts`.`points`)
-                    + IFNULL(`view_bonus`.`score`, 0) 
-                    - IFNULL(`view_penality`.`score`, 0) AS `score`,
-                IF(
-                    (SELECT COUNT(`ts2`.`id_task`) FROM `task_state` `ts2` WHERE `ts2`.`id_team` = `t`.`id_team` AND `ts2`.`skipped` = 1)
-                    + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `t`.`id_team`) > 0
-                , 1, 0) AS `activity`,
-        `view_last_correct_answer`.`last_time`
- 	FROM `view_team` `t`
- 	LEFT JOIN `task_state` `ts` ON `ts`.`id_team` = `t`.`id_team`
- 	LEFT JOIN `view_penality` ON `t`.`id_team`=`view_penality`.`id_team`
- 	LEFT JOIN `view_bonus` ON `t`.`id_team`=`view_bonus`.`id_team`
-        LEFT JOIN `view_last_correct_answer` ON `t`.`id_team`=`view_last_correct_answer`.`id_team`
-        LEFT JOIN `view_task` ON `view_task`.`id_task` = `ts`.`id_task`
-        WHERE `view_task`.`cancelled` = 0 OR `view_task`.`cancelled` IS NULL
- 	GROUP BY `t`.`id_team`
- 	ORDER BY `disqualified` ASC, `activity` DESC, `score` DESC, `last_time` ASC;
 
 DROP VIEW IF EXISTS `view_task_stat`;
 CREATE VIEW `view_task_stat` AS
@@ -288,9 +268,9 @@ CREATE VIEW `view_bonus_cached` AS
 DROP VIEW IF EXISTS `view_total_result_cached`;
 CREATE VIEW `view_total_result_cached` AS
  	SELECT
- 		`t`.*,
+ 		`t`.`id_team`, `t`.`category`, `t`.`disqualified`, `t`.`name`, -- `t`.*,
  		SUM(`ts`.`points`)
-                    + IFNULL(`tmp_bonus`.`score`, 0) 
+                    + IFNULL(`tmp_bonus`.`score`, 0)
                     - IFNULL(`tmp_penality`.`score`, 0) AS `score`,
                 IF(
                     (SELECT COUNT(`ts2`.`id_task`) FROM `task_state` `ts2` WHERE `ts2`.`id_team` = `t`.`id_team` AND `ts2`.`skipped` = 1)
@@ -299,13 +279,17 @@ CREATE VIEW `view_total_result_cached` AS
         `view_last_correct_answer`.`last_time`
  	FROM `view_team` `t`
  	LEFT JOIN `task_state` `ts` ON `ts`.`id_team` = `t`.`id_team`
+ 	LEFT JOIN `task` ON `ts`.`id_task` = `task`.`id_task`
  	LEFT JOIN `tmp_penality` ON `tmp_penality`.`id_team` = `t`.`id_team`
  	LEFT JOIN `tmp_bonus` ON `tmp_bonus`.`id_team` = `t`.`id_team`
         LEFT JOIN `view_last_correct_answer` ON `view_last_correct_answer`.`id_team` = `t`.`id_team`
         LEFT JOIN `view_task` ON `view_task`.`id_task` = `ts`.`id_task`
-        WHERE `view_task`.`cancelled` = 0 OR `view_task`.`cancelled` IS NULL
+        WHERE (`view_task`.`cancelled` = 0 OR `view_task`.`cancelled` IS NULL)
+            AND `ts`.`points` > 0
  	GROUP BY `t`.`id_team`
- 	ORDER BY `disqualified` ASC, `activity` DESC, `score` DESC, `last_time` ASC;
+ 	ORDER BY `disqualified` ASC, `activity` DESC, `score` DESC,
+ 	    GROUP_CONCAT(LPAD(`task`.`number`, 2, "0") ORDER BY `task`.`number` DESC) DESC,
+ 	    GROUP_CONCAT(TIME(`ts`.`inserted`) ORDER BY `ts`.`inserted` DESC) ASC;
  
 
 

@@ -9,6 +9,7 @@ use FlashMessagesComponent;
 use App\Model\Translator\GettextTranslator;
 use App\Tools\InterlosTemplate;
 use FOL\Components\Navigation\Navigation;
+use FOL\Components\Navigation\NavItem;
 use FOL\Model\ORM\TeamsService;
 use FOL\Model\ORM\YearsService;
 use Nette\Application\AbortException;
@@ -154,6 +155,10 @@ abstract class BasePresenter extends Presenter {
     }
 
     protected function createComponentNavigation(): Navigation {
-        return new Navigation($this->getContext());
+        $navigation = new Navigation($this->getContext());
+        $navigation->addNavItem(new NavItem(':Public:Stats:default', [], _('Výsledky'), ''));
+        $navigation->addNavItem(new NavItem(':Public:Stats:detail', [], _('Podrobné výsledky'), ''));
+        $navigation->addNavItem(new NavItem(':Game:Game:default', [], _('Hra'), 'visible-sm-inline glyphicon glyphicon-compressed'));
+        return $navigation;
     }
 }

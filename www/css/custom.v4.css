@@ -109,8 +109,13 @@
 
 
 /******************* BASIC ELEMENTS *******************************************/
+body {
+    background: #252525;
+    color: white;
+}
+
 h1, h2, h3, h4, h5, h6, strong, a {
-    color: #448fda;
+    color: #FF8A2A;
 }
 
 a img {

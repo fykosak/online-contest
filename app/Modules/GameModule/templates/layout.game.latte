@@ -30,8 +30,7 @@
     <title>{_'Fyziklání online'}{ifset $pageTitle} &ndash; {$pageTitle}{/ifset}</title>
 <!-- Bootstrap core CSS -->
 <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://bootswatch.com/4/cyborg/bootstrap.min.css" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -76,7 +75,21 @@
         {if $control->yearsService->isGameActive()}
         {control notificationMessages}
     {/if}
+    {ifset #subnavigation}
+    <div class="row">
+        <div class="col-md-3 order-md-2">
+            <div class="hidden-print affix-sm">
+                {block #subnavigation}{/block}
+            </div>
+        </div>
+        <div class="col-md-9">
+            {include content}
+        </div>
+    </div>
+    {else}
         {include content}
+    {/ifset}
+
 </main>
 <footer class="container text-center border-top">
     <p class="pull-right small">{_'Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu'}

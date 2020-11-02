@@ -60,11 +60,7 @@ class TeamsService extends AbstractService {
      * @throws Exception
      */
     public function findAllWithScore(): DataSource {
-        return $this->getDibiConnection()->dataSource("SELECT * FROM [tmp_total_result]")
-            ->orderBy('disqualified', 'ASC')
-            ->orderBy('activity', 'DESC')
-            ->orderBy('score', 'DESC')
-            ->orderBy('last_time', 'ASC');
+        return $this->getDibiConnection()->dataSource("SELECT * FROM [tmp_total_result]");
     }
 
     /**

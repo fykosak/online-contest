@@ -26,7 +26,7 @@ class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
      */
     public function actionLogout(): void {
         $this->getUser()->logout();
-        $this->redirect(':Public:Default:default');
+        $this->redirect(':Game:Game:default');
     }
 
     public function renderLogin(): void {
