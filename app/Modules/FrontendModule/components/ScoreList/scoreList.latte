@@ -57,7 +57,7 @@
                     <tr>
                         {foreach $tasks AS $task}
                             <th n:if="!$task->cancelled"
-                                    title="{$task|i18n:'name',$lang}">{$task->code_name|replace:'FoL'}</th>
+                                    title="">{$task->code_name|replace:'FoL'}</th>
                         {/foreach}
                     </tr>
                 {/if}

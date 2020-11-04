@@ -7,7 +7,6 @@
 
 namespace App\Tools;
 
-use App\Model\Translator\GettextTranslator;
 use DataNotFoundException;
 use Nette\SmartObject;
 use Texy\Texy;
@@ -33,11 +32,6 @@ final class Helpers {
             case 'time':
                 return function (...$args) {
                     return self::timeFormatHelper(...$args);
-                };
-            case 'translate':
-            case 'i18n':
-                return function (...$args) {
-                    return GettextTranslator::i18nHelper(...$args);
                 };
             case 'timeOnly':
                 return function (...$args) {

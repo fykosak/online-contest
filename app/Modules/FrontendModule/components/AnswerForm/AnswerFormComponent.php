@@ -128,7 +128,7 @@ class AnswerFormComponent extends BaseComponent {
         ];
 
         foreach ($this->tasks as $task) {
-            $options[$task['id_task']] = $task['code_name'] . ': ' . $task['name_' . $this->getPresenter()->lang];
+            $options[$task['id_task']] = $task['code_name'];
             $rules[$task['answer_type']][] = $task['id_task'];
         }
         $tasks = $options;
