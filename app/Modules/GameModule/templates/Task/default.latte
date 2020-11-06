@@ -1,6 +1,6 @@
     {block task}
     <li><del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}">
-    <strong>{$task->code_name}</strong>&nbsp;({$task->curPoints} {_'b.'}, max. {$task->points} {_'b.'})</del>
+    <strong>{$task->code_name}</strong></del>
         <ul><li>
             {foreach $mirrors as $mirror}
             <a href="{$mirror}{$task->filename_cs.'.'.$lang.'.pdf'}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
