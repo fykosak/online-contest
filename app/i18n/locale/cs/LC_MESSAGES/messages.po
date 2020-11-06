@@ -1,257 +1,280 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2019-11-26T22:10:26+01:00
+# Created: 2020-11-06T05:58:50+01:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# SkipFormComponent.php:77
+# SkipFormComponent.php:117
 msgid " ---- Vybrat ---- "
 msgstr " ---- Vybrat ---- "
 
-# TeamFormComponent.php:170
+# TeamFormComponent.php:205
 msgid "%d. člen"
 msgstr "%d. člen"
 
-# TeamFormComponent.php:157
+# TeamFormComponent.php:192
 msgid "1. ročník SŠ"
 msgstr "1. ročník SŠ"
 
-# TeamFormComponent.php:158
+# TeamFormComponent.php:193
 msgid "2. ročník SŠ"
 msgstr "2. ročník SŠ"
 
-# TeamFormComponent.php:159
+# TeamFormComponent.php:194
 msgid "3. ročník SŠ"
 msgstr "3. ročník SŠ"
 
-# TeamFormComponent.php:160
+# TeamFormComponent.php:195
 msgid "4. ročník SŠ"
 msgstr "4. ročník SŠ"
-
-# AnswerFormComponent.php:168
-msgid "Aktuálně bodů"
-msgstr "Aktuálně bodů"
 
 # menu.latte:13
 # menu.latte:14
 # menu.latte:15
+# BasePresenter.php:18
+# menu.latte:13
+# menu.latte:14
+# menu.latte:15
+# BasePresenter.php:18
 msgid "Archiv"
 msgstr "Archiv"
 
-# TeamFormComponent.php:72
-# TeamFormComponent.php:114
-# ChatListComponent.php:43
+# BasePresenter.php:33
+msgid "Chat"
+msgstr "Chat"
+
+# TeamFormComponent.php:98
+# TeamFormComponent.php:145
+# ChatListComponent.php:53
 msgid "Chyba při práci s databází."
 msgstr "Chyba při práci s databází."
 
-# TeamPresenter.php:33
+# TeamPresenter.php:57
 msgid "Chybný token."
 msgstr "Chybný token."
 
-# DefaultPresenter.php:70
+# DefaultPresenter.php:69
 msgid "Další akce"
 msgstr "Další akce"
 
-# TeamFormComponent.php:111
+# TeamFormComponent.php:142
 msgid "Daný tým již existuje."
 msgstr "Daný tým již existuje."
 
-# LoginFormComponent.php:28
+# LoginFormComponent.php:40
 msgid "Daný tým neexistuje."
 msgstr "Daný tým neexistuje."
 
-# ReportAddFormComponent.php:46
+# ReportAddFormComponent.php:51
 msgid "Datum konání"
 msgstr "Datum konání"
 
-# ReportAddFormComponent.php:48
+# ReportAddFormComponent.php:53
 msgid "Datum musí mít podobu YYYY-mm-dd."
 msgstr "Datum musí mít podobu YYYY-mm-dd."
 
-# DefaultPresenter.php:24
+# ChatPresenter.php:22
+# ChatPresenter.php:22
 msgid "Diskuse (česká verze)"
 msgstr "Diskuse (česká verze)"
 
-# GamePresenter.php:77
+# BasePresenter.php:20
 msgid "Do této sekce mají přístup pouze přihlášené týmy."
 msgstr "Do této sekce mají přístup pouze přihlášené týmy."
 
-# ReportAddFormComponent.php:35
+# ReportAddFormComponent.php:40
 msgid "Děkujeme za vložení reportu"
 msgstr "Děkujeme za vložení reportu"
 
-# NoticeboardPresenter.php:18
+# NoticeboardPresenter.php:28
 msgid "Důležitá oznámení"
 msgstr "Důležitá oznámení"
 
-# RecoverFormComponent.php:69
+# RecoverFormComponent.php:85
 msgid "E-mail libovolného člena týmu"
 msgstr "E-mail libovolného člena týmu"
 
-# RecoverFormComponent.php:70
+# RecoverFormComponent.php:86
 msgid "E-mail musí být vyplněn."
 msgstr "E-mail musí být vyplněn."
 
-# RecoverFormComponent.php:71
+# RecoverFormComponent.php:87
 msgid "E-mail nemá správný formát."
 msgstr "E-mail nemá správný formát."
 
-# RecoverFormComponent.php:60
+# RecoverFormComponent.php:76
 msgid "E-mail pro obnovu byl odeslán."
 msgstr "E-mail pro obnovu byl odeslán."
 
-# TeamPresenter.php:56
+# TeamPresenter.php:85
 msgid "Editaci přihlášky provádějte po osobním přihlášení "
 msgstr "Editaci přihlášky provádějte po osobním přihlášení "
 
-# TeamFormComponent.php:185
+# TeamFormComponent.php:220
 msgid "Email"
 msgstr "Email"
 
-# DefaultPresenter.php:56
 # menu.latte:21
 # menu.latte:22
 # menu.latte:23
 # menu.latte:27
+# BasePresenter.php:20
+# DefaultPresenter.php:55
+# menu.latte:21
+# menu.latte:22
+# menu.latte:23
+# menu.latte:27
+# BasePresenter.php:20
 msgid "FAQ"
 msgstr "FAQ"
 
-# ReportAddFormComponent.php:50
+# ReportAddFormComponent.php:55
 msgid "FKSDB ID týmu."
 msgstr "FKSDB ID týmu."
 
-# TeamFormComponent.php:59
+# TeamFormComponent.php:85
 msgid "FoL registrace"
 msgstr "FoL registrace"
 
-# ReportAddFormComponent.php:64
+# ReportAddFormComponent.php:70
 msgid "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
 msgstr "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
 
-# a201205detail.latte:11
-# @layout.latte:31
+# ReportAddFormComponent.php:69
+msgid "Fotografie nesmí být větší, než 500 kB."
+msgstr "Fotografie nesmí být větší, než 500 kB."
+
+# navigation.latte:12
 # menu.latte:9
+# @layout.latte:28
+# layout.game.latte:29
+# a201205detail.latte:11
+# menu.latte:9
+# @layout.latte:28
 msgid "Fyziklání online"
 msgstr "Fyziklání online"
 
-# menu.latte:30
 # menu.latte:31
 # menu.latte:32
+# menu.latte:33
+# BasePresenter.php:24
+# menu.latte:31
+# menu.latte:32
+# menu.latte:33
+# BasePresenter.php:24
 msgid "Fórum"
 msgstr "Fórum"
 
-# PasswordChangeFormComponent.php:30
+# PasswordChangeFormComponent.php:43
 msgid "Hesla se neshodují"
 msgstr "Hesla se neshodují"
 
-# LoginFormComponent.php:57
-# TeamFormComponent.php:130
+# TeamFormComponent.php:165
+# LoginFormComponent.php:63
 msgid "Heslo"
 msgstr "Heslo"
 
-# TeamFormComponent.php:133
+# TeamFormComponent.php:168
 msgid "Heslo a kontrola hesla se neshodují."
 msgstr "Heslo a kontrola hesla se neshodují."
 
-# PasswordChangeFormComponent.php:17
+# PasswordChangeFormComponent.php:30
 msgid "Heslo bylo změněno."
 msgstr "Heslo bylo změněno."
 
-# LoginFormComponent.php:58
-# PasswordChangeFormComponent.php:27
+# PasswordChangeFormComponent.php:40
+# LoginFormComponent.php:64
 msgid "Heslo musí být vyplněno."
 msgstr "Heslo musí být vyplněno."
 
-# @layout.latte:14
+# BasePresenter.php:34
 msgid "Historie"
 msgstr "Historie"
 
-# GamePresenter.php:71
+# AnswerPresenter.php:54
 msgid "Historie odpovědí"
 msgstr "Historie odpovědí"
 
-# menu.latte:48
-# menu.latte:49
+# menu.latte:52
+# menu.latte:53
+# menu.latte:54
+# BasePresenter.php:30
+# BasePresenter.php:160
 # menu.latte:50
+# menu.latte:51
+# menu.latte:52
+# BasePresenter.php:30
 msgid "Hra"
 msgstr "Hra"
 
-# AnswerFormComponent.php:133
-# SkipFormComponent.php:100
+# AnswerFormComponent.php:181
+# SkipFormComponent.php:143
 msgid "Hra ještě nezačala."
 msgstr "Hra ještě nezačala."
 
-# ReportAddFormComponent.php:52
+# ReportAddFormComponent.php:57
 msgid "ID týmu musí být větší než %d."
 msgstr "ID týmu musí být větší než %d."
 
-# ReportAddFormComponent.php:56
+# ReportAddFormComponent.php:61
 msgid "Jazyk reportu."
 msgstr "Jazyk reportu."
 
-# ReportAddFormComponent.php:63
+# ReportAddFormComponent.php:68
 msgid "Je možné nahrát maximálně 10 fotek."
 msgstr "Je možné nahrát maximálně 10 fotek."
 
-# TeamFormComponent.php:148
+# TeamFormComponent.php:183
 msgid "Je nutno si nejdříve přečíst pravidla."
 msgstr "Je nutno si nejdříve přečíst pravidla."
 
-# AnswerFormComponent.php:166
-msgid "Jednotka"
-msgstr "Jednotka"
-
-# TeamFormComponent.php:153
+# TeamFormComponent.php:188
 msgid "Jiná"
 msgstr "Jiná"
 
-# TeamFormComponent.php:179
+# TeamFormComponent.php:214
 msgid "Jiná škola"
 msgstr "Jiná škola"
 
-# SkipFormComponent.php:12
-# GamePresenter.php:16
+# SkipFormComponent.php:49
+# SkipPresenter.php:15
 msgid "Již jste vyčerpali svůj limit pro počet přeskočených úloh."
 msgstr "Již jste vyčerpali svůj limit pro počet přeskočených úloh."
 
-# TeamFormComponent.php:171
+# TeamFormComponent.php:206
 msgid "Jméno"
 msgstr "Jméno"
 
-# TeamFormComponent.php:197
+# TeamFormComponent.php:232
 msgid "Jméno prvního člena musí být vyplněno."
 msgstr "Jméno prvního člena musí být vyplněno."
 
-# default.latte:10
+# default.latte:13
 msgid "K dispozici máte zadání těchto úloh dle podmínek v zadání:"
 msgstr "K dispozici máte zadání těchto úloh dle podmínek v zadání:"
 
-# TeamFormComponent.php:94
+# TeamFormComponent.php:125
 msgid "Kategorie zůstala stejná jako v průbehu registrace."
 msgstr "Kategorie zůstala stejná jako v průbehu registrace."
 
-# TeamFormComponent.php:138
+# TeamFormComponent.php:173
 msgid "Kontaktní adresa"
 msgstr "Kontaktní adresa"
 
-# TeamFormComponent.php:131
+# TeamFormComponent.php:166
 msgid "Kontrola hesla"
 msgstr "Kontrola hesla"
 
-# AnswerFormComponent.php:43
-msgid "Lze odpovídat až za <span class='timesec'>%d</span> sekund."
-msgstr "Lze odpovídat až za <span class='timesec'>%d</span> sekund."
+# AnswerFormComponent.php:86
+msgid "Lze odpovídat až za <span class=\"timesec\">%d</span> sekund."
+msgstr "Lze odpovídat až za <span class=\"timesec\">%d</span> sekund."
 
-# AnswerFormComponent.php:167
-msgid "Maximum bodů"
-msgstr "Maximum bodů"
-
-# DefaultPresenter.php:28
+# DefaultPresenter.php:38
 msgid "Mezinárodní soutež ve fyzice"
 msgstr "Mezinárodní soutež ve fyzice"
 
-# DefaultPresenter.php:34
+# DefaultPresenter.php:44
 msgid "Minulé ročníky"
 msgstr "Minulé ročníky"
 
@@ -259,111 +282,118 @@ msgstr "Minulé ročníky"
 msgid "Možností přeskakovat neplýtvejte, snadno se může stát, že vám pak dojdou příklady"
 msgstr "Možností přeskakovat neplýtvejte, snadno se může stát, že vám pak dojdou příklady"
 
-# AnswerFormComponent.php:57
+# AnswerFormComponent.php:100
 msgid "Na zadaný úkol jste již takto jednou odpovídali."
 msgstr "Na zadaný úkol jste již takto jednou odpovídali."
 
-# ReportAddFormComponent.php:60
+# ReportAddFormComponent.php:65
 msgid "Nadpis reportu."
 msgstr "Nadpis reportu."
 
-# TeamPresenter.php:37
+# TeamPresenter.php:61
 msgid "Nejprve se prosím přihlaste."
 msgstr "Nejprve se prosím přihlaste."
 
-# AnswerFormComponent.php:46
+# AnswerFormComponent.php:89
 msgid "Není aktuální žádné odpovídací období."
 msgstr "Není aktuální žádné odpovídací období."
 
-# SkipFormComponent.php:33
+# SkipFormComponent.php:70
 msgid "Není možno přeskočit úlohu, na níž již bylo odpovídáno."
 msgstr "Není možno přeskočit úlohu, na níž již bylo odpovídáno."
 
-# TeamFormComponent.php:232
+# TeamFormComponent.php:267
 msgid "Není vyplněno heslo týmu."
 msgstr "Není vyplněno heslo týmu."
 
-# LoginFormComponent.php:31
+# LoginFormComponent.php:42
 msgid "Nesprávné heslo"
 msgstr "Nesprávné heslo"
 
-# TeamFormComponent.php:153
+# TeamFormComponent.php:188
 msgid "Nevyplněno"
 msgstr "Nevyplněno"
 
-# default.latte:12
+# default.latte:15
 msgid "Nevyřešené"
 msgstr "Nevyřešené"
 
-# NotificationFormComponent.php:25
+# visualPaginator.latte:25
+msgid "Next »"
+msgstr "Next »"
+
+# NotificationFormComponent.php:31
 msgid "Notifikace byla vložena"
 msgstr "Notifikace byla vložena"
 
-# PasswordChangeFormComponent.php:26
+# PasswordChangeFormComponent.php:39
 msgid "Nové heslo"
 msgstr "Nové heslo"
 
-# PasswordChangeFormComponent.php:29
+# PasswordChangeFormComponent.php:42
 msgid "Nové heslo (pro kontrolu)"
 msgstr "Nové heslo (pro kontrolu)"
 
-# visualPaginator.latte:15
-msgid "Následující »"
-msgstr "Následující »"
-
-# menu.latte:43
-# menu.latte:44
-# menu.latte:45
+# BasePresenter.php:28
+# BasePresenter.php:32
+# BasePresenter.php:28
 msgid "Nástěnka"
 msgstr "Nástěnka"
 
 # menu.latte:25
 # menu.latte:26
+# BasePresenter.php:21
+# menu.latte:25
+# menu.latte:26
+# BasePresenter.php:21
 msgid "Návod"
 msgstr "Návod"
 
-# LoginFormComponent.php:54
-# TeamFormComponent.php:127
+# TeamFormComponent.php:162
+# LoginFormComponent.php:60
 msgid "Název týmu"
 msgstr "Název týmu"
 
-# TeamFormComponent.php:127
+# TeamFormComponent.php:162
 msgid "Název týmu musí být vyplněn"
 msgstr "Název týmu musí být vyplněn"
 
-# LoginFormComponent.php:55
+# LoginFormComponent.php:61
 msgid "Název týmu musí být vyplněn."
 msgstr "Název týmu musí být vyplněn."
 
-# DefaultPresenter.php:43
+# AuthPresenter.php:42
 msgid "Obnova hesla"
 msgstr "Obnova hesla"
 
-# ChatListComponent.php:97
+# ChatListComponent.php:110
 msgid "Obsah příspěvku není vyplněn."
 msgstr "Obsah příspěvku není vyplněn."
 
-# NotificationFormComponent.php:35
-# PasswordChangeFormComponent.php:33
-# ReportAddFormComponent.php:71
+# PasswordChangeFormComponent.php:46
+# ReportAddFormComponent.php:77
+# NotificationFormComponent.php:41
 msgid "Odeslat"
 msgstr "Odeslat"
 
-# AnswerFormComponent.php:115
+# AnswerFormComponent.php:157
 msgid "Odeslat řešení"
 msgstr "Odeslat řešení"
 
-# GamePresenter.php:11
-# @layout.latte:6
-# @layout.latte:6
+# BasePresenter.php:29
+# AnswerPresenter.php:46
+# AnswerPresenter.php:50
 msgid "Odevzdat řešení"
 msgstr "Odevzdat řešení"
 
-# menu.latte:74
+# menu.latte:76
+# BasePresenter.php:44
+# BasePresenter.php:42
+# BasePresenter.php:44
 msgid "Odhlásit se"
 msgstr "Odhlásit se"
 
-# AnswerFormComponent.php:97
+# AnswerFormComponent.php:140
 msgid "Odpověď"
 msgstr "Odpověď"
 
@@ -371,113 +401,117 @@ msgstr "Odpověď"
 msgid "Ohlasy účastníků"
 msgstr "Ohlasy účastníků"
 
-# a201811results.latte:4448
-# a201512results.latte:2668
-# a201212results.latte:2109
-# a201205results.latte:844
-# a201611results.latte:2746
+# TeamsService.php:160
 # a201312results.latte:2148
-# a201711results.latte:3097
+# a201512results.latte:2668
+# a201205results.latte:844
+# a201811results.latte:4448
+# a201911results.latte:5333
 # a201412results.latte:1901
-# TeamsModel.php:130
+# a201711results.latte:3097
+# a201212results.latte:2109
+# a201611results.latte:2746
 msgid "Open"
 msgstr "Open"
 
-# chatList.latte:14
+# chatList.latte:13
 msgid "Organizátoři"
 msgstr "Organizátoři"
 
-# OrgPresenter.php:30
+# OrgPresenter.php:44
 msgid "Orgovský rozcestník"
 msgstr "Orgovský rozcestník"
 
-# AnswerFormComponent.php:165
-msgid "Očekávaný počet platných cifer"
-msgstr "Očekávaný počet platných cifer"
-
-# OrgPresenter.php:65
-# StatsPresenter.php:26
-# @layout.latte:24
-# @layout.latte:24
+# BasePresenter.php:36
+# ResultsPresenter.php:25
+# BasePresenter.php:159
+# @layout.latte:26
+# @layout.latte:26
+# StatsPresenter.php:42
+# OrgPresenter.php:72
 msgid "Podrobné výsledky"
 msgstr "Podrobné výsledky"
 
-# TeamFormComponent.php:28
+# TeamFormComponent.php:54
 msgid "Pokoušíte se vložit školu, která již existuje."
 msgstr "Pokoušíte se vložit školu, která již existuje."
 
-# RecoverFormComponent.php:73
+# RecoverFormComponent.php:89
 msgid "Pokračovat"
 msgstr "Pokračovat"
 
-# @layout.latte:90
+# @layout.latte:91
+# layout.game.latte:94
+# @layout.latte:91
 msgid "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu"
 msgstr "Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu"
 
-# TeamFormComponent.php:64
+# TeamFormComponent.php:90
 msgid "Potvrzovací e-mail se nepodařilo odeslat."
 msgstr "Potvrzovací e-mail se nepodařilo odeslat."
 
-# DefaultPresenter.php:51
 # menu.latte:17
 # menu.latte:18
 # menu.latte:19
+# BasePresenter.php:19
+# DefaultPresenter.php:50
+# menu.latte:17
+# menu.latte:18
+# menu.latte:19
+# BasePresenter.php:19
 msgid "Pravidla"
 msgstr "Pravidla"
 
-# RecoverFormComponent.php:54
+# RecoverFormComponent.php:70
 msgid "Pro obnovu hesla přejděte na %s\nVaši organizátoři\n\nToto je automatická zpráva. Pokud jste o obnovu hesla nežádali, tento e-mail ignorujte."
 msgstr "Pro obnovu hesla přejděte na %s\nVaši organizátoři\n\nToto je automatická zpráva. Pokud jste o obnovu hesla nežádali, tento e-mail ignorujte."
 
-# TeamFormComponent.php:140
+# TeamFormComponent.php:175
 msgid "Pro zaslání případné odměny."
 msgstr "Pro zaslání případné odměny."
 
-# default.latte:54
+# default.latte:48
 msgid "Promeškané"
 msgstr "Promeškané"
 
-# AnswerFormComponent.php:164
-msgid "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
-msgstr "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
-
-# default.latte:43
+# default.latte:37
 msgid "Přeskočené"
 msgstr "Přeskočené"
 
-# SkipFormComponent.php:81
-# GamePresenter.php:20
-# @layout.latte:7
-# @layout.latte:7
+# SkipFormComponent.php:121
+# BasePresenter.php:30
+# SkipPresenter.php:19
 msgid "Přeskočit úkol"
 msgstr "Přeskočit úkol"
 
-# TeamFormComponent.php:143
+# TeamFormComponent.php:178
 msgid "Přečetl jsem si "
 msgstr "Přečetl jsem si "
 
-# NoticeboardPresenter.php:25
+# NoticeboardPresenter.php:31
 msgid "Přidat notifikaci"
 msgstr "Přidat notifikaci"
 
-# ChatListComponent.php:100
-# chatList.latte:7
+# ChatListComponent.php:113
+# chatList.latte:6
 msgid "Přidat příspěvek"
 msgstr "Přidat příspěvek"
 
-# LoginFormComponent.php:60
-# DefaultPresenter.php:39
-# OrgPresenter.php:34
-# menu.latte:69
-# menu.latte:70
+# menu.latte:71
+# menu.latte:72
+# BasePresenter.php:42
+# LoginFormComponent.php:66
+# AuthPresenter.php:33
+# BasePresenter.php:42
+# OrgPresenter.php:48
 msgid "Přihlásit se"
 msgstr "Přihlásit se"
 
-# TeamFormComponent.php:42
+# TeamFormComponent.php:68
 msgid "Přiřazena kategorie %s."
 msgstr "Přiřazena kategorie %s."
 
-# ChatListComponent.php:39
+# ChatListComponent.php:50
 msgid "Příspěvek byl vložen."
 msgstr "Příspěvek byl vložen."
 
@@ -485,79 +519,81 @@ msgstr "Příspěvek byl vložen."
 msgid "Reagovat"
 msgstr "Reagovat"
 
-# TeamPresenter.php:75
-# menu.latte:61
-# menu.latte:62
+# menu.latte:63
+# menu.latte:64
+# BasePresenter.php:37
+# TeamPresenter.php:108
+# BasePresenter.php:37
 msgid "Registrace"
 msgstr "Registrace"
 
-# TeamPresenter.php:18
+# TeamPresenter.php:36
 msgid "Registrace není aktivní."
 msgstr "Registrace není aktivní."
 
-# TeamPresenter.php:76
+# TeamPresenter.php:109
 msgid "Registrace nového týmu je možná jen přes FKSDB."
 msgstr "Registrace nového týmu je možná jen přes FKSDB."
 
-# TeamFormComponent.php:233
+# TeamFormComponent.php:268
 msgid "Registrovat"
 msgstr "Registrovat"
 
-# DefaultPresenter.php:66
+# DefaultPresenter.php:65
 msgid "Rozcvička"
 msgstr "Rozcvička"
 
-# ReportAddFormComponent.php:42
+# ReportAddFormComponent.php:47
 msgid "Ročník"
 msgstr "Ročník"
 
-# ReportAddFormComponent.php:44
+# ReportAddFormComponent.php:49
 msgid "Ročník musí být větší než %d."
 msgstr "Ročník musí být větší než %d."
 
-# DefaultPresenter.php:61
+# DefaultPresenter.php:60
 msgid "Rychlý grafický návod ke hře"
 msgstr "Rychlý grafický návod ke hře"
 
-# TeamPresenter.php:67
+# TeamPresenter.php:100
 msgid "Seznam týmů"
 msgstr "Seznam týmů"
 
-# AnswerStatsComponent.php:48
-# NoticeboardPresenter.php:40
+# NoticeboardPresenter.php:48
 msgid "Sledujte prosím nástěnku."
 msgstr "Sledujte prosím nástěnku."
 
-# OrgPresenter.php:50
+# OrgPresenter.php:63
 msgid "Správa reportů"
 msgstr "Správa reportů"
 
-# AnswerFormComponent.php:49
-# AnswerFormComponent.php:59
-# AnswerFormComponent.php:66
-# LoginFormComponent.php:36
-# SkipFormComponent.php:36
-# SkipFormComponent.php:43
+# AnswerFormComponent.php:92
+# AnswerFormComponent.php:102
+# AnswerFormComponent.php:109
+# LoginFormComponent.php:46
+# SkipFormComponent.php:73
+# SkipFormComponent.php:80
 msgid "Stala se neočekávaná chyba."
 msgstr "Stala se neočekávaná chyba."
 
-# ArchivePresenter.php:26
-# OrgPresenter.php:73
-# StatsPresenter.php:31
+# ArchivePresenter.php:23
+# StatsPresenter.php:47
+# OrgPresenter.php:77
 msgid "Statistika úkolů"
 msgstr "Statistika úkolů"
 
-# OrgPresenter.php:106
-# StatsPresenter.php:52
+# ResultsPresenter.php:38
+# StatsPresenter.php:68
+# OrgPresenter.php:110
 msgid "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 msgstr "Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."
 
-# OrgPresenter.php:41
+# OrgPresenter.php:57
 msgid "Statistiky odpovědí"
 msgstr "Statistiky odpovědí"
 
-# @layout.latte:25
-# @layout.latte:25
+# @layout.latte:27
+# @layout.latte:27
 msgid "Statistiky úkolů"
 msgstr "Statistiky úkolů"
 
@@ -569,174 +605,189 @@ msgstr "Student Pilný"
 msgid "Středoškoláci"
 msgstr "Středoškoláci"
 
-# a201811results.latte:2
+# TeamsService.php:156
+# a201312results.latte:2
 # a201512results.latte:2
+# a201811results.latte:2
+# a201911results.latte:2
+# a201412results.latte:2
+# a201711results.latte:2
 # a201212results.latte:2
 # a201611results.latte:2
-# a201312results.latte:2
-# a201711results.latte:2
-# a201412results.latte:2
-# TeamsModel.php:126
 msgid "Středoškoláci A"
 msgstr "Středoškoláci A"
 
-# a201811results.latte:1708
+# TeamsService.php:157
+# a201312results.latte:363
 # a201512results.latte:493
+# a201811results.latte:1708
+# a201911results.latte:1747
+# a201412results.latte:480
+# a201711results.latte:571
 # a201212results.latte:376
 # a201611results.latte:493
-# a201312results.latte:363
-# a201711results.latte:571
-# a201412results.latte:480
-# TeamsModel.php:127
 msgid "Středoškoláci B"
 msgstr "Středoškoláci B"
 
-# a201811results.latte:3014
+# TeamsService.php:158
+# a201312results.latte:971
 # a201512results.latte:1166
+# a201811results.latte:3014
+# a201911results.latte:3524
+# a201412results.latte:958
+# a201711results.latte:1114
 # a201212results.latte:815
 # a201611results.latte:1075
-# a201312results.latte:971
-# a201711results.latte:1114
-# a201412results.latte:958
-# TeamsModel.php:128
 msgid "Středoškoláci C"
 msgstr "Středoškoláci C"
 
-# ReportAddFormComponent.php:61
+# ReportAddFormComponent.php:66
 msgid "Text reportu."
 msgstr "Text reportu."
 
-# scoreList.latte:11
-# TeamFormComponent.php:124
+# TeamFormComponent.php:159
+# scoreList.latte:12
 msgid "Tým"
 msgstr "Tým"
 
-# TeamFormComponent.php:69
+# TeamFormComponent.php:95
 msgid "Tým %s byl úspěšně zaregistrován."
 msgstr "Tým %s byl úspěšně zaregistrován."
 
-# TeamFormComponent.php:105
+# TeamFormComponent.php:136
 msgid "Tým byl úspěšně aktualizován."
 msgstr "Tým byl úspěšně aktualizován."
 
-# TeamFormComponent.php:108
+# TeamFormComponent.php:139
 msgid "Tým musí mít alespoň jednoho člena."
 msgstr "Tým musí mít alespoň jednoho člena."
 
-# RecoverFormComponent.php:34
+# RecoverFormComponent.php:50
 msgid "Tým nenalezen."
 msgstr "Tým nenalezen."
 
-# RecoverFormComponent.php:42
+# RecoverFormComponent.php:58
 msgid "Tým se již pokouší o obnovu hesla."
 msgstr "Tým se již pokouší o obnovu hesla."
 
-# TeamFormComponent.php:34
+# TeamFormComponent.php:60
 msgid "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 msgstr "Tým se stejným názvem nebo kontaktním e-mailem již existuje"
 
-# ReportAddFormComponent.php:54
+# ReportAddFormComponent.php:59
 msgid "Tým, za který se vkládá."
 msgstr "Tým, za který se vkládá."
 
-# menu.latte:34
-# menu.latte:35
-# menu.latte:36
+# menu.latte:37
+# menu.latte:38
+# menu.latte:39
+# BasePresenter.php:25
+# menu.latte:37
+# menu.latte:38
+# menu.latte:39
+# BasePresenter.php:25
 msgid "Týmy"
 msgstr "Týmy"
 
-# TeamFormComponent.php:189
+# TeamFormComponent.php:224
 msgid "U %d. člena je vyplněno jméno, ale není u něj vyplněn e-mail."
 msgstr "U %d. člena je vyplněno jméno, ale není u něj vyplněn e-mail."
 
-# TeamFormComponent.php:174
-# TeamFormComponent.php:182
+# TeamFormComponent.php:209
+# TeamFormComponent.php:217
 msgid "U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."
 msgstr "U %d. člena je vyplněno jméno, ale není u něj vyplněna škola."
 
-# TeamFormComponent.php:183
+# TeamFormComponent.php:218
 msgid "U %d. člena musí být název školy alespoň %d znaků."
 msgstr "U %d. člena musí být název školy alespoň %d znaků."
 
-# TeamFormComponent.php:187
+# TeamFormComponent.php:222
 msgid "U %d. člena není platná e-mailová adresa."
 msgstr "U %d. člena není platná e-mailová adresa."
 
-# TeamFormComponent.php:228
+# TeamFormComponent.php:263
 msgid "Upravit"
 msgstr "Upravit"
 
-# stats.latte:3
 # default.latte:3
+# stats.latte:3
 msgid "V průběhu hry nejsou statistiky okamžité, údaje jsou řádově po minutách přepočítávány."
 msgstr "V průběhu hry nejsou statistiky okamžité, údaje jsou řádově po minutách přepočítávány."
 
-# chat.latte:6
+# default.latte:6
+# default.latte:6
 msgid "V příspěvcích lze používat MathJax."
 msgstr "V příspěvcích lze používat MathJax."
 
-# SkipFormComponent.php:30
+# SkipFormComponent.php:67
 msgid "V tomto období není možno přeskakovat úlohy této série."
 msgstr "V tomto období není možno přeskakovat úlohy této série."
 
-# AnswerFormComponent.php:35
+# AnswerFormComponent.php:78
 msgid "Vaše odpověď je správně."
 msgstr "Vaše odpověď je správně."
 
-# AnswerFormComponent.php:39
+# AnswerFormComponent.php:82
 msgid "Vaše odpověď je špatně."
 msgstr "Vaše odpověď je špatně."
 
-# SkipFormComponent.php:78
+# SkipFormComponent.php:118
 msgid "Vyberte prosím úkol k přeskočení."
 msgstr "Vyberte prosím úkol k přeskočení."
 
-# AnswerFormComponent.php:94
+# AnswerFormComponent.php:137
 msgid "Vyberte prosím řešený úkol."
 msgstr "Vyberte prosím řešený úkol."
 
-# AnswerFormComponent.php:98
+# AnswerFormComponent.php:141
 msgid "Vyplňte prosím řešení úkolu."
 msgstr "Vyplňte prosím řešení úkolu."
 
-# default.latte:32
+# default.latte:26
 msgid "Vyřešené"
 msgstr "Vyřešené"
 
-# AnswerFormComponent.php:102
+# AnswerFormComponent.php:145
 msgid "Výsledek musí být celé číslo."
 msgstr "Výsledek musí být celé číslo."
 
-# AnswerFormComponent.php:106
+# AnswerFormComponent.php:149
 msgid "Výsledek musí být reálné číslo."
 msgstr "Výsledek musí být reálné číslo."
 
-# OrgPresenter.php:57
-# StatsPresenter.php:20
-# @layout.latte:17
-# @layout.latte:17
-# menu.latte:39
-# menu.latte:40
-# menu.latte:41
+# menu.latte:44
+# menu.latte:45
+# menu.latte:46
+# BasePresenter.php:27
+# BasePresenter.php:35
+# BasePresenter.php:158
+# @layout.latte:19
+# @layout.latte:19
+# StatsPresenter.php:36
+# menu.latte:44
+# menu.latte:45
+# menu.latte:46
+# BasePresenter.php:27
+# OrgPresenter.php:67
 msgid "Výsledky"
 msgstr "Výsledky"
 
-# TeamFormComponent.php:139
+# TeamFormComponent.php:174
 msgid "Zadejte prosím kontatní adresu."
 msgstr "Zadejte prosím kontatní adresu."
 
-# GamePresenter.php:24
-# @layout.latte:4
-# @layout.latte:4
+# BasePresenter.php:27
+# TaskPresenter.php:24
 msgid "Zadání"
 msgstr "Zadání"
 
+# a201312results.latte:1553
 # a201512results.latte:2151
+# a201412results.latte:1449
+# a201711results.latte:1748
 # a201212results.latte:1488
 # a201611results.latte:2047
-# a201312results.latte:1553
-# a201711results.latte:1748
-# a201412results.latte:1449
 msgid "Zahraniční SŠ"
 msgstr "Zahraniční SŠ"
 
@@ -744,146 +795,147 @@ msgstr "Zahraniční SŠ"
 msgid "Zapomenuté heslo"
 msgstr "Zapomenuté heslo"
 
-# TeamPresenter.php:41
+# TeamPresenter.php:65
 msgid "Změna hesla"
 msgstr "Změna hesla"
 
-# DefaultPresenter.php:45
+# AuthPresenter.php:44
 msgid "Změnu hesla proveďte editací vaší přihlášky."
 msgstr "Změnu hesla proveďte editací vaší přihlášky."
 
 # menu.latte:4
+# menu.latte:4
 msgid "Zobrazit navigaci"
 msgstr "Zobrazit navigaci"
 
-# default.latte:8
-msgid "Zobrazit pouze CZ&SK výsledky"
-msgstr "Zobrazit pouze CZ&SK výsledky"
-
-# default.latte:6
-msgid "Zobrazit všechny výsledky"
-msgstr "Zobrazit všechny výsledky"
-
-# NotificationFormComponent.php:34
+# NotificationFormComponent.php:40
 msgid "Zpráva v angličtině musí být vyplněna."
 msgstr "Zpráva v angličtině musí být vyplněna."
 
-# NotificationFormComponent.php:33
+# NotificationFormComponent.php:39
 msgid "Zpráva v angličtině."
 msgstr "Zpráva v angličtině."
 
-# NotificationFormComponent.php:32
+# NotificationFormComponent.php:38
 msgid "Zpráva v češtině musí být vyplněna."
 msgstr "Zpráva v češtině musí být vyplněna."
 
-# NotificationFormComponent.php:31
+# NotificationFormComponent.php:37
 msgid "Zpráva v češtině."
 msgstr "Zpráva v češtině."
 
-# taskStats.latte:12
-# scoreList.latte:65
-# default.latte:19
+# taskStats.latte:13
+# scoreList.latte:70
+# default.latte:1
 msgid "Zrušená úloha"
 msgstr "Zrušená úloha"
 
-# TeamFormComponent.php:156
+# TeamFormComponent.php:191
 msgid "ZŠ"
 msgstr "ZŠ"
 
-# RecoverFormComponent.php:53
+# RecoverFormComponent.php:69
 msgid "[Fyziklání online] obnova hesla"
 msgstr "[Fyziklání online] obnova hesla"
 
-# default.latte:19
-# default.latte:19
+# default.latte:2
+# default.latte:2
 msgid "b."
 msgstr "b."
 
 # results.latte:11
-# a201811results.latte:8
-# a201811results.latte:1714
-# a201811results.latte:3020
-# a201811results.latte:4454
-# a201512results.latte:8
-# a201512results.latte:499
-# a201512results.latte:1172
-# a201512results.latte:2157
-# a201512results.latte:2674
-# a201212results.latte:8
-# a201212results.latte:382
-# a201212results.latte:821
-# a201212results.latte:1494
-# a201212results.latte:2115
-# a201205results.latte:8
-# a201205results.latte:850
-# a201611results.latte:8
-# a201611results.latte:499
-# a201611results.latte:1081
-# a201611results.latte:2053
-# a201611results.latte:2752
 # a201312results.latte:8
 # a201312results.latte:369
 # a201312results.latte:977
 # a201312results.latte:1559
 # a201312results.latte:2154
-# a201711results.latte:8
-# a201711results.latte:577
-# a201711results.latte:1120
-# a201711results.latte:1754
-# a201711results.latte:3103
+# a201512results.latte:8
+# a201512results.latte:499
+# a201512results.latte:1172
+# a201512results.latte:2157
+# a201512results.latte:2674
+# a201205results.latte:8
+# a201205results.latte:850
+# a201811results.latte:8
+# a201811results.latte:1714
+# a201811results.latte:3020
+# a201811results.latte:4454
+# a201911results.latte:8
+# a201911results.latte:1753
+# a201911results.latte:3530
+# a201911results.latte:5339
 # a201412results.latte:8
 # a201412results.latte:486
 # a201412results.latte:964
 # a201412results.latte:1455
 # a201412results.latte:1907
+# a201711results.latte:8
+# a201711results.latte:577
+# a201711results.latte:1120
+# a201711results.latte:1754
+# a201711results.latte:3103
+# a201212results.latte:8
+# a201212results.latte:382
+# a201212results.latte:821
+# a201212results.latte:1494
+# a201212results.latte:2115
+# a201611results.latte:8
+# a201611results.latte:499
+# a201611results.latte:1081
+# a201611results.latte:2053
+# a201611results.latte:2752
 msgid "bonusové body"
 msgstr "bonusové body"
 
 # results.latte:10
-# a201811results.latte:7
-# a201811results.latte:1713
-# a201811results.latte:3019
-# a201811results.latte:4453
-# a201512results.latte:7
-# a201512results.latte:498
-# a201512results.latte:1171
-# a201512results.latte:2156
-# a201512results.latte:2673
-# a201212results.latte:7
-# a201212results.latte:381
-# a201212results.latte:820
-# a201212results.latte:1493
-# a201212results.latte:2114
-# a201205results.latte:7
-# a201205results.latte:849
-# a201611results.latte:7
-# a201611results.latte:498
-# a201611results.latte:1080
-# a201611results.latte:2052
-# a201611results.latte:2751
 # a201312results.latte:7
 # a201312results.latte:368
 # a201312results.latte:976
 # a201312results.latte:1558
 # a201312results.latte:2153
-# a201711results.latte:7
-# a201711results.latte:576
-# a201711results.latte:1119
-# a201711results.latte:1753
-# a201711results.latte:3102
+# a201512results.latte:7
+# a201512results.latte:498
+# a201512results.latte:1171
+# a201512results.latte:2156
+# a201512results.latte:2673
+# a201205results.latte:7
+# a201205results.latte:849
+# a201811results.latte:7
+# a201811results.latte:1713
+# a201811results.latte:3019
+# a201811results.latte:4453
+# a201911results.latte:7
+# a201911results.latte:1752
+# a201911results.latte:3529
+# a201911results.latte:5338
 # a201412results.latte:7
 # a201412results.latte:485
 # a201412results.latte:963
 # a201412results.latte:1454
 # a201412results.latte:1906
+# a201711results.latte:7
+# a201711results.latte:576
+# a201711results.latte:1119
+# a201711results.latte:1753
+# a201711results.latte:3102
+# a201212results.latte:7
+# a201212results.latte:381
+# a201212results.latte:820
+# a201212results.latte:1493
+# a201212results.latte:2114
+# a201611results.latte:7
+# a201611results.latte:498
+# a201611results.latte:1080
+# a201611results.latte:2052
+# a201611results.latte:2751
 msgid "celkem bodů"
 msgstr "celkem bodů"
 
-# teamList.latte:19
+# teamList.latte:22
 msgid "informace o členech týmu nejsou dostupné"
 msgstr "informace o členech týmu nejsou dostupné"
 
-# TeamPresenter.php:54
+# TeamPresenter.php:83
 msgid "na stránce přihlášky"
 msgstr "na stránce přihlášky"
 
@@ -892,15 +944,15 @@ msgid "nejlepší"
 msgstr "nejlepší"
 
 # taskStats.latte:4
-msgid "název"
-msgstr "název"
+msgid "number"
+msgstr "number"
 
 # answerHistory.latte:5
 msgid "odpověď"
 msgstr "odpověď"
 
-# TeamFormComponent.php:161
-# TeamFormComponent.php:164
+# TeamFormComponent.php:196
+# TeamFormComponent.php:199
 msgid "ostatní"
 msgstr "ostatní"
 
@@ -908,7 +960,7 @@ msgstr "ostatní"
 msgid "oznámení"
 msgstr "oznámení"
 
-# TeamFormComponent.php:144
+# TeamFormComponent.php:179
 msgid "pravidla soutěže"
 msgstr "pravidla soutěže"
 
@@ -920,47 +972,51 @@ msgstr "přeskočeno"
 msgid "správných odpovědí"
 msgstr "správných odpovědí"
 
-# TeamFormComponent.php:163
+# TeamFormComponent.php:198
 msgid "střední škola"
 msgstr "střední škola"
 
 # results.latte:9
-# a201811results.latte:6
-# a201811results.latte:1712
-# a201811results.latte:3018
-# a201811results.latte:4452
-# a201512results.latte:6
-# a201512results.latte:497
-# a201512results.latte:1170
-# a201512results.latte:2155
-# a201512results.latte:2672
-# a201212results.latte:6
-# a201212results.latte:380
-# a201212results.latte:819
-# a201212results.latte:1492
-# a201212results.latte:2113
-# a201205results.latte:6
-# a201205results.latte:848
-# a201611results.latte:6
-# a201611results.latte:497
-# a201611results.latte:1079
-# a201611results.latte:2051
-# a201611results.latte:2750
 # a201312results.latte:6
 # a201312results.latte:367
 # a201312results.latte:975
 # a201312results.latte:1557
 # a201312results.latte:2152
-# a201711results.latte:6
-# a201711results.latte:575
-# a201711results.latte:1118
-# a201711results.latte:1752
-# a201711results.latte:3101
+# a201512results.latte:6
+# a201512results.latte:497
+# a201512results.latte:1170
+# a201512results.latte:2155
+# a201512results.latte:2672
+# a201205results.latte:6
+# a201205results.latte:848
+# a201811results.latte:6
+# a201811results.latte:1712
+# a201811results.latte:3018
+# a201811results.latte:4452
+# a201911results.latte:6
+# a201911results.latte:1751
+# a201911results.latte:3528
+# a201911results.latte:5337
 # a201412results.latte:6
 # a201412results.latte:484
 # a201412results.latte:962
 # a201412results.latte:1453
 # a201412results.latte:1905
+# a201711results.latte:6
+# a201711results.latte:575
+# a201711results.latte:1118
+# a201711results.latte:1752
+# a201711results.latte:3101
+# a201212results.latte:6
+# a201212results.latte:380
+# a201212results.latte:819
+# a201212results.latte:1492
+# a201212results.latte:2113
+# a201611results.latte:6
+# a201611results.latte:497
+# a201611results.latte:1079
+# a201611results.latte:2051
+# a201611results.latte:2750
 msgid "tým"
 msgstr "tým"
 
@@ -968,60 +1024,64 @@ msgstr "tým"
 msgid "vloženo"
 msgstr "vloženo"
 
-# TeamFormComponent.php:162
+# TeamFormComponent.php:197
 msgid "zahraničí"
 msgstr "zahraničí"
 
 # results.latte:12
-# a201811results.latte:9
-# a201811results.latte:1715
-# a201811results.latte:3021
-# a201811results.latte:4455
-# a201512results.latte:9
-# a201512results.latte:500
-# a201512results.latte:1173
-# a201512results.latte:2158
-# a201512results.latte:2675
-# a201212results.latte:9
-# a201212results.latte:383
-# a201212results.latte:822
-# a201212results.latte:1495
-# a201212results.latte:2116
-# a201205results.latte:9
-# a201205results.latte:851
-# a201611results.latte:9
-# a201611results.latte:500
-# a201611results.latte:1082
-# a201611results.latte:2054
-# a201611results.latte:2753
 # a201312results.latte:9
 # a201312results.latte:370
 # a201312results.latte:978
 # a201312results.latte:1560
 # a201312results.latte:2155
-# a201711results.latte:9
-# a201711results.latte:578
-# a201711results.latte:1121
-# a201711results.latte:1755
-# a201711results.latte:3104
+# a201512results.latte:9
+# a201512results.latte:500
+# a201512results.latte:1173
+# a201512results.latte:2158
+# a201512results.latte:2675
+# a201205results.latte:9
+# a201205results.latte:851
+# a201811results.latte:9
+# a201811results.latte:1715
+# a201811results.latte:3021
+# a201811results.latte:4455
+# a201911results.latte:9
+# a201911results.latte:1754
+# a201911results.latte:3531
+# a201911results.latte:5340
 # a201412results.latte:9
 # a201412results.latte:487
 # a201412results.latte:965
 # a201412results.latte:1456
 # a201412results.latte:1908
+# a201711results.latte:9
+# a201711results.latte:578
+# a201711results.latte:1121
+# a201711results.latte:1755
+# a201711results.latte:3104
+# a201212results.latte:9
+# a201212results.latte:383
+# a201212results.latte:822
+# a201212results.latte:1495
+# a201212results.latte:2116
+# a201611results.latte:9
+# a201611results.latte:500
+# a201611results.latte:1082
+# a201611results.latte:2054
+# a201611results.latte:2753
 msgid "záporné body"
 msgstr "záporné body"
 
-# visualPaginator.latte:8
-msgid "« Předchozí"
-msgstr "« Předchozí"
+# visualPaginator.latte:11
+msgid "« Previous"
+msgstr "« Previous"
 
-# AnswerFormComponent.php:92
-# SkipFormComponent.php:76
+# AnswerFormComponent.php:135
+# SkipFormComponent.php:116
 msgid "Úkol"
 msgstr "Úkol"
 
-# SkipFormComponent.php:25
+# SkipFormComponent.php:62
 msgid "Úloha %s přeskočena."
 msgstr "Úloha %s přeskočena."
 
@@ -1029,12 +1089,12 @@ msgstr "Úloha %s přeskočena."
 msgid "úkol"
 msgstr "úkol"
 
-# TeamFormComponent.php:155
+# TeamFormComponent.php:190
 msgid "ČR/SR"
 msgstr "ČR/SR"
 
-# AnswerFormComponent.php:130
-# SkipFormComponent.php:97
+# AnswerFormComponent.php:178
+# SkipFormComponent.php:140
 msgid "Čas vypršel."
 msgstr "Čas vypršel."
 
@@ -1042,28 +1102,25 @@ msgstr "Čas vypršel."
 msgid "čas vzniku"
 msgstr "čas vzniku"
 
-# @layout.latte:11
-msgid "Řešení"
-msgstr "Řešení"
-
 # taskStats.latte:6
 msgid "řešilo týmů"
 msgstr "řešilo týmů"
 
-# a201811results.latte:1
-# a201512results.latte:1
-# a201212results.latte:1
-# a201205results.latte:1
-# a201611results.latte:1
 # a201312results.latte:1
-# a201711results.latte:1
+# a201512results.latte:1
+# a201205results.latte:1
+# a201811results.latte:1
+# a201911results.latte:1
 # a201412results.latte:1
-# stats.latte:4
+# a201711results.latte:1
+# a201212results.latte:1
+# a201611results.latte:1
 # default.latte:4
+# stats.latte:4
 msgid "Šedé jsou týmy, jež neprojevily během hry aktivitu."
 msgstr "Šedé jsou týmy, jež neprojevily během hry aktivitu."
 
-# TeamFormComponent.php:172
+# TeamFormComponent.php:207
 msgid "Škola"
 msgstr "Škola"
 
@@ -1071,9 +1128,9 @@ msgstr "Škola"
 msgid "špatných odpovědí"
 msgstr "špatných odpovědí"
 
-# default.latte:14
-# default.latte:34
-# default.latte:45
-# default.latte:56
+# default.latte:17
+# default.latte:28
+# default.latte:39
+# default.latte:50
 msgid "Žádné úlohy."
 msgstr "Žádné úlohy."

@@ -1,25 +1,24 @@
 <?php
 
-/**
- *
- * @author Michal Koutný <xm.koutny@gmail.com>
- */
-
 namespace App\Model\Translator;
 
 use Nette\Localization\ITranslator;
 
+/**
+ *
+ * @author Michal Koutný <xm.koutny@gmail.com>
+ */
 class GettextTranslator implements ITranslator {
 
-    public static $supportedLangs = ['cs', 'en'];
-    public static $locales = [
+    public static array $supportedLangs = ['cs', 'en'];
+    public static array $locales = [
         'cs' => 'cs_CZ.utf-8',
         'en' => 'en_US.utf-8',
     ];
 
     public function translate($message, $count = null) {
-        if ($message === "" || $message === null) {
-            return "";
+        if ($message === '' || $message === null) {
+            return '';
         }
         if ($count !== null) {
             return ngettext($message, $message, (int)$count);

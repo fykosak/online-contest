@@ -38,14 +38,14 @@ msgstr "3rd year of high school"
 msgid "4. ročník SŠ"
 msgstr "4th year of high school"
 
-# AnswerFormComponent.php:168
-msgid "Aktuálně bodů"
-msgstr "Points currently"
-
 # menu.latte:13
 # menu.latte:13
 msgid "Archiv"
 msgstr "Archive"
+
+# BasePresenter.php:33
+msgid "Chat"
+msgstr ""
 
 # TeamFormComponent.php:58
 # TeamFormComponent.php:99
@@ -135,6 +135,10 @@ msgstr "Online Physics Brawl registration"
 msgid "Fotografie musí být ve formátu JPEG, GIF nebo PNG."
 msgstr "Photo must be in the formats JPEG, GIF or PNG."
 
+# ReportAddFormComponent.php:64
+msgid "Fotografie nesmí být větší, než 500 kB."
+msgstr "The photo has to be smaller than 500 kB."
+
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:15
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:18
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:95
@@ -213,10 +217,6 @@ msgstr "You can upload at most 10 photos."
 msgid "Je nutno si nejdříve přečíst pravidla."
 msgstr "You have to read the rules first."
 
-# AnswerFormComponent.php:150
-msgid "Jednotka"
-msgstr "Unit"
-
 msgid "Jiná"
 msgstr "Other"
 
@@ -256,13 +256,9 @@ msgstr "Contact address"
 msgid "Kontrola hesla"
 msgstr "Password confirmation"
 
-# AnswerFormComponent.php:34
-msgid "Lze odpovídat až za <span class='timesec'>%d</span> sekund."
-msgstr "You can answer in <span class='timesec'>%d</span> seconds."
-
-# AnswerFormComponent.php:167
-msgid "Maximum bodů"
-msgstr "Max points"
+# AnswerFormComponent.php:86
+msgid "Lze odpovídat až za <span class=\"timesec\">%d</span> sekund."
+msgstr ""
 
 # DefaultPresenter.php:15
 msgid "Mezinárodní soutež ve fyzice"
@@ -321,6 +317,10 @@ msgstr "Not filled"
 msgid "Nevyřešené"
 msgstr "Unsolved"
 
+# visualPaginator.latte:25
+msgid "Next »"
+msgstr ""
+
 # NotificationFormComponent.php:25
 msgid "Notifikace byla vložena"
 msgstr "Notification was inserted"
@@ -332,13 +332,6 @@ msgstr "New password"
 # PasswordChangeFormComponent.php:29
 msgid "Nové heslo (pro kontrolu)"
 msgstr "New password (for check)"
-
-# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:55
-# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:57
-# visualPaginator.phtml:53
-# visualPaginator.phtml:55
-msgid "Následující »"
-msgstr "Next »"
 
 # menu.latte:27
 # menu.latte:28
@@ -414,10 +407,6 @@ msgstr "Organizers"
 msgid "Orgovský rozcestník"
 msgstr "Org dashboard"
 
-# AnswerFormComponent.php:149
-msgid "Očekávaný počet platných cifer"
-msgstr "Expected number of significant digits"
-
 # layout.phtml:13
 # layout.phtml:13
 # StatsPresenter.php:16
@@ -475,12 +464,6 @@ msgstr ""
 # default.latte:56
 msgid "Promeškané"
 msgstr "Missed"
-
-# AnswerFormComponent.php:94
-msgid "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
-msgstr ""
-"Pi can be entered in any of the following forms: 3.14; 3,14; 314e-2 or "
-"0.314e1."
 
 # default.phtml:39
 msgid "Přeskočené"
@@ -776,14 +759,6 @@ msgstr "You can change password by editing your application."
 msgid "Zobrazit navigaci"
 msgstr "Show navigation"
 
-# default.latte:8
-msgid "Zobrazit pouze CZ&SK výsledky"
-msgstr "Show only CZ&SK results"
-
-# default.latte:6
-msgid "Zobrazit všechny výsledky"
-msgstr "Show all results"
-
 # NotificationFormComponent.php:34
 msgid "Zpráva v angličtině musí být vyplněna."
 msgstr "Message in English has to be filled."
@@ -839,9 +814,9 @@ msgstr "on the application page"
 msgid "nejlepší"
 msgstr "the best"
 
-# taskStats.phtml:4
-msgid "název"
-msgstr "name"
+# taskStats.latte:4
+msgid "number"
+msgstr ""
 
 # answerHistory.phtml:5
 msgid "odpověď"
@@ -888,12 +863,9 @@ msgstr "foreign country"
 msgid "záporné body"
 msgstr "negative points"
 
-# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:40
-# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:42
-# visualPaginator.phtml:38
-# visualPaginator.phtml:40
-msgid "« Předchozí"
-msgstr "« Previous"
+# visualPaginator.latte:11
+msgid "« Previous"
+msgstr ""
 
 # SkipFormComponent.php:57
 # AnswerFormComponent.php:78
@@ -921,10 +893,6 @@ msgstr "Time is up."
 msgid "čas vzniku"
 msgstr "time of creation"
 
-# layout.phtml:12
-msgid "Řešení"
-msgstr "Solution"
-
 # taskStats.latte:6
 msgid "řešilo týmů"
 msgstr "teams trying to solve"
@@ -944,6 +912,62 @@ msgstr "wrong answers"
 # default.phtml:10
 msgid "Žádné úlohy."
 msgstr "No more problems."
+
+# AnswerFormComponent.php:168
+#~ msgid "Aktuálně bodů"
+#~ msgstr "Points currently"
+
+# AnswerFormComponent.php:150
+#~ msgid "Jednotka"
+#~ msgstr "Unit"
+
+# AnswerFormComponent.php:34
+#~ msgid "Lze odpovídat až za <span class='timesec'>%d</span> sekund."
+#~ msgstr "You can answer in <span class='timesec'>%d</span> seconds."
+
+# AnswerFormComponent.php:167
+#~ msgid "Maximum bodů"
+#~ msgstr "Max points"
+
+# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:55
+# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:57
+# visualPaginator.phtml:53
+# visualPaginator.phtml:55
+#~ msgid "Následující »"
+#~ msgstr "Next »"
+
+# AnswerFormComponent.php:149
+#~ msgid "Očekávaný počet platných cifer"
+#~ msgstr "Expected number of significant digits"
+
+# AnswerFormComponent.php:94
+#~ msgid "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
+#~ msgstr ""
+#~ "Pi can be entered in any of the following forms: 3.14; 3,14; 314e-2 or "
+#~ "0.314e1."
+
+# default.latte:8
+#~ msgid "Zobrazit pouze CZ&SK výsledky"
+#~ msgstr "Show only CZ&SK results"
+
+# default.latte:6
+#~ msgid "Zobrazit všechny výsledky"
+#~ msgstr "Show all results"
+
+# taskStats.phtml:4
+#~ msgid "název"
+#~ msgstr "name"
+
+# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:40
+# _6d7730eff2600c0d68c16c239283a44f.visualPaginator.phtml.php:42
+# visualPaginator.phtml:38
+# visualPaginator.phtml:40
+#~ msgid "« Předchozí"
+#~ msgstr "« Previous"
+
+# layout.phtml:12
+#~ msgid "Řešení"
+#~ msgstr "Solution"
 
 # DefaultPresenter.php:53
 #~ msgid "Další soutěže"
@@ -979,10 +1003,6 @@ msgstr "No more problems."
 # taskStats.phtml:9
 #~ msgid "špatně"
 #~ msgstr "incorrect"
-
-# ReportAddFormComponent.php:64
-#~ msgid "Fotografie nesmí být větší, než 500 kB."
-#~ msgstr "The photo has to be smaller than 500 kB."
 
 # SkipFormComponent.php:12
 # GamePresenter.php:16
