@@ -1,9 +1,9 @@
 
 .bg-fol {
-    background-image: -webkit-linear-gradient(top, #ff933a 0, #FF640F 100%);
-    background-image: -o-linear-gradient(top, #ff933a 0, #FF640F 100%);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#ff933a), to(#FF640F));
-    background-image: linear-gradient(to bottom, #ff933a 0, #FF640F 100%);
+    background-image: -webkit-linear-gradient(top, #b6cb83 0, #66a139 100%);
+    background-image: -o-linear-gradient(top, #b6cb83 0, #66a139 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#b6cb83), to(#66a139));
+    background-image: linear-gradient(to bottom, #b6cb83 0, #66a139 100%);
 }
 
 html, body {
