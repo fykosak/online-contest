@@ -4,42 +4,12 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
 
-    {if $presenter->getOpenGraphLang() == 'cs_CZ'}
-        <meta property="og:locale" content="cs_CZ"/>
-        <meta property="og:locale:alternate" content="en_US"/>
-        <meta property="og:url" content="http://online.fyziklani.cz/cs/"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="Týmová soutěž v řešení fyzikálních úloh"/>
-        <meta property="og:description" content="Online týmová soutěž v řešení fyzikálních úloh."/>
-        <meta property="og:image" content="http://online.fyziklani.cz/images/fyziklani-logo.png"/>
-        <meta property="og:image:type" content="image/png"/>
-    {else}
-        <meta property="og:locale" content="en_US"/>
-        <meta property="og:locale:alternate" content="cs_CZ"/>
-        <meta property="og:url" content="http://physicsbrawl.org/en/"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="Team competition in solving physics problems"/>
-        <meta property="og:description" content="Online team competition in solving physics problems."/>
-        <meta property="og:image" content="http://physicsbrawl.org/images/fyziklani-logo.png"/>
-        <meta property="og:image:type" content="image/png"/>
-    {/if}
     <link href="{$basePath}/favicon.png" rel="icon" type="image/png"/>
-    <title>{_'Fyziklání online'}{ifset $pageTitle} &ndash; {$pageTitle}{/ifset}</title>
+    <title>{$competition['name'][$lang]??$competition['name']['cs']}{ifset $pageTitle} &ndash; {$pageTitle}{/ifset}</title>
 <!-- Bootstrap core CSS -->
 <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="https://bootswatch.com/4/cyborg/bootstrap.min.css" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
 
     <link href="{$basePath}/css/flag-icon/flag-icon.min.css" rel="stylesheet"/>
 
@@ -93,10 +63,12 @@
 </main>
 <footer class="container text-center border-top">
     <p class="pull-right small">{_'Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu'}
-        <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>.
+        <a href="mailto:webmaster@fykos.cz">webmaster@fykos.cz</a>{if isset($competition['mail'])} | <a href="mailto:{$competition['mail'][$lang]??$competition['mail']['cs']}">{$competition['mail'][$lang]??$competition['mail']['cs']}</a>{/if}.
     </p>
     <p>{if $presenter->lang == 'cs'}<a href="http://fykos.cz/">FYKOS.cz</a>{else}<a
                 href="http://fykos.org/">FYKOS.org</a>{/if}
+        |
+        <a href="{$competition['link'][$lang]??$competition['link']['cs']}">{$competition['link'][$lang]??$competition['link']['cs']}</a>
     </p>
 </footer>
 
@@ -104,9 +76,9 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
-<script src="{$basePath}/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js" integrity="sha512-ubuT8Z88WxezgSqf3RLuNi5lmjstiJcyezx34yIU2gAHonIi27Na7atqzUZCOoY4CExaoFumzOsFQ2Ch+I/HCw==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
 <script src="{$basePath}/js/fix-navbar-issue.js"></script>
 

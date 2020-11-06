@@ -43,6 +43,12 @@ abstract class BasePresenter extends Presenter {
         $this->getTemplate()->pageTitle = $pageTitle;
     }
 
+    protected function beforeRender()
+    {
+        parent::beforeRender();
+        $this->template->competition = $this->getContext()->getParameters()['competition'];
+    }
+
 // ----- PROTECTED METHODS
 
     protected function createComponentFlashMessages(): FlashMessagesComponent {

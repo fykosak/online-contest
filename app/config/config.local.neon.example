@@ -62,6 +62,8 @@ parameters:
         link:
             cs: http://online.fykos.local/cs/
             en: http://online.fykos.local/en/
+        mail:
+            cs: info-cz@physics.naboj.org
 #TODO not reimplemented yet
 #[common]
 #debug.enable = TRUE
