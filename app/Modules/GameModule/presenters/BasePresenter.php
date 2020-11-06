@@ -24,7 +24,6 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
 
     protected function createComponentNavigation(): Navigation {
         $navigation = parent::createComponentNavigation();
-        $navigation->addNavItem(new NavItem(':Game:Game:default', [], _('Zadání'), 'visible-sm-inline glyphicon glyphicon-compressed'));
         if ($this->yearsService->isGameActive()) {
             $navigation->addNavItem(new NavItem(':Game:Game:answer', [], _('Odevzdat řešení'), ''));
             $navigation->addNavItem(new NavItem(':Game:Game:skip', [], _('Přeskočit úkol'), ''));
@@ -32,8 +31,6 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
         $navigation->addNavItem(new NavItem(':Game:Noticeboard:default', [], _('Nástěnka'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
         $navigation->addNavItem(new NavItem(':Game:Chat:default', [], _('Chat'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
         $navigation->addNavItem(new NavItem(':Game:Game:history', [], _('Historie'), ''));
-        $navigation->addNavItem(new NavItem(':Public:Stats:default', [], _('Výsledky'), ''));
-        $navigation->addNavItem(new NavItem(':Public:Stats:detail', [], _('Podrobné výsledky'), ''));
 
         if ($this->yearsService->isGameEnd()) {
             //  $navigation->addNavItem(new NavItem('{$basePath}/download/2019-1/ulohy/reseni.{$lang}.pdf', [], _('Historie'), ''));
