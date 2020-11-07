@@ -26,6 +26,7 @@ class AnswerHistoryComponent extends BaseListComponent {
         $this->getTemplate()->history = $this->getSource()->fetchAll();
         $this->getTemplate()->correct = $this->answersService->findAllCorrect($id_team)->fetchPairs("id_answer", "id_answer");
         $this->getTemplate()->tasks = $this->tasksService->findAll()->fetchAssoc("id_task");
+        $this->getTemplate()->timeFormat = 'H:i:s';//_('__time'); // TODO i18n
     }
 
     public function render(): void {

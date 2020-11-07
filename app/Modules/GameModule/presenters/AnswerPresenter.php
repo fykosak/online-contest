@@ -54,14 +54,6 @@ class AnswerPresenter extends BasePresenter {
         $this->setPageTitle(_("Historie odpovědí"));
     }
 
-    /**
-     * @return SingleAnswerComponent
-     * @throws BadRequestException
-     */
-    protected function createComponentEntryForm(): SingleAnswerComponent {
-        return new SingleAnswerComponent($this->getContext(), $this->id);
-    }
-
     protected function createComponentAnswerForm(): \AnswerFormComponent {
         return new \AnswerFormComponent($this->getContext(), $this->getLoggedTeam()->id_team);
     }
