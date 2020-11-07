@@ -26,7 +26,6 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
         $navigation = parent::createComponentNavigation();
         if ($this->yearsService->isGameActive()) {
             $navigation->addNavItem(new NavItem(':Game:Game:answer', [], _('Odevzdat řešení'), ''));
-            $navigation->addNavItem(new NavItem(':Game:Game:skip', [], _('Přeskočit úkol'), ''));
         }
         $navigation->addNavItem(new NavItem(':Game:Noticeboard:default', [], _('Nástěnka'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
         $navigation->addNavItem(new NavItem(':Game:Chat:default', [], _('Chat'), 'visible-sm-inline glyphicon glyphicon-pushpin'));

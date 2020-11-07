@@ -3,7 +3,7 @@
     <strong>{$task->code_name}</strong></del>
         <ul><li>
             {foreach $mirrors as $mirror}
-            <a href="{$mirror}{$task->filename_cs.'.'.$lang.'.pdf'}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
+            <a href="{$mirror}{$task->filename_cs.'.'.$lang.'.pdf'}" target="_blank">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
             {/foreach}
             </li>
         </ul>
@@ -35,27 +35,6 @@
 </ul>
 {/if}
 
-<h3>{_'Přeskočené'}</h3>
-{if count($skippedTasks) == 0}
-<p>{_'Žádné úlohy.'}</p>
-{else}
-<ul>
-    {foreach $skippedTasks as $task}
-    {include #task}
-    {/foreach}
-</ul>
-{/if}
-
-<h3>{_'Promeškané'}</h3>
-{if count($missedTasks) == 0}
-<p>{_'Žádné úlohy.'}</p>
-{else}
-<ul>
-    {foreach $missedTasks as $task}
-    {include #task}
-    {/foreach}
-</ul>
-{/if}
 {include @info.$lang.latte}
 
 {/block}

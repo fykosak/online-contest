@@ -226,7 +226,7 @@ CREATE TABLE `team`
     `id_year`      int(25) unsigned                                                                NOT NULL,
     `name`         varchar(150) COLLATE utf8_czech_ci                                              NOT NULL COMMENT 'prihlasovaci jmeno',
     `password`     varchar(160) COLLATE utf8_czech_ci                                              NOT NULL COMMENT 'zahashovane heslo',
-    `category`     enum ('high_school','open','abroad','hs_a','hs_b','hs_c') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
+    `category`     enum ('junior','senior') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
     `email`        varchar(150) COLLATE utf8_czech_ci                                              NOT NULL COMMENT 'e-mailova adresa',
     `address`      text COLLATE utf8_czech_ci                                                      NOT NULL COMMENT 'kontaktni adresa',
     `disqualified` tinyint(1)                                                                      NOT NULL COMMENT 'tym diskvalifikovan',

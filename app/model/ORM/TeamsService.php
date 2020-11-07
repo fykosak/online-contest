@@ -8,17 +8,15 @@ use Dibi\Connection as DibiConnection;
 use Dibi\DataSource;
 use Dibi\Exception;
 use Dibi\Fluent;
+use Dibi\NotImplementedException;
 use Dibi\Row;
 use Nette\Database\Context;
+use Nette\DeprecatedException;
 
 class TeamsService extends AbstractService {
 
-    const HIGH_SCHOOL = 'high_school';
-    const OPEN = 'open';
-    const HIGH_SCHOOL_A = 'hs_a';
-    const HIGH_SCHOOL_B = 'hs_b';
-    const HIGH_SCHOOL_C = 'hs_c';
-    const ABROAD = 'abroad';
+    const JUNIOR = 'junior';
+    const SENIOR = 'senior';
 
     protected YearsService $yearService;
 
@@ -101,63 +99,13 @@ class TeamsService extends AbstractService {
      *   ČR - C - [0,2] - nikdo ze 4. ročníku, max. 2 z 3 ročníku
      */
     public function getCategory($competitors) {
-        // init stats
-        $olds = 0;
-        $year = [0, 0, 0, 0, 0]; //0 - ZŠ, 1..4 - SŠ
-        $abroad = 0;
-        // calculate stats
-        foreach ($competitors as $competitor) {
-            switch ($competitor["study_year"]) {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                    $year[(int)$competitor["study_year"]] += 1;
-                    break;
-                case 5:
-                    $olds += 1;
-                    break;
-                case 10:
-                    $abroad += 1;
-                    break;
-                case 11:
-                    $abroad += 1;
-                    $olds += 1;
-                    break;
-            }
-        }
-        // evaluate stats
-        if ($olds > 0) {
-            return self::OPEN;
-        } elseif ($abroad > 0) {
-            return self::ABROAD;
-        } else { //Czech/Slovak highschoolers (or lower)
-            $sum = 0;
-            $cnt = 0;
-            for ($y = 0; $y <= 4; ++$y) {
-                $sum += $year[$y] * $y;
-                $cnt += $year[$y];
-            }
-            $avg = $sum / $cnt;
-            if ($avg <= 2 && $year[4] == 0 && $year[3] <= 2) {
-                return self::HIGH_SCHOOL_C;
-            } elseif ($avg <= 3 && $year[4] <= 2) {
-                return self::HIGH_SCHOOL_B;
-            } else {
-                return self::HIGH_SCHOOL_A;
-            }
-        }
+        throw new DeprecatedException();
     }
 
     public function getCategoryNames() {
         return [
-            //self::HIGH_SCHOOL => "Středoškoláci",
-            self::HIGH_SCHOOL_A => _("Středoškoláci A"),
-            self::HIGH_SCHOOL_B => _("Středoškoláci B"),
-            self::HIGH_SCHOOL_C => _("Středoškoláci C"),
-            //self::ABROAD => _("Zahraniční SŠ"),
-            self::OPEN => _("Open"),
+            self::JUNIOR => _("Junior"),
+            self::SENIOR => _("Senior"),
         ];
     }
 
