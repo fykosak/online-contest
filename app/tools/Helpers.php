@@ -54,7 +54,7 @@ final class Helpers {
      */
     public static function dateFormatHelper(string $date): string {
         return preg_replace(
-            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
+            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})(\.\d*)?/",
             "\\3. \\2. \\1",
             $date
         );
@@ -68,7 +68,7 @@ final class Helpers {
      */
     public static function timeFormatHelper(?string $time): string {
         return preg_replace(
-            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
+            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})(\.\d*)?/",
             "\\3. \\2. \\1, \\4:\\5",
             $time
         );
@@ -76,7 +76,7 @@ final class Helpers {
 
     public static function timeOnlyHelper(?string $time): string {
         return preg_replace(
-            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})/",
+            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})(\.\d*)?/",
             "\\4:\\5:\\6",
             $time
         );
