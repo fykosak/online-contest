@@ -29,18 +29,16 @@
                         </a>
                     </li>
                 </ul>
+
                 <ul class="nav navbar-nav ml-auto">
-                    <span class="navbar-text real-clock" data-timestamp="{1000 * time()}"></span>
-                    <li class="nav-item" n:if="$control->getPresenter()->lang == 'cs'">
-                        <a class="nav-link" href="{plink this, lang => 'en'}">
-                            <img src="{$basePath}/images/icons/us-icon.png" alt="English" title="Switch to English"/>
+                   <span class="navbar-text real-clock" data-timestamp="{1000 * time()}"></span>
+                {foreach $suppotredLangs as $supportedLang}
+                    <li class="nav-item" n:if="$control->getPresenter()->lang != $supportedLang">
+                        <a class="nav-link" href="{plink this, lang => $supportedLang}">
+                        <i class="flag-icon flag-icon-{$supportedLang=='en'?'us':($supportedLang=='cs'?'cz':$supportedLang)}"></i>
                         </a>
                     </li>
-                    <li class="nav-item" n:if="$control->getPresenter()->lang == 'en'">
-                        <a class="nav-link" href="{plink this, lang => 'cs'}">
-                            <img src="{$basePath}/images/icons/cz-icon.png" alt="čeština" title="Přepnout do češtiny"/>
-                        </a>
-                    </li>
+                {/foreach}
                 </ul>
             </div>
         </div>
