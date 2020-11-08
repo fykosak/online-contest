@@ -17,7 +17,7 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
         $navigation->addNavItem(new NavItem(':Org:Org:statsDetail', [], _('výsledky'), 'visible-sm-inline glyphicon glyphicon-comment'));
         $navigation->addNavItem(new NavItem(':Org:Org:answerStats', [], _('podrobné výsledky'), 'visible-sm-inline glyphicon glyphicon-comment'));
         $navigation->addNavItem(new NavItem(':Org:Org:statsTasks', [], _('statistiky úkolů'), 'visible-sm-inline glyphicon glyphicon-comment'));
-
+        $navigation->addNavItem(new NavItem(':Game:Auth:logout', [], _('Logout'), 'visible-sm-inline glyphicon glyphicon-comment'));
         return $navigation;
     }
 }
