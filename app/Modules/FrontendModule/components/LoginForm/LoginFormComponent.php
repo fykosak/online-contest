@@ -1,9 +1,9 @@
 <?php
 
+use App\Model\Authentication\AbstractAuthenticator;
 use FOL\Model\ORM\YearsService;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
-use App\Model\Authentication\AbstractAuthenticator;
 use Nette\DI\Container;
 use Nette\Security\AuthenticationException;
 use Nette\Security\IAuthenticator;
@@ -13,10 +13,12 @@ class LoginFormComponent extends BaseComponent {
 
     protected AbstractAuthenticator $authenticator;
     public YearsService $yearsService;
+    private string $redirectDestination;
 
-    public function __construct(Container $container, AbstractAuthenticator $authenticator) {
+    public function __construct(Container $container, AbstractAuthenticator $authenticator, string $redirectDestination) {
         parent::__construct($container);
         $this->authenticator = $authenticator;
+        $this->redirectDestination = $redirectDestination;
     }
 
     public function injectPrimary(YearsService $yearsService): void {
@@ -48,7 +50,7 @@ class LoginFormComponent extends BaseComponent {
             return;
         }
 
-        $this->getPresenter()->redirect(":Game:Game:default");
+        $this->getPresenter()->redirect($this->redirectDestination);
 
     }
 
