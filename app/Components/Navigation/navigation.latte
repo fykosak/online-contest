@@ -2,6 +2,7 @@
 {varType \FOL\Components\Navigation\Navigation $control}
 {varType array $items}
 {varType array $competition}
+{varType array $supportedLangs}
 {varType string $lang}
 {block content}
     <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-fol" role="navigation">
@@ -32,7 +33,7 @@
 
                 <ul class="nav navbar-nav ml-auto">
                    <span class="navbar-text real-clock" data-timestamp="{1000 * time()}"></span>
-                {foreach $suppotredLangs as $supportedLang}
+                {foreach $supportedLangs as $supportedLang}
                     <li class="nav-item" n:if="$control->getPresenter()->lang != $supportedLang">
                         <a class="nav-link" href="{plink this, lang => $supportedLang}">
                         <i class="flag-icon flag-icon-{$supportedLang=='en'?'us':($supportedLang=='cs'?'cz':$supportedLang)}"></i>

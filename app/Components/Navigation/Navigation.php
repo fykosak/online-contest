@@ -17,7 +17,7 @@ class Navigation extends BaseComponent {
         $this->template->items = $this->items;
         $this->template->competition = $this->getContext()->getParameters()['competition'];
         $this->template->lang = $this->getPresenter()->lang;
-        $this->template->suppotredLangs = GettextTranslator::getSupportedLangs();
+        $this->template->supportedLangs = GettextTranslator::getSupportedLangs();
         parent::render();
     }
 
