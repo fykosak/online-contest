@@ -30,14 +30,14 @@ CREATE TABLE `answer`
 DROP TABLE IF EXISTS `chat`;
 CREATE TABLE `chat`
 (
-    `id_chat`   int(25) unsigned                       NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
-    `id_parent` int(25) unsigned                                DEFAULT NULL COMMENT 'identifikator rodicovskeho prispevku',
-    `id_team`   int(25) unsigned                                DEFAULT NULL COMMENT 'tym, ktery prispevek vlozil',
-    `org`       tinyint(1) unsigned                    NOT NULL DEFAULT '0' COMMENT 'organizatorsky prispevek',
-    `content`   text COLLATE utf8_czech_ci             NOT NULL COMMENT 'text prispevku',
-    `lang`      enum ('cs','en') COLLATE utf8_czech_ci NOT NULL COMMENT 'jazyk fora',
-    `inserted`  datetime                               NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
-    `updated`   timestamp                              NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
+    `id_chat`   int(25) unsigned                                           NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
+    `id_parent` int(25) unsigned                                                    DEFAULT NULL COMMENT 'identifikator rodicovskeho prispevku',
+    `id_team`   int(25) unsigned                                                    DEFAULT NULL COMMENT 'tym, ktery prispevek vlozil',
+    `org`       tinyint(1) unsigned                                        NOT NULL DEFAULT '0' COMMENT 'organizatorsky prispevek',
+    `content`   text COLLATE utf8_czech_ci                                 NOT NULL COMMENT 'text prispevku',
+    `lang`      enum ('cs','en','sk','hu','pl','ru') COLLATE utf8_czech_ci NOT NULL COMMENT 'jazyk fora',
+    `inserted`  datetime                                                   NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
+    `updated`   timestamp                                                  NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
     PRIMARY KEY (`id_chat`),
     KEY `id_team` (`id_team`),
     KEY `id_parent` (`id_parent`),
@@ -203,12 +203,12 @@ CREATE TABLE `task`
 DROP TABLE IF EXISTS `task_state`;
 CREATE TABLE `task_state`
 (
-    `id_task`    int(25) unsigned NOT NULL,
-    `id_team`    int(25) unsigned NOT NULL,
-    `skipped`    tinyint(1)       NOT NULL COMMENT 'úloha byla přeskočena',
+    `id_task`    int(25) unsigned           NOT NULL,
+    `id_team`    int(25) unsigned           NOT NULL,
+    `skipped`    tinyint(1)                 NOT NULL COMMENT 'úloha byla přeskočena',
     `substitute` tinyint(1)       DEFAULT 0 NOT NULL COMMENT 'úloha vydána jako náhrada při přeskakování (not used)',
     `points`     int(25) unsigned DEFAULT NULL COMMENT 'body za úlohu (bez bonusu)',
-    `inserted`   datetime         NOT NULL COMMENT 'cas vlozeni zaznamu',
+    `inserted`   datetime                   NOT NULL COMMENT 'cas vlozeni zaznamu',
     PRIMARY KEY (`id_task`, `id_team`),
     KEY `id_task` (`id_task`),
     KEY `id_team` (`id_team`),
@@ -222,17 +222,17 @@ CREATE TABLE `task_state`
 DROP TABLE IF EXISTS `team`;
 CREATE TABLE `team`
 (
-    `id_team`      int(25) unsigned                                                                NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
-    `id_year`      int(25) unsigned                                                                NOT NULL,
-    `name`         varchar(150) COLLATE utf8_czech_ci                                              NOT NULL COMMENT 'prihlasovaci jmeno',
-    `password`     varchar(160) COLLATE utf8_czech_ci                                              NOT NULL COMMENT 'zahashovane heslo',
+    `id_team`      int(25) unsigned                               NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
+    `id_year`      int(25) unsigned                               NOT NULL,
+    `name`         varchar(150) COLLATE utf8_czech_ci             NOT NULL COMMENT 'prihlasovaci jmeno',
+    `password`     varchar(160) COLLATE utf8_czech_ci             NOT NULL COMMENT 'zahashovane heslo',
     `category`     enum ('junior','senior') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
-    `email`        varchar(150) COLLATE utf8_czech_ci                                              NOT NULL COMMENT 'e-mailova adresa',
-    `address`      text COLLATE utf8_czech_ci                                                      NOT NULL COMMENT 'kontaktni adresa',
-    `disqualified` tinyint(1)                                                                      NOT NULL COMMENT 'tym diskvalifikovan',
-    `inserted`     datetime                                                                        NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
-    `updated`      timestamp                                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
-    `score_exp`    int(25)                                                                         NOT NULL DEFAULT '0' COMMENT 'zive skore, experimental hotfix feature',
+    `email`        varchar(150) COLLATE utf8_czech_ci             NOT NULL COMMENT 'e-mailova adresa',
+    `address`      text COLLATE utf8_czech_ci                     NOT NULL COMMENT 'kontaktni adresa',
+    `disqualified` tinyint(1)                                     NOT NULL COMMENT 'tym diskvalifikovan',
+    `inserted`     datetime                                       NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
+    `updated`      timestamp                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
+    `score_exp`    int(25)                                        NOT NULL DEFAULT '0' COMMENT 'zive skore, experimental hotfix feature',
     PRIMARY KEY (`id_team`),
     UNIQUE KEY `id_year` (`id_year`, `name`),
     CONSTRAINT `team_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
