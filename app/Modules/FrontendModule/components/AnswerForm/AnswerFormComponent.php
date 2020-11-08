@@ -63,7 +63,9 @@ class AnswerFormComponent extends BaseComponent {
             $task = $this->tasksService->find($values[self::TASK_ELEMENT]);
             $period = $this->periodService->findCurrent($task['id_group']);
             $solution = trim($values['solution'], ' ');
-            $solution = strtr($solution, ',', '.');
+            if ($task->answer_type !== TasksService::TYPE_STR) {
+                $solution = strtr($solution, ',', '.');
+            }
             $team = $this->getPresenter()->getLoggedTeam()->id_team;
 
             if (!$period) {

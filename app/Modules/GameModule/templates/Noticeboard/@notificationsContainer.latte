@@ -1,6 +1,8 @@
 {foreach $notifications as $notification}
-    <div class="alert alert-danger">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close"><span class="glyphicon glyphicon-remove"/></a>
-        <b>{$notification['message']}</b> {$notification['created']|time}
+    <div class="alert alert-danger alert-dismissible fade show"  role="alert">
+        <b>{$notification['message']}</b>{if $notification['created']} ({$notification['created']|time}){/if}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 {/foreach}
