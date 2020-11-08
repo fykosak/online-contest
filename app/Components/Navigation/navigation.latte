@@ -32,14 +32,20 @@
                 </ul>
 
                 <ul class="nav navbar-nav ml-auto">
-                   <span class="navbar-text real-clock" data-timestamp="{1000 * time()}"></span>
-                {foreach $supportedLangs as $supportedLang}
-                    <li class="nav-item" n:if="$control->getPresenter()->lang != $supportedLang">
-                        <a class="nav-link" href="{plink this, lang => $supportedLang}">
-                        <i class="flag-icon flag-icon-{$supportedLang=='en'?'us':($supportedLang=='cs'?'cz':$supportedLang)}"></i>
+                    <span class="navbar-text real-clock" data-timestamp="{1000 * time()}"></span>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span><i class="{$control::mapLangToIcon($lang)}"></i></span>
                         </a>
-                    </li>
-                {/foreach}
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {foreach $supportedLangs as $supportedLang}
+                            <a class="dropdown-item {$lang == $supportedLang?'active':''}" href="{plink this, lang => $supportedLang}">
+                            <i class="{$control::mapLangToIcon($supportedLang)}"></i>
+                            </a>
+                        {/foreach}
+        </div>
+      </li>
+
                 </ul>
             </div>
         </div>
