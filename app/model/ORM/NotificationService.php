@@ -55,28 +55,10 @@ class NotificationService extends AbstractService {
      * @return void
      * @throws Exception
      */
-    public function insert($message, $lang) {
+    public function insert(string $message, string $lang): void {
         $this->getDibiConnection()->insert("notification", [
             'message' => $message,
             'lang' => $lang,
-        ])->execute();
-    }
-
-    /**
-     * @param $messageCs
-     * @param $messageEn
-     * @return void
-     * @throws Exception
-     */
-    public function insertNotification($messageCs, $messageEn) {
-        $connection = $this->getDibiConnection();
-        $connection->insert("notification", [
-            'message' => $messageCs,
-            'lang' => 'cs',
-        ])->execute();
-        $connection->insert("notification", [
-            'message' => $messageEn,
-            'lang' => 'en',
         ])->execute();
     }
 
