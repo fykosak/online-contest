@@ -9,15 +9,11 @@
     <th>#</th>
     <th>{_'tým'}</th>
     <th>{_'celkem bodů'}</th>
-    <th>{_'bonusové body'}</th>
-    <th>{_'záporné body'}</th>
     </thead>
     <tr class="text-muted">
     <td></td>
     <td>{_'Student Pilný'}</td>
 <td>{$maxPoints}</td>
-<td>{$maxBonus}</td>
-<td>0</td>
 </tr>
 {if isset($teams[$category])}
     {var $i = 1}
@@ -31,20 +27,6 @@
             <td>
                 {if !empty($team->score) && $team->disqualified == 0}
                     {$team->score}
-                {else}
-                    0
-                {/if}
-            </td>
-            <td>
-                {if isset($bonus[$team->id_team]) && $team->disqualified == 0}
-                    {$bonus[$team->id_team]->score}
-                {else}
-                    0
-                {/if}
-            </td>
-            <td>
-                {if isset($penality[$team->id_team]) && $team->disqualified == 0}
-                    {$penality[$team->id_team]->score}
                 {else}
                     0
                 {/if}
