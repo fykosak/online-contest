@@ -57,6 +57,10 @@ msgstr "Database error."
 msgid "Chybný token."
 msgstr "Wrong token."
 
+# NotificationFormComponent.php:42
+msgid "Create"
+msgstr ""
+
 # DefaultPresenter.php:70
 msgid "Další akce"
 msgstr "Other events"
@@ -238,6 +242,10 @@ msgstr "Name"
 msgid "Jméno prvního člena musí být vyplněno."
 msgstr "You must enter the name of the first team member."
 
+# TeamsService.php:107
+msgid "Junior"
+msgstr ""
+
 # default.phtml:7
 msgid "K dispozici máte zadání těchto úloh dle podmínek v zadání:"
 msgstr ""
@@ -256,8 +264,20 @@ msgstr "Contact address"
 msgid "Kontrola hesla"
 msgstr "Password confirmation"
 
+# NotificationFormComponent.php:40
+msgid "Lang"
+msgstr ""
+
+# BasePresenter.php:20
+msgid "Logout"
+msgstr ""
+
 # AnswerFormComponent.php:86
 msgid "Lze odpovídat až za <span class=\"timesec\">%d</span> sekund."
+msgstr ""
+
+# NotificationFormComponent.php:38
+msgid "Message"
 msgstr ""
 
 # DefaultPresenter.php:15
@@ -461,14 +481,6 @@ msgstr ""
 "For purposes of sending out possible prizes (the address must be Czech or "
 "Slovak)."
 
-# default.latte:56
-msgid "Promeškané"
-msgstr "Missed"
-
-# default.phtml:39
-msgid "Přeskočené"
-msgstr "Skipped"
-
 # layout.phtml:8
 # layout.phtml:8
 # SkipFormComponent.php:62
@@ -487,6 +499,10 @@ msgstr "Add notification"
 # ChatListComponent.php:39
 msgid "Přidat příspěvek"
 msgstr "Add a new entry"
+
+# BasePresenter.php:14
+msgid "Přidat příspěvek do fóra."
+msgstr ""
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:30
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:30
@@ -544,6 +560,15 @@ msgstr "Year of the competition has to be greater than %d."
 # DefaultPresenter.php:57
 msgid "Rychlý grafický návod ke hře"
 msgstr "Quick visual guide"
+
+# TeamsService.php:108
+msgid "Senior"
+msgstr ""
+
+# navigation.latte:27
+# navigation.latte:28
+msgid "Seznam konstant"
+msgstr ""
 
 # TeamPresenter.php:17
 msgid "Seznam týmů"
@@ -759,22 +784,6 @@ msgstr "You can change password by editing your application."
 msgid "Zobrazit navigaci"
 msgstr "Show navigation"
 
-# NotificationFormComponent.php:34
-msgid "Zpráva v angličtině musí být vyplněna."
-msgstr "Message in English has to be filled."
-
-# NotificationFormComponent.php:33
-msgid "Zpráva v angličtině."
-msgstr "Message in English."
-
-# NotificationFormComponent.php:32
-msgid "Zpráva v češtině musí být vyplněna."
-msgstr "Message in Czech has to be filled."
-
-# NotificationFormComponent.php:31
-msgid "Zpráva v češtině."
-msgstr "Message in Czech."
-
 # default.phtml:23
 # taskStats.phtml:15
 # scoreList.phtml:68
@@ -788,10 +797,6 @@ msgstr "Elementary school"
 # RecoverFormComponent.php:46
 msgid "[Fyziklání online] obnova hesla"
 msgstr "[Online physics brawl] password recovery"
-
-# default.phtml:15
-msgid "b."
-msgstr "p."
 
 # results.phtml:7
 msgid "bonusové body"
@@ -831,6 +836,14 @@ msgstr "other"
 msgid "oznámení"
 msgstr "notification"
 
+# BasePresenter.php:18
+msgid "podrobné výsledky"
+msgstr ""
+
+# BasePresenter.php:15
+msgid "pokusy o odevzdání"
+msgstr ""
+
 # TeamFormComponent.php:132
 msgid "pravidla soutěže"
 msgstr "rules of the contest"
@@ -843,6 +856,10 @@ msgstr "skipped"
 msgid "správných odpovědí"
 msgstr "correct answers"
 
+# BasePresenter.php:19
+msgid "statistiky úkolů"
+msgstr ""
+
 # TeamFormComponent.php:141
 msgid "střední škola"
 msgstr "high school"
@@ -854,6 +871,10 @@ msgstr "team"
 # answerHistory.phtml:4
 msgid "vloženo"
 msgstr "inserted"
+
+# BasePresenter.php:17
+msgid "výsledky"
+msgstr ""
 
 # TeamFormComponent.php:140
 msgid "zahraničí"
@@ -912,6 +933,34 @@ msgstr "wrong answers"
 # default.phtml:10
 msgid "Žádné úlohy."
 msgstr "No more problems."
+
+# default.latte:56
+#~ msgid "Promeškané"
+#~ msgstr "Missed"
+
+# default.phtml:39
+#~ msgid "Přeskočené"
+#~ msgstr "Skipped"
+
+# NotificationFormComponent.php:34
+#~ msgid "Zpráva v angličtině musí být vyplněna."
+#~ msgstr "Message in English has to be filled."
+
+# NotificationFormComponent.php:33
+#~ msgid "Zpráva v angličtině."
+#~ msgstr "Message in English."
+
+# NotificationFormComponent.php:32
+#~ msgid "Zpráva v češtině musí být vyplněna."
+#~ msgstr "Message in Czech has to be filled."
+
+# NotificationFormComponent.php:31
+#~ msgid "Zpráva v češtině."
+#~ msgstr "Message in Czech."
+
+# default.phtml:15
+#~ msgid "b."
+#~ msgstr "p."
 
 # AnswerFormComponent.php:168
 #~ msgid "Aktuálně bodů"

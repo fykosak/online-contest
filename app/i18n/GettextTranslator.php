@@ -16,7 +16,7 @@ class GettextTranslator implements ITranslator {
         'sk' => 'sk_SK.utf-8',
         'hu' => 'hu_HU.utf-8',
         'pl' => 'pl_PL.utf-8',
-        'ru' => 'ru_RU.utf-8'
+        'ru' => 'ru_RU.utf-8',
     ];
 
     public function translate($message, $count = null) {

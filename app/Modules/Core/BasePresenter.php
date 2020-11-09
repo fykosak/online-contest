@@ -2,12 +2,12 @@
 
 namespace FOL\Modules\Core;
 
+use App\Model\Translator\GettextTranslator;
+use App\Tools\InterlosTemplate;
 use DataNotFoundException;
 use Dibi\Exception;
 use Dibi\Row;
 use FlashMessagesComponent;
-use App\Model\Translator\GettextTranslator;
-use App\Tools\InterlosTemplate;
 use FOL\Components\Navigation\Navigation;
 use FOL\Components\Navigation\NavItem;
 use FOL\Model\ORM\TeamsService;
@@ -43,8 +43,7 @@ abstract class BasePresenter extends Presenter {
         $this->getTemplate()->pageTitle = $pageTitle;
     }
 
-    protected function beforeRender()
-    {
+    protected function beforeRender() {
         parent::beforeRender();
         $this->template->competition = $this->getContext()->getParameters()['competition'];
     }
@@ -100,8 +99,7 @@ abstract class BasePresenter extends Presenter {
     protected function localize(): void {
         $i18nConf = $this->context->parameters['i18n'];
         $this->detectLang($i18nConf);
-        $locale = isset(GettextTranslator::$locales[$this->lang]) ? GettextTranslator::$locales[$this->lang] : 'cs_CZ.utf-8';
-
+        $locale = GettextTranslator::$locales[$this->lang] ?? 'cs_CZ.utf-8';
         putenv("LANGUAGE=$locale");
         setlocale(LC_MESSAGES, $locale);
         setlocale(LC_TIME, $locale);
