@@ -222,17 +222,24 @@ CREATE TABLE `task_state`
 DROP TABLE IF EXISTS `team`;
 CREATE TABLE `team`
 (
-    `id_team`      int(25) unsigned                               NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
-    `id_year`      int(25) unsigned                               NOT NULL,
-    `name`         varchar(150) COLLATE utf8_czech_ci             NOT NULL COMMENT 'prihlasovaci jmeno',
-    `password`     varchar(160) COLLATE utf8_czech_ci             NOT NULL COMMENT 'zahashovane heslo',
-    `category`     enum ('junior','senior') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
-    `email`        varchar(150) COLLATE utf8_czech_ci             NOT NULL COMMENT 'e-mailova adresa',
-    `address`      text COLLATE utf8_czech_ci                     NOT NULL COMMENT 'kontaktni adresa',
-    `disqualified` tinyint(1)                                     NOT NULL COMMENT 'tym diskvalifikovan',
-    `inserted`     datetime                                       NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
-    `updated`      timestamp                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
-    `score_exp`    int(25)                                        NOT NULL DEFAULT '0' COMMENT 'zive skore, experimental hotfix feature',
+    `id_team`      int(25) unsigned                   NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
+    `id_year`      int(25) unsigned                   NOT NULL,
+    `name`         varchar(150) COLLATE utf8_czech_ci NOT NULL COMMENT 'prihlasovaci jmeno',
+    `password`     varchar(160) COLLATE utf8_czech_ci NOT NULL COMMENT 'zahashovane heslo',
+    `category`     enum (
+        'cz_j','cz_s',
+        'sk_j','sk_s',
+        'en_j','en_s',
+        'pl_j','pl_s',
+        'hu_j','hu_s',
+        'ru_j','ru_s'
+        ) COLLATE utf8_czech_ci                       NOT NULL COMMENT 'soutezni kategorie',
+    `email`        varchar(150) COLLATE utf8_czech_ci NOT NULL COMMENT 'e-mailova adresa',
+    `address`      text COLLATE utf8_czech_ci         NOT NULL COMMENT 'kontaktni adresa',
+    `disqualified` tinyint(1)                         NOT NULL COMMENT 'tym diskvalifikovan',
+    `inserted`     datetime                           NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
+    `updated`      timestamp                          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
+    `score_exp`    int(25)                            NOT NULL DEFAULT '0' COMMENT 'zive skore, experimental hotfix feature',
     PRIMARY KEY (`id_team`),
     UNIQUE KEY `id_year` (`id_year`, `name`),
     CONSTRAINT `team_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
