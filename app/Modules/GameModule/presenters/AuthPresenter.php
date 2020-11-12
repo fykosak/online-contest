@@ -3,10 +3,8 @@
 namespace FOL\Modules\GameModule\Presenters;
 
 use App\Model\Authentication\TeamAuthenticator;
-use Dibi\Exception;
 use LoginFormComponent;
 use Nette\Application\AbortException;
-use RecoverFormComponent;
 
 /**
  * Class AuthPresenter
@@ -34,6 +32,6 @@ class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
     }
 
     protected function createComponentLogin(): LoginFormComponent {
-        return new LoginFormComponent($this->getContext(), $this->authenticator,':Game:Game:default');
+        return new LoginFormComponent($this->getContext(), $this->authenticator, ':Game:Game:default');
     }
 }
