@@ -227,12 +227,16 @@ CREATE TABLE `team`
     `name`         varchar(150) COLLATE utf8_czech_ci NOT NULL COMMENT 'prihlasovaci jmeno',
     `password`     varchar(160) COLLATE utf8_czech_ci NOT NULL COMMENT 'zahashovane heslo',
     `category`     enum (
-        'cz_j','cz_s',
-        'sk_j','sk_s',
-        'en_j','en_s',
-        'pl_j','pl_s',
-        'hu_j','hu_s',
-        'ru_j','ru_s'
+        'cs_j',
+        'cs_s',
+        'hu_j',
+        'hu_s',
+        'pl_j',
+        'pl_s',
+        'ru_j',
+        'ru_s',
+        'sk_j',
+        'sk_s'
         ) COLLATE utf8_czech_ci                       NOT NULL COMMENT 'soutezni kategorie',
     `email`        varchar(150) COLLATE utf8_czech_ci NOT NULL COMMENT 'e-mailova adresa',
     `address`      text COLLATE utf8_czech_ci         NOT NULL COMMENT 'kontaktni adresa',
