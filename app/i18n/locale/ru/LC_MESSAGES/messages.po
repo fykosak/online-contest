@@ -566,7 +566,7 @@ msgstr ""
 # navigation.latte:27
 # navigation.latte:28
 msgid "Seznam konstant"
-msgstr ""
+msgstr "Таблица констант"
 
 # TeamPresenter.php:17
 msgid "Seznam týmů"
