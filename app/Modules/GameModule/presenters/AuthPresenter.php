@@ -10,7 +10,7 @@ use RecoverFormComponent;
 
 /**
  * Class AuthPresenter
- * TODO Take care thi presenter is not child of GameModule/BasePresenter
+ * TODO Take care, this presenter is not intentionally child of GameModule/BasePresenter
  */
 class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
 
@@ -33,24 +33,7 @@ class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
         $this->setPagetitle(_('Přihlásit se'));
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     * @throws AbortException
-     */
-    public function renderRecover(): void {
-        $this->setPageTitle(_('Obnova hesla'));
-        if (!$this->yearsService->isGameMigrated()) {
-            $this->flashMessage(_('Změnu hesla proveďte editací vaší přihlášky.'), 'danger');
-            $this->redirect(':Public:Default:default');
-        }
-    }
-
     protected function createComponentLogin(): LoginFormComponent {
         return new LoginFormComponent($this->getContext(), $this->authenticator,':Game:Game:default');
-    }
-
-    protected function createComponentRecover(): RecoverFormComponent {
-        return new RecoverFormComponent($this->getContext());
     }
 }

@@ -29,7 +29,6 @@ class LoginFormComponent extends BaseComponent {
      * @param Form $form
      * @return void
      * @throws AbortException
-     * @throws \Dibi\Exception
      */
     private function formSubmitted(Form $form): void {
         $values = $form->getValues();
@@ -46,7 +45,7 @@ class LoginFormComponent extends BaseComponent {
             return;
         } catch (Exception $e) {
             $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
-            Debugger::exceptionHandler($e); // TODO WTF?
+            Debugger::log($e);
             return;
         }
 
