@@ -57,6 +57,10 @@ msgstr "Hiba történt az adatbázissal való munka közben."
 msgid "Chybný token."
 msgstr "Rossz token."
 
+# NotificationFormComponent.php:42
+msgid "Create"
+msgstr "Teremt"
+
 # DefaultPresenter.php:70
 msgid "Další akce"
 msgstr "További események"
@@ -76,6 +80,10 @@ msgstr "Az esemény időpontja"
 # ReportAddFormComponent.php:48
 msgid "Datum musí mít podobu YYYY-mm-dd."
 msgstr "A dátumnak ÉÉÉÉ-hh-nn formában kell lennie."
+
+# ChatPresenter.php:22
+msgid "Diskuse (%s)"
+msgstr "Fórum (%s)"
 
 # DefaultPresenter.php:20
 msgid "Diskuse (česká verze)"
@@ -237,6 +245,10 @@ msgstr "Név"
 msgid "Jméno prvního člena musí být vyplněno."
 msgstr "Meg kell adni az első csapattag nevét."
 
+# TeamsService.php:107
+msgid "Junior"
+msgstr ""
+
 # default.phtml:7
 msgid "K dispozici máte zadání těchto úloh dle podmínek v zadání:"
 msgstr "A szabályok értelmében a következő feladatok állnak rendelkezésre:"
@@ -253,8 +265,20 @@ msgstr "Elérhetőség"
 msgid "Kontrola hesla"
 msgstr "Jelszó megerősítés"
 
+# NotificationFormComponent.php:40
+msgid "Lang"
+msgstr ""
+
+# BasePresenter.php:20
+msgid "Logout"
+msgstr ""
+
 # AnswerFormComponent.php:86
 msgid "Lze odpovídat až za <span class=\"timesec\">%d</span> sekund."
+msgstr ""
+
+# NotificationFormComponent.php:38
+msgid "Message"
 msgstr ""
 
 # DefaultPresenter.php:15
@@ -275,8 +299,7 @@ msgstr "Korábbi évek"
 msgid ""
 "Možností přeskakovat neplýtvejte, snadno se může stát, že vám pak dojdou "
 "příklady"
-msgstr ""
-"Óvatosan ugorjátok át a feladatokat, elfogyhatnak a megoldandó példák"
+msgstr "Óvatosan ugorjátok át a feladatokat, elfogyhatnak a megoldandó példák"
 
 # AnswerFormComponent.php:44
 msgid "Na zadaný úkol jste již takto jednou odpovídali."
@@ -296,8 +319,7 @@ msgstr "Jelenleg nincs válaszadási időszak."
 
 # SkipFormComponent.php:23
 msgid "Není možno přeskočit úlohu, na níž již bylo odpovídáno."
-msgstr ""
-"Nem lehet átugrani egy feladatot, amire már küldtetek be megoldást."
+msgstr "Nem lehet átugrani egy feladatot, amire már küldtetek be megoldást."
 
 # TeamFormComponent.php:202
 msgid "Není vyplněno heslo týmu."
@@ -455,16 +477,7 @@ msgstr ""
 
 msgid "Pro zaslání případné odměny."
 msgstr ""
-"Lehetséges díjak elküldésére (a címnek csehnek vagy szlováknak "
-"kell lennie)."
-
-# default.latte:56
-msgid "Promeškané"
-msgstr "Elkésett"
-
-# default.phtml:39
-msgid "Přeskočené"
-msgstr "Átugrott"
+"Lehetséges díjak elküldésére (a címnek csehnek vagy szlováknak kell lennie)."
 
 # layout.phtml:8
 # layout.phtml:8
@@ -484,6 +497,10 @@ msgstr "Értesítés hozzáadása"
 # ChatListComponent.php:39
 msgid "Přidat příspěvek"
 msgstr "Új bejegyzés hozzáadása"
+
+# BasePresenter.php:14
+msgid "Přidat příspěvek do fóra."
+msgstr ""
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:30
 # _9a1e0954900b84e0955a128d46156089.layout.phtml.php:30
@@ -541,6 +558,15 @@ msgstr "A verseny évének %d-től nagyobbnak kell lennie."
 # DefaultPresenter.php:57
 msgid "Rychlý grafický návod ke hře"
 msgstr "Gyors vizuláis útmutató"
+
+# TeamsService.php:108
+msgid "Senior"
+msgstr ""
+
+# navigation.latte:27
+# navigation.latte:28
+msgid "Seznam konstant"
+msgstr ""
 
 # TeamPresenter.php:17
 msgid "Seznam týmů"
@@ -685,8 +711,7 @@ msgstr "Használhatsz MathJax-ot ebben a beszélgetésben."
 # SkipFormComponent.php:20
 msgid "V tomto období není možno přeskakovat úlohy této série."
 msgstr ""
-"A verseny ezen részében nem ugorhatsz át feladatokat ebből a "
-"sorozatból. "
+"A verseny ezen részében nem ugorhatsz át feladatokat ebből a sorozatból. "
 
 # AnswerFormComponent.php:24
 msgid "Vaše odpověď je správně."
@@ -756,22 +781,6 @@ msgstr "A jelszavadat a jelentkezésed szerkeszésével tudod változtatni."
 msgid "Zobrazit navigaci"
 msgstr "Navigáció mutatása"
 
-# NotificationFormComponent.php:34
-msgid "Zpráva v angličtině musí být vyplněna."
-msgstr "Az Üzenet angolul mezőt ki kell tölteni."
-
-# NotificationFormComponent.php:33
-msgid "Zpráva v angličtině."
-msgstr "Üzenet angolul."
-
-# NotificationFormComponent.php:32
-msgid "Zpráva v češtině musí být vyplněna."
-msgstr "Az Üzenet csehül mezőt ki kell tölteni."
-
-# NotificationFormComponent.php:31
-msgid "Zpráva v češtině."
-msgstr "Üzenet csehül."
-
 # default.phtml:23
 # taskStats.phtml:15
 # scoreList.phtml:68
@@ -785,10 +794,6 @@ msgstr "Általános iskola"
 # RecoverFormComponent.php:46
 msgid "[Fyziklání online] obnova hesla"
 msgstr "[Online physics brawl] jelszó visszaállítása"
-
-# default.phtml:15
-msgid "b."
-msgstr "p."
 
 # results.phtml:7
 msgid "bonusové body"
@@ -811,10 +816,6 @@ msgstr "a jelentkezési oldalon"
 msgid "nejlepší"
 msgstr "a legjobb"
 
-# taskStats.latte:4
-msgid "number"
-msgstr ""
-
 # answerHistory.phtml:5
 msgid "odpověď"
 msgstr "válasz"
@@ -828,17 +829,25 @@ msgstr "egyéb"
 msgid "oznámení"
 msgstr "értesítés"
 
+# BasePresenter.php:18
+msgid "podrobné výsledky"
+msgstr ""
+
+# BasePresenter.php:15
+msgid "pokusy o odevzdání"
+msgstr ""
+
 # TeamFormComponent.php:132
 msgid "pravidla soutěže"
 msgstr "a verseny szabályai"
 
-# taskStats.phtml:10
-msgid "přeskočeno"
-msgstr "átugorva"
-
 # taskStats.latte:7
 msgid "správných odpovědí"
 msgstr "helyes válaszok"
+
+# BasePresenter.php:19
+msgid "statistiky úkolů"
+msgstr ""
 
 # TeamFormComponent.php:141
 msgid "střední škola"
@@ -851,6 +860,10 @@ msgstr "csapat"
 # answerHistory.phtml:4
 msgid "vloženo"
 msgstr "megadott"
+
+# BasePresenter.php:17
+msgid "výsledky"
+msgstr ""
 
 # TeamFormComponent.php:140
 msgid "zahraničí"
@@ -910,6 +923,38 @@ msgstr "helytelen válaszok"
 msgid "Žádné úlohy."
 msgstr "Nincs több feladat."
 
+# default.latte:56
+#~ msgid "Promeškané"
+#~ msgstr "Elkésett"
+
+# default.phtml:39
+#~ msgid "Přeskočené"
+#~ msgstr "Átugrott"
+
+# NotificationFormComponent.php:34
+#~ msgid "Zpráva v angličtině musí být vyplněna."
+#~ msgstr "Az Üzenet angolul mezőt ki kell tölteni."
+
+# NotificationFormComponent.php:33
+#~ msgid "Zpráva v angličtině."
+#~ msgstr "Üzenet angolul."
+
+# NotificationFormComponent.php:32
+#~ msgid "Zpráva v češtině musí být vyplněna."
+#~ msgstr "Az Üzenet csehül mezőt ki kell tölteni."
+
+# NotificationFormComponent.php:31
+#~ msgid "Zpráva v češtině."
+#~ msgstr "Üzenet csehül."
+
+# default.phtml:15
+#~ msgid "b."
+#~ msgstr "p."
+
+# taskStats.phtml:10
+#~ msgid "přeskočeno"
+#~ msgstr "átugorva"
+
 # AnswerFormComponent.php:168
 #~ msgid "Aktuálně bodů"
 #~ msgstr "Jelenlegi pontszám"
@@ -940,8 +985,7 @@ msgstr "Nincs több feladat."
 # AnswerFormComponent.php:94
 #~ msgid "Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1."
 #~ msgstr ""
-#~ "Pít a következő formákban lehet megadni: 3.14; 3,14; 314e-2 vagy "
-#~ "0.314e1."
+#~ "Pít a következő formákban lehet megadni: 3.14; 3,14; 314e-2 vagy 0.314e1."
 
 # default.latte:8
 #~ msgid "Zobrazit pouze CZ&SK výsledky"
@@ -1015,8 +1059,8 @@ msgstr "Nincs több feladat."
 #~ "Uveďte odpovídající ročník čtyřleté střední školy. ZŠ je pod SŠ, Ostatní "
 #~ "je nad SŠ."
 #~ msgstr ""
-#~ "Adjátok meg a négyéves középiskola megfelelő évfolyamát. Az általános iskola"
-#~ "a középiskola alatt, az egyéb a középiskola felett van."
+#~ "Adjátok meg a négyéves középiskola megfelelő évfolyamát. Az általános "
+#~ "iskolaa középiskola alatt, az egyéb a középiskola felett van."
 
 # TeamFormComponent.php:123
 #~ msgid "Zadejte prosím kontatní e-mail."

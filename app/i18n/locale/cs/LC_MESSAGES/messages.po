@@ -1,5 +1,5 @@
 # Gettext keys exported by GettextExtractor
-# Created: 2020-11-09T18:18:55+01:00
+# Created: 2020-11-12T20:31:00+01:00
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -78,6 +78,9 @@ msgid "Datum musí mít podobu YYYY-mm-dd."
 msgstr "Datum musí mít podobu YYYY-mm-dd."
 
 # ChatPresenter.php:22
+msgid "Diskuse (%s)"
+msgstr "Diskuse (%s)"
+
 # ChatPresenter.php:22
 msgid "Diskuse (česká verze)"
 msgstr "Diskuse (česká verze)"
@@ -198,7 +201,7 @@ msgstr "Historie odpovědí"
 # menu.latte:53
 # menu.latte:54
 # BasePresenter.php:30
-# BasePresenter.php:165
+# BasePresenter.php:164
 # menu.latte:50
 # menu.latte:51
 # menu.latte:52
@@ -430,7 +433,7 @@ msgid "Orgovský rozcestník"
 msgstr "Orgovský rozcestník"
 
 # ResultsPresenter.php:25
-# BasePresenter.php:164
+# BasePresenter.php:163
 # @layout.latte:26
 # @layout.latte:26
 # StatsPresenter.php:42
@@ -484,7 +487,7 @@ msgid "Přečetl jsem si "
 msgstr "Přečetl jsem si "
 
 # BasePresenter.php:13
-# NoticeboardPresenter.php:31
+# NoticeboardPresenter.php:27
 msgid "Přidat notifikaci"
 msgstr "Přidat notifikaci"
 
@@ -604,7 +607,7 @@ msgstr "Statistiky odpovědí"
 msgid "Statistiky úkolů"
 msgstr "Statistiky úkolů"
 
-# results.latte:16
+# results.latte:14
 msgid "Student Pilný"
 msgstr "Student Pilný"
 
@@ -763,7 +766,7 @@ msgstr "Výsledek musí být reálné číslo."
 # menu.latte:45
 # menu.latte:46
 # BasePresenter.php:27
-# BasePresenter.php:163
+# BasePresenter.php:162
 # @layout.latte:19
 # @layout.latte:19
 # StatsPresenter.php:36
@@ -808,7 +811,7 @@ msgstr "Změnu hesla proveďte editací vaší přihlášky."
 msgid "Zobrazit navigaci"
 msgstr "Zobrazit navigaci"
 
-# taskStats.latte:13
+# taskStats.latte:11
 # scoreList.latte:70
 # default.latte:1
 msgid "Zrušená úloha"
@@ -822,7 +825,6 @@ msgstr "ZŠ"
 msgid "[Fyziklání online] obnova hesla"
 msgstr "[Fyziklání online] obnova hesla"
 
-# results.latte:11
 # a201312results.latte:8
 # a201312results.latte:369
 # a201312results.latte:977
@@ -918,13 +920,9 @@ msgstr "informace o členech týmu nejsou dostupné"
 msgid "na stránce přihlášky"
 msgstr "na stránce přihlášky"
 
-# taskStats.latte:5
+# taskStats.latte:4
 msgid "nejlepší"
 msgstr "nejlepší"
-
-# taskStats.latte:4
-msgid "number"
-msgstr "number"
 
 # answerHistory.latte:5
 msgid "odpověď"
@@ -951,11 +949,7 @@ msgstr "pokusy o odevzdání"
 msgid "pravidla soutěže"
 msgstr "pravidla soutěže"
 
-# taskStats.latte:9
-msgid "přeskočeno"
-msgstr "přeskočeno"
-
-# taskStats.latte:7
+# taskStats.latte:6
 msgid "správných odpovědí"
 msgstr "správných odpovědí"
 
@@ -1023,7 +1017,6 @@ msgstr "výsledky"
 msgid "zahraničí"
 msgstr "zahraničí"
 
-# results.latte:12
 # a201312results.latte:9
 # a201312results.latte:370
 # a201312results.latte:978
@@ -1097,7 +1090,7 @@ msgstr "Čas vypršel."
 msgid "čas vzniku"
 msgstr "čas vzniku"
 
-# taskStats.latte:6
+# taskStats.latte:5
 msgid "řešilo týmů"
 msgstr "řešilo týmů"
 
@@ -1119,7 +1112,7 @@ msgstr "Šedé jsou týmy, jež neprojevily během hry aktivitu."
 msgid "Škola"
 msgstr "Škola"
 
-# taskStats.latte:8
+# taskStats.latte:7
 msgid "špatných odpovědí"
 msgstr "špatných odpovědí"
 

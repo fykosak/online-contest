@@ -81,6 +81,10 @@ msgstr "Date of the event"
 msgid "Datum musí mít podobu YYYY-mm-dd."
 msgstr "Date must be in the form YYYY-mm-dd."
 
+# ChatPresenter.php:22
+msgid "Diskuse (%s)"
+msgstr ""
+
 # DefaultPresenter.php:20
 msgid "Diskuse (česká verze)"
 msgstr "Forum (English version)"
@@ -819,10 +823,6 @@ msgstr "on the application page"
 msgid "nejlepší"
 msgstr "the best"
 
-# taskStats.latte:4
-msgid "number"
-msgstr ""
-
 # answerHistory.phtml:5
 msgid "odpověď"
 msgstr "answer"
@@ -847,10 +847,6 @@ msgstr ""
 # TeamFormComponent.php:132
 msgid "pravidla soutěže"
 msgstr "rules of the contest"
-
-# taskStats.phtml:10
-msgid "přeskočeno"
-msgstr "skipped"
 
 # taskStats.latte:7
 msgid "správných odpovědí"
@@ -933,6 +929,10 @@ msgstr "wrong answers"
 # default.phtml:10
 msgid "Žádné úlohy."
 msgstr "No more problems."
+
+# taskStats.phtml:10
+#~ msgid "přeskočeno"
+#~ msgstr "skipped"
 
 # default.latte:56
 #~ msgid "Promeškané"

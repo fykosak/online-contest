@@ -59,7 +59,7 @@ msgstr "Wrong token."
 
 # NotificationFormComponent.php:42
 msgid "Create"
-msgstr ""
+msgstr "Создайте"
 
 # DefaultPresenter.php:70
 msgid "Další akce"
@@ -80,6 +80,10 @@ msgstr "Дата проведения"
 # ReportAddFormComponent.php:48
 msgid "Datum musí mít podobu YYYY-mm-dd."
 msgstr "Дата должна быть в формате YYYY-mm-dd."
+
+# ChatPresenter.php:22
+msgid "Diskuse (%s)"
+msgstr "Форум (%s)"
 
 # DefaultPresenter.php:20
 msgid "Diskuse (česká verze)"
@@ -812,10 +816,6 @@ msgstr "на сайте регистрации"
 msgid "nejlepší"
 msgstr "лучший"
 
-# taskStats.latte:4
-msgid "number"
-msgstr "№"
-
 # answerHistory.phtml:5
 msgid "odpověď"
 msgstr "ответ"
@@ -840,10 +840,6 @@ msgstr ""
 # TeamFormComponent.php:132
 msgid "pravidla soutěže"
 msgstr "правила соревнования"
-
-# taskStats.phtml:10
-msgid "přeskočeno"
-msgstr "пропушено"
 
 # taskStats.latte:7
 msgid "správných odpovědí"
@@ -928,6 +924,14 @@ msgstr "неверных ответов"
 # default.phtml:10
 msgid "Žádné úlohy."
 msgstr "Нет заданий."
+
+# taskStats.latte:4
+#~ msgid "number"
+#~ msgstr "№"
+
+# taskStats.phtml:10
+#~ msgid "přeskočeno"
+#~ msgstr "пропушено"
 
 # default.latte:56
 #~ msgid "Promeškané"
