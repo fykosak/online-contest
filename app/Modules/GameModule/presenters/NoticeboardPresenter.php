@@ -44,11 +44,7 @@ class NoticeboardPresenter extends BasePresenter {
         $now = time();
 
         if ($lastAsked == null) {
-            $notification = [
-                'message' => _('Sledujte prosím nástěnku.'),
-                'created' => 0,
-            ];
-            $notifications[] = $notification;
+            $notifications = [];
         } else {
             $notifications = $this->notificationModel->findNew($lastAsked, $lang);
         }

@@ -15,8 +15,16 @@ use Nette\DeprecatedException;
 
 class TeamsService extends AbstractService {
 
-    const JUNIOR = 'junior';
-    const SENIOR = 'senior';
+    const JUNIOR_CS = 'cs_j';
+    const SENIOR_CS = 'cs_s';
+    const JUNIOR_HU = 'hu_j';
+    const SENIOR_HU = 'hu_s';
+    const JUNIOR_PL = 'pl_j';
+    const SENIOR_PL = 'pl_s';
+    const JUNIOR_RU = 'ru_j';
+    const SENIOR_RU = 'ru_s';
+    const JUNIOR_SK = 'sk_j';
+    const SENIOR_SK = 'sk_s';
 
     protected YearsService $yearService;
 
@@ -104,8 +112,16 @@ class TeamsService extends AbstractService {
 
     public function getCategoryNames() {
         return [
-            self::JUNIOR => _("Junior"),
-            self::SENIOR => _("Senior"),
+            self::JUNIOR_CS => _("Junior") . " Czech Republic",
+            self::SENIOR_CS => _("Senior") . " Czech Republic",
+            self::JUNIOR_HU => _("Junior") . " Hungary",
+            self::SENIOR_HU => _("Senior") . " Hungary",
+            self::JUNIOR_PL => _("Junior") . " Poland",
+            self::SENIOR_PL => _("Senior") . " Poland",
+            self::JUNIOR_RU => _("Junior") . " Russia",
+            self::SENIOR_RU => _("Senior") . " Russia",
+            self::JUNIOR_SK => _("Junior") . " Slovakia",
+            self::SENIOR_SK => _("Senior") . " Slovakia",
         ];
     }
 
