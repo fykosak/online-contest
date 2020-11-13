@@ -10,10 +10,10 @@
 
 {foreach $posts AS $post}
         <div class="chat-item" {if !$post['root']}style="margin: 0 0 0 20px"{/if}>
-            <h5 {if $post['org']}style="color: orange"{/if}>
+            <h6 class="mt-1" {if $post['org']}style="color: orange"{/if}>
                 {if $post['org']}{_'Organizátoři'}{else}{$post['team_name']}{/if} <span
                         class="pull-right small">{$post['inserted']|time}</span>
-            </h5>
+            </h6>
             <div>{$post['content']}</div>
             {if $user->isLoggedIn() && $post['root']}
                 <div>
