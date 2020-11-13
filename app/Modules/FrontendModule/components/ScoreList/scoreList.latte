@@ -23,7 +23,7 @@
                 {/if}
                 <td>{if $team->disqualified == 0}{$iterator->getCounter()}{else}DSQ{/if}</td>
                 <td class="team"
-                    title="{$team->name}, {$categories[$team->category]}">{$team->name|truncate:15|replace:' ':' '}</td>{* Unicode non-breaking space*}
+                    title="{$team->name}, {$categories[$team->category]}">{substr(strstr($team->name," "), 1)|truncate:45|replace:' ':' '}</td>{* Unicode non-breaking space*}
                 <td>
                     {if !empty($team->score) && $team->disqualified == 0}
                         {$team->score}
