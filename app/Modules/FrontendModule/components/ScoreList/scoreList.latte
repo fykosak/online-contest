@@ -12,8 +12,6 @@
                     <th>#</th>
                     <th>{_'Tým'}</th>
                 <th>&sum;</th>
-                <th>+</th>
-                <th>-</th>
                 </tr>
                 {/if}
                 {if $iterator->getCounter() % 10 == 1}
@@ -23,24 +21,10 @@
                 {/if}
                 <td>{if $team->disqualified == 0}{$iterator->getCounter()}{else}DSQ{/if}</td>
                 <td class="team"
-                    title="{$team->name}, {$categories[$team->category]}">{substr(strstr($team->name," "), 1)|truncate:35|replace:' ':' '}</td>{* Unicode non-breaking space*}
+                    title="{$team->name}, {$categories[$team->category]}">{substr(strstr($team->name," "), 1)|truncate:50|replace:' ':' '}</td>{* Unicode non-breaking space*}
                 <td>
                     {if !empty($team->score) && $team->disqualified == 0}
                         {$team->score}
-                    {else}
-                        0
-                    {/if}
-                </td>
-                <td>
-                    {if isset($bonus[$team->id_team]) && $team->disqualified == 0}
-                        {$bonus[$team->id_team]->score}
-                    {else}
-                        0
-                    {/if}
-                </td>
-                <td>
-                    {if isset($penality[$team->id_team]) && $team->disqualified == 0}
-                        {$penality[$team->id_team]->score}
                     {else}
                         0
                     {/if}
