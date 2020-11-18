@@ -9,7 +9,7 @@
         <tr{if isset($correct[$answer->id_answer])} class="bg-success"{else} class="bg-danger"{/if}>
             <td>{$answer->id_answer}</td>
             <td>{$tasks[$answer->id_task]->code_name}</td>
-            <td>{$answer->inserted|timeOnly}</td>
+            <td>{$answer->inserted->format($timeFormat)}</td>
             <td>{if $tasks[$answer->id_task]->answer_type == \FOL\Model\ORM\TasksService::TYPE_STR}
                     {$answer->answer_str}
                 {elseif $tasks[$answer->id_task]->answer_type == \FOL\Model\ORM\TasksService::TYPE_INT}

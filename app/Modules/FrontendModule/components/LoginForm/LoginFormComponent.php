@@ -1,9 +1,9 @@
 <?php
 
+use App\Model\Authentication\AbstractAuthenticator;
 use FOL\Model\ORM\YearsService;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
-use App\Model\Authentication\AbstractAuthenticator;
 use Nette\DI\Container;
 use Nette\Security\AuthenticationException;
 use Nette\Security\IAuthenticator;
@@ -13,10 +13,12 @@ class LoginFormComponent extends BaseComponent {
 
     protected AbstractAuthenticator $authenticator;
     public YearsService $yearsService;
+    private string $redirectDestination;
 
-    public function __construct(Container $container, AbstractAuthenticator $authenticator) {
+    public function __construct(Container $container, AbstractAuthenticator $authenticator, string $redirectDestination) {
         parent::__construct($container);
         $this->authenticator = $authenticator;
+        $this->redirectDestination = $redirectDestination;
     }
 
     public function injectPrimary(YearsService $yearsService): void {
@@ -27,7 +29,6 @@ class LoginFormComponent extends BaseComponent {
      * @param Form $form
      * @return void
      * @throws AbortException
-     * @throws \Dibi\Exception
      */
     private function formSubmitted(Form $form): void {
         $values = $form->getValues();
@@ -44,15 +45,12 @@ class LoginFormComponent extends BaseComponent {
             return;
         } catch (Exception $e) {
             $this->getPresenter()->flashMessage(_("Stala se neočekávaná chyba."), "danger");
-            Debugger::exceptionHandler($e); // TODO WTF?
+            Debugger::log($e);
             return;
         }
 
-        if ($this->yearsService->isGameActive()) {
-            $this->getPresenter()->redirect(":Game:Game:default");
-        } else {
-            $this->getPresenter()->redirect(":Public:Team:default");
-        }
+        $this->getPresenter()->redirect($this->redirectDestination);
+
     }
 
     // ---- PROTECTED METHODS

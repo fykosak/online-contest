@@ -17,11 +17,11 @@ class NotificationService extends AbstractService {
     }
 
     /**
-     * @param null $lang
+     * @param string|null $lang
      * @return DataSource
      * @throws Exception
      */
-    public function findAll($lang = null): DataSource {
+    public function findAll(?string $lang = null): DataSource {
         $dataSource = $this->getDibiConnection()->dataSource("SELECT * FROM [notification]");
 
         if ($lang !== null) {
@@ -31,21 +31,21 @@ class NotificationService extends AbstractService {
     }
 
     /**
-     * @param null $lang
+     * @param string|null $lang
      * @return DataSource
      * @throws Exception
      */
-    public function findActive($lang = null): DataSource {
+    public function findActive(?string $lang = null): DataSource {
         return $this->findAll($lang)->where("[created] < NOW()")->orderBy('created', 'DESC');
     }
 
     /**
      * @param $timestamp
-     * @param null $lang
+     * @param string|null $lang
      * @return DataSource
      * @throws Exception
      */
-    public function findNew($timestamp, $lang = null): DataSource {
+    public function findNew($timestamp, ?string $lang = null): DataSource {
         return $this->findActive($lang)->where("[created] > %t", $timestamp)->orderBy('created');
     }
 
@@ -55,28 +55,10 @@ class NotificationService extends AbstractService {
      * @return void
      * @throws Exception
      */
-    public function insert($message, $lang) {
+    public function insert(string $message, string $lang): void {
         $this->getDibiConnection()->insert("notification", [
             'message' => $message,
             'lang' => $lang,
-        ])->execute();
-    }
-
-    /**
-     * @param $messageCs
-     * @param $messageEn
-     * @return void
-     * @throws Exception
-     */
-    public function insertNotification($messageCs, $messageEn) {
-        $connection = $this->getDibiConnection();
-        $connection->insert("notification", [
-            'message' => $messageCs,
-            'lang' => 'cs',
-        ])->execute();
-        $connection->insert("notification", [
-            'message' => $messageEn,
-            'lang' => 'en',
         ])->execute();
     }
 

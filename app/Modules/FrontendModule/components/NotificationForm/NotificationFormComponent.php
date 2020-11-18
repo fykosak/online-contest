@@ -1,5 +1,6 @@
 <?php
 
+use App\Model\Translator\GettextTranslator;
 use FOL\Model\ORM\NotificationService;
 use Nette\Application\AbortException;
 use Nette\Application\BadRequestException;
@@ -27,18 +28,18 @@ class NotificationFormComponent extends BaseComponent {
         }
 
         $values = $form->getValues();
-        $this->notificationModel->insertNotification($values['messageCs'], $values['messageEn']);
-        $this->getPresenter()->flashMessage(_("Notifikace byla vložena"), "info");
+        $this->notificationModel->insert($values['message'], $values['lang']);
+        $this->getPresenter()->flashMessage(_('Notifikace byla vložena'), 'info');
         $this->getPresenter()->redirect('Noticeboard:add');
     }
 
     protected function createComponentForm(): BaseForm {
         $form = new BaseForm($this->getContext());
-        $form->addText("messageCs", "Zpráva v češtině.")
-            ->addRule(Form::FILLED, "Zpráva v češtině musí být vyplněna.");
-        $form->addText("messageEn", "Zpráva v angličtině.")
-            ->addRule(Form::FILLED, "Zpráva v angličtině musí být vyplněna.");
-        $form->addSubmit("submit", "Odeslat");
+        $form->addText('message', _('Message'))
+            ->setRequired(true);
+        $form->addSelect('lang', _('Lang'), GettextTranslator::getSupportedLangs())
+            ->setRequired(true);
+        $form->addSubmit('submit', _('Create'));
         $form->onSuccess[] = function (Form $form) {
             $this->formSucceeded($form);
         };

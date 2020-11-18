@@ -109,10 +109,10 @@ abstract class BasePresenter extends Presenter {
             if (array_search($this->getHttpRequest()->getUrl()->host, explode(',', $i18nConf['en']['hosts'])) !== false) {
                 $this->lang = 'en';
             } else {
-                $this->lang = $this->getHttpRequest()->detectLanguage(GettextTranslator::$supportedLangs);
+                $this->lang = $this->getHttpRequest()->detectLanguage(GettextTranslator::getSupportedLangs());
             }
         }
-        if (array_search($this->lang, GettextTranslator::$supportedLangs) === false) {
+        if (array_search($this->lang, GettextTranslator::getSupportedLangs()) === false) {
             $this->lang = $i18nConf['defaultLang'];
         }
     }
