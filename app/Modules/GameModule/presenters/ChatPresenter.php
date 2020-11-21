@@ -18,8 +18,8 @@ class ChatPresenter extends BasePresenter {
      * @throws Exception
      */
     public function renderDefault(): void {
-        $this->getComponent("chat")->setSource($this->chatService->findAll($this->lang));
-        $this->setPageTitle(_("Diskuse (česká verze)"));
+        $this->getComponent('chat')->setSource($this->chatService->findAll($this->lang));
+        $this->setPageTitle(_('Diskuse (česká verze)'));
     }
 
     protected function createComponentChat(): ChatListComponent {

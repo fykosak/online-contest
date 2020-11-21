@@ -22,8 +22,8 @@ class ResultsPresenter extends BasePresenter {
     }
 
     public function renderDetail(): void {
-        $this->setPageTitle(_("Podrobné výsledky"));
-        $this->check("scoreList");
+        $this->setPageTitle(_('Podrobné výsledky'));
+        $this->check('scoreList');
     }
 
     protected function createComponentScoreList(): ScoreListComponent {
@@ -35,7 +35,7 @@ class ResultsPresenter extends BasePresenter {
             $this->getComponent($componentName);
             $this->getTemplate()->available = true;
         } catch (Exception $e) {
-            $this->flashMessage(_("Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."), "danger");
+            $this->flashMessage(_('Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání.'), 'danger');
             $this->getTemplate()->available = false;
         }
     }

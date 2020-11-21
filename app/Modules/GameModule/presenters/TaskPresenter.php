@@ -21,11 +21,11 @@ class TaskPresenter extends BasePresenter {
      * @throws Exception
      */
     public function renderDefault(): void {
-        $this->setPageTitle(_("Zadání"));
+        $this->setPageTitle(_('Zadání'));
         $team = $this->getLoggedTeam()->id_team;
         $this->getTemplate()->id_team = $team;
 
-        $mirrors = (array)$this->context->parameters["tasks"]["mirrors"];
+        $mirrors = (array)$this->context->parameters['tasks']['mirrors'];
         shuffle($mirrors);
         $this->getTemplate()->mirrors = $mirrors;
 

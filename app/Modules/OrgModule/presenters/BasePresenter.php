@@ -8,10 +8,6 @@ use FOL\Components\Navigation\NavItem;
 
 abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
 
-    /**
-     * @return Navigation
-     * @throws Exception
-     */
     protected function createComponentNavigation(): Navigation {
         $navigation = parent::createComponentNavigation();
         $navigation->addNavItem(new NavItem(':Org:Noticeboard:add', [], _('Přidat notifikaci'), 'visible-sm-inline glyphicon glyphicon-comment'));
