@@ -47,7 +47,7 @@ class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
     }
 
     protected function createComponentLogin(): LoginFormComponent {
-        return new LoginFormComponent($this->getContext(), $this->authenticator);
+        return new LoginFormComponent($this->getContext(), $this->authenticator, ':Game:Game:default');
     }
 
     protected function createComponentRecover(): RecoverFormComponent {
