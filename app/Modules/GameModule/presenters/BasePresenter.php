@@ -24,14 +24,14 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
 
     protected function createComponentNavigation(): Navigation {
         $navigation = parent::createComponentNavigation();
-        $navigation->addNavItem(new NavItem(':Game:Game:default', [], _('Zadání'), 'visible-sm-inline glyphicon glyphicon-compressed'));
+        $navigation->addNavItem(new NavItem(':Game:Task:default', [], _('Zadání'), 'visible-sm-inline glyphicon glyphicon-compressed'));
         if ($this->yearsService->isGameActive()) {
-            $navigation->addNavItem(new NavItem(':Game:Game:answer', [], _('Odevzdat řešení'), ''));
-            $navigation->addNavItem(new NavItem(':Game:Game:skip', [], _('Přeskočit úkol'), ''));
+            $navigation->addNavItem(new NavItem(':Game:Answer:default', [], _('Odevzdat řešení'), ''));
+            $navigation->addNavItem(new NavItem(':Game:Skip:default', [], _('Přeskočit úkol'), ''));
         }
         $navigation->addNavItem(new NavItem(':Game:Noticeboard:default', [], _('Nástěnka'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
         $navigation->addNavItem(new NavItem(':Game:Chat:default', [], _('Chat'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
-        $navigation->addNavItem(new NavItem(':Game:Game:history', [], _('Historie'), ''));
+        $navigation->addNavItem(new NavItem(':Game:Answer:history', [], _('Historie'), ''));
         $navigation->addNavItem(new NavItem(':Game:Results:detail', [], _('Results'), ''));
 
         if ($this->yearsService->isGameEnd()) {

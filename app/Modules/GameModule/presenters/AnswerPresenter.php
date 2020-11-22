@@ -22,44 +22,24 @@ class AnswerPresenter extends BasePresenter {
 
     /**
      * @return void
-     * @throws BadRequestException
-     */
-    public function actionEntry(): void {
-        throw new BadRequestException();
-    }
-
-    /**
-     * @return void
      * @throws Exception
      */
     public function actionHistory(): void {
         //has to be loaded in action due to pagination
-        $this->getComponent("answerHistory")->setSource(
+        $this->getComponent('answerHistory')->setSource(
             $this->answersService->findAll()
-                ->where("[id_team] = %i", $this->getLoggedTeam()->id_team)
-                ->orderBy("inserted", "DESC")
+                ->where('[id_team] = %i', $this->getLoggedTeam()->id_team)
+                ->orderBy('inserted', 'DESC')
         );
-        $this->getComponent("answerHistory")->setLimit(50);
+        $this->getComponent('answerHistory')->setLimit(50);
     }
 
     public function renderDefault(): void {
-        $this->setPageTitle(_("Odevzdat řešení"));
-    }
-
-    public function renderEntry(): void {
-        $this->setPageTitle(_("Odevzdat řešení"));
+        $this->setPageTitle(_('Odevzdat řešení'));
     }
 
     public function renderHistory(): void {
-        $this->setPageTitle(_("Historie odpovědí"));
-    }
-
-    /**
-     * @return SingleAnswerComponent
-     * @throws BadRequestException
-     */
-    protected function createComponentEntryForm(): SingleAnswerComponent {
-        return new SingleAnswerComponent($this->getContext(), $this->id);
+        $this->setPageTitle(_('Historie odpovědí'));
     }
 
     protected function createComponentAnswerForm(): \AnswerFormComponent {

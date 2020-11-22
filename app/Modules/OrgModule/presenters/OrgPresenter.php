@@ -79,7 +79,7 @@ class OrgPresenter extends BasePresenter {
     }
 
     protected function createComponentLogin(): LoginFormComponent {
-        return new LoginFormComponent($this->getContext(), $this->authenticator);
+        return new LoginFormComponent($this->getContext(), $this->authenticator, ':Org:Org:default');
     }
 
     protected function createComponentAnswerStats(): AnswerStatsComponent {

@@ -25,7 +25,7 @@ class NoticeboardPresenter extends BasePresenter {
      */
     public function renderDefault(): void {
         $this->template->notifications = $this->notificationModel->findActive($this->lang);
-        $this->setPageTitle(_("Důležitá oznámení"));
+        $this->setPageTitle(_('Důležitá oznámení'));
     }
 
     /**
