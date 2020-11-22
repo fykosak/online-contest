@@ -26,15 +26,20 @@ class RatingComponent extends BaseComponent {
     }
 
     protected function createComponentForm(): Form {
-        $control = new Form();
+        $control = new \BaseForm($this->getContext());
         $control->addInteger('rating', _('Rating'))
+            ->setAttribute('class', 'form-control-range')
             ->setAttribute('type', 'range')
             ->setAttribute('min', 0)
-            ->setAttribute('max', 10)
-            ->setAttribute('step', 1); // TODO copy paste this for new options
+            ->setAttribute('max', 100)
+            ->setAttribute('step', 1)
+            ->setDefaultValue(50); // TODO copy paste this for new options
 
-        $control->addSubmit(_('Send'))->onClick[] = function (SubmitButton $button) {
+        $control->addSubmit('submit', _('Send'))->onClick[] = function (SubmitButton $button) {
             $this->handleForm($button->getForm());
+        };
+        $control->addSubmit('skip', _('Skip'))->setAttribute('class', 'btn btn-secondary')->onClick[] = function () {
+            $this->getPresenter()->redirect(':Game:Task:default');
         };
         return $control;
     }

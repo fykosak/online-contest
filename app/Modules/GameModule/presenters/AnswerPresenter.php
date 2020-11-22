@@ -43,6 +43,10 @@ class AnswerPresenter extends BasePresenter {
         $this->setPageTitle(_('Historie odpovědí'));
     }
 
+    public function renderRating(): void {
+        $this->setPageTitle(_('Rate this task'));
+    }
+
     protected function createComponentAnswerForm(): \AnswerFormComponent {
         return new \AnswerFormComponent($this->getContext(), $this->getLoggedTeam()->id_team);
     }

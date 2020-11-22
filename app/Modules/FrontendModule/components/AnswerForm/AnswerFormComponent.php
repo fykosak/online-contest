@@ -25,9 +25,7 @@ class AnswerFormComponent extends BaseComponent {
     protected AnswersService $answersService;
     protected ScoreService $scoreService;
     protected YearsService $yearsService;
-
     protected User $user;
-
     protected int $teamId;
 
     public function __construct(Container $container, int $teamId) {
@@ -93,9 +91,7 @@ class AnswerFormComponent extends BaseComponent {
                 return;
             } else {
                 $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
-                //Debug::processException($e, TRUE);
                 Debugger::log($e);
-                //error_log($e->getTraceAsString());
                 return;
             }
         } catch (DriverException $e) {
@@ -103,16 +99,12 @@ class AnswerFormComponent extends BaseComponent {
                 $this->getPresenter()->flashMessage(_('Na zadaný úkol jste již takto jednou odpovídali.'), 'danger');
             } else {
                 $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
-                //Debug::processException($e, TRUE);
                 Debugger::log($e);
-                //error_log($e->getTraceAsString());
             }
             return;
         } catch (Exception $e) {
             $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
-            //Debug::processException($e, TRUE);
             Debugger::log($e);
-            //error_log($e->getTraceAsString());
             return;
         }
         $this->getPresenter()->redirect('this');
