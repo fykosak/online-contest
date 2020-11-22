@@ -273,5 +273,19 @@ CREATE TABLE `year`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_czech_ci COMMENT ='Rocniky';
 
+DROP TABLE IF EXISTS `rating`;
+CREATE TABLE `rating`
+(
+    `rating_id` INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `team_id`   INT(25) unsigned    NOT NULL,
+    `task_id`   INT(25) unsigned    NOT NULL,
+    `rating`    INT(8)              NULL DEFAULT NULL,
+    # todo add more options
+    CONSTRAINT `rating_team1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id_team`),
+    CONSTRAINT `rating_task1` FOREIGN KEY (`task_id`) REFERENCES `task` (`id_task`),
+    UNIQUE KEY `id_year` (`team_id`, `task_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_czech_ci;
 
 -- 2016-06-19 14:54:47

@@ -78,9 +78,12 @@ class AnswerFormComponent extends BaseComponent {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je správně.'), 'success');
                 $this->tasksService->updateSingleCounter($team, $task);
                 $this->scoreService->updateAfterInsert($team, $task); //musi byt az po updatu counteru
+                $this->getPresenter()->redirect('rating', ['id' => $task['id_task']]);
             } else {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je špatně.'), 'danger');
             }
+        } catch (AbortException $exception) {
+            throw $exception;
         } catch (InvalidStateException $e) {
             if ($e->getCode() == AnswersService::ERROR_TIME_LIMIT) {
                 $this->getPresenter()->flashMessage(sprintf(_('Lze odpovídat až za <span class="timesec">%d</span> sekund.'), $e->getMessage()), '!warning');

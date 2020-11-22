@@ -3,6 +3,7 @@
 namespace FOL\Modules\GameModule\Presenters;
 
 use Dibi\Exception;
+use FOL\Components\RatingComponent;
 use FOL\Components\SingleAnswerComponent;
 use FOL\Model\ORM\AnswersService;
 use Nette\Application\BadRequestException;
@@ -48,5 +49,9 @@ class AnswerPresenter extends BasePresenter {
 
     protected function createComponentAnswerHistory(): \AnswerHistoryComponent {
         return new \AnswerHistoryComponent($this->getContext());
+    }
+
+    protected function createComponentRating(): RatingComponent {
+        return new RatingComponent($this->getContext(), $this->id, $this->getLoggedTeam());
     }
 }
