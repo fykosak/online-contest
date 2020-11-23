@@ -15,16 +15,16 @@
 {/block}
 
 {block #subnavigation}
-<ul class="nav">
+<ul>
     <li>
-        <a href="{plink Stats:default}" title="{_'Výsledky'}">{_'Výsledky'}</a>
+        <a href="{plink Results:default}" title="{_'Výsledky'}">{_'Výsledky'}</a>
         <ul>
             {foreach $categories AS $category => $name}
-            <li><a href="{plink Stats:default}#{$category}" title="{$name}">{$name}</a></li>
+            <li><a href="{plink Results:default}#{$category}" title="{$name}">{$name}</a></li>
             {/foreach}
         </ul>
     </li>
-    <li><a href="{plink Stats:detail}" title="{_'Podrobné výsledky'}">{_'Podrobné výsledky'}</a></li>
-    <li><a href="{plink Stats:tasks}" title="{_'Statistiky úkolů'}">{_'Statistiky úkolů'}</a></li>
+    <li><a href="{plink Results:detail}" title="{_'Podrobné výsledky'}">{_'Podrobné výsledky'}</a></li>
+    <li><a href="{plink Results:tasks}" title="{_'Statistiky úkolů'}">{_'Statistiky úkolů'}</a></li>
 </ul>
 {/block}

@@ -76,7 +76,20 @@
         {if $control->yearsService->isGameActive()}
         {control notificationMessages}
     {/if}
+    {ifset #subnavigation}
+        <div class="row">
+            <div class="col-md-3 order-md-2">
+                <div class="hidden-print affix-sm">
+                    {block #subnavigation}{/block}
+                </div>
+            </div>
+            <div class="col-md-9">
+                {include content}
+            </div>
+        </div>
+    {else}
         {include content}
+    {/ifset}
 </main>
 <footer class="container text-center border-top">
     <p class="pull-right small">{_'Pokud máte jakýkoliv dotaz, připomínku, námět apod., napište nám na naši adresu'}

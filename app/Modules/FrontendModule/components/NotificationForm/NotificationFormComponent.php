@@ -28,7 +28,7 @@ class NotificationFormComponent extends BaseComponent {
         }
 
         $values = $form->getValues();
-        $this->notificationModel->insert($values['message'], $values['lang']);
+        $this->notificationModel->insert($values['message'], GettextTranslator::getSupportedLangs()[$values['lang']]);
         $this->getPresenter()->flashMessage(_('Notifikace byla vložena'), 'info');
         $this->getPresenter()->redirect('Noticeboard:add');
     }
