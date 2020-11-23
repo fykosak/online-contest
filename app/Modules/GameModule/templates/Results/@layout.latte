@@ -1,0 +1,30 @@
+{extends '../@layout.latte'}
+
+{block #title}
+{if $control->yearsService->isGameEnd() && false}
+<br>
+<div class="alert alert-info" role="alert">
+{if $lang == 'cs'}
+  Líbí se vám Fyziklání online? Pak se přihlašte i na <a href="https://fyziklani.cz/" class="alert-link">Fyziklání 2020</a> v Praze.
+{else}
+  Do you enjoy Online Physics Brawl? Then also take part in <a href="https://fyziklani.org/en" class="alert-link">Fyziklani 2020 &ndash; Team Contest in Prague</a>.
+{/if}
+</div>
+{/if}
+{include parent}
+{/block}
+
+{block #subnavigation}
+<ul>
+    <li>
+        <a href="{plink Results:default}" title="{_'Výsledky'}">{_'Výsledky'}</a>
+        <ul>
+            {foreach $categories AS $category => $name}
+            <li><a href="{plink Results:default}#{$category}" title="{$name}">{$name}</a></li>
+            {/foreach}
+        </ul>
+    </li>
+    <li><a href="{plink Results:detail}" title="{_'Podrobné výsledky'}">{_'Podrobné výsledky'}</a></li>
+    <li><a href="{plink Results:tasks}" title="{_'Statistiky úkolů'}">{_'Statistiky úkolů'}</a></li>
+</ul>
+{/block}
