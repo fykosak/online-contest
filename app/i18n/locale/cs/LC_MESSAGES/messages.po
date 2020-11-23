@@ -5,6 +5,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "Skip rating"
+msgstr "Přeskočit"
+
+msgid "Send rating"
+msgstr "Odeslat"
+
+msgid "Rating"
+msgstr "Hodnocení"
+
+msgid "Your rating has been saved"
+msgstr "Hodnocení úlohy bylo uloženo, děkujeme"
+
+msgid "You have already rated this task"
+msgstr "Tato úloha byla již vašim týmem hodnocena"
+
+msgid "You can not rate this task right now"
+msgstr "Tuto úlohu není možné hodnotit"
+
+msgid "Rate this task"
+msgstr "Ohodnoťte tuto úlohu"
+
 # SkipFormComponent.php:77
 msgid " ---- Vybrat ---- "
 msgstr " ---- Vybrat ---- "

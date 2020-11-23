@@ -27,7 +27,8 @@
     "tracy/tracy": "v2.6.8",
     "dg/adminer-custom": ">= 1.6",
     "dibi/dibi": "v3.2.4",
-    "texy/texy": "^2.6"
+    "texy/texy": "^2.6",
+    "ext-gettext": "*"
   },
   "require-dev": {
     "nette/tester": "~1.3"

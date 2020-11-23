@@ -25,9 +25,7 @@ class AnswerFormComponent extends BaseComponent {
     protected AnswersService $answersService;
     protected ScoreService $scoreService;
     protected YearsService $yearsService;
-
     protected User $user;
-
     protected int $teamId;
 
     public function __construct(Container $container, int $teamId) {
@@ -78,9 +76,12 @@ class AnswerFormComponent extends BaseComponent {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je správně.'), 'success');
                 $this->tasksService->updateSingleCounter($team, $task);
                 $this->scoreService->updateAfterInsert($team, $task); //musi byt az po updatu counteru
+                $this->getPresenter()->redirect('rating', ['id' => $task['id_task']]);
             } else {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je špatně.'), 'danger');
             }
+        } catch (AbortException $exception) {
+            throw $exception;
         } catch (InvalidStateException $e) {
             if ($e->getCode() == AnswersService::ERROR_TIME_LIMIT) {
                 $this->getPresenter()->flashMessage(sprintf(_('Lze odpovídat až za <span class="timesec">%d</span> sekund.'), $e->getMessage()), '!warning');
@@ -90,9 +91,7 @@ class AnswerFormComponent extends BaseComponent {
                 return;
             } else {
                 $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
-                //Debug::processException($e, TRUE);
                 Debugger::log($e);
-                //error_log($e->getTraceAsString());
                 return;
             }
         } catch (DriverException $e) {
@@ -100,16 +99,12 @@ class AnswerFormComponent extends BaseComponent {
                 $this->getPresenter()->flashMessage(_('Na zadaný úkol jste již takto jednou odpovídali.'), 'danger');
             } else {
                 $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
-                //Debug::processException($e, TRUE);
                 Debugger::log($e);
-                //error_log($e->getTraceAsString());
             }
             return;
         } catch (Exception $e) {
             $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
-            //Debug::processException($e, TRUE);
             Debugger::log($e);
-            //error_log($e->getTraceAsString());
             return;
         }
         $this->getPresenter()->redirect('this');
