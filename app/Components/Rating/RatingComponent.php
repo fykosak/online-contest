@@ -35,10 +35,10 @@ class RatingComponent extends BaseComponent {
             ->setAttribute('step', 1)
             ->setDefaultValue(50); // TODO copy paste this for new options
 
-        $control->addSubmit('submit', _('Send'))->onClick[] = function (SubmitButton $button) {
+        $control->addSubmit('submit', _('Send rating'))->onClick[] = function (SubmitButton $button) {
             $this->handleForm($button->getForm());
         };
-        $control->addSubmit('skip', _('Skip'))->setAttribute('class', 'btn btn-secondary')->onClick[] = function () {
+        $control->addSubmit('skip', _('Skip rating'))->setAttribute('class', 'btn btn-secondary')->onClick[] = function () {
             $this->getPresenter()->redirect(':Game:Task:default');
         };
         return $control;
@@ -59,9 +59,9 @@ class RatingComponent extends BaseComponent {
             ]);
             $this->getPresenter()->flashMessage(_('Your rating has been saved'), 'success');
         } catch (UniqueConstraintViolationException $exception) {
-            $this->getPresenter()->flashMessage(_('za tuto ulohu bolo už hlasované'), 'danger');
+            $this->getPresenter()->flashMessage(_('You have already rated this task'), 'danger');
         } catch (\Throwable $exception) {
-            $this->getPresenter()->flashMessage(_('Error pičo'), 'danger');
+            $this->getPresenter()->flashMessage(_('You can not rate this task right now'), 'danger');
         }
         $this->getPresenter()->redirect(':Game:Task:default');
     }
