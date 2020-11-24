@@ -64,6 +64,8 @@ abstract class BasePresenter extends Presenter {
         $template->lang = $this->lang;
         $template->customScript = '';
         $template->setTranslator($this->translator);
+        $template->isGameStarted = $this->yearsService->isGameStarted();
+        $template->isGameEnd = $this->yearsService->isGameEnd();
         $template->getLatte()->addFilter('i18n', '\App\Model\Translator\GettextTranslator::i18nHelper');
 
         return InterlosTemplate::loadTemplate($template);
