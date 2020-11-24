@@ -8,6 +8,20 @@
 <p><b>Please, spend a few moments filling a <a href="https://forms.gle/5uJHPEgpC6x4vBYW9">survey</a> about this year's competition.</b></p>
 {/if}*}
 
+{if !$isGameStarted}
+<div class="alert alert-secondary">
+{if $lang == 'cs'}
+Jakmile hra začne, na této stránce se objeví zadání úloh. Úlohy budete moci odevzdávat na stránce <b>Odevzdat řešení</b>, která se objeví v menu po začátku hry.
+<hr>
+V mezičase, co takhle poslat nějakou fotku vašeho týmu na <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>?
+{else}
+Once the game starts, the task assignment will appear here. You will be able to submit the tasks on the <b>Submit the solution</b> page, which will appear in the menu after the game starts.
+<hr>
+In the meantime, how about sending a photo of your team to <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>?
+{/if}
+</div>
+{/if}
+
 <p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
 
 <h3>{_'Nevyřešené'}</h3>
