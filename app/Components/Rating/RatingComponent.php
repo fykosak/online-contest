@@ -7,7 +7,6 @@ use Nette\Database\Context;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\DI\Container;
 use Nette\Forms\Controls\SubmitButton;
-use Tracy\Debugger;
 
 class RatingComponent extends BaseComponent {
 
@@ -33,6 +32,7 @@ class RatingComponent extends BaseComponent {
             ->setAttribute('min', 0)
             ->setAttribute('max', 100)
             ->setAttribute('step', 1)
+            ->setOption('description', _('bad ⇔ good'))
             ->setDefaultValue(50); // TODO copy paste this for new options
 
         $control->addSubmit('submit', _('Send rating'))->onClick[] = function (SubmitButton $button) {
