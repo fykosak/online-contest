@@ -2,7 +2,7 @@
 {foreach $reports as $report}
     <h2>{$report['team']}</h2>
     <h3>{$report['header']}</h3>
-    {!$report['text']|escape|nl2br}
+    {!$report['text']|escape}
     <br/>
     <div class="row">
     {foreach $report['images'] as $image}
