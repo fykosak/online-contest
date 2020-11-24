@@ -5,7 +5,7 @@ php:
     date.timezone: Europe/Prague
 
 application:
-    errorPresenter: Core:Error
+    errorPresenter: Frontend:Error
     mapping:
         *: FOL\Modules\*Module\Presenters\*Presenter
 
