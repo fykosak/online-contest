@@ -37,9 +37,11 @@ class PasswordChangeFormComponent extends BaseComponent {
         $form = new BaseForm($this->getContext());
 
         $form->addPassword("password", "Nové heslo")
+            ->setRequired(true)
             ->addRule(Form::FILLED, "Heslo musí být vyplněno.");
 
         $form->addPassword("passwordCheck", "Nové heslo (pro kontrolu)")
+            ->setRequired(true)
             ->addRule(Form::EQUAL, "Hesla se neshodují", $form['password'])
             ->setOmitted();
 

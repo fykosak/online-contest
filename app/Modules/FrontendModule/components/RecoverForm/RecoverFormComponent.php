@@ -7,31 +7,23 @@ use Nette\Application\UI\Form;
 use Nette\Application\UI\InvalidLinkException;
 use Nette\Mail\Message;
 use Nette\Mail\IMailer;
-use Nette\Http\IRequest;
 use App\Model\Authentication\TeamAuthenticator;
 
 class RecoverFormComponent extends BaseComponent {
 
     private TeamAuthenticator $authenticator;
-
     private IMailer $mailer;
-
-    private IRequest $httpRequest;
-
     protected TeamsService $teamsService;
-
     protected CompetitorsService $competitorsService;
 
     public function injectPrimary(
         TeamAuthenticator $authenticator,
         IMailer $mailer,
-        IRequest $httpRequest,
         TeamsService $teamsService,
         CompetitorsService $competitorsService
     ) {
         $this->authenticator = $authenticator;
         $this->mailer = $mailer;
-        $this->httpRequest = $httpRequest;
         $this->teamsService = $teamsService;
         $this->competitorsService = $competitorsService;
     }
@@ -63,7 +55,7 @@ class RecoverFormComponent extends BaseComponent {
         $prefs = $this->getPresenter()->context->parameters['mail'];
 
         //this way it works behind reverse proxy, but is ugly
-        $recoveryUrl = "https://" . $this->httpRequest->getRemoteHost() . $this->getPresenter()->link("Team:changePassword", ['token' => $token]);
+        $recoveryUrl = $this->getPresenter()->link("//:Public:Team:changePassword", ['token' => $token]);
 
         $message->setFrom($prefs['info'], $prefs['name'])
             ->setSubject(_("[Fyziklání online] obnova hesla"))
