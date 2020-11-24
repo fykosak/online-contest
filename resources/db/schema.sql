@@ -188,7 +188,7 @@ CREATE TABLE `task`
     `answer_unit`     varchar(255) COLLATE utf8_czech_ci                        DEFAULT NULL COMMENT 'jednotka vysledku, HTML fragment',
     `real_tolerance`  double                                                    DEFAULT NULL COMMENT 'povolena odchylka u realnych odpovedi',
     `real_sig_digits` tinyint(4)                                                DEFAULT NULL COMMENT 'ocekavany pocet platnych cifer vysledku',
-    `inserted`        datetime                                         NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
+    `inserted`        datetime                                         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka vlozena do systemu',
     `updated`         timestamp                                        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
     PRIMARY KEY (`id_task`),
     KEY `id_serie` (`id_group`),
