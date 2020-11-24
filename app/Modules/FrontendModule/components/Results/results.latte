@@ -27,7 +27,7 @@
             <td>{if $team->disqualified == 0}{$i++}{else}DSQ{/if}</td>
             <td>
                 {$team->name}
-                {if isset($competitors[$team->id_team])}({foreach array_count_values($teamCountries[$team->id_team]) as $country => $countryCount}{$countryCount}&times;&thinsp;
+                {if isset($teamCountries[$team->id_team]) && $teamCountries[$team->id_team]}({foreach array_count_values($teamCountries[$team->id_team]) as $country => $countryCount}{$countryCount}&times;&thinsp;
                     <span class="flag-icon flag-icon-{$country|lower}"></span>{sep}, {/sep}{/foreach}){/if}
             </td>
             <td>
