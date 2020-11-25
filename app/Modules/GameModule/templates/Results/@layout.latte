@@ -11,6 +11,19 @@
 {/if}
 </div>
 {/if}
+
+{if $control->yearsService->isGameEnd() && true}
+<br>
+<div class="alert alert-danger" role="alert">
+{if $lang == 'cs'}
+    <b>Výsledky soutěže se můžou ještě mírně měnit</b>, než dořešíme všechny problémy. Finální výsledky budou včas oznámeny.
+{else}
+    <b>The results of the competition may still change slightly</b> before we resolve any issues. The final results will be announced in time.
+{/if}
+</div>
+{/if}
+
+
 {include parent}
 {/block}
 
