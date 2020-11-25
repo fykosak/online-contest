@@ -2,6 +2,7 @@
 
 namespace FOL\Components\Navigation;
 
+use App\Model\Translator\GettextTranslator;
 use FOL\Components\BaseComponent;
 
 /**
@@ -16,10 +17,22 @@ class Navigation extends BaseComponent {
         $this->template->items = $this->items;
         $this->template->competition = $this->getContext()->getParameters()['competition'];
         $this->template->lang = $this->getPresenter()->lang;
+        $this->template->supportedLangs = GettextTranslator::getSupportedLangs();
         parent::render();
     }
 
     public function addNavItem(NavItem $item): void {
         $this->items[] = $item;
+    }
+
+    public static function mapLangToIcon(string $lang): string {
+        switch ($lang) {
+            case 'en':
+                return 'flag-icon flag-icon-us';
+            case 'cs':
+                return 'flag-icon flag-icon-cz';
+            default:
+                return 'flag-icon flag-icon-' . $lang;
+        }
     }
 }
