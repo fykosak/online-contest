@@ -13,13 +13,17 @@
 {/if}
 
 {if $control->yearsService->isGameEnd() && true}
-<br>
-<div class="alert alert-danger" role="alert">
-{if $lang == 'cs'}
-    <p>
-        <b>Výsledky soutěže se můžou ještě mírně měnit</b>, než dořešíme všechny problémy. Finální výsledky budou včas oznámeny.
-    </p>
 
+<div class="alert alert-success" role="alert">
+{if $lang == 'cs'}
+    <b>Výsledky soutěže jsou oficiální.</b>
+{else}
+    <b>The results of the competition are final.</b>
+{/if}
+</div>
+
+<div class="alert alert-secondary" role="alert">
+{if $lang == 'cs'}
     <p>
         Řešení najdete <a href="https://online.fyziklani.cz/download/2020-1/reseni.cs.pdf">zde</a>.
     </p>
@@ -32,9 +36,6 @@
     </p>
 
 {else}
-    <p>
-        <b>The results of the competition may still change slightly</b> before we resolve any issues. The final results will be announced in time.
-    </p>
     <p>
         Solutions can be found <a href="https://online.fyziklani.cz/download/2020-1/reseni.en.pdf">here</a>.
     </p>
