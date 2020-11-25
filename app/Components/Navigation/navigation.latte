@@ -2,18 +2,17 @@
 {varType \FOL\Components\Navigation\Navigation $control}
 {varType array $items}
 {varType array $competition}
+{varType array $supportedLangs}
 {varType string $lang}
 {block content}
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-fol" role="navigation">
         <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            {*<a class="navbar-brand" href="{plink :Public:Default:default}">{_'Fyziklání online'}</a>*}
             <a class="navbar-brand"
                href="{$competition['link'][$lang]??$competition['link']['cs']}">{$competition['name'][$lang]??$competition['name']['cs']}</a>
-            <div class="navbar-collapse collapse">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarNavDropdown">
                 <ul class="nav navbar-nav">
                     {foreach $items as $item}
                         <li class="nav-item">
@@ -25,18 +24,22 @@
                         </li>
                     {/foreach}
                 </ul>
+
                 <ul class="nav navbar-nav ml-auto">
-                    <span class="navbar-text real-clock" data-timestamp="{1000 * time()}"></span>
-                    <li class="nav-item" n:if="$control->getPresenter()->lang == 'cs'">
-                        <a class="nav-link" href="{plink this, lang => 'en'}">
-                            <img src="{$basePath}/images/icons/us-icon.png" alt="English" title="Switch to English"/>
+                    <li class="nav-item real-clock navbar-text" data-timestamp="{1000 * time()}" style="padding-top: .5rem; padding-bottom: .5rem;"></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span><i class="{$control::mapLangToIcon($lang)}"></i></span>
                         </a>
-                    </li>
-                    <li class="nav-item" n:if="$control->getPresenter()->lang == 'en'">
-                        <a class="nav-link" href="{plink this, lang => 'cs'}">
-                            <img src="{$basePath}/images/icons/cz-icon.png" alt="čeština" title="Přepnout do češtiny"/>
-                        </a>
-                    </li>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {foreach $supportedLangs as $supportedLang}
+                            <a class="dropdown-item {$lang == $supportedLang?'active':''}" href="{plink this, lang => $supportedLang}">
+                            <i class="{$control::mapLangToIcon($supportedLang)}"></i>
+                            </a>
+                        {/foreach}
+        </div>
+      </li>
+
                 </ul>
             </div>
         </div>
