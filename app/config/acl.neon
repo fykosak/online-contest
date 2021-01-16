@@ -1,5 +1,5 @@
 services:
-    skipAssertion: App\Model\Authorization\SkipAssertion
+    skipAssertion: FOL\Model\Authorization\SkipAssertion
 
     acl:
         class: Nette\Security\Permission

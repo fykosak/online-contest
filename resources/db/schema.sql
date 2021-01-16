@@ -203,12 +203,12 @@ CREATE TABLE `task`
 DROP TABLE IF EXISTS `task_state`;
 CREATE TABLE `task_state`
 (
-    `id_task`    int(25) unsigned NOT NULL,
-    `id_team`    int(25) unsigned NOT NULL,
-    `skipped`    tinyint(1)       NOT NULL COMMENT 'úloha byla přeskočena',
+    `id_task`    int(25) unsigned           NOT NULL,
+    `id_team`    int(25) unsigned           NOT NULL,
+    `skipped`    tinyint(1)                 NOT NULL COMMENT 'úloha byla přeskočena',
     `substitute` tinyint(1)       DEFAULT 0 NOT NULL COMMENT 'úloha vydána jako náhrada při přeskakování (not used)',
     `points`     int(25) unsigned DEFAULT NULL COMMENT 'body za úlohu (bez bonusu)',
-    `inserted`   datetime         NOT NULL COMMENT 'cas vlozeni zaznamu',
+    `inserted`   datetime                   NOT NULL COMMENT 'cas vlozeni zaznamu',
     PRIMARY KEY (`id_task`, `id_team`),
     KEY `id_task` (`id_task`),
     KEY `id_team` (`id_team`),
@@ -288,4 +288,24 @@ CREATE TABLE `rating`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_czech_ci;
 
--- 2016-06-19 14:54:47
+DROP TABLE IF EXISTS `card_type`;
+CREATE TABLE `card_type`
+(
+    `card_type_id` INT(11) PRIMARY KEY                                               NOT NULL AUTO_INCREMENT,
+    `type`         ENUM ('skip','reset','double_points','add_task','hint','options') NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_czech_ci;
+
+DROP TABLE IF EXISTS `card_usage`;
+CREATE TABLE `card_usage`
+(
+    `card_usage_id` INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `card_type_id`  INT(11)             NOT NULL,
+    `team_id`       INT(11)             NOT NULL,
+    `created`       TIMESTAMP           NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `data`          VARCHAR(256)        NULL     DEFAULT NULL COMMENT 'serialized data',
+    CONSTRAINT `card_usage_team` FOREIGN KEY (`team_id`) REFERENCES `team` (`id_team`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_czech_ci;

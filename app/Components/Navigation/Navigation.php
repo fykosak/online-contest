@@ -2,7 +2,7 @@
 
 namespace FOL\Components\Navigation;
 
-use App\Model\Translator\GettextTranslator;
+use FOL\i18n\GettextTranslator;
 use FOL\Components\BaseComponent;
 
 /**

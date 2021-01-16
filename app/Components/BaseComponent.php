@@ -2,21 +2,20 @@
 
 namespace FOL\Components;
 
-use App\Tools\Helpers;
+use DataNotFoundException;
+use FOL\tools\Helpers;
 use Nette\Application\UI\Control;
-use Nette\Application\UI\ITemplate;
-use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Application\UI\Template;
 use Nette\DI\Container;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 abstract class BaseComponent extends Control {
 
     protected Container $container;
 
-    protected ITranslator $translator;
+    protected Translator $translator;
 
     public function __construct(Container $container) {
-        parent::__construct();
         $this->container = $container;
         $container->callInjects($this);
         $this->startUp();
@@ -26,7 +25,7 @@ abstract class BaseComponent extends Control {
         return $this->container;
     }
 
-    public function injectTranslator(ITranslator $translator): void {
+    public function injectTranslator(Translator $translator): void {
         $this->translator = $translator;
     }
 
@@ -36,11 +35,9 @@ abstract class BaseComponent extends Control {
     }
 
     /**
-     * @return ITemplate
-     * @throws \DataNotFoundException
+     * @return Template
      */
-    protected function createTemplate(): ITemplate {
-        /** @var Template $template */
+    protected function createTemplate(): Template  {
         $template = parent::createTemplate();
         $template->setTranslator($this->translator);
         $template->getLatte()->addFilter("date2", Helpers::getHelper('date')); // this shadows standard Nette helper

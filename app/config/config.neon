@@ -7,19 +7,19 @@ php:
 application:
     errorPresenter: Frontend:Error
     mapping:
-        *: FOL\Modules\*Module\Presenters\*Presenter
+        *: FOL\Modules\*Module\*Presenter
 
 session:
     expiration: 14 days
     #cookie_secure: true
 
 services:
-    - App\Model\Authentication\TeamAuthenticator
-    - App\Model\Authentication\OrgAuthenticator(%orgs%)
-    - App\Model\Authentication\CronAuthenticator(%cron.key%)
-    - App\Model\Translator\GettextTranslator
+    - FOL\Model\Authentication\TeamAuthenticator
+    - FOL\Model\Authentication\OrgAuthenticator(%orgs%)
+    - FOL\Model\Authentication\CronAuthenticator(%cron.key%)
+    - FOL\i18n\GettextTranslator
 
-    router: FOL\Modules\FrontendModule\FrontendModule::createRouter
+    router: FOL\Model\Router\Router::createRouter
     - FOL\Model\ORM\AnswersService
     - FOL\Model\ORM\ChatService
     - FOL\Model\ORM\CompetitorsService
@@ -32,6 +32,7 @@ services:
     - FOL\Model\ORM\TasksService
     - FOL\Model\ORM\TeamsService
     - FOL\Model\ORM\YearsService
+    - FOL\Model\ORM\ServiceCardType
 
     nette.userStorage:
         setup:

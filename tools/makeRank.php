@@ -9,7 +9,7 @@
 use FOL\Bootstrap;
 use FOL\Model\ORM\TeamsService;
 
-require __DIR__ . '/../app/bootstrap.php';
+require __DIR__ . '/../app/Bootstrap.php';
 
 $container = Bootstrap::boot()->createContainer();
 $teamsModel = $container->getByType(TeamsService::class);

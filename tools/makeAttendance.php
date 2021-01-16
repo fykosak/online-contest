@@ -11,7 +11,7 @@ use FOL\Model\ORM\TeamsService;
 
 $event_id = 122;
 
-require __DIR__ . '/../app/bootstrap.php';
+require __DIR__ . '/../app/Bootstrap.php';
 $container = Bootstrap::boot()->createContainer();
 $teamsModel = $container->getByType(TeamsService::class);
 $teams = $teamsModel->findAllWithScore()->fetchAll();

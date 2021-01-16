@@ -1,18 +1,22 @@
 <?php
 
-namespace FOL\Components;
+namespace FOL\Components\Rating;
 
+use FOL\Components\BaseComponent;
+use FOL\Modules\FrontendModule\Components\BaseForm;
+use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\DI\Container;
 use Nette\Forms\Controls\SubmitButton;
+use Throwable;
 
 class RatingComponent extends BaseComponent {
 
     private int $taskId;
     private $team;
-    private Context $context;
+    private Explorer $explorer;
 
     public function __construct(Container $container, int $taskId, $team) {
         parent::__construct($container);
@@ -20,12 +24,12 @@ class RatingComponent extends BaseComponent {
         $this->team = $team;
     }
 
-    public function injectPrimary(Context $context): void {
-        $this->context = $context;
+    public function injectPrimary(Explorer $explorer): void {
+        $this->explorer = $explorer;
     }
 
     protected function createComponentForm(): Form {
-        $control = new \BaseForm($this->getContext());
+        $control = new BaseForm($this->getContext());
         $control->addInteger('rating', _('Rating'))
             ->setAttribute('class', 'form-control-range')
             ->setAttribute('type', 'range')
@@ -49,10 +53,14 @@ class RatingComponent extends BaseComponent {
         parent::render();
     }
 
+    /**
+     * @param \Nette\Forms\Form $form
+     * @throws AbortException
+     */
     private function handleForm(\Nette\Forms\Form $form) {
         $values = $form->getValues();
         try {
-            $this->context->table('rating')->insert([
+            $this->explorer->table('rating')->insert([
                 'team_id' => $this->team['id_team'],
                 'task_id' => $this->taskId,
                 'rating' => $values['rating'],
@@ -60,7 +68,7 @@ class RatingComponent extends BaseComponent {
             $this->getPresenter()->flashMessage(_('Your rating has been saved'), 'success');
         } catch (UniqueConstraintViolationException $exception) {
             $this->getPresenter()->flashMessage(_('You have already rated this task'), 'danger');
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             $this->getPresenter()->flashMessage(_('You can not rate this task right now'), 'danger');
         }
         $this->getPresenter()->redirect(':Game:Task:default');

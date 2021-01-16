@@ -2,20 +2,19 @@
 
 namespace FOL\Modules\Core;
 
-use DataNotFoundException;
 use Dibi\Exception;
 use Dibi\Row;
-use FlashMessagesComponent;
-use App\Model\Translator\GettextTranslator;
-use App\Tools\InterlosTemplate;
+use FOL\i18n\GettextTranslator;
+use FOL\Modules\FrontendModule\Components\FlashMessages\FlashMessagesComponent;
+use FOL\Modules\FrontendModule\Components\NotificationMessages\NotificationMessagesComponent;
+use FOL\Tools\InterlosTemplate;
 use FOL\Components\Navigation\Navigation;
 use FOL\Model\ORM\TeamsService;
 use FOL\Model\ORM\YearsService;
 use Nette\Application\AbortException;
-use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
-use Nette\Localization\ITranslator;
-use NotificationMessagesComponent;
+use Nette\Application\UI\Template;
+use Nette\Localization\Translator;
 
 abstract class BasePresenter extends Presenter {
 
@@ -30,9 +29,9 @@ abstract class BasePresenter extends Presenter {
 
     protected TeamsService $teamsService;
 
-    protected ITranslator $translator;
+    protected Translator $translator;
 
-    public function injectServices(YearsService $yearsService, TeamsService $teamsService, ITranslator $translator): void {
+    public function injectServices(YearsService $yearsService, TeamsService $teamsService, Translator $translator): void {
         $this->yearsService = $yearsService;
         $this->teamsService = $teamsService;
         $this->translator = $translator;
@@ -53,10 +52,10 @@ abstract class BasePresenter extends Presenter {
     }
 
     /**
-     * @return ITemplate
-     * @throws DataNotFoundException
+     * @return Template
+     * @throws Exception
      */
-    protected function createTemplate(): ITemplate {
+    protected function createTemplate(): Template {
         //$this->oldLayoutMode = false;
 
         $template = parent::createTemplate();
@@ -66,7 +65,7 @@ abstract class BasePresenter extends Presenter {
         $template->setTranslator($this->translator);
         $template->isGameStarted = $this->yearsService->isGameStarted();
         $template->isGameEnd = $this->yearsService->isGameEnd();
-        $template->getLatte()->addFilter('i18n', '\App\Model\Translator\GettextTranslator::i18nHelper');
+        $template->getLatte()->addFilter('i18n', GettextTranslator::class . '::i18nHelper');
 
         return InterlosTemplate::loadTemplate($template);
     }
