@@ -1,0 +1,11 @@
+{block content}
+    {foreach $cards as $card}
+        <div class="{($card->isUsed($team)?'text-muted':'') . ' card'}">
+            <div class="card-header">{$card->getTitle()}</div>
+            <div class="card-body">
+                <p class="card-text">{$card->getDescription()}</p>
+                <a href="{plink use id=>$card->getType()}" class="btn btn-primary">{_'Use'}</a>
+            </div>
+        </div>
+    {/foreach}
+{/block}

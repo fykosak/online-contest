@@ -1,0 +1,9 @@
+{block content}
+    {varType FOL\Model\ORM\ModelCardUsage|null $usage}
+    {varType Dibi\Row $team}
+    {if $usage}
+        {dump $usage}
+    {else}
+        {control cardForm}
+    {/if}
+{/block}

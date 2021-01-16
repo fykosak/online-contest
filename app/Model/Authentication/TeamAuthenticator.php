@@ -11,7 +11,6 @@ use FOL\Model\ORM\TeamsService;
 use Nette\Security\Authenticator;
 use Nette\Security\SimpleIdentity;
 use Nette\Security\AuthenticationException;
-use Nette\Security\IIdentity;
 use Nette\Utils\Random;
 use Nette\Security\User;
 
@@ -20,7 +19,7 @@ use Nette\Security\User;
  */
 class TeamAuthenticator extends AbstractAuthenticator {
 
-    const TEAM = "team";
+    const TEAM = 'team';
     const TOKEN_LENGTH = 10;
     const TOKEN_LIFETIME = 'PT10M';
 
@@ -43,20 +42,20 @@ class TeamAuthenticator extends AbstractAuthenticator {
     protected function authenticate(array $credentials): SimpleIdentity {
         $name = $credentials[Authenticator::USERNAME];
         $password = self::passwordHash($credentials[Authenticator::PASSWORD]);
-        $row = $this->teamsService->findAll()->where("[name] = %s", $name)->fetch();
+        $row = $this->teamsService->findAll()->where('[name] = %s', $name)->fetch();
         if (empty($row)) {
             throw new AuthenticationException(
-                "Tým '$name' neexistuje.",
+                sprintf('Tým %s neexistuje.', $name),
                 Authenticator::IDENTITY_NOT_FOUND
             );
         }
-        if ($row["password"] != $password) {
+        if ($row['password'] != $password) {
             throw new AuthenticationException(
-                "Heslo se neshoduje.",
+                'Heslo se neshoduje.',
                 Authenticator::INVALID_CREDENTIAL
             );
         }
-        return new SimpleIdentity($name, self::TEAM, ["id_team" => $row["id_team"], "role" => self::TEAM]);
+        return new SimpleIdentity($name, self::TEAM, ['id_team' => $row['id_team'], 'role' => self::TEAM]);
     }
 
     /**
@@ -66,17 +65,17 @@ class TeamAuthenticator extends AbstractAuthenticator {
      * @throws Exception
      */
     public function authenticateByToken($token): void {
-        $res = $this->findValidRecoveryTokens()->where("[token] = %s", $token)->fetch();
+        $res = $this->findValidRecoveryTokens()->where('[token] = %s', $token)->fetch();
         if (empty($res)) {
             throw new AuthenticationException(
-                "Token '$token' není validní.",
+                sprintf('Token %s není validní.', $token),
                 Authenticator::INVALID_CREDENTIAL
             );
         }
-        $this->connection->delete("token")->where("[id_token] = %i", $res['id_token'])->execute();
+        $this->connection->delete('token')->where('[id_token] = %i', $res['id_token'])->execute();
 
         $team = $this->teamsService->find($res['id_team']);
-        $identity = new SimpleIdentity($team['name'], self::TEAM, ["id_team" => $team["id_team"], "role" => self::TEAM]);
+        $identity = new SimpleIdentity($team['name'], self::TEAM, ['id_team' => $team['id_team'], 'role' => self::TEAM]);
         $this->user->login($identity);
     }
 
@@ -87,7 +86,7 @@ class TeamAuthenticator extends AbstractAuthenticator {
      */
     public function createRecoveryToken($teamId): ?string {
         $token = Random::generate(self::TOKEN_LENGTH);
-        if ($this->findValidRecoveryTokens()->where("[id_team] = %i", $teamId)->fetch()) {
+        if ($this->findValidRecoveryTokens()->where('[id_team] = %i', $teamId)->fetch()) {
             return null;
         }
 
@@ -109,7 +108,7 @@ class TeamAuthenticator extends AbstractAuthenticator {
      * @throws Exception
      */
     private function findValidRecoveryTokens(): DataSource {
-        return $this->connection->dataSource("SELECT * FROM [token] WHERE [not_before] <= NOW() AND [not_after] >= NOW()");
+        return $this->connection->dataSource('SELECT * FROM [token] WHERE [not_before] <= NOW() AND [not_after] >= NOW()');
     }
 
 }

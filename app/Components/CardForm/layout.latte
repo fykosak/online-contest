@@ -1,0 +1,7 @@
+{block content}
+    {if $available}
+        {control form}
+    {else}
+        <p class="alert alert-warning">{_'Card can not be used'}</p>
+    {/if}
+{/block}

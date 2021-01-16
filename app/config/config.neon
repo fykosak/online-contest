@@ -27,12 +27,13 @@ services:
     - FOL\Model\ORM\NotificationService
     - FOL\Model\ORM\PeriodService
     - FOL\Model\ORM\ReportService
-    - FOL\Model\ORM\SchoolsService
     - FOL\Model\ORM\ScoreService
     - FOL\Model\ORM\TasksService
     - FOL\Model\ORM\TeamsService
     - FOL\Model\ORM\YearsService
-    - FOL\Model\ORM\ServiceCardType
+    - FOL\Model\ORM\ServiceCardUsage
+
+    - FOL\Model\Card\CardFactory
 
     nette.userStorage:
         setup:
