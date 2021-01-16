@@ -2,6 +2,7 @@
 
 namespace FOL\Modules\CliModule;
 
+use dibi;
 use Dibi\DriverException;
 use Dibi\Exception;
 use Nette\Application\UI\Presenter;
@@ -30,9 +31,9 @@ class CliPresenter extends Presenter {
             $this->loadTeams();
             $this->generateAnswers($answers, $this->getParameter('sleep', 0));
         } else {
-            \dibi::query("DELETE FROM [group_state]");
-            \dibi::query("DELETE FROM [team] WHERE name NOT LIKE '%test%'");
-            \dibi::query("DELETE FROM [answer]");
+            dibi::query("DELETE FROM [group_state]");
+            dibi::query("DELETE FROM [team] WHERE name NOT LIKE '%test%'");
+            dibi::query("DELETE FROM [answer]");
 
             $this->generateTeams($teams);
             $this->generateAnswers($answers);
@@ -62,16 +63,16 @@ class CliPresenter extends Presenter {
             } while (isset($used[$name]));
             $used[$name] = true;
 
-            \dibi::insert('team', [
+            dibi::insert('team', [
                 'name' => $name,
                 'id_year' => $this->year,
                 'email' => $name,
                 'password' => '',
                 'category' => 'open',
                 'address' => 'adresa',
-                'inserted' => \dibi::datetime(),
+                'inserted' => dibi::datetime(),
             ])->execute();
-            $teamId = \dibi::insertId();
+            $teamId = dibi::insertId();
 
             $this->teams[$teamId] = new TeamData();
         }
@@ -82,7 +83,7 @@ class CliPresenter extends Presenter {
      * @throws Exception
      */
     private function loadTeams() {
-        $teams = \dibi::fetchAll('SELECT * FROM [view_team]');
+        $teams = dibi::fetchAll('SELECT * FROM [view_team]');
         $this->teams = [];
         foreach ($teams as $team) {
             $this->teams[$team['id_team']] = new TeamData();
@@ -96,7 +97,7 @@ class CliPresenter extends Presenter {
      * @throws Exception
      */
     private function generateAnswers($n, $sleep = 0) {
-        $tasks = \dibi::fetchAll('SELECT * FROM [view_task]');
+        $tasks = dibi::fetchAll('SELECT * FROM [view_task]');
         $teamIds = array_keys($this->teams);
         Debugger::timer();
         $dbTime = 0;
@@ -127,11 +128,11 @@ class CliPresenter extends Presenter {
             do {
                 $exp = false;
                 try {
-                    \dibi::insert('answer', [
+                    dibi::insert('answer', [
                         'id_team' => $team,
                         'id_task' => $task['id_task'],
                         'answer_' . $suff => $answer,
-                        'inserted' => \dibi::datetime(),//TODO
+                        'inserted' => dibi::datetime(),//TODO
                     ])->execute();
                 } catch (DriverException $e) {
                     $exp = true;

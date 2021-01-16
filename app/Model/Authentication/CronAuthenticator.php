@@ -2,9 +2,9 @@
 
 namespace FOL\Model\Authentication;
 
-use Nette\Security\IAuthenticator;
-use Nette\Security\Identity;
+use Nette\Security\Authenticator;
 use Nette\Security\AuthenticationException;
+use Nette\Security\SimpleIdentity;
 use Nette\Security\User;
 
 class CronAuthenticator extends AbstractAuthenticator {
@@ -18,11 +18,11 @@ class CronAuthenticator extends AbstractAuthenticator {
         $this->cronKey = $cronKey;
     }
 
-    protected function authenticate(array $credentials): Identity {
+    protected function authenticate(array $credentials): SimpleIdentity {
         [$key] = $credentials;
         if ((string)$key === (string)$this->cronKey) {
-            return new Identity('cron', self::ROLE);
+            return new SimpleIdentity('cron', self::ROLE);
         }
-        throw new AuthenticationException("Klíč se neshoduje.", IAuthenticator::INVALID_CREDENTIAL);
+        throw new AuthenticationException("Klíč se neshoduje.", Authenticator::INVALID_CREDENTIAL);
     }
 }

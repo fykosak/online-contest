@@ -146,7 +146,7 @@ abstract class BasePresenter extends Presenter {
     public function getLoggedTeam(): ?Row {
         if (!isset($this->loggedTeam)) {
             if ($this->getUser()->isLoggedIn()) {
-                $this->loggedTeam = $this->teamsService->find($this->getUser()->getIdentity()->id_team) ?: null;
+                $this->loggedTeam = $this->teamsService->find($this->getUser()->getIdentity()->id_team);
             } else {
                 $this->loggedTeam = null;
             }

@@ -2,8 +2,8 @@
 
 namespace FOL\Model\Authentication;
 
-use Nette\Security\IAuthenticator;
-use Nette\Security\Identity;
+use Nette\Security\Authenticator;
+use Nette\Security\SimpleIdentity;
 use Nette\Security\AuthenticationException;
 use Nette\Security\User;
 
@@ -18,23 +18,23 @@ class OrgAuthenticator extends AbstractAuthenticator {
         $this->userList = $userList;
     }
 
-    protected function authenticate(array $credentials): Identity {
+    protected function authenticate(array $credentials): SimpleIdentity {
         [$username, $password] = $credentials;
         foreach ($this->userList as $name => $pass) {
             if (strcasecmp($name, $username) === 0) {
                 if ((string)$pass === (string)$password) {
-                    return new Identity($name, self::ROLE);
+                    return new SimpleIdentity($name, self::ROLE);
                 } else {
                     throw new AuthenticationException(
                         "Heslo se neshoduje.",
-                        IAuthenticator::INVALID_CREDENTIAL
+                        Authenticator::INVALID_CREDENTIAL
                     );
                 }
             }
         }
         throw new AuthenticationException(
             "Org '$username' neexistuje.",
-            IAuthenticator::IDENTITY_NOT_FOUND
+            Authenticator::IDENTITY_NOT_FOUND
         );
     }
 }

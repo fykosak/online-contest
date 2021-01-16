@@ -8,8 +8,8 @@ use Dibi\Connection;
 use Dibi\DataSource;
 use Dibi\Exception;
 use FOL\Model\ORM\TeamsService;
-use Nette\Security\IAuthenticator;
-use Nette\Security\Identity;
+use Nette\Security\Authenticator;
+use Nette\Security\SimpleIdentity;
 use Nette\Security\AuthenticationException;
 use Nette\Security\IIdentity;
 use Nette\Utils\Random;
@@ -36,27 +36,27 @@ class TeamAuthenticator extends AbstractAuthenticator {
 
     /**
      * @param array $credentials
-     * @return Identity|IIdentity
+     * @return SimpleIdentity
      * @throws AuthenticationException
      * @throws Exception
      */
-    protected function authenticate(array $credentials): Identity {
-        $name = $credentials[IAuthenticator::USERNAME];
-        $password = self::passwordHash($credentials[IAuthenticator::PASSWORD]);
+    protected function authenticate(array $credentials): SimpleIdentity {
+        $name = $credentials[Authenticator::USERNAME];
+        $password = self::passwordHash($credentials[Authenticator::PASSWORD]);
         $row = $this->teamsService->findAll()->where("[name] = %s", $name)->fetch();
         if (empty($row)) {
             throw new AuthenticationException(
                 "Tým '$name' neexistuje.",
-                IAuthenticator::IDENTITY_NOT_FOUND
+                Authenticator::IDENTITY_NOT_FOUND
             );
         }
         if ($row["password"] != $password) {
             throw new AuthenticationException(
                 "Heslo se neshoduje.",
-                IAuthenticator::INVALID_CREDENTIAL
+                Authenticator::INVALID_CREDENTIAL
             );
         }
-        return new Identity($name, self::TEAM, ["id_team" => $row["id_team"], "role" => self::TEAM]);
+        return new SimpleIdentity($name, self::TEAM, ["id_team" => $row["id_team"], "role" => self::TEAM]);
     }
 
     /**
@@ -70,13 +70,13 @@ class TeamAuthenticator extends AbstractAuthenticator {
         if (empty($res)) {
             throw new AuthenticationException(
                 "Token '$token' není validní.",
-                IAuthenticator::INVALID_CREDENTIAL
+                Authenticator::INVALID_CREDENTIAL
             );
         }
         $this->connection->delete("token")->where("[id_token] = %i", $res['id_token'])->execute();
 
         $team = $this->teamsService->find($res['id_team']);
-        $identity = new Identity($team['name'], self::TEAM, ["id_team" => $team["id_team"], "role" => self::TEAM]);
+        $identity = new SimpleIdentity($team['name'], self::TEAM, ["id_team" => $team["id_team"], "role" => self::TEAM]);
         $this->user->login($identity);
     }
 

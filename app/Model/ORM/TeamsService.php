@@ -29,10 +29,10 @@ class TeamsService extends AbstractService {
 
     /**
      * @param $id
-     * @return Row|false
+     * @return Row|null
      * @throws Exception
      */
-    public function find($id) {
+    public function find($id):?Row {
         return $this->findAll()->where("[id_team] = %i", $id)->fetch();
     }
 
@@ -87,7 +87,7 @@ class TeamsService extends AbstractService {
             "inserted" => new DateTime(),
             "id_year" => $this->yearService->findCurrent()->id_year,
         ])->execute();
-        $return = $this->getDibiConnection()->insertId();
+        $return = $this->getDibiConnection()->getInsertId();
         $this->log($return, "team_inserted", "The team [$name] has been inserted.");
         return $return;
     }

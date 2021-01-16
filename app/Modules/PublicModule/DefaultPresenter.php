@@ -5,7 +5,6 @@ namespace FOL\Modules\PublicModule;
 use FOL\Model\Authentication\TeamAuthenticator;
 use Dibi\Exception;
 use FOL\Model\ORM\ChatService;
-use Nette\Mail\IMailer;
 use Nette\Mail\Mailer;
 
 class DefaultPresenter extends BasePresenter {

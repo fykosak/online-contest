@@ -50,15 +50,15 @@ class ReportAddFormComponent extends BaseComponent {
         $form = new BaseForm($this->getContext());
 
         $form->addText('year_rank', 'Ročník')
-            ->setType('number')
+            ->setHtmlType('number')
             ->addRule(Form::MIN, 'Ročník musí být větší než %d.', 1)
             ->setRequired('Ročník musí být vyplněn.');
         $form->addText('year_date', 'Datum konání')
-            ->setType('date')
+            ->setHtmlType('date')
             ->addRule(Form::PATTERN, 'Datum musí mít podobu YYYY-mm-dd.', '[0-9]{4}-[0-9]{2}-[0-9]{2}')
             ->setRequired('Ročník musí být vyplněn.');
         $form->addText('id_team', 'FKSDB ID týmu.')
-            ->setType('number')
+            ->setHtmlType('number')
             ->addRule(Form::MIN, 'ID týmu musí být větší než %d.', 1)
             ->setRequired('ID týmu musí být vyplněno.');
         $form->addText('team', 'Tým, za který se vkládá.')

@@ -33,7 +33,7 @@ abstract class BaseComponent extends Control {
         $this->beforeRender();
         $this->getTemplate()->render();
     }
-    
+
     protected function createTemplate(): Template {
         $template = parent::createTemplate();
         $template->setTranslator($this->translator);

@@ -9,11 +9,11 @@ use Nette\Forms\Controls\TextArea;
 use Nette\Forms\Controls\TextInput;
 use Nette\Forms\IFormRenderer;
 use Nette\Forms\Rendering\DefaultFormRenderer;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 class BaseForm extends Form {
 
-    protected ITranslator $translator;
+    protected Translator $translator;
 
     public function __construct(Container $container) {
         parent::__construct();
@@ -22,7 +22,7 @@ class BaseForm extends Form {
         $this->setRenderer($this->createRenderer());
     }
 
-    public function injectTranslator(ITranslator $translator): void {
+    public function injectTranslator(Translator $translator): void {
         $this->translator = $translator;
     }
 

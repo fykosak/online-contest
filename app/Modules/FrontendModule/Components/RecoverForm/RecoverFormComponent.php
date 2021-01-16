@@ -10,20 +10,20 @@ use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\InvalidLinkException;
 use Nette\Mail\Message;
-use Nette\Mail\IMailer;
+use Nette\Mail\Mailer;
 use FOL\Model\Authentication\TeamAuthenticator;
 use FOL\Modules\FrontendModule\Components\BaseComponent;
 
 class RecoverFormComponent extends BaseComponent {
 
     private TeamAuthenticator $authenticator;
-    private IMailer $mailer;
+    private Mailer $mailer;
     protected TeamsService $teamsService;
     protected CompetitorsService $competitorsService;
 
     public function injectPrimary(
         TeamAuthenticator $authenticator,
-        IMailer $mailer,
+        Mailer $mailer,
         TeamsService $teamsService,
         CompetitorsService $competitorsService
     ) {

@@ -288,24 +288,17 @@ CREATE TABLE `rating`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_czech_ci;
 
-DROP TABLE IF EXISTS `card_type`;
-CREATE TABLE `card_type`
-(
-    `card_type_id` INT(11) PRIMARY KEY                                               NOT NULL AUTO_INCREMENT,
-    `type`         ENUM ('skip','reset','double_points','add_task','hint','options') NOT NULL
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  COLLATE = utf8_czech_ci;
-
 DROP TABLE IF EXISTS `card_usage`;
 CREATE TABLE `card_usage`
 (
-    `card_usage_id` INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `card_type_id`  INT(11)             NOT NULL,
-    `team_id`       INT(11)             NOT NULL,
-    `created`       TIMESTAMP           NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `data`          VARCHAR(256)        NULL     DEFAULT NULL COMMENT 'serialized data',
-    CONSTRAINT `card_usage_team` FOREIGN KEY (`team_id`) REFERENCES `team` (`id_team`)
+    `card_usage_id` INT(11) PRIMARY KEY                                               NOT NULL AUTO_INCREMENT,
+    `card_type`     ENUM ('skip','reset','double_points','add_task','hint','options') NOT NULL,
+    `team_id`       INT(11)                                                           NOT NULL,
+    `created`       TIMESTAMP                                                         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `data`          VARCHAR(256)                                                      NULL     DEFAULT NULL COMMENT 'serialized data',
+    INDEX (`team_id`),
+    INDEX (`card_type`),
+    UNIQUE (`team_id`, `card_type`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_czech_ci;

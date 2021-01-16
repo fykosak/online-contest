@@ -3,11 +3,9 @@
 namespace FOL\Model\Authentication;
 
 use Nette\Security\AuthenticationException;
-use Nette\Security\Identity;
-use Nette\Security\IIdentity;
+use Nette\Security\SimpleIdentity;
 use Nette\Security\User;
 use Nette\SmartObject;
-use Tracy\Debugger;
 
 abstract class AbstractAuthenticator {
     use SmartObject;
@@ -31,8 +29,8 @@ abstract class AbstractAuthenticator {
 
     /**
      * @param array $credentials
-     * @return IIdentity
+     * @return SimpleIdentity
      * @throws AuthenticationException
      */
-    protected abstract function authenticate(array $credentials): IIdentity;
+    protected abstract function authenticate(array $credentials): SimpleIdentity;
 }

@@ -6,7 +6,6 @@ use FOL\Model\Authentication\TeamAuthenticator;
 use Dibi\Exception;
 use FOL\Model\ORM\TeamsService;
 use FOL\Modules\FrontendModule\Components\PasswordChangeForm\PasswordChangeFormComponent;
-use FOL\Modules\FrontendModule\Components\TeamForm\TeamFormComponent;
 use FOL\Modules\FrontendModule\Components\TeamList\TeamListComponent;
 use Nette\Application\AbortException;
 use Nette\Application\BadRequestException;
@@ -110,11 +109,6 @@ class TeamPresenter extends BasePresenter {
     }
 
     // ---- PROTECTED METHODS
-
-    protected function createComponentTeamForm(): TeamFormComponent {
-        return new TeamFormComponent($this->getContext());
-    }
-
     protected function createComponentTeamList(): TeamListComponent {
         return new TeamListComponent($this->getContext());
     }

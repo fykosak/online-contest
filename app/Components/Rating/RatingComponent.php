@@ -31,11 +31,11 @@ class RatingComponent extends BaseComponent {
     protected function createComponentForm(): Form {
         $control = new BaseForm($this->getContext());
         $control->addInteger('rating', _('Rating'))
-            ->setAttribute('class', 'form-control-range')
-            ->setAttribute('type', 'range')
-            ->setAttribute('min', 0)
-            ->setAttribute('max', 100)
-            ->setAttribute('step', 1)
+            ->setHtmlAttribute('class', 'form-control-range')
+            ->setHtmlAttribute('type', 'range')
+            ->setHtmlAttribute('min', 0)
+            ->setHtmlAttribute('max', 100)
+            ->setHtmlAttribute('step', 1)
             ->setOption('description', _('bad ⇔ good'))
             ->setDefaultValue(50); // TODO copy paste this for new options
 
