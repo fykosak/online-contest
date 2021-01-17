@@ -1,11 +1,23 @@
 {block content}
     {foreach $cards as $card}
-        <div class="{($card->isUsed($team)?'text-muted':'') . ' card'}">
-            <div class="card-header">{$card->getTitle()}</div>
-            <div class="card-body">
-                <p class="card-text">{$card->getDescription()}</p>
-                <a href="{plink use id=>$card->getType()}" class="btn btn-primary">{_'Use'}</a>
+        {if $card->wasUsed()}
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <del>{$card->getTitle()}</del>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{$card->getDescription()}</p>
+                    <a href="{plink use id=>$card->getType()}" class="btn btn-secondary">{_'View usage'}</a>
+                </div>
             </div>
-        </div>
+        {else}
+            <div class="card">
+                <div class="card-header bg-success">{$card->getTitle()}</div>
+                <div class="card-body">
+                    <p class="card-text">{$card->getDescription()}</p>
+                    <a href="{plink use id=>$card->getType()}" class="btn btn-primary">{_'Use'}</a>
+                </div>
+            </div>
+        {/if}
     {/foreach}
 {/block}

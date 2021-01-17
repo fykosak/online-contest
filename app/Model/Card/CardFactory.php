@@ -2,6 +2,7 @@
 
 namespace FOL\Model\Card;
 
+use Dibi\Row;
 use Nette\Application\BadRequestException;
 use Nette\DI\Container;
 
@@ -17,14 +18,6 @@ final class CardFactory {
      */
     public function __construct(Container $container) {
         $this->container = $container;
-        $this->create();
-    }
-
-    /**
-     * @return Card[]
-     */
-    public function getAll(): array {
-        return $this->cards;
     }
 
     /**
@@ -39,17 +32,22 @@ final class CardFactory {
         throw new BadRequestException();
     }
 
-    private function create(): void {
-        $this->cards = [
-            'skip' => new SkipCard(),
-            'reset' => new ResetCard(),
-            'double_points' => new DoublePointsCard(),
-            'add_task' => new AddTaskCard(),
-            'hint' => new HintCard(),
-            'options' => new OptionsCard(),
+    /**
+     * @param Row $team
+     * @return Card[]
+     */
+    public function createForTeam(Row $team): array {
+        $cards = [
+            'skip' => new SkipCard($team),
+            'reset' => new ResetCard($team),
+            'double_points' => new DoublePointsCard($team),
+            'add_task' => new AddTaskCard($team),
+            'hint' => new HintCard($team),
+            'options' => new OptionsCard($team),
         ];
-        foreach ($this->cards as $card) {
+        foreach ($cards as $card) {
             $this->container->callInjects($card);
         }
+        return $cards;
     }
 }

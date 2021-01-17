@@ -1,8 +1,7 @@
 {block content}
-    {varType FOL\Model\ORM\ModelCardUsage|null $usage}
-    {varType Dibi\Row $team}
-    {if $usage}
-        {dump $usage}
+    {varType FOL\Model\Card\Card $card}
+    {if $card->wasUsed()}
+        {$card->renderUsage()}
     {else}
         {control cardForm}
     {/if}

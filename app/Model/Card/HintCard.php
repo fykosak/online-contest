@@ -3,23 +3,32 @@
 namespace FOL\Model\Card;
 
 use Dibi\Exception;
-use Dibi\Row;
-use FOL\Model\ORM\TasksService;
+use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
+use FOL\Model\Card\Exceptions\NoTasksAvailableException;
+use FOL\Model\Card\Exceptions\NoTasksWithHintAvailableException;
+use FOL\Model\Card\Exceptions\TaskDoesNotHaveHintException;
+use FOL\Model\Card\Exceptions\TaskNotAvailableException;
+use FOL\Model\ORM\Services\ServiceTaskHint;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Application\UI\Form;
-use Nette\Forms\Container;
 use Nette\Utils\Html;
 
 class HintCard extends Card {
 
-    protected TasksService $tasksService;
+    private ServiceTaskHint $serviceTaskHint;
 
-    public function injectPrimary(TasksService $tasksService): void {
-        $this->tasksService = $tasksService;
+    public function injectPrimary(ServiceTaskHint $serviceTaskHint): void {
+        $this->serviceTaskHint = $serviceTaskHint;
     }
 
-    protected function innerHandle(Row $team, Logger $logger, array $values): void {
-        // TODO: Implement innerHandle() method.
+    protected function innerHandle(Logger $logger, array $values): void {
+        $taskId = $values['task'];
+        if (!isset($this->getTasks()[$taskId])) {
+            throw new TaskNotAvailableException();
+        }
+        if (!$this->serviceTaskHint->getTaskHint($taskId)) {
+            throw new TaskDoesNotHaveHintException();
+        }
     }
 
     public function getType(): string {
@@ -37,21 +46,34 @@ class HintCard extends Card {
 
     /**
      * @param Form $form
-     * @param Row $team
      * @param string $lang
      * @throws Exception
      */
-    public function decorateForm(Form $form, Row $team, string $lang): void {
-        $container = new Container();
+    public function decorateForm(Form $form, string $lang): void {
         $items = [];
-        foreach ($this->tasksService->findSubmitAvailable($team->id_team)->fetchAll() as $task) {
-            $items[$task->id_task] = $task['name_' . $lang];
+        foreach ($this->tasksService->findSubmitAvailable($this->team->id_team)->fetchAll() as $task) {
+            if ($this->serviceTaskHint->getTaskHint($task->id_task)) {
+                $items[$task->id_task] = $task['name_' . $lang];
+            }
         }
         $form->addSelect('task', _('Task'), $items);
-        $form->addComponent($container, 'tasks');
     }
 
-    protected function isInnerAvailable(Row $team): bool {
-        return (bool)$this->tasksService->findSubmitAvailable($team->id_team)->count(); // TODO hasTaskHint?
+    private function hasAnyTaskHint(): bool {
+        foreach ($this->getTasks() as $task) {
+            if ($this->serviceTaskHint->getTaskHint($task->id_taks)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @throws CardCannotBeUsedException
+     */
+    public function checkRequirements(): void {
+        if (!$this->hasAnyTaskHint()) {
+            throw new NoTasksWithHintAvailableException();
+        }
     }
 }

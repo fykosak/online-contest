@@ -1,8 +1,9 @@
 <?php
 
-namespace FOL\Model\ORM;
+namespace FOL\Model\ORM\Services;
 
 use Dibi\Row;
+use FOL\Model\ORM\Models\ModelCardUsage;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 use Fykosak\Utils\ORM\AbstractService;

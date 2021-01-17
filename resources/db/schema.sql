@@ -293,12 +293,42 @@ CREATE TABLE `card_usage`
 (
     `card_usage_id` INT(11) PRIMARY KEY                                               NOT NULL AUTO_INCREMENT,
     `card_type`     ENUM ('skip','reset','double_points','add_task','hint','options') NOT NULL,
-    `team_id`       INT(11)                                                           NOT NULL,
+    `team_id`       INT(25) UNSIGNED                                                  NOT NULL,
     `created`       TIMESTAMP                                                         NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `data`          VARCHAR(256)                                                      NULL     DEFAULT NULL COMMENT 'serialized data',
     INDEX (`team_id`),
     INDEX (`card_type`),
-    UNIQUE (`team_id`, `card_type`)
+    UNIQUE (`team_id`, `card_type`),
+    CONSTRAINT `fk_card_usage_team` FOREIGN KEY (`team_id`) REFERENCES `team` (`id_team`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_czech_ci;
+
+
+DROP TABLE IF EXISTS `task_hint`;
+CREATE TABLE `task_hint`
+(
+    `task_id` int(25) UNSIGNED NOT NULL PRIMARY KEY,
+    `hint_cs` TEXT,
+    `hint_en` TEXT,
+    CONSTRAINT `fk_task_hint_task` FOREIGN KEY (`task_id`) REFERENCES `task` (`id_task`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_czech_ci;
+
+DROP TABLE IF EXISTS `answer_options`;
+CREATE TABLE `answer_options`
+(
+    `task_id`     int(25) UNSIGNED NOT NULL PRIMARY KEY,
+    `option_1_cs` VARCHAR(64),
+    `option_1_en` VARCHAR(64),
+    `option_2_cs` VARCHAR(64),
+    `option_2_en` VARCHAR(64),
+    `option_3_cs` VARCHAR(64),
+    `option_3_en` VARCHAR(64),
+    `option_4_cs` VARCHAR(64),
+    `option_4_en` VARCHAR(64),
+    CONSTRAINT `fk_answer_options_task` FOREIGN KEY (`task_id`) REFERENCES `task` (`id_task`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_czech_ci;

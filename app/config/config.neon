@@ -31,7 +31,9 @@ services:
     - FOL\Model\ORM\TasksService
     - FOL\Model\ORM\TeamsService
     - FOL\Model\ORM\YearsService
-    - FOL\Model\ORM\ServiceCardUsage
+    - FOL\Model\ORM\Services\ServiceCardUsage
+    - FOL\Model\ORM\Services\ServiceAnswerOptions
+    - FOL\Model\ORM\Services\ServiceTaskHint
 
     - FOL\Model\Card\CardFactory
 
