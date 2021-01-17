@@ -59,12 +59,12 @@ class TeamAuthenticator extends AbstractAuthenticator {
     }
 
     /**
-     * @param $token
+     * @param string $token
      * @return void
      * @throws AuthenticationException
      * @throws Exception
      */
-    public function authenticateByToken($token): void {
+    public function authenticateByToken(string $token): void {
         $res = $this->findValidRecoveryTokens()->where('[token] = %s', $token)->fetch();
         if (empty($res)) {
             throw new AuthenticationException(
@@ -80,11 +80,11 @@ class TeamAuthenticator extends AbstractAuthenticator {
     }
 
     /**
-     * @param $teamId
+     * @param int $teamId
      * @return string|null
      * @throws Exception
      */
-    public function createRecoveryToken($teamId): ?string {
+    public function createRecoveryToken(int $teamId): ?string {
         $token = Random::generate(self::TOKEN_LENGTH);
         if ($this->findValidRecoveryTokens()->where('[id_team] = %i', $teamId)->fetch()) {
             return null;

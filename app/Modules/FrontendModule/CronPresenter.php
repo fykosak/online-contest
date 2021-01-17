@@ -60,7 +60,7 @@ class CronPresenter extends BasePresenter {
             Debugger::timer();
             $this->connection->query("DROP TABLE IF EXISTS [$result$table]");
             $this->connection->query("CREATE TABLE [$result$table] AS SELECT * FROM [$src$view]");
-            echo "$table: " . Debugger::timer() . "<br>";
+            echo "$table: " . Debugger::timer() . '<br>';
         }
     }
 
@@ -69,14 +69,14 @@ class CronPresenter extends BasePresenter {
      * @throws Exception
      */
     public function renderCounters(): void {
-        $this->tasksService->updateCounter(null, true);
+        $this->tasksService->updateCounter(true);
     }
 
-    private function invalidateCache($freezed): void {
+    private function invalidateCache(bool $freezed): void {
         //$cache = Environment::getCache('Nette.Template.Curly');
         if ($freezed) {
             $this->cache->clean([Cache::TAGS => [OrgPresenter::STATS_TAG]]);
-            echo "<br>FREEZED<br>";
+            echo '<br>FREEZED<br>';
         } else {
             $this->cache->clean([Cache::ALL => true]);
         }
@@ -88,14 +88,14 @@ class CronPresenter extends BasePresenter {
      * @throws BadRequestException
      * @throws AuthenticationException
      */
-    protected function startup(): void {
-        parent::startup();
-        $key = $this->getHttpRequest()->getQuery("cron-key");
+    protected function startUp(): void {
+        parent::startUp();
+        $key = $this->getHttpRequest()->getQuery('cron-key');
         $this->authenticator->login($key);
 //        if (!$this->isCronAccess()) {
         if (!$this->user->isAllowed('cron')) {
             //die("PERMISSION DENIED");
-            $this->error("PERMISSION DENIED", IResponse::S403_FORBIDDEN);
+            $this->error('PERMISSION DENIED', IResponse::S403_FORBIDDEN);
         }
     }
 

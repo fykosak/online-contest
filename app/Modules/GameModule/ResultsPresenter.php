@@ -2,7 +2,6 @@
 
 namespace FOL\Modules\GameModule;
 
-use Exception;
 use FOL\Model\ORM\TeamsService;
 use FOL\Components\Results\ResultsComponent;
 use FOL\Components\ScoreList\ScoreListComponent;
@@ -22,7 +21,6 @@ class ResultsPresenter extends BasePresenter {
     /**
      * @return void
      * @throws BadRequestException
-     * @throws \Dibi\Exception
      */
     protected function beforeRender(): void {
         parent::beforeRender();
@@ -32,20 +30,20 @@ class ResultsPresenter extends BasePresenter {
         $this->template->categories = $this->teamsService->getCategoryNames();
     }
 
+    /**
+     * @param string $display
+     */
     public function renderDefault($display = 'all'): void {
         $this->setPageTitle(_('Výsledky'));
-        $this->check('results');
         $this->template->display = $display;
     }
 
     public function renderDetail(): void {
         $this->setPageTitle(_('Podrobné výsledky'));
-        $this->check('scoreList');
     }
 
     public function renderTasks(): void {
         $this->setPageTitle(_('Statistika úkolů'));
-        $this->check('taskStats');
     }
 
     protected function createComponentResults(): ResultsComponent {
@@ -58,15 +56,5 @@ class ResultsPresenter extends BasePresenter {
 
     protected function createComponentTaskStats(): TaskStatsComponent {
         return new TaskStatsComponent($this->getContext());
-    }
-
-    private function check($componentName): void {
-        try {
-            $this->getComponent($componentName);
-            $this->template->available = true;
-        } catch (Exception $e) {
-            $this->flashMessage(_('Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání.'), 'danger');
-            $this->template->available = false;
-        }
     }
 }

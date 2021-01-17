@@ -8,6 +8,7 @@ use Dibi\DataSource;
 use Dibi\Exception;
 use Dibi\Result;
 use Dibi\Row;
+use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use Nette\Database\Explorer;
 use Nette\InvalidArgumentException;
@@ -31,10 +32,10 @@ class TasksService extends AbstractService {
 
     /**
      * @param $id
-     * @return Row|false
+     * @return Row|null
      * @throws Exception
      */
-    public function find($id) {
+    public function find(int $id): ?Row {
         return $this->findAll()->where('[id_task] = %i', $id)->fetch();
     }
 
@@ -128,12 +129,12 @@ class TasksService extends AbstractService {
     /**
      * Find skipped tasks
      *
-     * @param $teamId
+     * @param ModelTeam $team
      * @return array id_task => id_task
      * @throws Exception
      */
-    public function findSkipped(int $teamId): array {
-        $source = $this->getDibiConnection()->dataSource('SELECT id_task FROM [task_state] WHERE [id_team] = %i', $teamId, ' and skipped = 1');
+    public function findSkipped(ModelTeam $team): array {
+        $source = $this->getDibiConnection()->dataSource('SELECT id_task FROM [task_state] WHERE [id_team] = %i', $team->id_team, ' and skipped = 1');
         return $source->fetchPairs('id_task', 'id_task');
     }
 
@@ -187,12 +188,11 @@ class TasksService extends AbstractService {
     }
 
     /**
-     * @param $teamId
      * @param false $full
      * @return void
      * @throws Exception
      */
-    public function updateCounter($teamId, $full = false) {
+    public function updateCounter(bool $full = false) {
         // Initialize with zeroes
         $sql = 'INSERT INTO [group_state] ([id_group], [id_team], [task_counter])
                     SELECT [id_group], [id_team], 0
@@ -233,11 +233,11 @@ class TasksService extends AbstractService {
 
     /**
      * @param ModelTeam $team
-     * @param $task
+     * @param ModelTask $task
      * @return void
      * @throws Exception
      */
-    public function updateSingleCounter(ModelTeam $team, $task): void {
+    public function updateSingleCounter(ModelTeam $team, ModelTask $task): void {
         $sql = 'UPDATE group_state AS gs
                 SET task_counter = 
                     GREATEST(
@@ -264,10 +264,10 @@ class TasksService extends AbstractService {
                     gs.task_counter)
                 WHERE gs.id_group = %i AND gs.id_team = %i';
 
-        $this->getDibiConnection()->query($sql, $task['id_group'], $team->id_team);
+        $this->getDibiConnection()->query($sql, $task->id_group, $team->id_team);
     }
 
-    public static function checkAnswer($task, $solution): bool {
+    public static function checkAnswer(ModelTask $task, string $solution): bool {
         switch ($task->answer_type) {
             case self::TYPE_STR:
                 return $solution == $task->answer_str;

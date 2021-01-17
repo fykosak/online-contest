@@ -37,21 +37,42 @@ class BaseForm extends Form {
         return $renderer;
     }
 
-    public function addSelect($name, $label = null, array $items = null, $size = null): SelectBox {
+    /**
+     * @param string $name
+     * @param null $label
+     * @param array|null $items
+     * @param null $size
+     * @return SelectBox
+     */
+    public function addSelect(string $name, $label = null, array $items = null, $size = null): SelectBox {
         $result = parent::addSelect($name, $label, $items, $size);
         $result->getControlPrototype()->class = 'form-control';
         $result->getLabelPrototype()->class = 'col-md-2 control-label';
         return $result;
     }
 
-    public function addText($name, $label = null, $cols = null, $maxLength = null): TextInput {
+    /**
+     * @param string $name
+     * @param null $label
+     * @param null $cols
+     * @param null $maxLength
+     * @return TextInput
+     */
+    public function addText(string $name, $label = null, $cols = null, $maxLength = null): TextInput {
         $result = parent::addText($name, $label, $cols, $maxLength);
         $result->getControlPrototype()->class = 'form-control';
         $result->getLabelPrototype()->class = 'col-md-2 control-label';
         return $result;
     }
 
-    public function addTextArea($name, $label = null, $cols = 40, $rows = 10): TextArea {
+    /**
+     * @param string $name
+     * @param null $label
+     * @param int $cols
+     * @param int $rows
+     * @return TextArea
+     */
+    public function addTextArea(string $name, $label = null, $cols = 40, $rows = 10): TextArea {
         $result = parent::addTextArea($name, $label, $cols, $rows);
         $result->getControlPrototype()->class = 'form-control';
         if (!$label) {
@@ -63,7 +84,14 @@ class BaseForm extends Form {
         return $result;
     }
 
-    public function addPassword($name, $label = null, $cols = null, $maxLength = null): TextInput {
+    /**
+     * @param string $name
+     * @param null $label
+     * @param null $cols
+     * @param null $maxLength
+     * @return TextInput
+     */
+    public function addPassword(string $name, $label = null, $cols = null, $maxLength = null): TextInput {
         $result = parent::addPassword($name, $label, $cols, $maxLength);
         $result->getControlPrototype()->class = 'form-control';
         $result->getLabelPrototype()->class = 'col-md-2 control-label';

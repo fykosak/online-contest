@@ -2,6 +2,7 @@
 
 namespace FOL\Model\Card;
 
+use Dibi\Exception;
 use FOL\Model\ORM\TasksService;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Forms\Container;
@@ -32,6 +33,11 @@ class OptionsCard extends Card {
         return Html::el('span')->addText('TODO');
     }
 
+    /**
+     * @param Container $container
+     * @param string $lang
+     * @throws Exception
+     */
     public function decorateFormContainer(Container $container, string $lang): void {
         $items = [];
         foreach ($this->getTasks() as $task) {

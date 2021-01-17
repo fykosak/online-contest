@@ -26,7 +26,7 @@ class AnswerHistoryComponent extends BaseListComponent {
         $paginator = $this->getPaginator();
         $this->getSource()->applyLimit($paginator->itemsPerPage, $paginator->offset);
         // Load template
-        $id_team = $this->getPresenter()->getLoggedTeam2()->id_team;
+        $id_team = $this->getPresenter()->getLoggedTeam()->id_team;
         $this->template->history = $this->getSource()->fetchAll();
         $this->template->correct = $this->answersService->findAllCorrect($id_team)->fetchPairs('id_answer', 'id_answer');
         $this->template->tasks = $this->tasksService->findAll()->fetchAssoc('id_task');

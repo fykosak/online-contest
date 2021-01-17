@@ -100,8 +100,7 @@ class ChatListComponent extends BaseListComponent {
         return $paginator;
     }
 
-    /* Hack for creating multiple ChatForms */
-    protected function createComponent($name): IComponent {
+    protected function createComponent(string $name): IComponent {
         if (preg_match('/^chatForm(\d+)/', $name, $matches)) {
             $id = $matches[1];
             return $this->createInstanceChatForm($id);
@@ -110,6 +109,10 @@ class ChatListComponent extends BaseListComponent {
         }
     }
 
+    /**
+     * @param mixed $id
+     * @return BaseForm
+     */
     protected function createInstanceChatForm($id): BaseForm {
         $form = new BaseForm($this->getContext());
 

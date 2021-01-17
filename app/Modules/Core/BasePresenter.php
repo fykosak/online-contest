@@ -2,7 +2,6 @@
 
 namespace FOL\Modules\Core;
 
-use Dibi\Exception;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Models\ModelYear;
 use FOL\Model\ORM\Services\ServiceTeam;
@@ -30,7 +29,7 @@ abstract class BasePresenter extends Presenter {
 
     protected GettextTranslator $translator;
     protected ServiceTeam $serviceTeam;
-    protected ServiceYear $serviceYear;
+    public ServiceYear $serviceYear;
 
     private ModelYear $currentYear;
 
@@ -41,7 +40,7 @@ abstract class BasePresenter extends Presenter {
         $this->serviceYear = $serviceYear;
     }
 
-    public function setPageTitle($pageTitle): void {
+    public function setPageTitle(string $pageTitle): void {
         $this->template->pageTitle = $pageTitle;
     }
 
@@ -51,10 +50,6 @@ abstract class BasePresenter extends Presenter {
         return new NotificationMessagesComponent($this->getContext());
     }
 
-    /**
-     * @return Template
-     * @throws Exception
-     */
     protected function createTemplate(): Template {
         //$this->oldLayoutMode = false;
 
@@ -102,7 +97,7 @@ abstract class BasePresenter extends Presenter {
         $this->translator->setLang($this->lang);
     }
 
-    protected function detectLang($i18nConf): void {
+    protected function detectLang(array $i18nConf): void {
         if (!isset($this->lang)) {
             if (array_search($this->getHttpRequest()->getUrl()->host, explode(',', $i18nConf['en']['hosts'])) !== false) {
                 $this->lang = 'en';
@@ -136,7 +131,7 @@ abstract class BasePresenter extends Presenter {
         }
     }
 
-    public function getLoggedTeam2(): ?ModelTeam {
+    public function getLoggedTeam(): ?ModelTeam {
         if (!isset($this->loggedTeam2)) {
             if ($this->getUser()->isLoggedIn()) {
                 $this->loggedTeam2 = $this->serviceTeam->findByPrimary($this->getUser()->getIdentity()->id_team);
@@ -152,7 +147,7 @@ abstract class BasePresenter extends Presenter {
     }
 
     protected function getCurrentYear(): ModelYear {
-        if (!isset($this->serviceYear)) {
+        if (!isset($this->currentYear)) {
             $this->currentYear = $this->serviceYear->getCurrent();
         }
         return $this->currentYear;

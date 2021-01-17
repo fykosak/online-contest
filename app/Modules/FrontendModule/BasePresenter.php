@@ -2,16 +2,11 @@
 
 namespace FOL\Modules\FrontendModule;
 
-use Dibi\Exception;
 use FOL\Components\Navigation\Navigation;
 use FOL\Components\Navigation\NavItem;
 
 abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
 
-    /**
-     * @return Navigation
-     * @throws Exception
-     */
     protected function createComponentNavigation(): Navigation {
         $navigation = parent::createComponentNavigation();
 

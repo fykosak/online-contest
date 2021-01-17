@@ -1,7 +1,5 @@
 {block #body}
-    {if $available}
-        {cache "scoreList/" . $presenter->lang, tags => [$presenter::STATS_TAG]}
-            {control scoreList}
-        {/cache}
-    {/if}
+    {cache "scoreList/" . $presenter->lang, tags => [$presenter::STATS_TAG]}
+        {control scoreList}
+    {/cache}
 {/block}

@@ -7,6 +7,7 @@ use Dibi\DataSource;
 use Dibi\DriverException;
 use Dibi\Exception;
 use Dibi\Row;
+use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use Nette\InvalidStateException;
 
@@ -19,10 +20,10 @@ class AnswersService extends AbstractService {
 
     /**
      * @param $id
-     * @return Row|false
+     * @return Row|null
      * @throws Exception
      */
-    public function find($id) {
+    public function find(int $id): ?Row {
         return $this->findAll()->where('[id_answer] = %i', $id)->fetch();
     }
 
@@ -31,7 +32,7 @@ class AnswersService extends AbstractService {
      * @return DataSource
      * @throws Exception
      */
-    public function findByTaskId($taskId): DataSource {
+    public function findByTaskId(int $taskId): DataSource {
         return $this->findAll()->where('[id_task] = %i', $taskId);
     }
 
@@ -74,14 +75,15 @@ class AnswersService extends AbstractService {
      * @return int
      * @throws Exception
      * @throws DriverException
+     * TODO double points
      */
-    public function insert(ModelTeam $team, $task, $solution, $period, bool $correct, bool $isDoublePoints): int {
+    public function insert(ModelTeam $team, ModelTask $task, $solution, $period, bool $correct, bool $isDoublePoints): int {
         $this->getDibiConnection()->begin();
         // Correct answers of the team
         $correctAnswers = $this->findAllCorrect($team->id_team)
             ->fetchPairs('id_answer', 'id_answer');
         // Last answer from same group has to be older than XX seconds
-        $query = $this->findAll($task['id_group'])
+        $query = $this->findAll($task->id_group)
             ->where('[id_team] = %i', $team->id_team)
             ->where('[inserted] > NOW() - INTERVAL %i SECOND', $period['time_penalty']);
         if (!empty($correctAnswers)) {
@@ -115,7 +117,7 @@ class AnswersService extends AbstractService {
         // Insert a new answer
         $this->getDibiConnection()->insert('answer', [
                 'id_team' => $team->id_team,
-                'id_task' => $task['id_task'],
+                'id_task' => $task->id_task,
                 'correct' => $correct,
                 'inserted' => new DateTime(),
             ] + $answer)->execute();

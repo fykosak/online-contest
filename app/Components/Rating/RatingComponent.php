@@ -4,6 +4,7 @@ namespace FOL\Components\Rating;
 
 use FOL\Components\BaseComponent;
 use FOL\Components\BaseForm;
+use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
@@ -15,13 +16,13 @@ use Throwable;
 
 class RatingComponent extends BaseComponent {
 
-    private int $taskId;
+    private ModelTask $task;
     private ModelTeam $team;
     private Explorer $explorer;
 
-    public function __construct(Container $container, int $taskId, ModelTeam $team) {
+    public function __construct(Container $container, ModelTask $task, ModelTeam $team) {
         parent::__construct($container);
-        $this->taskId = $taskId;
+        $this->task = $task;
         $this->team = $team;
     }
 
@@ -43,7 +44,7 @@ class RatingComponent extends BaseComponent {
         $control->addSubmit('submit', _('Send rating'))->onClick[] = function (SubmitButton $button) {
             $this->handleForm($button->getForm());
         };
-        $control->addSubmit('skip', _('Skip rating'))->setAttribute('class', 'btn btn-secondary')->onClick[] = function () {
+        $control->addSubmit('skip', _('Skip rating'))->setHtmlAttribute('class', 'btn btn-secondary')->onClick[] = function () {
             $this->getPresenter()->redirect(':Game:Task:default');
         };
         return $control;
@@ -63,7 +64,7 @@ class RatingComponent extends BaseComponent {
         try {
             $this->explorer->table('rating')->insert([
                 'team_id' => $this->team->id_team,
-                'task_id' => $this->taskId,
+                'task_id' => $this->task->id_task,
                 'rating' => $values['rating'],
             ]);
             $this->getPresenter()->flashMessage(_('Your rating has been saved'), 'success');

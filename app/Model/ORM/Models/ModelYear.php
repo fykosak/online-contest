@@ -2,17 +2,18 @@
 
 namespace FOL\Model\ORM\Models;
 
+use DateTimeInterface;
 use Fykosak\Utils\ORM\AbstractModel;
 
 /**
  * @property-read int id_year
  * @property-read string name
- * @property-read \DateTimeInterface registration_start
- * @property-read \DateTimeInterface registration_end
- * @property-read \DateTimeInterface game_start
- * @property-read \DateTimeInterface game_end
- * @property-read \DateTimeInterface inserted
- * @property-read \DateTimeInterface updated
+ * @property-read DateTimeInterface registration_start
+ * @property-read DateTimeInterface registration_end
+ * @property-read DateTimeInterface game_start
+ * @property-read DateTimeInterface game_end
+ * @property-read DateTimeInterface inserted
+ * @property-read DateTimeInterface updated
  */
 class ModelYear extends AbstractModel {
 

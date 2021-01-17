@@ -4,6 +4,7 @@ namespace FOL\Model\Card;
 
 use Dibi\Exception;
 use FOL\Model\Card\Exceptions\NoTasksAvailableException;
+use FOL\Model\ORM\Models\ModelTask;
 use Fykosak\Utils\Logging\Logger;
 use Fykosak\Utils\Logging\Message;
 use FOL\Model\ORM\ScoreService;
@@ -25,7 +26,8 @@ final class SkipCard extends Card {
      */
     protected function innerHandle(Logger $logger, array $values): void {
         foreach ($values as $taskId) {
-            $task = $this->tasksService->findByPrimary($taskId);
+            /** @var ModelTask $task */
+            $task = $this->serviceTask->findByPrimary($taskId);
 
             $this->tasksService->skip($this->team, $task);
             // TODO label
@@ -47,12 +49,21 @@ final class SkipCard extends Card {
         return Html::el('p')->addText('Lorem ipsum.....');
     }
 
+    /**
+     * @param Container $container
+     * @param string $lang
+     * @throws Exception
+     */
     public function decorateFormContainer(Container $container, string $lang): void {
         foreach ($this->getTasks() as $task) {
             $container->addCheckbox($task->id_task, $task['name_' . $lang]);
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws NoTasksAvailableException
+     */
     public function checkRequirements(): void {
         if (!count($this->getTasks())) {
             throw new NoTasksAvailableException();

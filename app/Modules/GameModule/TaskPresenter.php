@@ -22,7 +22,7 @@ class TaskPresenter extends BasePresenter {
      */
     public function renderDefault(): void {
         $this->setPageTitle(_('Zadání'));
-        $team = $this->getLoggedTeam2();
+        $team = $this->getLoggedTeam();
         $this->template->id_team = $team;
 
         $mirrors = (array)$this->context->parameters['tasks']['mirrors'];
@@ -31,7 +31,7 @@ class TaskPresenter extends BasePresenter {
 
         // tasks
         $solved = $this->tasksService->findSolved($team);
-        $skipped = $this->tasksService->findSkipped($team->id_team);
+        $skipped = $this->tasksService->findSkipped($team);
         $unsolved = $this->tasksService->findUnsolved($team);
 
         $unsolvedTasks = [];

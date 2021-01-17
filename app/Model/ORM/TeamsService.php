@@ -33,7 +33,7 @@ class TeamsService extends AbstractService {
      * @return Row|null
      * @throws Exception
      */
-    public function find($id): ?Row {
+    public function find(int $id): ?Row {
         return $this->findAll()->where('[id_team] = %i', $id)->fetch();
     }
 

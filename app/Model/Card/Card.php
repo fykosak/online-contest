@@ -7,6 +7,7 @@ use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
 use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceCardUsage;
+use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\TasksService;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Database\Explorer;
@@ -23,6 +24,7 @@ abstract class Card {
     protected ServiceCardUsage $serviceCardUsage;
     protected ModelTeam $team;
     protected TasksService $tasksService;
+    protected ServiceTask $serviceTask;
     /* cache*/
     private array $tasks;
 
@@ -30,10 +32,12 @@ abstract class Card {
         $this->team = $team;
     }
 
-    public function injectBase(Explorer $explorer, ServiceCardUsage $serviceCardUsage, TasksService $tasksService): void {
+    public function injectBase(Explorer $explorer, ServiceCardUsage $serviceCardUsage, TasksService $tasksService, ServiceTask $serviceTask): void {
         $this->explorer = $explorer;
         $this->serviceCardUsage = $serviceCardUsage;
         $this->tasksService = $tasksService;
+        $this->serviceTask = $serviceTask;
+
     }
 
     public final function wasUsed(): bool {

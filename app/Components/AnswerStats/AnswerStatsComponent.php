@@ -24,11 +24,11 @@ class AnswerStatsComponent extends BaseComponent {
     }
 
     /**
-     * @param null $taskId
+     * @param int|null $taskId
      * @return void
      * @throws Exception
      */
-    public function render($taskId = null): void {
+    public function render(?int $taskId = null): void {
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'answerStats.latte');
         if (!is_numeric($taskId)) {
             throw new NotSupportedException();
@@ -48,7 +48,6 @@ class AnswerStatsComponent extends BaseComponent {
         $task = $this->tasksModel->find($this->taskId);
         $teams = $this->teamsModel->findAll()->fetchAssoc('id_team');
 
-
         //$taskNo = $task['id_group'].'_'.$task['number'];
 
         if ($task['answer_type'] == 'int') {
@@ -61,7 +60,6 @@ class AnswerStatsComponent extends BaseComponent {
         $taskData = [];
 
         foreach ($answers as $answer) {
-
             if (isset($answer->answer_int)) {
                 $trueValue = $answer->answer_int;
                 $value = $trueValue - $correctValue;

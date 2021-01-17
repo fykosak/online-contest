@@ -26,7 +26,6 @@ services:
     - FOL\Model\ORM\GroupsService
     - FOL\Model\ORM\NotificationService
     - FOL\Model\ORM\PeriodService
-    - FOL\Model\ORM\ReportService
     - FOL\Model\ORM\ScoreService
     - FOL\Model\ORM\TasksService
     - FOL\Model\ORM\TeamsService
@@ -37,6 +36,7 @@ services:
     - FOL\Model\ORM\Services\ServiceTaskHint
     - FOL\Model\ORM\Services\ServiceTeam
     - FOL\Model\ORM\Services\ServiceYear
+    - FOL\Model\ORM\Services\ServiceTask
 
     - FOL\Model\Card\CardFactory
 

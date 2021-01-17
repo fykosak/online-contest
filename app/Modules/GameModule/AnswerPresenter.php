@@ -7,19 +7,22 @@ use FOL\Components\Rating\RatingComponent;
 use FOL\Model\ORM\AnswersService;
 use FOL\Components\AnswerForm\AnswerFormComponent;
 use FOL\Components\AnswerHistory\AnswerHistoryComponent;
+use FOL\Model\ORM\Models\ModelTask;
+use FOL\Model\ORM\Services\ServiceTask;
 
 class AnswerPresenter extends BasePresenter {
 
     /**
-     * @var int $id
      * @persistent
      */
-    public $id;
+    public ?int $id = null;
 
     private AnswersService $answersService;
+    private ServiceTask $serviceTask;
 
-    public function injectSecondary(AnswersService $answersService): void {
+    public function injectSecondary(AnswersService $answersService, ServiceTask $serviceTask): void {
         $this->answersService = $answersService;
+        $this->serviceTask = $serviceTask;
     }
 
     /**
@@ -30,7 +33,7 @@ class AnswerPresenter extends BasePresenter {
         //has to be loaded in action due to pagination
         $this->getComponent('answerHistory')->setSource(
             $this->answersService->findAll()
-                ->where('[id_team] = %i', $this->getLoggedTeam2()->id_team)
+                ->where('[id_team] = %i', $this->getLoggedTeam()->id_team)
                 ->orderBy('inserted', 'DESC')
         );
         $this->getComponent('answerHistory')->setLimit(50);
@@ -49,20 +52,23 @@ class AnswerPresenter extends BasePresenter {
     }
 
     protected function createComponentAnswerForm(): AnswerFormComponent {
-        return new AnswerFormComponent($this->getContext(), $this->getLoggedTeam2());
+        return new AnswerFormComponent($this->getContext(), $this->getLoggedTeam());
     }
 
-    /**
-     * @return AnswerHistoryComponent
-     */
     protected function createComponentAnswerHistory(): AnswerHistoryComponent {
         return new AnswerHistoryComponent($this->getContext());
     }
 
-    /**
-     * @return RatingComponent
-     */
+    private ?ModelTask $task;
+
+    protected function getTask(): ?ModelTask {
+        if (!isset($this->task)) {
+            $this->task = $this->serviceTask->findByPrimary($this->id);
+        }
+        return $this->task;
+    }
+
     protected function createComponentRating(): RatingComponent {
-        return new RatingComponent($this->getContext(), $this->id, $this->getLoggedTeam2());
+        return new RatingComponent($this->getContext(), $this->getTask(), $this->getLoggedTeam());
     }
 }

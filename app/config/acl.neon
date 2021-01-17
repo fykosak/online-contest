@@ -1,6 +1,4 @@
 services:
-    skipAssertion: FOL\Model\Authorization\SkipAssertion
-
     acl:
         class: Nette\Security\Permission
         setup:
@@ -23,7 +21,6 @@ services:
             #ACL
             - allow(team, chat, add)
             - allow(team, game)
-            - allow(team, task, skip, [@skipAssertion, 'canSkip'])
             - allow(team, team)
 
             - allow(org, chat, add)

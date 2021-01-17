@@ -27,7 +27,7 @@
                         <span class="hidden-sm">{_'Návod'}</span>
                         <span class="visible-sm-inline glyphicon glyphicon-info-sign" title="{_'FAQ'}"/>
                     </a></li>
-                {if $control->yearsService->isRegistrationStarted()}
+                {if $control->serviceYear->getCurrent()->isRegistrationStarted()}
                     <li>
                         <a href="{link :Public:Default:chat}" title="{_'Fórum'}">
                             <span class="hidden-sm">{_'Fórum'}</span>
@@ -40,7 +40,7 @@
                             <span class="visible-sm-inline glyphicon glyphicon-list" title="{_'Týmy'}"/>
                         </a>
                     </li>
-                    {if $control->yearsService->isGameStarted()}
+                    {if $control->serviceYear->getCurrent()->isGameStarted()}
                         <li>
                             <a href="{link :Public:Stats:default}" title="{_'Výsledky'}">
                                 <span class="hidden-sm">{_'Výsledky'}</span>
@@ -58,7 +58,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                {if $control->yearsService->isRegistrationActive()}
+                {if $control->serviceYear->getCurrent()->isRegistrationActive()}
                     {if !$user->isLoggedIn()}
                         <li><a href="{link :Public:Team:registration}">
                         <span class="hidden-sm">{_'Registrace'}</span>
@@ -66,7 +66,7 @@
                     </a></li>
                     {/if}
                 {/if}
-                {if $control->yearsService->isRegistrationStarted()}
+                {if $control->serviceYear->getCurrent()->isRegistrationStarted()}
                     {if !$user->isLoggedIn()}
                         <li><a href="{link :Game:Auth:login}">
                                 <span class="hidden-sm">{_'Přihlásit se'}</span>
@@ -85,7 +85,7 @@
                                 src="{$basePath}/images/icons/cz-icon.png" alt="čeština"
                                 title="Přepnout do češtiny"/></a></li>
             </ul>
-            {if $control->yearsService->isGameActive()}
+            {if $control->serviceYear->getCurrent()->isGameActive()}
                 <p class="navbar-text navbar-right visible-lg-inline-block"><span class="real-clock"
                                                                                   data-timestamp="{1000*time()}"></span>
                 </p>

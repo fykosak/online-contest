@@ -2,7 +2,6 @@
 
 namespace FOL\Modules\GameModule;
 
-use Dibi\Exception;
 use FOL\Components\CardForm\CardFormComponent;
 use FOL\Components\CardUsage\CardUsageComponent;
 use FOL\Model\Card\Card;
@@ -22,13 +21,10 @@ class CardPresenter extends BasePresenter {
         $this->cardFactory = $cardFactory;
     }
 
-    /**
-     * @throws Exception
-     */
     public function renderList(): void {
         $this->setPageTitle(_('Cards'));
-        $this->template->cards = $this->cardFactory->createForTeam($this->getLoggedTeam2());
-        $this->template->team = $this->getLoggedTeam2();
+        $this->template->cards = $this->cardFactory->createForTeam($this->getLoggedTeam());
+        $this->template->team = $this->getLoggedTeam();
     }
 
     /**
@@ -45,7 +41,7 @@ class CardPresenter extends BasePresenter {
      */
     protected function getCard(): Card {
         if (!isset($this->card)) {
-            $cards = $this->cardFactory->createForTeam($this->getLoggedTeam2());
+            $cards = $this->cardFactory->createForTeam($this->getLoggedTeam());
             if (!isset($cards[$this->id])) {
                 throw new BadRequestException();
             }
@@ -57,7 +53,6 @@ class CardPresenter extends BasePresenter {
     /**
      * @return CardFormComponent
      * @throws BadRequestException
-     * @throws Exception
      */
     protected function createComponentCardForm(): CardFormComponent {
         return new CardFormComponent($this->getContext(), $this->getCard(), $this->lang);
@@ -66,7 +61,6 @@ class CardPresenter extends BasePresenter {
     /**
      * @return CardUsageComponent
      * @throws BadRequestException
-     * @throws Exception
      */
     protected function createComponentCardUsage(): CardUsageComponent {
         return new CardUsageComponent($this->getContext(), $this->getCard(), $this->lang);

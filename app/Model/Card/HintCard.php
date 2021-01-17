@@ -20,6 +20,13 @@ class HintCard extends Card {
         $this->serviceTaskHint = $serviceTaskHint;
     }
 
+    /**
+     * @param Logger $logger
+     * @param array $values
+     * @throws Exception
+     * @throws TaskDoesNotHaveHintException
+     * @throws TaskNotAvailableException
+     */
     protected function innerHandle(Logger $logger, array $values): void {
         $taskId = $values['task'];
         if (!isset($this->getTasks()[$taskId])) {

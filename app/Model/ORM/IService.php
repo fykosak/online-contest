@@ -2,10 +2,13 @@
 
 namespace FOL\Model\ORM;
 
+use Dibi\DataSource;
+use Dibi\Row;
+
 interface IService {
 
-    function find($id);
+    function find(int $id): ?Row;
 
-    function findAll();
+    function findAll(): DataSource;
 
 }

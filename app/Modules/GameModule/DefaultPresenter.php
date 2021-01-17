@@ -2,7 +2,6 @@
 
 namespace FOL\Modules\GameModule;
 
-use Dibi\Exception;
 use Fykosak\Utils\Localization\UnsupportedLanguageException;
 use Nette\Application\AbortException;
 
@@ -13,7 +12,6 @@ class DefaultPresenter extends BasePresenter {
 
     /**
      * @return void
-     * @throws Exception
      * @throws AbortException
      * @throws UnsupportedLanguageException
      */

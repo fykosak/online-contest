@@ -1,68 +1,78 @@
 {extends '../../../GameModule/templates/@layout.latte'}
 
 {block #title}
-{if $control->yearsService->isGameEnd() && false}
-<br>
-<div class="alert alert-info" role="alert">
-{if $lang == 'cs'}
-  Líbí se vám Fyziklání online? Pak se přihlašte i na <a href="https://fyziklani.cz/" class="alert-link">Fyziklání 2020</a> v Praze.
-{else}
-  Do you enjoy Online Physics Brawl? Then also take part in <a href="https://fyziklani.org/en" class="alert-link">Fyziklani 2020 &ndash; Team Contest in Prague</a>.
-{/if}
-</div>
-{/if}
+    {if $control->serviceYear->getCurrent()->isGameEnd() && false}
+        <br>
+        <div class="alert alert-info" role="alert">
+            {if $lang == 'cs'}
+                Líbí se vám Fyziklání online? Pak se přihlašte i na <a href="https://fyziklani.cz/" class="alert-link">Fyziklání
+                2020</a> v Praze.
+            {else}
+                Do you enjoy Online Physics Brawl? Then also take part in <a href="https://fyziklani.org/en"
+                                                                             class="alert-link">Fyziklani 2020 &ndash;
+                Team Contest in Prague</a>.
+            {/if}
+        </div>
+    {/if}
 
-{if $control->yearsService->isGameEnd() && true}
+    {if $control->serviceYear->getCurrent()->isGameEnd() && true}
 
-<div class="alert alert-success" role="alert">
-{if $lang == 'cs'}
-    <b>Výsledky soutěže jsou oficiální.</b>
-{else}
-    <b>The results of the competition are final.</b>
-{/if}
-</div>
+        <div class="alert alert-success" role="alert">
+            {if $lang == 'cs'}
+                <b>Výsledky soutěže jsou oficiální.</b>
+            {else}
+                <b>The results of the competition are final.</b>
+            {/if}
+        </div>
 
-<div class="alert alert-secondary" role="alert">
-{if $lang == 'cs'}
-    <p>
-        Řešení najdete <a href="/download/2020-1/ulohy/reseni.cs.pdf">zde</a>.
-    </p>
+        <div class="alert alert-secondary" role="alert">
+            {if $lang == 'cs'}
+                <p>
+                    Řešení najdete <a href="/download/2020-1/ulohy/reseni.cs.pdf">zde</a>.
+                </p>
 
-    <p>
-        Jsme si vědomi, že jste nemohli odesílat řešení během posleních 15 sekund soutěže. Za tuto nepříjemnost se omlouváme. Tato chyba postihla všechny týmy stejně a tedy soutěž proběhla férově.
-    </p>
-    <p>
-        Děkujeme za vaše připomínky. Zjistili jsme, že naše řešení úlohy FoL 9 je špatně. Rozhodli jsme se, že nejférovější řešení vůči všem týmům je, že nikomu nebudeme počítat žádné získané ani ztracené body za tuto úlohu. Omlouváme se vám za potíže.
-    </p>
+                <p>
+                    Jsme si vědomi, že jste nemohli odesílat řešení během posleních 15 sekund soutěže. Za tuto
+                    nepříjemnost se omlouváme. Tato chyba postihla všechny týmy stejně a tedy soutěž proběhla férově.
+                </p>
+                <p>
+                    Děkujeme za vaše připomínky. Zjistili jsme, že naše řešení úlohy FoL 9 je špatně. Rozhodli jsme se,
+                    že nejférovější řešení vůči všem týmům je, že nikomu nebudeme počítat žádné získané ani ztracené
+                    body za tuto úlohu. Omlouváme se vám za potíže.
+                </p>
 
-{else}
-    <p>
-        Solutions can be found <a href="/download/2020-1/ulohy/reseni.en.pdf">here</a>.
-    </p>
-    <p>
-        We are aware that you were unable to submit answers 15 seconds before the end of the official time limit. We are sorry about that, but that was same for all the teams so the competition was still fair.
-    </p>
-    <p>
-        Thanks for your comments. We found out that our solution to FoL 9 was wrong. We decided that the fairest resolution is to not count any points gained or lost because of this problem. We apologize for the trouble.
-    </p>
-{/if}
-</div>
-{/if}
+            {else}
+                <p>
+                    Solutions can be found <a href="/download/2020-1/ulohy/reseni.en.pdf">here</a>.
+                </p>
+                <p>
+                    We are aware that you were unable to submit answers 15 seconds before the end of the official time
+                    limit. We are sorry about that, but that was same for all the teams so the competition was still
+                    fair.
+                </p>
+                <p>
+                    Thanks for your comments. We found out that our solution to FoL 9 was wrong. We decided that the
+                    fairest resolution is to not count any points gained or lost because of this problem. We apologize
+                    for the trouble.
+                </p>
+            {/if}
+        </div>
+    {/if}
 
-{include parent}
+    {include parent}
 {/block}
 
 {block #subnavigation}
-<ul class="nav">
-    <li>
-        <a href="{plink Stats:default}" title="{_'Výsledky'}">{_'Výsledky'}</a>
-        <ul>
-            {foreach $categories AS $category => $name}
-            <li><a href="{plink Stats:default}#{$category}" title="{$name}">{$name}</a></li>
-            {/foreach}
-        </ul>
-    </li>
-    <li><a href="{plink Stats:detail}" title="{_'Podrobné výsledky'}">{_'Podrobné výsledky'}</a></li>
-    <li><a href="{plink Stats:tasks}" title="{_'Statistiky úkolů'}">{_'Statistiky úkolů'}</a></li>
-</ul>
+    <ul class="nav">
+        <li>
+            <a href="{plink Stats:default}" title="{_'Výsledky'}">{_'Výsledky'}</a>
+            <ul>
+                {foreach $categories AS $category => $name}
+                    <li><a href="{plink Stats:default}#{$category}" title="{$name}">{$name}</a></li>
+                {/foreach}
+            </ul>
+        </li>
+        <li><a href="{plink Stats:detail}" title="{_'Podrobné výsledky'}">{_'Podrobné výsledky'}</a></li>
+        <li><a href="{plink Stats:tasks}" title="{_'Statistiky úkolů'}">{_'Statistiky úkolů'}</a></li>
+    </ul>
 {/block}

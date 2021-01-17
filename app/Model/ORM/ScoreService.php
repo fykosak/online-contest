@@ -5,8 +5,12 @@ namespace FOL\Model\ORM;
 use DateTime;
 use Dibi\Connection as DibiConnection;
 use Dibi\DataSource;
+use Dibi\Row;
 use Exception;
+use FOL\Model\ORM\Models\ModelGroup;
+use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Services\ServiceGroup;
 use Nette\Database\Explorer;
 use Nette\NotSupportedException;
 use Tracy\Debugger;
@@ -16,25 +20,28 @@ class ScoreService extends AbstractService {
     protected PeriodService $periodService;
     protected TasksService $tasksService;
     protected GroupsService $groupsService;
+    private ServiceGroup $serviceGroup;
 
     public function __construct(
         Explorer $explorer,
         DibiConnection $dibiConnection,
         PeriodService $periodService,
         TasksService $tasksService,
-        GroupsService $groupsService
+        GroupsService $groupsService,
+        ServiceGroup $serviceGroup
     ) {
         parent::__construct($explorer, $dibiConnection);
         $this->periodService = $periodService;
         $this->tasksService = $tasksService;
         $this->groupsService = $groupsService;
+        $this->serviceGroup = $serviceGroup;
     }
 
-    public function find($id) {
+    public function find(int $id): ?Row {
         throw new NotSupportedException();
     }
 
-    public function findAll() {
+    public function findAll(): DataSource {
         throw new NotSupportedException();
     }
 
@@ -78,11 +85,7 @@ class ScoreService extends AbstractService {
         $this->getDibiConnection()->query('UPDATE [team] SET score_exp = score_exp-1 WHERE id_team = %i', $team->id_team);
     }
 
-    public function updateAfterCancel($task) {
-        //TODO
-    }
-
-    public function updateAfterInsert(ModelTeam $team, $task) {
+    public function updateAfterInsert(ModelTeam $team, ModelTask $task): void {
         try {
             $hurry = ($task->id_group == 1) ? false : true; //dle SQL id_group=2,3,4
 
@@ -121,7 +124,8 @@ class ScoreService extends AbstractService {
      * @throws \Dibi\Exception
      */
     public function getSingleTaskScore(ModelTeam $team, $task): int {
-        $group = $this->groupsService->find($task->id_group);
+        /** @var ModelGroup $group */
+        $group = $this->serviceGroup->findByPrimary($task->id_group);
         $wrongTries = $this->getDibiConnection()->query('SELECT COUNT(*) FROM [answer] WHERE %and', [
             ['id_team = %i', $team->id_team],
             ['id_task = %i', $task->id_task],
@@ -132,8 +136,6 @@ class ScoreService extends AbstractService {
     }
 
     private function getPointCount(int $maxPoints, int $wrongTries, bool $allowZeroes): int {
-        $score = 0;
-
         if (!$this->isHurryUp($allowZeroes)) {
             switch ($wrongTries) {
                 case 0:

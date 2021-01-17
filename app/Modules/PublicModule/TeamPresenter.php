@@ -28,7 +28,6 @@ class TeamPresenter extends BasePresenter {
     /**
      * @return void
      * @throws AbortException
-     * @throws Exception
      */
     public function actionRegistration(): void {
         if (!$this->getCurrentYear()->isRegistrationActive()) {
@@ -42,13 +41,13 @@ class TeamPresenter extends BasePresenter {
     }
 
     /**
-     * @param null $token
+     * @param string|null $token
      * @return void
      * @throws Exception
      * @throws AbortException
      * @throws BadRequestException
      */
-    public function renderChangePassword($token = null): void {
+    public function renderChangePassword(?string $token = null): void {
         if (!is_null($token)) {
             try {
                 $this->authenticator->authenticateByToken($token);
@@ -66,11 +65,10 @@ class TeamPresenter extends BasePresenter {
 
     /**
      * @return void
-     * @throws Exception
      * @throws AbortException
      */
     public function renderDefault(): void {
-        $team = $this->getPresenter()->getLoggedTeam2();
+        $team = $this->getPresenter()->getLoggedTeam();
         if (!$team) {
             $this->redirect('Default:default');
         }
@@ -108,16 +106,18 @@ class TeamPresenter extends BasePresenter {
         $this->flashMessage(_('Registrace nového týmu je možná jen přes FKSDB.'), 'warning');
     }
 
-    // ---- PROTECTED METHODS
     protected function createComponentTeamList(): TeamListComponent {
         return new TeamListComponent($this->getContext());
     }
 
     protected function createComponentPasswordChangeForm(): PasswordChangeFormComponent {
-        return new PasswordChangeFormComponent($this->getContext());
+        return new PasswordChangeFormComponent($this->getContext(), $this->getLoggedTeam());
     }
 
-    // ---- PRIVATE METHODS
+    /**
+     * @param mixed $key
+     * @return mixed
+     */
     private function getRegistrationValue($key) {
         $registration = $this->context->parameters['registration'];
         return $registration[$key];

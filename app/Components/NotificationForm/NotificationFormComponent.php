@@ -3,7 +3,6 @@
 namespace FOL\Components\NotificationForm;
 
 use Dibi\Exception;
-use Fykosak\Utils\Localization\GettextTranslator;
 use FOL\Model\ORM\NotificationService;
 use FOL\Components\BaseForm;
 use Nette\Application\AbortException;

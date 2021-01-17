@@ -6,13 +6,10 @@ use Nette;
 use Nette\Application\UI\Template;
 
 final class InterlosTemplate {
+
     use Nette\SmartObject;
 
-    /**
-     * @param  Template  $template
-     * @return  Template
-     */
-    public static function loadTemplate( Template  $template): Template {
+    public static function loadTemplate(Template $template): Template {
         // register custom helpers
         $template->getLatte()->addFilter('date2', Helpers::getHelper('date')); // this shadows standard Nette helper
         $template->getLatte()->addFilter('time', Helpers::getHelper('time'));

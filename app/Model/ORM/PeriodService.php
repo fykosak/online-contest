@@ -2,17 +2,18 @@
 
 namespace FOL\Model\ORM;
 
+use Dibi\DataSource;
 use Dibi\Exception;
 use Dibi\Row;
 use Nette\NotSupportedException;
 
 class PeriodService extends AbstractService {
 
-    public function find($id) {
+    public function find(int $id): ?Row {
         throw new NotSupportedException();
     }
 
-    public function findAll() {
+    public function findAll(): DataSource {
         throw new NotSupportedException();
     }
 

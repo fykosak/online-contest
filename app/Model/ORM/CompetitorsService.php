@@ -8,25 +8,13 @@ use Dibi\Result;
 use Dibi\Row;
 
 class CompetitorsService extends AbstractService {
-    /**
-     * @param $team
-     * @return void
-     * @throws Exception
-     */
-    public function deleteByTeam($team) {
-
-        $this->getDibiConnection()->delete('competitor')
-            ->where('[id_team] = %i', $team)
-            ->execute();
-        $this->log($team, 'competitors_deleted', 'The competitors of team [$team] have been deleted.');
-    }
 
     /**
      * @param $id
-     * @return Row|false
+     * @return Row|null
      * @throws Exception
      */
-    public function find($id) {
+    public function find(int $id): ?Row {
         return $this->findAll()->where('[id_competitor] = %i', $id)->fetch();
     }
 
@@ -57,7 +45,6 @@ class CompetitorsService extends AbstractService {
      * @throws Exception
      */
     public function insert($team, $school, $name, $email, $study_year) {
-
         $return = $this->getDibiConnection()->insert('competitor', [
             'id_team' => $team,
             'id_school' => $school,

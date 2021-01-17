@@ -8,6 +8,7 @@ use Dibi\Exception;
 use Dibi\Row;
 use FOL\Model\ORM\Services\ServiceYear;
 use Nette\Database\Explorer;
+use Nette\DeprecatedException;
 
 class YearsService extends AbstractService {
 
@@ -18,21 +19,12 @@ class YearsService extends AbstractService {
         $this->serviceYear = $serviceYear;
     }
 
-    /**
-     * @param $id
-     * @return array|Row|null
-     * @throws Exception
-     */
-    public function find($id) {
-        return $this->getDibiConnection()->query('SELECT * FROM [year] WHERE [id_year] = %i', $id)->fetch();
+    public function find(int $id): ?Row {
+        throw new DeprecatedException();
     }
 
-    /**
-     * @return DataSource
-     * @throws Exception
-     */
     public function findAll(): DataSource {
-        return $this->getDibiConnection()->dataSource('SELECT * FROM [year]');
+        throw new DeprecatedException();
     }
 
     protected function getTableName(): string {

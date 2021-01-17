@@ -30,7 +30,7 @@ class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
     }
 
     public function renderLogin(): void {
-        $this->setPagetitle(_('Přihlásit se'));
+        $this->setPageTitle(_('Přihlásit se'));
     }
 
     /**

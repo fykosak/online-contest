@@ -18,7 +18,7 @@ class TaskStatsComponent extends BaseComponent {
      * @return void
      * @throws Exception
      */
-    public function beforeRender(): void {
+    protected function beforeRender(): void {
         $this->template->tasks = $this->tasksService->findAllStats();
     }
 

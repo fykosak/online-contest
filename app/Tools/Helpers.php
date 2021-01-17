@@ -15,7 +15,6 @@ use Texy\Texy;
 final class Helpers {
     use SmartObject;
 
-    /** @var Texy */
     private static Texy $texy;
 
     /**
@@ -59,7 +58,7 @@ final class Helpers {
      */
     public static function dateFormatHelper(string $date): string {
         return preg_replace(
-            "/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})(\.\d*)?/",
+            '/(\d{4})-0?([1-9]{1,2}0?)-0?([1-9]{1,2}0?) 0?([0-9]{1,2}0?):(\d{2}):(\d{2})(\.\d*)?/',
             "\\3. \\2. \\1",
             $date
         );

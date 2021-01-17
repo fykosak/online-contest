@@ -3,7 +3,6 @@
 namespace FOL\Modules\OrgModule;
 
 use FOL\Model\Authentication\OrgAuthenticator;
-use Exception;
 use FOL\Model\ORM\TasksService;
 use FOL\Components\AnswerStats\AnswerStatsComponent;
 use FOL\Components\LoginForm\LoginFormComponent;
@@ -18,7 +17,7 @@ class OrgPresenter extends BasePresenter {
     protected OrgAuthenticator $authenticator;
     protected TasksService $tasksModel;
 
-    public function injectSecondary(TasksService $tasksModel, OrgAuthenticator $authenticator) {
+    public function injectSecondary(TasksService $tasksModel, OrgAuthenticator $authenticator): void {
         $this->tasksModel = $tasksModel;
         $this->authenticator = $authenticator;
     }
@@ -35,7 +34,7 @@ class OrgPresenter extends BasePresenter {
     }
 
     public function renderLogin(): void {
-        $this->setPagetitle(_('Přihlásit se'));
+        $this->setPageTitle(_('Přihlásit se'));
     }
 
     /**
@@ -51,17 +50,14 @@ class OrgPresenter extends BasePresenter {
 
     public function renderStats(): void {
         $this->setPageTitle(_('Výsledky'));
-        $this->check('results');
     }
 
     public function renderStatsDetail(): void {
         $this->setPageTitle(_('Podrobné výsledky'));
-        $this->check('scoreList');
     }
 
     public function renderStatsTasks(): void {
         $this->setPageTitle(_('Statistika úkolů'));
-        $this->check('taskStats');
     }
 
     protected function createComponentLogin(): LoginFormComponent {
@@ -82,15 +78,5 @@ class OrgPresenter extends BasePresenter {
 
     protected function createComponentTaskStats(): TaskStatsComponent {
         return new TaskStatsComponent($this->getContext());
-    }
-
-    private function check($componentName): void {
-        try {
-            $this->getComponent($componentName);
-            $this->template->available = true;
-        } catch (Exception $e) {
-            $this->flashMessage(_('Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání.'), 'danger');
-            $this->template->available = false;
-        }
     }
 }

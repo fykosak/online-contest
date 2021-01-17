@@ -26,7 +26,7 @@ class RecoverFormComponent extends BaseComponent {
         Mailer $mailer,
         TeamsService $teamsService,
         CompetitorsService $competitorsService
-    ) {
+    ): void {
         $this->authenticator = $authenticator;
         $this->mailer = $mailer;
         $this->teamsService = $teamsService;

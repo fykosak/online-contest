@@ -2,7 +2,6 @@
 
 namespace FOL\Modules\GameModule;
 
-use Dibi\Exception;
 use FOL\Components\Navigation\Navigation;
 use FOL\Components\Navigation\NavItem;
 use Fykosak\Utils\Localization\UnsupportedLanguageException;
@@ -17,16 +16,12 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
      */
     protected function startUp(): void {
         parent::startUp();
-        if (is_null($this->getLoggedTeam2())) {
+        if (is_null($this->getLoggedTeam())) {
             $this->flashMessage(_('Do této sekce mají přístup pouze přihlášené týmy.'), 'danger');
             $this->redirect(':Game:Auth:login');
         }
     }
 
-    /**
-     * @return Navigation
-     * @throws Exception
-     */
     protected function createComponentNavigation(): Navigation {
         $navigation = parent::createComponentNavigation();
         $navigation->addNavItem(new NavItem(':Game:Task:default', [], _('Zadání'), 'visible-sm-inline glyphicon glyphicon-compressed'));

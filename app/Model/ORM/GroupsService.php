@@ -7,12 +7,13 @@ use Dibi\Exception;
 use Dibi\Row;
 
 class GroupsService extends AbstractService {
+
     /**
      * @param $id
-     * @return Row|false
+     * @return Row|null
      * @throws Exception
      */
-    public function find($id) {
+    public function find(int $id): ?Row {
         return $this->findAll()->where('[id_group] = %i', $id)->fetch();
     }
 

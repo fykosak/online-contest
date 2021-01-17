@@ -30,6 +30,9 @@ class ResultsComponent extends BaseComponent {
         $this->competitorsService = $competitorsService;
     }
 
+    /**
+     * @param string $display
+     */
     public function render($display = 'all'): void {
         $this->display = $display;
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'results.latte');

@@ -7,9 +7,11 @@ use Dibi\Exception;
 use FOL\Model\Card\CardFactory;
 use FOL\Model\Card\DoublePointsCard;
 use FOL\Model\ORM\AnswersService;
+use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\PeriodService;
 use FOL\Model\ORM\ScoreService;
+use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceYear;
 use FOL\Model\ORM\TasksService;
 use FOL\Components\BaseForm;
@@ -22,6 +24,7 @@ use Nette\DI\Container;
 use Nette\InvalidStateException;
 use Nette\Security\User;
 use Nette\Utils\Html;
+use Throwable;
 use Tracy\Debugger;
 use FOL\Components\BaseComponent;
 
@@ -39,6 +42,7 @@ class AnswerFormComponent extends BaseComponent {
     protected User $user;
     protected ModelTeam $team;
     protected DoublePointsCard $doublePointsCard;
+    protected ServiceTask $serviceTask;
 
     public function __construct(Container $container, ModelTeam $team) {
         $this->team = $team;
@@ -51,6 +55,7 @@ class AnswerFormComponent extends BaseComponent {
         AnswersService $answersService,
         ScoreService $scoreService,
         ServiceYear $serviceYear,
+        ServiceTask $serviceTask,
         User $user,
         CardFactory $cardFactory
     ): void {
@@ -59,6 +64,7 @@ class AnswerFormComponent extends BaseComponent {
         $this->answersService = $answersService;
         $this->scoreService = $scoreService;
         $this->serviceYear = $serviceYear;
+        $this->serviceTask = $serviceTask;
         $this->user = $user;
         $this->doublePointsCard = $cardFactory->createForTeam($this->team)['double_points'];
     }
@@ -67,6 +73,7 @@ class AnswerFormComponent extends BaseComponent {
      * @param Form $form
      * @return void
      * @throws AbortException
+     * @throws Throwable
      */
     private function formSubmitted(Form $form): void {
         $values = $form->getValues();
@@ -79,9 +86,10 @@ class AnswerFormComponent extends BaseComponent {
                 }
                 $isDoublePoints = true; // TODO continue implementation
             }
+            /** @var ModelTask $task */
+            $task = $this->serviceTask->findByPrimary($values[self::TASK_ELEMENT]);
 
-            $task = $this->tasksService->find($values[self::TASK_ELEMENT]);
-            $period = $this->periodService->findCurrent($task['id_group']);
+            $period = $this->periodService->findCurrent($task->id_group);
             $solution = trim($values['solution'], ' ');
             $solution = strtr($solution, ',', '.');
 
@@ -92,7 +100,7 @@ class AnswerFormComponent extends BaseComponent {
             // Handle card usage
 
             $correct = TasksService::checkAnswer($task, $solution);
-            $results = $this->answersService->insert($this->team, $task, $solution, $period, $correct,$isDoublePoints);
+            $results = $this->answersService->insert($this->team, $task, $solution, $period, $correct, $isDoublePoints);
             //Environment::getCache()->clean(array(Cache::TAGS => array('problems/$team'))); // not used
 
             if ($isDoublePoints) {
@@ -100,7 +108,7 @@ class AnswerFormComponent extends BaseComponent {
                 $this->doublePointsCard->handle($logger, [
                     'correct' => $correct,
                     'answer_id' => $results,
-                    'task_id' => $task,
+                    'task_id' => $task->id_task,
                 ]);
                 FlashMessageDump::dump($logger, $this->getPresenter());
             }
@@ -109,7 +117,7 @@ class AnswerFormComponent extends BaseComponent {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je správně.'), 'success');
                 $this->tasksService->updateSingleCounter($this->team, $task);
                 $this->scoreService->updateAfterInsert($this->team, $task); //musi byt az po updatu counteru
-                $this->getPresenter()->redirect('rating', ['id' => $task['id_task']]);
+                $this->getPresenter()->redirect('rating', ['id' => $task->id_task]);
             } else {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je špatně.'), 'danger');
             }
