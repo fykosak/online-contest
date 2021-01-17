@@ -34,38 +34,38 @@ class DefaultPresenter extends BasePresenter {
      * @throws Exception
      */
     public function renderDefault(): void {
-        $this->setPagetitle(_("Mezinárodní soutež ve fyzice"));
-        $this->template->year = $this->yearsService->findCurrent();
+        $this->setPagetitle(_('Mezinárodní soutež ve fyzice'));
+        $this->template->year = $this->getCurrentYear();
         $this->changeViewByLang();
     }
 
     public function renderLastYears(): void {
-        $this->setPagetitle(_("Minulé ročníky"));
+        $this->setPagetitle(_('Minulé ročníky'));
         $this->changeViewByLang();
     }
 
 
     public function renderRules(): void {
-        $this->setPagetitle(_("Pravidla"));
+        $this->setPagetitle(_('Pravidla'));
         $this->changeViewByLang();
     }
 
     public function renderFaq(): void {
-        $this->setPagetitle(_("FAQ"));
+        $this->setPagetitle(_('FAQ'));
         $this->changeViewByLang();
     }
 
     public function renderHowto(): void {
-        $this->setPagetitle(_("Rychlý grafický návod ke hře"));
+        $this->setPagetitle(_('Rychlý grafický návod ke hře'));
         $this->changeViewByLang();
     }
 
     public function renderTaskExamples(): void {
-        $this->setPagetitle(_("Rozcvička"));
+        $this->setPagetitle(_('Rozcvička'));
     }
 
     public function renderOtherEvents(): void {
-        $this->setPagetitle(_("Další akce"));
+        $this->setPagetitle(_('Další akce'));
         $this->changeViewByLang();
     }
 }

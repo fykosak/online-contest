@@ -23,6 +23,6 @@ class CronAuthenticator extends AbstractAuthenticator {
         if ((string)$key === (string)$this->cronKey) {
             return new SimpleIdentity('cron', self::ROLE);
         }
-        throw new AuthenticationException("Klíč se neshoduje.", Authenticator::INVALID_CREDENTIAL);
+        throw new AuthenticationException('Klíč se neshoduje.', Authenticator::INVALID_CREDENTIAL);
     }
 }

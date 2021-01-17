@@ -1,0 +1,32 @@
+{block content}
+    <div id="teams" class="list">
+        {foreach $categories AS $category => $categoryName}
+            {if isset($teams[$category])}
+                <h2 id="{$category}">{$categoryName}</h2>
+                <ol>
+                    {foreach $teams[$category] AS $team}
+                        <li>
+                            <strong>{$team->name}</strong>:
+                            {var $prevSchool = null}
+                            {var $prevSchoolCountry = null}
+                            {var $inSchool = 0}
+				{if isset($competitors[$team->id_team])}
+                                {foreach $competitors[$team->id_team] AS $competitor}{*
+						*}{if $prevSchool !== null && $competitor->school_name != $prevSchool} <span class="text-muted">({if $inSchool > 1}{$inSchool}&times; {/if}{$prevSchool} <span
+                                            class="flag-icon flag-icon-{$prevSchoolCountry|lower}"></span>)</span>{*
+                                                *}{var $inSchool = 1}{else}{var $inSchool = $inSchool + 1}{/if}{*
+                                                *}{var $prevSchool = $competitor->school_name}{var $prevSchoolCountry = $competitor->country_iso}{if !$iterator->isFirst()}, {/if}{$competitor->name}{*
+					*}{/foreach}
+                                {if $prevSchool !== null}<span
+                                        class="text-muted">({if $inSchool > 1}{$inSchool}&times; {/if}{$prevSchool} <span
+                                            class="flag-icon flag-icon-{$prevSchoolCountry|lower}"></span>)</span>{/if}
+                            {else}
+                                {_'informace o členech týmu nejsou dostupné'}
+                            {/if}
+                        </li>
+                    {/foreach}
+                </ol>
+            {/if}
+        {/foreach}
+    </div>
+{/block}

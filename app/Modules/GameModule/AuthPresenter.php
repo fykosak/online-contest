@@ -4,8 +4,8 @@ namespace FOL\Modules\GameModule;
 
 use FOL\Model\Authentication\TeamAuthenticator;
 use Dibi\Exception;
-use FOL\Modules\FrontendModule\Components\LoginForm\LoginFormComponent;
-use FOL\Modules\FrontendModule\Components\RecoverForm\RecoverFormComponent;
+use FOL\Components\LoginForm\LoginFormComponent;
+use FOL\Components\RecoverForm\RecoverFormComponent;
 use Nette\Application\AbortException;
 
 /**

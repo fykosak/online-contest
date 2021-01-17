@@ -7,7 +7,8 @@
 
 namespace FOL\Tools;
 
-use FOL\i18n\GettextTranslator;
+use Fykosak\Utils\Localization\GettextTranslator;
+use InvalidArgumentException;
 use Nette\SmartObject;
 use Texy\Texy;
 
@@ -21,7 +22,6 @@ final class Helpers {
      * It returns the callback for helper with given name
      * @param string $helper The name of helper.
      * @return callback The callback to the helper.
-     * @throws DataNotFoundExceptio if the helper does not exist.
      */
     public static function getHelper(string $helper): callable {
         switch ($helper) {
@@ -47,7 +47,7 @@ final class Helpers {
                     return self::texyHelper(...$args);
                 };
             default:
-                throw new DataNotFoundException("helper: $helper");
+                throw new InvalidArgumentException("helper: $helper");
         }
     }
 
@@ -68,7 +68,7 @@ final class Helpers {
     /**
      * It returns time in format 'day.month.year, hour:second'
      *
-     * @param $time string Time in format 'YYYY-MM-DD HH:mm:ms'
+     * @param $time string|null Time in format 'YYYY-MM-DD HH:mm:ms'
      * @return string Formated time.
      */
     public static function timeFormatHelper(?string $time): string {

@@ -3,7 +3,8 @@
 namespace FOL\Components\Rating;
 
 use FOL\Components\BaseComponent;
-use FOL\Modules\FrontendModule\Components\BaseForm;
+use FOL\Components\BaseForm;
+use FOL\Model\ORM\Models\ModelTeam;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Database\Explorer;
@@ -15,10 +16,10 @@ use Throwable;
 class RatingComponent extends BaseComponent {
 
     private int $taskId;
-    private $team;
+    private ModelTeam $team;
     private Explorer $explorer;
 
-    public function __construct(Container $container, int $taskId, $team) {
+    public function __construct(Container $container, int $taskId, ModelTeam $team) {
         parent::__construct($container);
         $this->taskId = $taskId;
         $this->team = $team;
@@ -61,7 +62,7 @@ class RatingComponent extends BaseComponent {
         $values = $form->getValues();
         try {
             $this->explorer->table('rating')->insert([
-                'team_id' => $this->team['id_team'],
+                'team_id' => $this->team->id_team,
                 'task_id' => $this->taskId,
                 'rating' => $values['rating'],
             ]);

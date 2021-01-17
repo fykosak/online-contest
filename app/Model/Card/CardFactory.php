@@ -2,7 +2,7 @@
 
 namespace FOL\Model\Card;
 
-use Dibi\Row;
+use FOL\Model\ORM\Models\ModelTeam;
 use Nette\Application\BadRequestException;
 use Nette\DI\Container;
 
@@ -33,10 +33,10 @@ final class CardFactory {
     }
 
     /**
-     * @param Row $team
+     * @param ModelTeam $team
      * @return Card[]
      */
-    public function createForTeam(Row $team): array {
+    public function createForTeam(ModelTeam $team): array {
         $cards = [
             'skip' => new SkipCard($team),
             'reset' => new ResetCard($team),

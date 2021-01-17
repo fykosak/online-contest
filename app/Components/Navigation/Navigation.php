@@ -2,7 +2,6 @@
 
 namespace FOL\Components\Navigation;
 
-use FOL\i18n\GettextTranslator;
 use FOL\Components\BaseComponent;
 
 /**
@@ -17,7 +16,7 @@ class Navigation extends BaseComponent {
         $this->template->items = $this->items;
         $this->template->competition = $this->getContext()->getParameters()['competition'];
         $this->template->lang = $this->getPresenter()->lang;
-        $this->template->supportedLangs = GettextTranslator::getSupportedLangs();
+        $this->template->supportedLangs = $this->translator->getSupportedLanguages();
         parent::render();
     }
 

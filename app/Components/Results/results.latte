@@ -1,0 +1,59 @@
+{block content}
+    {var $teams = $teams->fetchAssoc("category,id_team")}
+    {var $bonus = $bonus->fetchAssoc("id_team")}
+    {var $penality = $penality->fetchAssoc("id_team")}
+    {foreach $categories AS $category => $name}
+        <h2 id="{$category}">{$name}</h2>
+        <table class="table table-condensed table-striped small">
+            <thead>
+            <th>#</th>
+            <th>{_'tým'}</th>
+            <th>{_'celkem bodů'}</th>
+            <th>{_'bonusové body'}</th>
+            <th>{_'záporné body'}</th>
+            </thead>
+            <tr class="text-muted">
+                <td></td>
+                <td>{_'Student Pilný'}</td>
+                <td>{$maxPoints}</td>
+                <td>{$maxBonus}</td>
+                <td>0</td>
+            </tr>
+            {if isset($teams[$category])}
+                {var $i = 1}
+                {foreach $teams[$category] AS $team}
+                    {continueIf $display == 'czsk' && count(array_diff($teamCountries[$team->id_team], ['CZ','SK'])) != 0}
+                    <tr n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted">
+                        <td>{if $team->disqualified == 0}{$i++}{else}DSQ{/if}</td>
+                        <td>
+                            {$team->name}
+                {if isset($teamCountries[$team->id_team]) && $teamCountries[$team->id_team]}({foreach array_count_values($teamCountries[$team->id_team]) as $country => $countryCount}{$countryCount}&times;&thinsp;
+                                <span class="flag-icon flag-icon-{$country|lower}"></span>{sep}, {/sep}{/foreach}){/if}
+                        </td>
+                        <td>
+                            {if !empty($team->score) && $team->disqualified == 0}
+                                {$team->score}
+                            {else}
+                                0
+                            {/if}
+                        </td>
+                        <td>
+                            {if isset($bonus[$team->id_team]) && $team->disqualified == 0}
+                                {$bonus[$team->id_team]->score}
+                            {else}
+                                0
+                            {/if}
+                        </td>
+                        <td>
+                            {if isset($penality[$team->id_team]) && $team->disqualified == 0}
+                                {$penality[$team->id_team]->score}
+                            {else}
+                                0
+                            {/if}
+                        </td>
+                    </tr>
+                {/foreach}
+            {/if}
+        </table>
+    {/foreach}
+{/block}

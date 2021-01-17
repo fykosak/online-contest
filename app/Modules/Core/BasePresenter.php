@@ -3,49 +3,49 @@
 namespace FOL\Modules\Core;
 
 use Dibi\Exception;
-use Dibi\Row;
-use FOL\i18n\GettextTranslator;
-use FOL\Modules\FrontendModule\Components\FlashMessages\FlashMessagesComponent;
-use FOL\Modules\FrontendModule\Components\NotificationMessages\NotificationMessagesComponent;
+use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Models\ModelYear;
+use FOL\Model\ORM\Services\ServiceTeam;
+use FOL\Model\ORM\Services\ServiceYear;
+use Fykosak\Utils\Localization\GettextTranslator;
+use FOL\Components\NotificationMessages\NotificationMessagesComponent;
 use FOL\Tools\InterlosTemplate;
 use FOL\Components\Navigation\Navigation;
-use FOL\Model\ORM\TeamsService;
 use FOL\Model\ORM\YearsService;
+use Fykosak\Utils\Localization\UnsupportedLanguageException;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
-use Nette\Localization\Translator;
 
 abstract class BasePresenter extends Presenter {
 
     /** @persistent */
-    public $lang; // = 'cs';
+    public ?string $lang = null;
 
     private string $customScript = '';
 
-    private ?Row $loggedTeam;
+    private ?ModelTeam $loggedTeam2;
 
     public YearsService $yearsService;
 
-    protected TeamsService $teamsService;
+    protected GettextTranslator $translator;
+    protected ServiceTeam $serviceTeam;
+    protected ServiceYear $serviceYear;
 
-    protected Translator $translator;
+    private ModelYear $currentYear;
 
-    public function injectServices(YearsService $yearsService, TeamsService $teamsService, Translator $translator): void {
+    public function injectServices(YearsService $yearsService, GettextTranslator $translator, ServiceTeam $serviceTeam, ServiceYear $serviceYear): void {
         $this->yearsService = $yearsService;
-        $this->teamsService = $teamsService;
         $this->translator = $translator;
+        $this->serviceTeam = $serviceTeam;
+        $this->serviceYear = $serviceYear;
     }
 
     public function setPageTitle($pageTitle): void {
-        $this->getTemplate()->pageTitle = $pageTitle;
+        $this->template->pageTitle = $pageTitle;
     }
 
 // ----- PROTECTED METHODS
-
-    protected function createComponentFlashMessages(): FlashMessagesComponent {
-        return new FlashMessagesComponent($this->getContext());
-    }
 
     protected function createComponentNotificationMessages(): NotificationMessagesComponent {
         return new NotificationMessagesComponent($this->getContext());
@@ -59,12 +59,12 @@ abstract class BasePresenter extends Presenter {
         //$this->oldLayoutMode = false;
 
         $template = parent::createTemplate();
-        $template->today = date("Y-m-d H:i:s");
+        $template->today = date('Y-m-d H:i:s');
         $template->lang = $this->lang;
         $template->customScript = '';
         $template->setTranslator($this->translator);
-        $template->isGameStarted = $this->yearsService->isGameStarted();
-        $template->isGameEnd = $this->yearsService->isGameEnd();
+        $template->isGameStarted = $this->getCurrentYear()->isGameStarted();
+        $template->isGameEnd = $this->getCurrentYear()->isGameEnd();
         $template->getLatte()->addFilter('i18n', GettextTranslator::class . '::i18nHelper');
 
         return InterlosTemplate::loadTemplate($template);
@@ -83,6 +83,7 @@ abstract class BasePresenter extends Presenter {
     /**
      * @return void
      * @throws AbortException
+     * @throws UnsupportedLanguageException
      */
     protected function startUp(): void {
         parent::startup();
@@ -92,17 +93,13 @@ abstract class BasePresenter extends Presenter {
 
 // -------------- l12n ------------------
 
+    /**
+     * @throws UnsupportedLanguageException
+     */
     protected function localize(): void {
         $i18nConf = $this->context->parameters['i18n'];
         $this->detectLang($i18nConf);
-        $locale = isset(GettextTranslator::$locales[$this->lang]) ? GettextTranslator::$locales[$this->lang] : 'cs_CZ.utf-8';
-
-        putenv("LANGUAGE=$locale");
-        setlocale(LC_MESSAGES, $locale);
-        setlocale(LC_TIME, $locale);
-        bindtextdomain('messages', $i18nConf['dir']);
-        bind_textdomain_codeset('messages', "utf-8");
-        textdomain('messages');
+        $this->translator->setLang($this->lang);
     }
 
     protected function detectLang($i18nConf): void {
@@ -110,10 +107,10 @@ abstract class BasePresenter extends Presenter {
             if (array_search($this->getHttpRequest()->getUrl()->host, explode(',', $i18nConf['en']['hosts'])) !== false) {
                 $this->lang = 'en';
             } else {
-                $this->lang = $this->getHttpRequest()->detectLanguage(GettextTranslator::getSupportedLangs());
+                $this->lang = $this->getHttpRequest()->detectLanguage($this->translator->getSupportedLanguages());
             }
         }
-        if (array_search($this->lang, GettextTranslator::getSupportedLangs()) === false) {
+        if (array_search($this->lang, $this->translator->getSupportedLanguages()) === false) {
             $this->lang = $i18nConf['defaultLang'];
         }
     }
@@ -139,22 +136,25 @@ abstract class BasePresenter extends Presenter {
         }
     }
 
-    /**
-     * @return Row|null
-     * @throws Exception
-     */
-    public function getLoggedTeam(): ?Row {
-        if (!isset($this->loggedTeam)) {
+    public function getLoggedTeam2(): ?ModelTeam {
+        if (!isset($this->loggedTeam2)) {
             if ($this->getUser()->isLoggedIn()) {
-                $this->loggedTeam = $this->teamsService->find($this->getUser()->getIdentity()->id_team);
+                $this->loggedTeam2 = $this->serviceTeam->findByPrimary($this->getUser()->getIdentity()->id_team);
             } else {
-                $this->loggedTeam = null;
+                $this->loggedTeam2 = null;
             }
         }
-        return $this->loggedTeam;
+        return $this->loggedTeam2;
     }
 
     protected function createComponentNavigation(): Navigation {
         return new Navigation($this->getContext());
+    }
+
+    protected function getCurrentYear(): ModelYear {
+        if (!isset($this->serviceYear)) {
+            $this->currentYear = $this->serviceYear->getCurrent();
+        }
+        return $this->currentYear;
     }
 }

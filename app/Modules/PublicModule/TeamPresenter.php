@@ -5,8 +5,8 @@ namespace FOL\Modules\PublicModule;
 use FOL\Model\Authentication\TeamAuthenticator;
 use Dibi\Exception;
 use FOL\Model\ORM\TeamsService;
-use FOL\Modules\FrontendModule\Components\PasswordChangeForm\PasswordChangeFormComponent;
-use FOL\Modules\FrontendModule\Components\TeamList\TeamListComponent;
+use FOL\Components\PasswordChangeForm\PasswordChangeFormComponent;
+use FOL\Components\TeamList\TeamListComponent;
 use Nette\Application\AbortException;
 use Nette\Application\BadRequestException;
 use Nette\Http\IResponse;
@@ -31,9 +31,9 @@ class TeamPresenter extends BasePresenter {
      * @throws Exception
      */
     public function actionRegistration(): void {
-        if (!$this->yearsService->isRegistrationActive()) {
-            $this->flashMessage(_("Registrace není aktivní."), "danger");
-            $this->redirect("Default:default");
+        if (!$this->getCurrentYear()->isRegistrationActive()) {
+            $this->flashMessage(_('Registrace není aktivní.'), 'danger');
+            $this->redirect('Default:default');
         } elseif ($url = $this->getRegistrationValue('url')) {
             $uri = new Url($url);
             $uri->appendQuery(['lang' => $this->lang]);
@@ -53,15 +53,15 @@ class TeamPresenter extends BasePresenter {
             try {
                 $this->authenticator->authenticateByToken($token);
             } catch (AuthenticationException $e) {
-                $this->error(_("Chybný token."), IResponse::S401_UNAUTHORIZED);
+                $this->error(_('Chybný token.'), IResponse::S401_UNAUTHORIZED);
             }
         }
         if (!$this->user->isAllowed('team', 'edit')) {
-            $this->flashMessage(_("Nejprve se prosím přihlaste."), "danger");
-            $this->redirect("Default:login");
+            $this->flashMessage(_('Nejprve se prosím přihlaste.'), 'danger');
+            $this->redirect('Default:login');
         }
 
-        $this->setPageTitle(_("Změna hesla"));
+        $this->setPageTitle(_('Změna hesla'));
     }
 
     /**
@@ -70,9 +70,9 @@ class TeamPresenter extends BasePresenter {
      * @throws AbortException
      */
     public function renderDefault(): void {
-        $team = $this->getPresenter()->getLoggedTeam();
+        $team = $this->getPresenter()->getLoggedTeam2();
         if (!$team) {
-            $this->redirect("Default:default");
+            $this->redirect('Default:default');
         }
         $this->setPageTitle($team->name);
         $url = $this->getRegistrationValue('editUrl');
@@ -85,9 +85,9 @@ class TeamPresenter extends BasePresenter {
             $message->addHtml($link);
             $message->addText('.');
             $this->flashMessage($message);
-            $this->getTemplate()->external = true;
+            $this->template->external = true;
         } else {
-            $this->getTemplate()->external = false;
+            $this->template->external = false;
         }
     }
 
@@ -96,15 +96,15 @@ class TeamPresenter extends BasePresenter {
      * @throws Exception
      */
     public function renderList(): void {
-        $this->setPageTitle(_("Seznam týmů"));
-        $this->getComponent("teamList")->setSource(
+        $this->setPageTitle(_('Seznam týmů'));
+        $this->getComponent('teamList')->setSource(
             $this->teamsService->findAll()
         );
-        $this->getTemplate()->categories = $this->teamsService->getCategoryNames();
+        $this->template->categories = $this->teamsService->getCategoryNames();
     }
 
     public function renderRegistration(): void {
-        $this->setPageTitle(_("Registrace"));
+        $this->setPageTitle(_('Registrace'));
         $this->flashMessage(_('Registrace nového týmu je možná jen přes FKSDB.'), 'warning');
     }
 

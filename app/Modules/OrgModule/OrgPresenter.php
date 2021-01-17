@@ -4,33 +4,23 @@ namespace FOL\Modules\OrgModule;
 
 use FOL\Model\Authentication\OrgAuthenticator;
 use Exception;
-use FOL\Model\ORM\AnswersService;
-use FOL\Model\ORM\ReportService;
 use FOL\Model\ORM\TasksService;
-use FOL\Model\ORM\TeamsService;
-use FOL\Modules\FrontendModule\Components\AnswerStats\AnswerStatsComponent;
-use FOL\Modules\FrontendModule\Components\LoginForm\LoginFormComponent;
-use FOL\Modules\FrontendModule\Components\ReportAddForm\ReportAddFormComponent;
-use FOL\Modules\FrontendModule\Components\Results\ResultsComponent;
-use FOL\Modules\FrontendModule\Components\ScoreList\ScoreListComponent;
-use FOL\Modules\FrontendModule\Components\TaskStats\TaskStatsComponent;
+use FOL\Components\AnswerStats\AnswerStatsComponent;
+use FOL\Components\LoginForm\LoginFormComponent;
+use FOL\Components\Results\ResultsComponent;
+use FOL\Components\ScoreList\ScoreListComponent;
+use FOL\Components\TaskStats\TaskStatsComponent;
 
 class OrgPresenter extends BasePresenter {
 
     const STATS_TAG = 'orgStats';
 
     protected OrgAuthenticator $authenticator;
-    protected AnswersService $answersModel;
     protected TasksService $tasksModel;
-    protected TeamsService $teamsModel;
-    protected ReportService $reportModel;
 
-    public function injectSecondary(ReportService $reportModel, TeamsService $teamsModel, TasksService $tasksModel, AnswersService $answersModel, OrgAuthenticator $authenticator) {
-        $this->reportModel = $reportModel;
-        $this->teamsModel = $teamsModel;
+    public function injectSecondary(TasksService $tasksModel, OrgAuthenticator $authenticator) {
         $this->tasksModel = $tasksModel;
         $this->authenticator = $authenticator;
-        $this->answersModel = $answersModel;
     }
 
     protected function startUp(): void {
@@ -41,11 +31,11 @@ class OrgPresenter extends BasePresenter {
     }
 
     public function renderDefault(): void {
-        $this->setPageTitle(_("Orgovský rozcestník"));
+        $this->setPageTitle(_('Orgovský rozcestník'));
     }
 
     public function renderLogin(): void {
-        $this->setPagetitle(_("Přihlásit se"));
+        $this->setPagetitle(_('Přihlásit se'));
     }
 
     /**
@@ -54,28 +44,24 @@ class OrgPresenter extends BasePresenter {
      * @throws \Dibi\Exception
      */
     public function renderAnswerStats($taskId = 1): void {
-        $this->setPageTitle(_("Statistiky odpovědí"));
+        $this->setPageTitle(_('Statistiky odpovědí'));
         $this->template->taskId = $taskId;
         $this->template->tasks = $this->tasksModel->findAll()->fetchAll();
     }
 
-    public function renderReport(): void {
-        $this->setPageTitle(_("Správa reportů"));
-    }
-
     public function renderStats(): void {
-        $this->setPageTitle(_("Výsledky"));
-        $this->check("results");
+        $this->setPageTitle(_('Výsledky'));
+        $this->check('results');
     }
 
     public function renderStatsDetail(): void {
-        $this->setPageTitle(_("Podrobné výsledky"));
-        $this->check("scoreList");
+        $this->setPageTitle(_('Podrobné výsledky'));
+        $this->check('scoreList');
     }
 
     public function renderStatsTasks(): void {
-        $this->setPageTitle(_("Statistika úkolů"));
-        $this->check("taskStats");
+        $this->setPageTitle(_('Statistika úkolů'));
+        $this->check('taskStats');
     }
 
     protected function createComponentLogin(): LoginFormComponent {
@@ -84,10 +70,6 @@ class OrgPresenter extends BasePresenter {
 
     protected function createComponentAnswerStats(): AnswerStatsComponent {
         return new AnswerStatsComponent($this->getContext());
-    }
-
-    protected function createComponentReportAdd(): ReportAddFormComponent {
-        return new ReportAddFormComponent($this->getContext());
     }
 
     protected function createComponentResults(): ResultsComponent {
@@ -105,10 +87,10 @@ class OrgPresenter extends BasePresenter {
     private function check($componentName): void {
         try {
             $this->getComponent($componentName);
-            $this->getTemplate()->available = true;
+            $this->template->available = true;
         } catch (Exception $e) {
-            $this->flashMessage(_("Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."), "danger");
-            $this->getTemplate()->available = false;
+            $this->flashMessage(_('Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání.'), 'danger');
+            $this->template->available = false;
         }
     }
 }

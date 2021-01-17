@@ -34,7 +34,7 @@ class ReportService extends AbstractService {
      * @throws Exception
      */
     public function find($id) {
-        $this->getDibiConnection()->query("SELECT * FROM [report] WHERE [id_report] = %i", $id)->fetch();
+        $this->getDibiConnection()->query('SELECT * FROM [report] WHERE [id_report] = %i', $id)->fetch();
     }
 
     /**
@@ -42,7 +42,7 @@ class ReportService extends AbstractService {
      * @throws Exception
      */
     public function findAll(): DataSource {
-        return $this->getDibiConnection()->dataSource("SELECT * FROM [report]");
+        return $this->getDibiConnection()->dataSource('SELECT * FROM [report]');
     }
 
     /**
@@ -55,10 +55,10 @@ class ReportService extends AbstractService {
     public function findByYear($year, $lang = null, $published = true): DataSource {
         $res = $this->findAll()->where("DATE_FORMAT([year_date],'%Y%m')=%i", $year);
         if (!is_null($lang)) {
-            $res = $res->where("[lang]=%s", $lang);
+            $res = $res->where('[lang]=%s', $lang);
         }
         if ($published) {
-            $res = $res->where("[published] IS NOT NULL");
+            $res = $res->where('[published] IS NOT NULL');
         }
         return $res;
     }
@@ -69,8 +69,8 @@ class ReportService extends AbstractService {
      * @throws Exception
      */
     public function findImages($id_report): DataSource {
-        return $this->getDibiConnection()->dataSource("SELECT * FROM [report_image]")
-            ->where("[id_report]=%i", $id_report);
+        return $this->getDibiConnection()->dataSource('SELECT * FROM [report_image]')
+            ->where('[id_report]=%i', $id_report);
     }
 
     /**
@@ -89,7 +89,7 @@ class ReportService extends AbstractService {
         $connection = $this->getDibiConnection();
 
         $now = new DateTime();
-        $id_report = $connection->insert("report", [
+        $id_report = $connection->insert('report', [
             'team' => $team,
             'id_team' => $id_team,
             'header' => $header,
@@ -109,7 +109,7 @@ class ReportService extends AbstractService {
             $image->save($this->getImagePath($filename), $this->context->parameters['reports']['jpgQuality'], Image::JPEG);
             $image->resize(null, min([$this->context->parameters['reports']['thumbnailHeight'], $image->getHeight()]));
             $image->save($this->getThumbnailPath($filename), $this->context->parameters['reports']['jpgQuality'], Image::JPEG);
-            $connection->insert("report_image", [
+            $connection->insert('report_image', [
                 'id_report' => $id_report,
                 'image_hash' => $filename,
                 'caption' => $file['caption'],

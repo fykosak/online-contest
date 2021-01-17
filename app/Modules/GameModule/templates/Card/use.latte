@@ -1,7 +1,7 @@
 {block content}
     {varType FOL\Model\Card\Card $card}
     {if $card->wasUsed()}
-        {$card->renderUsage()}
+        {control cardUsage}
     {else}
         {control cardForm}
     {/if}

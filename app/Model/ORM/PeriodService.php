@@ -22,9 +22,9 @@ class PeriodService extends AbstractService {
      * @throws Exception
      */
     public function findCurrent($groupId) {
-        $source = $this->getDibiConnection()->dataSource("SELECT * FROM [period]");
-        $source->where("[id_group] = %i", $groupId);
-        $source->where("[begin] <= NOW() AND [end] > NOW()");
+        $source = $this->getDibiConnection()->dataSource('SELECT * FROM [period]');
+        $source->where('[id_group] = %i', $groupId);
+        $source->where('[begin] <= NOW() AND [end] > NOW()');
         return $source->fetch();
     }
 

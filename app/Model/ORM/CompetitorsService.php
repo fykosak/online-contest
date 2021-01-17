@@ -15,10 +15,10 @@ class CompetitorsService extends AbstractService {
      */
     public function deleteByTeam($team) {
 
-        $this->getDibiConnection()->delete("competitor")
-            ->where("[id_team] = %i", $team)
+        $this->getDibiConnection()->delete('competitor')
+            ->where('[id_team] = %i', $team)
             ->execute();
-        $this->log($team, "competitors_deleted", "The competitors of team [$team] have been deleted.");
+        $this->log($team, 'competitors_deleted', 'The competitors of team [$team] have been deleted.');
     }
 
     /**
@@ -27,7 +27,7 @@ class CompetitorsService extends AbstractService {
      * @throws Exception
      */
     public function find($id) {
-        return $this->findAll()->where("[id_competitor] = %i", $id)->fetch();
+        return $this->findAll()->where('[id_competitor] = %i', $id)->fetch();
     }
 
     /**
@@ -35,7 +35,7 @@ class CompetitorsService extends AbstractService {
      * @throws Exception
      */
     public function findAll(): DataSource {
-        return $this->getDibiConnection()->dataSource("SELECT * FROM [view_competitor]");
+        return $this->getDibiConnection()->dataSource('SELECT * FROM [view_competitor]');
     }
 
     /**
@@ -44,7 +44,7 @@ class CompetitorsService extends AbstractService {
      * @throws Exception
      */
     public function findAllByTeam($team): DataSource {
-        return $this->findAll()->where("[id_team] = %i", $team);
+        return $this->findAll()->where('[id_team] = %i', $team);
     }
 
     /**
@@ -58,14 +58,14 @@ class CompetitorsService extends AbstractService {
      */
     public function insert($team, $school, $name, $email, $study_year) {
 
-        $return = $this->getDibiConnection()->insert("competitor", [
-            "id_team" => $team,
-            "id_school" => $school,
-            "name" => $name,
-            "email" => $email,
-            "study_year" => $study_year,
+        $return = $this->getDibiConnection()->insert('competitor', [
+            'id_team' => $team,
+            'id_school' => $school,
+            'name' => $name,
+            'email' => $email,
+            'study_year' => $study_year,
         ])->execute();
-        $this->log($team, "competitor_inserted", "The new competitor [$name] has been inserted and joined to team.");
+        $this->log($team, 'competitor_inserted', 'The new competitor [$name] has been inserted and joined to team.');
         return $return;
     }
 

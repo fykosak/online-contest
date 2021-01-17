@@ -2,7 +2,6 @@
 
 namespace FOL\Modules\OrgModule;
 
-use Dibi\Exception;
 use FOL\Components\Navigation\Navigation;
 use FOL\Components\Navigation\NavItem;
 

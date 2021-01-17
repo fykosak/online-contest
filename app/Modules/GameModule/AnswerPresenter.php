@@ -5,10 +5,11 @@ namespace FOL\Modules\GameModule;
 use Dibi\Exception;
 use FOL\Components\Rating\RatingComponent;
 use FOL\Model\ORM\AnswersService;
-use FOL\Modules\FrontendModule\Components\AnswerForm\AnswerFormComponent;
-use FOL\Modules\FrontendModule\Components\AnswerHistory\AnswerHistoryComponent;
+use FOL\Components\AnswerForm\AnswerFormComponent;
+use FOL\Components\AnswerHistory\AnswerHistoryComponent;
 
 class AnswerPresenter extends BasePresenter {
+
     /**
      * @var int $id
      * @persistent
@@ -29,7 +30,7 @@ class AnswerPresenter extends BasePresenter {
         //has to be loaded in action due to pagination
         $this->getComponent('answerHistory')->setSource(
             $this->answersService->findAll()
-                ->where('[id_team] = %i', $this->getLoggedTeam()->id_team)
+                ->where('[id_team] = %i', $this->getLoggedTeam2()->id_team)
                 ->orderBy('inserted', 'DESC')
         );
         $this->getComponent('answerHistory')->setLimit(50);
@@ -47,12 +48,8 @@ class AnswerPresenter extends BasePresenter {
         $this->setPageTitle(_('Rate this task'));
     }
 
-    /**
-     * @return AnswerFormComponent
-     * @throws Exception
-     */
     protected function createComponentAnswerForm(): AnswerFormComponent {
-        return new AnswerFormComponent($this->getContext(), $this->getLoggedTeam()->id_team);
+        return new AnswerFormComponent($this->getContext(), $this->getLoggedTeam2());
     }
 
     /**
@@ -64,9 +61,8 @@ class AnswerPresenter extends BasePresenter {
 
     /**
      * @return RatingComponent
-     * @throws Exception
      */
     protected function createComponentRating(): RatingComponent {
-        return new RatingComponent($this->getContext(), $this->id, $this->getLoggedTeam());
+        return new RatingComponent($this->getContext(), $this->id, $this->getLoggedTeam2());
     }
 }

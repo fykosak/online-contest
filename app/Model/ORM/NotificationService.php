@@ -13,7 +13,7 @@ class NotificationService extends AbstractService {
      * @throws Exception
      */
     public function find($id) {
-        return $this->findAll()->where("[id_notification] = %i", $id)->fetch();
+        return $this->findAll()->where('[id_notification] = %i', $id)->fetch();
     }
 
     /**
@@ -22,10 +22,10 @@ class NotificationService extends AbstractService {
      * @throws Exception
      */
     public function findAll(?string $lang = null): DataSource {
-        $dataSource = $this->getDibiConnection()->dataSource("SELECT * FROM [notification]");
+        $dataSource = $this->getDibiConnection()->dataSource('SELECT * FROM [notification]');
 
         if ($lang !== null) {
-            return $dataSource->where("[lang] = %s", $lang);
+            return $dataSource->where('[lang] = %s', $lang);
         }
         return $dataSource;
     }
@@ -36,7 +36,7 @@ class NotificationService extends AbstractService {
      * @throws Exception
      */
     public function findActive(?string $lang = null): DataSource {
-        return $this->findAll($lang)->where("[created] < NOW()")->orderBy('created', 'DESC');
+        return $this->findAll($lang)->where('[created] < NOW()')->orderBy('created', 'DESC');
     }
 
     /**
@@ -46,7 +46,7 @@ class NotificationService extends AbstractService {
      * @throws Exception
      */
     public function findNew($timestamp, ?string $lang = null): DataSource {
-        return $this->findActive($lang)->where("[created] > %t", $timestamp)->orderBy('created');
+        return $this->findActive($lang)->where('[created] > %t', $timestamp)->orderBy('created');
     }
 
     /**
@@ -56,7 +56,7 @@ class NotificationService extends AbstractService {
      * @throws Exception
      */
     public function insert(string $message, string $lang): void {
-        $this->getDibiConnection()->insert("notification", [
+        $this->getDibiConnection()->insert('notification', [
             'message' => $message,
             'lang' => $lang,
         ])->execute();

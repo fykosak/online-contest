@@ -15,7 +15,7 @@ class ChatService extends AbstractService {
      * @throws Exception
      */
     public function find($id) {
-        return $this->findAll()->where("[id_chat] = %i", $id)->fetch();
+        return $this->findAll()->where('[id_chat] = %i', $id)->fetch();
     }
 
     /**
@@ -24,10 +24,10 @@ class ChatService extends AbstractService {
      * @throws Exception
      */
     public function findAll($lang = null): DataSource {
-        $dataSource = $this->getDibiConnection()->dataSource("SELECT * FROM [view_chat]");
+        $dataSource = $this->getDibiConnection()->dataSource('SELECT * FROM [view_chat]');
 
         if ($lang !== null) {
-            return $dataSource->where("[lang] = %s", $lang);
+            return $dataSource->where('[lang] = %s', $lang);
         }
         return $dataSource;
     }
@@ -38,7 +38,7 @@ class ChatService extends AbstractService {
      * @throws Exception
      */
     public function findAllRoot($lang = null): DataSource {
-        return $this->findAll($lang)->where("[id_parent] IS NULL");
+        return $this->findAll($lang)->where('[id_parent] IS NULL');
     }
 
     /**
@@ -48,7 +48,7 @@ class ChatService extends AbstractService {
      * @throws Exception
      */
     public function findDescendants($parent_id, $lang = null): DataSource {
-        return $this->findAll($lang)->where("[id_parent] = %i", $parent_id);
+        return $this->findAll($lang)->where('[id_parent] = %i', $parent_id);
     }
 
     /**
@@ -61,15 +61,15 @@ class ChatService extends AbstractService {
      * @throws Exception
      */
     public function insert($team, $org, $content, $parent_id, $lang) {
-        $return = $this->getDibiConnection()->insert("chat", [
-            "id_parent" => $parent_id,
-            "id_team" => $team,
-            "org" => $org,
-            "content" => $content,
-            "lang" => $lang,
-            "inserted" => new DateTime(),
+        $return = $this->getDibiConnection()->insert('chat', [
+            'id_parent' => $parent_id,
+            'id_team' => $team,
+            'org' => $org,
+            'content' => $content,
+            'lang' => $lang,
+            'inserted' => new DateTime(),
         ])->execute();
-        $this->log($team, "chat_inserted", "The team successfuly contributed to the chat.");
+        $this->log($team, 'chat_inserted', 'The team successfuly contributed to the chat.');
         return $return;
     }
 

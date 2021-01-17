@@ -3,7 +3,7 @@
 namespace FOL\Model\Card;
 
 use Fykosak\Utils\Logging\Logger;
-use Nette\Application\UI\Form;
+use Nette\Forms\Container;
 use Nette\Utils\Html;
 
 class AddTaskCard extends Card {
@@ -12,7 +12,7 @@ class AddTaskCard extends Card {
         // TODO: Implement isInnerAvailable() method.
     }
 
-    public function decorateForm(Form $form,string $lang): void {
+    public function decorateFormContainer(Container $container, string $lang): void {
         // TODO: Implement decorateForm() method.
     }
 
@@ -21,7 +21,7 @@ class AddTaskCard extends Card {
     }
 
     public function getType(): string {
-      return 'add_task';
+        return 'add_task';
     }
 
     public function getTitle(): string {

@@ -4,7 +4,7 @@ namespace FOL\Modules\GameModule;
 
 use Dibi\Exception;
 use FOL\Model\ORM\ChatService;
-use FOL\Modules\FrontendModule\Components\ChatList\ChatListComponent;
+use FOL\Components\ChatList\ChatListComponent;
 
 class ChatPresenter extends BasePresenter {
     protected ChatService $chatService;

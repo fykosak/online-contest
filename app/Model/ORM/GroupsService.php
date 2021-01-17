@@ -13,7 +13,7 @@ class GroupsService extends AbstractService {
      * @throws Exception
      */
     public function find($id) {
-        return $this->findAll()->where("[id_group] = %i", $id)->fetch();
+        return $this->findAll()->where('[id_group] = %i', $id)->fetch();
     }
 
     /**
@@ -21,7 +21,7 @@ class GroupsService extends AbstractService {
      * @throws Exception
      */
     public function findAll(): DataSource {
-        return $this->getDibiConnection()->dataSource("SELECT * FROM [view_group]");
+        return $this->getDibiConnection()->dataSource('SELECT * FROM [view_group]');
     }
 
     /**
@@ -29,7 +29,7 @@ class GroupsService extends AbstractService {
      * @throws Exception
      */
     public function findAllAvailable(): DataSource {
-        return $this->getDibiConnection()->dataSource("SELECT * FROM [view_group] WHERE [to_show] < NOW() ORDER BY [id_group]");
+        return $this->getDibiConnection()->dataSource('SELECT * FROM [view_group] WHERE [to_show] < NOW() ORDER BY [id_group]');
     }
 
     /**
@@ -37,7 +37,7 @@ class GroupsService extends AbstractService {
      * @throws Exception
      */
     public function findAllSkippable(): DataSource {
-        return $this->getDibiConnection()->dataSource("
+        return $this->getDibiConnection()->dataSource('
                     SELECT [view_group].*
                     FROM [view_group]
                     RIGHT JOIN [period] ON [period].[id_group] = [view_group].[id_group]
@@ -45,7 +45,7 @@ class GroupsService extends AbstractService {
                     WHERE
                         [to_show] < NOW()
                         AND [period].[allow_skip] = 1
-                    ORDER BY [id_group]");
+                    ORDER BY [id_group]');
     }
 
     protected function getTableName(): string {

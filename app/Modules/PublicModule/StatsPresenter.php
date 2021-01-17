@@ -4,9 +4,9 @@ namespace FOL\Modules\PublicModule;
 
 use Exception;
 use FOL\Model\ORM\TeamsService;
-use FOL\Modules\FrontendModule\Components\Results\ResultsComponent;
-use FOL\Modules\FrontendModule\Components\ScoreList\ScoreListComponent;
-use FOL\Modules\FrontendModule\Components\TaskStats\TaskStatsComponent;
+use FOL\Components\Results\ResultsComponent;
+use FOL\Components\ScoreList\ScoreListComponent;
+use FOL\Components\TaskStats\TaskStatsComponent;
 use Nette\Application\BadRequestException;
 
 class StatsPresenter extends BasePresenter {
@@ -26,26 +26,26 @@ class StatsPresenter extends BasePresenter {
      */
     protected function beforeRender(): void {
         parent::beforeRender();
-        if (!$this->yearsService->isGameStarted()) {
-            $this->error("Statistiky nejsou dostupné.");
+        if (!$this->getCurrentYear()->isGameStarted()) {
+            $this->error('Statistiky nejsou dostupné.');
         }
-        $this->getTemplate()->categories = $this->teamsService->getCategoryNames();
+        $this->template->categories = $this->teamsService->getCategoryNames();
     }
 
     public function renderDefault($display = 'all'): void {
-        $this->setPageTitle(_("Výsledky"));
-        $this->check("results");
+        $this->setPageTitle(_('Výsledky'));
+        $this->check('results');
         $this->template->display = $display;
     }
 
     public function renderDetail(): void {
-        $this->setPageTitle(_("Podrobné výsledky"));
-        $this->check("scoreList");
+        $this->setPageTitle(_('Podrobné výsledky'));
+        $this->check('scoreList');
     }
 
     public function renderTasks(): void {
-        $this->setPageTitle(_("Statistika úkolů"));
-        $this->check("taskStats");
+        $this->setPageTitle(_('Statistika úkolů'));
+        $this->check('taskStats');
     }
 
     protected function createComponentResults(): ResultsComponent {
@@ -63,10 +63,10 @@ class StatsPresenter extends BasePresenter {
     private function check($componentName): void {
         try {
             $this->getComponent($componentName);
-            $this->getTemplate()->available = true;
+            $this->template->available = true;
         } catch (Exception $e) {
-            $this->flashMessage(_("Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání."), "danger");
-            $this->getTemplate()->available = false;
+            $this->flashMessage(_('Statistiky jsou momentálně nedostupné. Pravděpodobně dochází k přepočítávání.'), 'danger');
+            $this->template->available = false;
         }
     }
 }

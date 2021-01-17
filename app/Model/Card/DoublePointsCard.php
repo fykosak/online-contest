@@ -3,7 +3,7 @@
 namespace FOL\Model\Card;
 
 use Fykosak\Utils\Logging\Logger;
-use Nette\Application\UI\Form;
+use Nette\Forms\Container;
 use Nette\Utils\Html;
 
 class DoublePointsCard extends Card {
@@ -12,12 +12,12 @@ class DoublePointsCard extends Card {
         // TODO: Implement isInnerAvailable() method.
     }
 
-    public function decorateForm(Form $form, string $lang): void {
+    public function decorateFormContainer(Container $container, string $lang): void {
         // TODO: Implement decorateForm() method.
     }
 
     protected function innerHandle(Logger $logger, array $values): void {
-        // TODO: Implement innerHandle() method.
+        // intentionally blank!
     }
 
     public function getType(): string {

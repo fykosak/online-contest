@@ -32,11 +32,11 @@ abstract class AbstractService implements IService {
 
     protected final function log($team, $type, $text): void {
         try {
-            $this->getDibiConnection()->insert("log", [
-                "id_team" => $team,
-                "type" => $type,
-                "text" => $text,
-                "inserted" => new DateTime(),
+            $this->getDibiConnection()->insert('log', [
+                'id_team' => $team,
+                'type' => $type,
+                'text' => $text,
+                'inserted' => new DateTime(),
             ])->execute();
         } catch (Exception $e) {
             Debugger::log($e);

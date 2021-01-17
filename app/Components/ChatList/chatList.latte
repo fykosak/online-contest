@@ -1,0 +1,57 @@
+{block content}
+    <div id="chat" class="list">
+        {if $user->isLoggedIn()}
+            <div>
+                <div id="chat-form0" class="chat-form">
+                    {control chatForm0}
+                </div>
+                <button class="hideChatForm btn btn-default btn-sm btn-secondary">{_'Přidat příspěvek'}</button>
+            </div>
+        {/if}
+
+{foreach $posts AS $post}
+            <div class="chat-item" {if !$post['root']}style="margin: 0 0 0 20px"{/if}>
+                <h3 {if $post['org']}style="color: orange"{/if}>
+                    {if $post['org']}{_'Organizátoři'}{else}{$post['team_name']}{/if} <span
+                            class="pull-right small">{$post['inserted']|time}</span>
+                </h3>
+                <div>{$post['content']}</div>
+                {if $user->isLoggedIn() && $post['root']}
+                    <div>
+                        <div id="chat-form{$post['id_chat']}" class="chat-form">
+                            {control 'chatForm' . $post['id_chat']}
+                        </div>
+                        <button class="hideChatForm btn-sm  btn btn-default btn-secondary">{_'Reagovat'}</button>
+                    </div>
+                {/if}
+            </div>
+        {/foreach}
+    </div>
+
+    {control paginator}
+
+    {capture $script}
+        <script n:syntax="off">
+            function hideForms() {
+                $(".chat-form").each(function () {
+                    $(this).hide();
+                });
+
+                $(".hideChatForm").each(function () {
+                    $(this).show();
+                });
+            }
+
+            $(document).ready(function () {
+                hideForms();
+
+                $(".hideChatForm").click(function () {
+                    hideForms();
+                    $(this).parent().find("div").eq(0).slideDown();
+                    $(this).hide();
+                });
+            });
+        </script>
+    {/capture}
+    {$presenter->addCustomScript($script)}
+{/block}

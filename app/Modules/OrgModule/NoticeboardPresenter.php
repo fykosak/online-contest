@@ -3,7 +3,7 @@
 namespace FOL\Modules\OrgModule;
 
 use FOL\Model\ORM\NotificationService;
-use FOL\Modules\FrontendModule\Components\NotificationForm\NotificationFormComponent;
+use FOL\Components\NotificationForm\NotificationFormComponent;
 use Nette\Application\BadRequestException;
 use Nette\Http\Response;
 
@@ -23,7 +23,7 @@ class NoticeboardPresenter extends BasePresenter {
         if (!$this->user->isAllowed('noticeboard', 'add')) {
             $this->error('Nemáte oprávnění pro přidání notifikace.', Response::S403_FORBIDDEN);
         }
-        $this->setPageTitle(_("Přidat notifikaci"));
+        $this->setPageTitle(_('Přidat notifikaci'));
     }
 
     protected function createComponentNotificationForm(): NotificationFormComponent {

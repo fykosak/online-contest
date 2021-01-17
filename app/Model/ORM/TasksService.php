@@ -8,7 +8,9 @@ use Dibi\DataSource;
 use Dibi\Exception;
 use Dibi\Result;
 use Dibi\Row;
+use FOL\Model\ORM\Models\ModelTeam;
 use Nette\Database\Explorer;
+use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
 
 class TasksService extends AbstractService {
@@ -47,38 +49,37 @@ class TasksService extends AbstractService {
     }
 
     /**
-     * @param null $teamId
      * @return DataSource
      * @throws Exception
      */
-    public function findPossiblyAvailable($teamId = null): DataSource {
+    public function findPossiblyAvailable(): DataSource {
         return $this->getDibiConnection()->dataSource('SELECT * FROM [view_possibly_available_task]')
             ->orderBy('id_group')
             ->orderBy('number');
     }
 
     /**
-     * @param $teamId
+     * @param ModelTeam $team
      * @return DataSource
      * @throws Exception
      */
-    public function findProblemAvailable($teamId): DataSource {
-        return $this->getDibiConnection()->dataSource('SELECT * FROM [view_available_task] WHERE [id_team] = %i', $teamId)
+    public function findProblemAvailable(ModelTeam $team): DataSource {
+        return $this->getDibiConnection()->dataSource('SELECT * FROM [view_available_task] WHERE [id_team] = %i', $team->id_team)
             ->orderBy('id_group')
             ->orderBy('number');
     }
 
     /**
-     * @param $teamId
+     * @param ModelTeam $team
      * @return DataSource
      * @throws Exception
      */
-    public function findSubmitAvailable($teamId): DataSource {
-        $source = $this->getDibiConnection()->dataSource('SELECT * FROM [view_submit_available_task] WHERE [id_team] = %i', $teamId)
+    public function findSubmitAvailable(ModelTeam $team): DataSource {
+        $source = $this->getDibiConnection()->dataSource('SELECT * FROM [view_submit_available_task] WHERE [id_team] = %i', $team->id_team)
             ->orderBy('id_group')
             ->orderBy('number');
 
-        $solved = $this->findSolved($teamId);
+        $solved = $this->findSolved($team);
 
         // Remove solved tasks from the source
         if (!empty($solved)) {
@@ -90,36 +91,37 @@ class TasksService extends AbstractService {
     /**
      * Find missed tasks (after end of hurry up)
      *
-     * @param $teamId
+     * @param ModelTeam $team
      * @return array id_task => id_task
      * @throws Exception
      */
-    public function findMissed($teamId): array {
+    public function findMissed(ModelTeam $team): array {
         $source = $this->getDibiConnection()->dataSource('SELECT `view_available_task`.* FROM [view_available_task]
             RIGHT JOIN `period` ON `period`.`id_group` = `view_available_task`.`id_group`
-            AND (`period`.`begin` > NOW() OR `period`.`end` < NOW()) WHERE [id_team] = %i', $teamId);
+            AND (`period`.`begin` > NOW() OR `period`.`end` < NOW()) WHERE [id_team] = %i', $team->id_team);
         return $source->fetchPairs('id_task', 'id_task');
     }
 
     /**
      * Find unsolved tasks, which can be submitted (i.e. not hurry up after its end)
      *
+     * @param ModelTeam $team
      * @return array id_task => id_task
      * @throws Exception
      */
-    public function findUnsolved($teamId) {
-        return $this->findSubmitAvailable($teamId)->fetchPairs('id_task', 'id_task');
+    public function findUnsolved(ModelTeam $team): array {
+        return $this->findSubmitAvailable($team)->fetchPairs('id_task', 'id_task');
     }
 
     /**
      * Find solved tasks
      *
-     * @param $teamId
+     * @param ModelTeam $team
      * @return array id_task => id_task
      * @throws Exception
      */
-    public function findSolved($teamId) {
-        $source = $this->getDibiConnection()->dataSource('SELECT id_task FROM [task_state] WHERE [id_team] = %i', $teamId, ' and points IS NOT NULL');
+    public function findSolved(ModelTeam $team): array {
+        $source = $this->getDibiConnection()->dataSource('SELECT id_task FROM [task_state] WHERE [id_team] = %i', $team->id_team, ' and points IS NOT NULL');
         return $source->fetchPairs('id_task', 'id_task');
     }
 
@@ -130,7 +132,7 @@ class TasksService extends AbstractService {
      * @return array id_task => id_task
      * @throws Exception
      */
-    public function findSkipped($teamId) {
+    public function findSkipped(int $teamId): array {
         $source = $this->getDibiConnection()->dataSource('SELECT id_task FROM [task_state] WHERE [id_team] = %i', $teamId, ' and skipped = 1');
         return $source->fetchPairs('id_task', 'id_task');
     }
@@ -139,32 +141,10 @@ class TasksService extends AbstractService {
      * @return DataSource
      * @throws Exception
      */
-    public function findAllStats() {
+    public function findAllStats(): DataSource {
         return $this->getDibiConnection()->dataSource('SELECT * FROM [tmp_task_stat]')
             ->orderBy('id_group')
             ->orderBy('number');
-    }
-
-    /**
-     * @param $name
-     * @param $number
-     * @param $serie
-     * @param $type
-     * @param $code
-     * @return Result|int
-     * @throws Exception
-     */
-    public function insert($name, $number, $serie, $type, $code) {
-        $return = $this->getDibiConnection()->insert('task', [
-            'name' => $name,
-            'number' => $number,
-            'serie' => $serie,
-            'type' => $type,
-            'code' => $code,
-            'inserted' => new DateTime(),
-        ])->execute();
-        $this->log(null, 'task_inserted', 'The task [$name] has been inserted.');
-        return $return;
     }
 
     /**
@@ -173,17 +153,17 @@ class TasksService extends AbstractService {
      * @return Result|int
      * @throws Exception
      */
-    public function skip($team, $task) {
+    public function skip(ModelTeam $team, $task) {
         // Check that skip is allowed for task
-        $answers = $this->answersService->findAllCorrect($team)->where('[id_task] = %i', $task->id_task);
+        $answers = $this->answersService->findAllCorrect($team->id_team)->where('[id_task] = %i', $task->id_task);
         if ($answers->count() > 0) {
             $this->log($team, 'skip_tried', 'The team tried to skip the task [$task->id_task].');
             throw new InvalidStateException('Skipping not allowed for the task [$task->id_task].', AnswersService::ERROR_SKIP_OF_ANSWERED);
         }
 
         // Check that skip is allowed in period
-        $skippableGroups = $this->groupsService->findAllSkippable()->fetchPairs('id_group', 'id_group');
-        if (!array_key_exists($task['id_group'], $skippableGroups)) {
+        $skippAbleGroups = $this->groupsService->findAllSkippable()->fetchPairs('id_group', 'id_group');
+        if (!array_key_exists($task['id_group'], $skippAbleGroups)) {
             $this->log($team, 'skip_tried', 'The team tried to skip the task [$task->id_task].');
             throw new InvalidStateException('Skipping not allowed during this period.', AnswersService::ERROR_SKIP_OF_PERIOD);
         }
@@ -252,12 +232,12 @@ class TasksService extends AbstractService {
     }
 
     /**
-     * @param $teamId
+     * @param ModelTeam $team
      * @param $task
      * @return void
      * @throws Exception
      */
-    public function updateSingleCounter($teamId, $task) {
+    public function updateSingleCounter(ModelTeam $team, $task): void {
         $sql = 'UPDATE group_state AS gs
                 SET task_counter = 
                     GREATEST(
@@ -284,7 +264,7 @@ class TasksService extends AbstractService {
                     gs.task_counter)
                 WHERE gs.id_group = %i AND gs.id_team = %i';
 
-        $this->getDibiConnection()->query($sql, $task['id_group'], $teamId);
+        $this->getDibiConnection()->query($sql, $task['id_group'], $team->id_team);
     }
 
     public static function checkAnswer($task, $solution): bool {
@@ -296,6 +276,7 @@ class TasksService extends AbstractService {
             case self::TYPE_REAL:
                 return ($task->answer_real - $task->real_tolerance <= $solution) && ($solution <= $task->answer_real + $task->real_tolerance);
         }
+        throw new InvalidArgumentException();
     }
 
     protected function getTableName(): string {

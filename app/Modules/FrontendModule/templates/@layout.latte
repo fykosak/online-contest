@@ -67,7 +67,11 @@
     <!-- PAGE TITLE -->
     {block #title}<h1 n:ifset="$pageTitle">{$pageTitle}</h1>{/block}
     <!-- FLASH MESSAGES -->
-    {control flashMessages}
+    {foreach $flashes as $flash}
+        <div class="alert alert-{$flash->type}">
+            {$flash->message}
+        </div>
+    {/foreach}
     {if $control->yearsService->isGameActive()}
     {control notificationMessages}
     {/if}

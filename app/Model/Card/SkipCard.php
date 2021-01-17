@@ -7,13 +7,10 @@ use FOL\Model\Card\Exceptions\NoTasksAvailableException;
 use Fykosak\Utils\Logging\Logger;
 use Fykosak\Utils\Logging\Message;
 use FOL\Model\ORM\ScoreService;
-use Nette\Application\UI\Form;
 use Nette\Forms\Container;
 use Nette\Utils\Html;
 
 final class SkipCard extends Card {
-
-    private const CONTAINER = 'tasks';
 
     protected ScoreService $scoreService;
 
@@ -27,7 +24,7 @@ final class SkipCard extends Card {
      * @throws Exception
      */
     protected function innerHandle(Logger $logger, array $values): void {
-        foreach ($values[self::CONTAINER] as $taskId) {
+        foreach ($values as $taskId) {
             $task = $this->tasksService->findByPrimary($taskId);
 
             $this->tasksService->skip($this->team, $task);
@@ -50,16 +47,10 @@ final class SkipCard extends Card {
         return Html::el('p')->addText('Lorem ipsum.....');
     }
 
-    /**
-     * @param Form $form
-     * @param string $lang
-     */
-    public function decorateForm(Form $form, string $lang): void {
-        $container = new Container();
+    public function decorateFormContainer(Container $container, string $lang): void {
         foreach ($this->getTasks() as $task) {
             $container->addCheckbox($task->id_task, $task['name_' . $lang]);
         }
-        $form->addComponent($container, self::CONTAINER);
     }
 
     public function checkRequirements(): void {

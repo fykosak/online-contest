@@ -17,7 +17,7 @@ services:
     - FOL\Model\Authentication\TeamAuthenticator
     - FOL\Model\Authentication\OrgAuthenticator(%orgs%)
     - FOL\Model\Authentication\CronAuthenticator(%cron.key%)
-    - FOL\i18n\GettextTranslator
+    - Fykosak\Utils\Localization\GettextTranslator(%i18n.locales%,%i18n.dir%)
 
     router: FOL\Model\Router\Router::createRouter
     - FOL\Model\ORM\AnswersService
@@ -31,9 +31,12 @@ services:
     - FOL\Model\ORM\TasksService
     - FOL\Model\ORM\TeamsService
     - FOL\Model\ORM\YearsService
+    #new ORM
     - FOL\Model\ORM\Services\ServiceCardUsage
     - FOL\Model\ORM\Services\ServiceAnswerOptions
     - FOL\Model\ORM\Services\ServiceTaskHint
+    - FOL\Model\ORM\Services\ServiceTeam
+    - FOL\Model\ORM\Services\ServiceYear
 
     - FOL\Model\Card\CardFactory
 

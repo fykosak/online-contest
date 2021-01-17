@@ -26,14 +26,14 @@ class OrgAuthenticator extends AbstractAuthenticator {
                     return new SimpleIdentity($name, self::ROLE);
                 } else {
                     throw new AuthenticationException(
-                        "Heslo se neshoduje.",
+                        'Heslo se neshoduje.',
                         Authenticator::INVALID_CREDENTIAL
                     );
                 }
             }
         }
         throw new AuthenticationException(
-            "Org '$username' neexistuje.",
+            sprintf('Org %s neexistuje.', $username),
             Authenticator::IDENTITY_NOT_FOUND
         );
     }

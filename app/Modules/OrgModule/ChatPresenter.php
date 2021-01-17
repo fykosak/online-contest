@@ -4,7 +4,7 @@ namespace FOL\Modules\OrgModule;
 
 use Dibi\Exception;
 use FOL\Model\ORM\ChatService;
-use FOL\Modules\FrontendModule\Components\ChatList\ChatListComponent;
+use FOL\Components\ChatList\ChatListComponent;
 
 class ChatPresenter extends BasePresenter {
 
@@ -19,8 +19,8 @@ class ChatPresenter extends BasePresenter {
      * @throws Exception
      */
     public function renderDefault(): void {
-        $this->getComponent("chat")->setSource($this->chatService->findAll($this->lang));
-        $this->setPageTitle(_("Diskuse (česká verze)"));
+        $this->getComponent('chat')->setSource($this->chatService->findAll($this->lang));
+        $this->setPageTitle(_('Diskuse (česká verze)'));
     }
 
     protected function createComponentChat(): ChatListComponent {

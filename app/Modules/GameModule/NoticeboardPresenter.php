@@ -46,7 +46,7 @@ class NoticeboardPresenter extends BasePresenter {
             $notifications = $this->notificationModel->findNew($lastAsked, $lang);
         }
 
-        $this->template->setFile(__DIR__ . '/../templates/Noticeboard/@notificationsContainer.latte');
+        $this->template->setFile(__DIR__ . '/templates/Noticeboard/@notificationsContainer.latte');
         $this->template->notifications = $notifications;
 
         $payload = [

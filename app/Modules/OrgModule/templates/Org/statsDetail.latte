@@ -1,5 +1,4 @@
 {block #body}
-    {control flashMessages}
     {if $available}
         {cache "scoreList/" . $presenter->lang, tags => [$presenter::STATS_TAG]}
             {control scoreList}

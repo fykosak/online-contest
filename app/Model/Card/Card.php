@@ -2,14 +2,15 @@
 
 namespace FOL\Model\Card;
 
-use Dibi\Row;
+use Dibi\Exception;
 use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
 use FOL\Model\ORM\Models\ModelCardUsage;
+use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceCardUsage;
 use FOL\Model\ORM\TasksService;
 use Fykosak\Utils\Logging\Logger;
-use Nette\Application\UI\Form;
 use Nette\Database\Explorer;
+use Nette\Forms\Container;
 use Nette\SmartObject;
 use Nette\Utils\Html;
 use Throwable;
@@ -20,12 +21,12 @@ abstract class Card {
 
     protected Explorer $explorer;
     protected ServiceCardUsage $serviceCardUsage;
-    protected Row $team;
+    protected ModelTeam $team;
     protected TasksService $tasksService;
     /* cache*/
     private array $tasks;
 
-    public function __construct(Row $team) {
+    public function __construct(ModelTeam $team) {
         $this->team = $team;
     }
 
@@ -55,6 +56,10 @@ abstract class Card {
         return serialize($values);
     }
 
+    protected function deserializeData(string $values): array {
+        return unserialize($values);
+    }
+
     /**
      * @param Logger $logger
      * @param array $values
@@ -73,11 +78,15 @@ abstract class Card {
         }
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     protected function getTasks(): array {
         if (!isset($this->tasks)) {
             $this->tasks = [];
-            foreach ($this->getTasks() as $task) {
-                $this->tasks[$task->id_taks] = $task;
+            foreach ($this->tasksService->findSubmitAvailable($this->team)->fetchAll() as $task) {
+                $this->tasks[$task->id_task] = $task;
             }
         }
         return $this->tasks;
@@ -88,7 +97,7 @@ abstract class Card {
      */
     abstract public function checkRequirements(): void;
 
-    abstract public function decorateForm(Form $form, string $lang): void;
+    abstract public function decorateFormContainer(Container $container, string $lang): void;
 
     /**
      * @param Logger $logger
@@ -103,8 +112,9 @@ abstract class Card {
 
     abstract public function getDescription(): Html;
 
-    public function renderUsage(): Html {
+    public final function renderUsage(): Html {
+        $usage = $this->getUsage();
+        $data = $this->deserializeData($usage->data);
         return Html::el('span')->addText('TODO');
     }
-
 }

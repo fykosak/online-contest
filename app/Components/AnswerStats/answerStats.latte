@@ -1,0 +1,51 @@
+{block content}
+    <div id="flot-placeholder" style="width:500px;height:300px"></div>
+
+    {capture $script}
+        <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="{$basePath}/js/flot/excanvas.min.js"></script><![endif]-->
+        <script type="text/javascript" src="{$basePath}/js/flot/jquery.flot.min.js"></script>
+        <script type="text/javascript" src="{$basePath}/js/flot/jquery.flot.time.min.js"></script>
+        <script type="text/javascript" src="{$basePath}/js/flot/jquery.flot.axislabels.js"></script>
+        <script type="text/javascript" src="{$basePath}/js/flot/jquery.flot.symbol.min.js"></script>
+        <script type="text/javascript">
+            var data = [{foreach $taskData['answers'] as $answer}[{$answer['value']},{$answer['inserted']}],{/foreach}];
+        </script>
+        <script type="text/javascript" n:syntax="off">
+            //var data = [[1, 130], [2, 40], [3, 80], [4, 160], [5, 159], [6, 370], [7, 330], [8, 350], [9, 370], [10, 400], [11, 330], [12, 350]];
+
+            var dataset = [{data : data}];
+
+            var options = {
+                series: {
+                    lines: {show : false},
+                    points: {
+                        radius: 3,
+                        show: true
+                    }
+                },
+                /*xaxis: {
+                    transform: function (v) { return Math.log(v); },
+                    inverseTransform: function (v) { return Math.exp(v); }
+                },*/
+                yaxis: {
+                    mode: "time"
+                },
+                grid: {
+                    markings: [
+                        {color : "#000", lineWidth: 1, xaxis: {from: 1, to: 1}},
+                        {color : "#000", lineWidth: 1, xaxis: {from: -1, to: -1}}
+                    ],
+                    hoverable: true
+                }
+            };
+
+            $(document).ready(function () {
+                $.plot($("#flot-placeholder"),
+                    dataset,
+                    options);
+                $("#flot-placeholder").UseTooltip();
+            });
+        </script>
+    {/capture}
+    {$presenter->addCustomScript($script)}
+{/block}
