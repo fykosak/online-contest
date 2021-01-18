@@ -3,6 +3,7 @@
 namespace FOL\Model\Card;
 
 use Dibi\Exception;
+use FOL\Model\Card\Exceptions\CardAlreadyUsedException;
 use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
 use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTeam;
@@ -37,7 +38,6 @@ abstract class Card {
         $this->serviceCardUsage = $serviceCardUsage;
         $this->tasksService = $tasksService;
         $this->serviceTask = $serviceTask;
-
     }
 
     public final function wasUsed(): bool {
@@ -72,6 +72,9 @@ abstract class Card {
     final public function handle(Logger $logger, array $values): void {
         $this->explorer->beginTransaction();
         try {
+            if ($this->wasUsed()) {
+                throw new CardAlreadyUsedException();
+            }
             $this->checkRequirements();
             $this->innerHandle($logger, $values);
             $this->logUsage($values);

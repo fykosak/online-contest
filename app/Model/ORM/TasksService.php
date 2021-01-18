@@ -150,7 +150,7 @@ class TasksService extends AbstractService {
 
     /**
      * @param $team
-     * @param $task
+     * @param mixed|ModelTask $task
      * @return Result|int
      * @throws Exception
      */
@@ -158,32 +158,33 @@ class TasksService extends AbstractService {
         // Check that skip is allowed for task
         $answers = $this->answersService->findAllCorrect($team->id_team)->where('[id_task] = %i', $task->id_task);
         if ($answers->count() > 0) {
-            $this->log($team, 'skip_tried', 'The team tried to skip the task [$task->id_task].');
+            $this->log($team->id_team, 'skip_tried', 'The team tried to skip the task [$task->id_task].');
             throw new InvalidStateException('Skipping not allowed for the task [$task->id_task].', AnswersService::ERROR_SKIP_OF_ANSWERED);
         }
 
         // Check that skip is allowed in period
         $skippAbleGroups = $this->groupsService->findAllSkippable()->fetchPairs('id_group', 'id_group');
         if (!array_key_exists($task['id_group'], $skippAbleGroups)) {
-            $this->log($team, 'skip_tried', 'The team tried to skip the task [$task->id_task].');
+            $this->log($team->id_team, 'skip_tried', 'The team tried to skip the task [$task->id_task].');
             throw new InvalidStateException('Skipping not allowed during this period.', AnswersService::ERROR_SKIP_OF_PERIOD);
         }
         // Insert a skip record
         $return = $this->getDibiConnection()->insert('task_state', [
-            'id_team' => $team,
+            'id_team' => $team->id_team,
             'id_task' => $task['id_task'],
             'inserted' => new DateTime(),
             'skipped' => 1,
-            'points' => null,])->execute();
+            'points' => null,
+        ])->execute();
 
         // Increase counter
         $sql = 'INSERT INTO [group_state] ([id_group], [id_team], [task_counter])
                     VALUES(%i, %i, 0)
                 ON DUPLICATE KEY UPDATE [task_counter] = [task_counter] + 1';
-        $this->getDibiConnection()->query($sql, $task->id_group, $team);
+        $this->getDibiConnection()->query($sql, $task->id_group, $team->id_team);
 
         // Log the action
-        $this->log($team, 'task_skipped', 'The team successfuly skipped the task [$task->id_task].');
+        $this->log($team->id_team, 'task_skipped', 'The team successfuly skipped the task [$task->id_task].');
         return $return;
     }
 

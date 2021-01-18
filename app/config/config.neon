@@ -37,6 +37,7 @@ services:
     - FOL\Model\ORM\Services\ServiceTeam
     - FOL\Model\ORM\Services\ServiceYear
     - FOL\Model\ORM\Services\ServiceTask
+    - FOL\Model\ORM\Services\ServiceGroup
 
     - FOL\Model\Card\CardFactory
 

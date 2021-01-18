@@ -56,7 +56,7 @@ class AnswerPresenter extends BasePresenter {
     }
 
     protected function createComponentAnswerHistory(): AnswerHistoryComponent {
-        return new AnswerHistoryComponent($this->getContext());
+        return new AnswerHistoryComponent($this->getContext(), $this->getLoggedTeam());
     }
 
     private ?ModelTask $task;
