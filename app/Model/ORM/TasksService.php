@@ -154,7 +154,7 @@ class TasksService extends AbstractService {
      * @return Result|int
      * @throws Exception
      */
-    public function skip(ModelTeam $team, $task) {
+    public function skip(ModelTeam $team, ModelTask $task) {
         // Check that skip is allowed for task
         $answers = $this->answersService->findAllCorrect($team->id_team)->where('[id_task] = %i', $task->id_task);
         if ($answers->count() > 0) {

@@ -6,18 +6,26 @@ use Dibi\Exception;
 use FOL\Model\ORM\ChatService;
 use FOL\Components\BaseForm;
 use FOL\Components\VisualPaginator\VisualPaginatorComponent;
+use FOL\Model\ORM\Models\ModelTeam;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Dibi\DriverException;
 use FOL\Components\BaseListComponent;
 use Nette\ComponentModel\IComponent;
+use Nette\DI\Container;
 
 class ChatListComponent extends BaseListComponent {
 
     protected ChatService $chatService;
+    private ?ModelTeam $team;
 
     public function injectChatService(ChatService $chatService): void {
         $this->chatService = $chatService;
+    }
+
+    public function __construct(Container $container, ?ModelTeam $team) {
+        parent::__construct($container);
+        $this->team = $team;
     }
 
     /**
@@ -40,16 +48,9 @@ class ChatListComponent extends BaseListComponent {
 
         // Insert a chat post
         try {
-            if ($user->isInRole('org')) {
-                $team = null;
-                $org = 1;
-            } else {
-                $team = $user->getIdentity()->id_team;
-                $org = 0;
-            }
             $this->chatService->insert(
-                $team,
-                $org,
+                isset($this->team) ? $this->team->id_team : null,
+                isset($this->team) ? 0 : 1,
                 $values['content'],
                 $values['parent_id'],
                 $this->getPresenter()->lang

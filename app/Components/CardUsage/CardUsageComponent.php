@@ -20,7 +20,7 @@ class CardUsageComponent extends BaseComponent {
     public function render(): void {
         $this->template->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'layout.latte');
         $this->template->usage = $this->card->getUsage();
-        $this->template->html = $this->card->renderUsage();
+        $this->template->html = $this->card->renderUsage($this->lang);
         parent::render();
     }
 }

@@ -24,6 +24,6 @@ class ChatPresenter extends BasePresenter {
     }
 
     protected function createComponentChat(): ChatListComponent {
-        return new ChatListComponent($this->getContext());
+        return new ChatListComponent($this->getContext(),$this->getLoggedTeam());
     }
 }

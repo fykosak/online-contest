@@ -4,10 +4,12 @@ namespace FOL\Model\ORM\Models;
 
 use DateTimeInterface;
 use Fykosak\Utils\ORM\AbstractModel;
+use Nette\Database\Table\ActiveRow;
 
 /**
  * @property-read int id_task
  * @property-read int id_group
+ * @property-read ActiveRow group
  * @property-read int number
  * @property-read string name_cs
  * @property-read string name_en
@@ -27,4 +29,7 @@ use Fykosak\Utils\ORM\AbstractModel;
  */
 class ModelTask extends AbstractModel {
 
+    public function getGroup(): ModelGroup {
+        return ModelGroup::createFromActiveRow($this->group);
+    }
 }

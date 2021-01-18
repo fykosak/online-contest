@@ -34,6 +34,7 @@ class CardFormComponent extends BaseComponent {
             $logger = new MemoryLogger();
             $this->card->handle($logger, $form->getValues('array')[self::CONTAINER]);
             FlashMessageDump::dump($logger, $this->getPresenter());
+            $this->getPresenter()->redirect('this');
         };
         return $form;
     }

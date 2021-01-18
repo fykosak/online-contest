@@ -6,10 +6,12 @@ use Dibi\Exception;
 use FOL\Model\Card\Exceptions\CardAlreadyUsedException;
 use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
 use FOL\Model\ORM\Models\ModelCardUsage;
+use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceCardUsage;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\TasksService;
+use Fykosak\Utils\Localization\GettextTranslator;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Database\Explorer;
 use Nette\Forms\Container;
@@ -60,8 +62,8 @@ abstract class Card {
         return serialize($values);
     }
 
-    protected function deserializeData(string $values): array {
-        return unserialize($values);
+    protected function deserializeData(): array {
+        return unserialize($this->getUsage()->data);
     }
 
     /**
@@ -72,9 +74,6 @@ abstract class Card {
     final public function handle(Logger $logger, array $values): void {
         $this->explorer->beginTransaction();
         try {
-            if ($this->wasUsed()) {
-                throw new CardAlreadyUsedException();
-            }
             $this->checkRequirements();
             $this->innerHandle($logger, $values);
             $this->logUsage($values);
@@ -99,10 +98,27 @@ abstract class Card {
         return $this->tasks;
     }
 
+    public final function renderUsage(string $lang): Html {
+        $usage = $this->getUsage();
+        $mainContainer = Html::el('div');
+        $mainContainer->addHtml(Html::el('div')
+            ->setAttribute('class', 'row')
+            ->addHtml(Html::el('b')->setAttribute('class', 'col')->addText(_('Used')))
+            ->addHtml(Html::el('span')->setAttribute('class', 'col')->addText($usage->created))
+        );
+        $mainContainer->addHtml(Html::el('hr'));
+        $this->innerRenderUsage($lang, $mainContainer);
+        return $mainContainer;
+    }
+
     /**
      * @throws CardCannotBeUsedException
      */
-    abstract public function checkRequirements(): void;
+    public function checkRequirements(): void {
+        if ($this->wasUsed()) {
+            throw new CardAlreadyUsedException();
+        }
+    }
 
     abstract public function decorateFormContainer(Container $container, string $lang): void;
 
@@ -119,9 +135,5 @@ abstract class Card {
 
     abstract public function getDescription(): Html;
 
-    public final function renderUsage(): Html {
-        $usage = $this->getUsage();
-        $data = $this->deserializeData($usage->data);
-        return Html::el('span')->addText('TODO');
-    }
+    abstract protected function innerRenderUsage(string $lang, Html $mainContainer): void;
 }

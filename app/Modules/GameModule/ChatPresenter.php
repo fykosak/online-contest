@@ -7,6 +7,7 @@ use FOL\Model\ORM\ChatService;
 use FOL\Components\ChatList\ChatListComponent;
 
 class ChatPresenter extends BasePresenter {
+
     protected ChatService $chatService;
 
     public function injectSecondary(ChatService $chatService): void {
@@ -23,6 +24,6 @@ class ChatPresenter extends BasePresenter {
     }
 
     protected function createComponentChat(): ChatListComponent {
-        return new ChatListComponent($this->getContext());
+        return new ChatListComponent($this->getContext(), null);
     }
 }

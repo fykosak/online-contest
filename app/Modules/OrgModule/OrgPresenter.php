@@ -2,6 +2,7 @@
 
 namespace FOL\Modules\OrgModule;
 
+use Dibi\Exception;
 use FOL\Model\Authentication\OrgAuthenticator;
 use FOL\Model\ORM\TasksService;
 use FOL\Components\AnswerStats\AnswerStatsComponent;
@@ -40,7 +41,7 @@ class OrgPresenter extends BasePresenter {
     /**
      * @param int $taskId
      * @return void
-     * @throws \Dibi\Exception
+     * @throws Exception
      */
     public function renderAnswerStats($taskId = 1): void {
         $this->setPageTitle(_('Statistiky odpovědí'));

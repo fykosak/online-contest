@@ -10,6 +10,7 @@ use FOL\Model\Card\Exceptions\TaskNotAvailableException;
 use FOL\Model\ORM\Services\ServiceTaskHint;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Forms\Container;
+use Nette\NotImplementedException;
 use Nette\Utils\Html;
 
 class HintCard extends Card {
@@ -65,6 +66,10 @@ class HintCard extends Card {
         $container->addSelect('task', _('Task'), $items);
     }
 
+    /**
+     * @return bool
+     * @throws Exception
+     */
     private function hasAnyTaskHint(): bool {
         foreach ($this->getTasks() as $task) {
             if ($this->serviceTaskHint->getTaskHint($task->id_task)) {
@@ -75,11 +80,18 @@ class HintCard extends Card {
     }
 
     /**
+     * @throws Exception
+     * @throws NoTasksWithHintAvailableException
      * @throws CardCannotBeUsedException
      */
     public function checkRequirements(): void {
+        parent::checkRequirements();
         if (!$this->hasAnyTaskHint()) {
             throw new NoTasksWithHintAvailableException();
         }
+    }
+
+    protected function innerRenderUsage(string $lang, Html $mainContainer): void {
+        throw new NotImplementedException();
     }
 }
