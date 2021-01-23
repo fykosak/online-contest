@@ -2,9 +2,11 @@
 
 namespace FOL\Components\Results;
 
-use Dibi\Exception;
-use FOL\Model\ORM\CompetitorsService;
+use FOL\Model\ORM\Models\ModelCompetitor;
+use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\ScoreService;
+use FOL\Model\ORM\Services\ServiceCompetitor;
+use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\TasksService;
 use FOL\Model\ORM\TeamsService;
 use FOL\Components\BaseComponent;
@@ -16,18 +18,21 @@ class ResultsComponent extends BaseComponent {
     protected TasksService $tasksService;
     protected TeamsService $teamsService;
     protected ScoreService $scoreService;
-    protected CompetitorsService $competitorsService;
+    protected ServiceCompetitor $serviceCompetitors;
+    private ServiceTask $serviceTask;
 
     public function injectPrimary(
         TasksService $tasksService,
         TeamsService $teamsService,
         ScoreService $scoreService,
-        CompetitorsService $competitorsService
+        ServiceCompetitor $serviceCompetitors,
+        ServiceTask $serviceTask
     ): void {
         $this->tasksService = $tasksService;
         $this->teamsService = $teamsService;
         $this->scoreService = $scoreService;
-        $this->competitorsService = $competitorsService;
+        $this->serviceCompetitors = $serviceCompetitors;
+        $this->serviceTask = $serviceTask;
     }
 
     /**
@@ -39,17 +44,14 @@ class ResultsComponent extends BaseComponent {
         parent::render();
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     protected function beforeRender(): void {
         $this->template->display = $this->display;
 
         $this->template->teams = $this->teamsService->findAllWithScore();
 
-        $competitors = $this->competitorsService->findAll();
+        $competitors = $this->serviceCompetitors->getTable();
         $teamCountries = [];
+        /** @var ModelCompetitor $competitor */
         foreach ($competitors as $competitor) {
             if (!array_key_exists($competitor->id_team, $teamCountries)) {
                 $teamCountries[$competitor->id_team] = [];
@@ -61,10 +63,10 @@ class ResultsComponent extends BaseComponent {
         $this->template->bonus = $this->scoreService->findAllBonus();
         $this->template->penality = $this->scoreService->findAllPenality();
 
-        $tasks = $this->tasksService->findAll();
         $maxBonus = 0;
         $maxPoints = 0;
-        foreach ($tasks as $task) {
+        /** @var ModelTask $task */
+        foreach ($this->serviceTask->getTable() as $task) {
             $hurry = ($task->id_group == 1) ? false : true; //dle SQL id_group=2,3,4
             $maxPoints += $task->points;
             if ($hurry) {

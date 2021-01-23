@@ -2,8 +2,7 @@
 
 namespace FOL\Components\RecoverForm;
 
-use Dibi\Exception;
-use FOL\Model\ORM\CompetitorsService;
+use FOL\Model\ORM\Services\ServiceCompetitor;
 use FOL\Model\ORM\TeamsService;
 use FOL\Components\BaseForm;
 use Nette\Application\AbortException;
@@ -19,18 +18,18 @@ class RecoverFormComponent extends BaseComponent {
     private TeamAuthenticator $authenticator;
     private Mailer $mailer;
     protected TeamsService $teamsService;
-    protected CompetitorsService $competitorsService;
+    protected ServiceCompetitor $serviceCompetitors;
 
     public function injectPrimary(
         TeamAuthenticator $authenticator,
         Mailer $mailer,
         TeamsService $teamsService,
-        CompetitorsService $competitorsService
+        ServiceCompetitor $serviceCompetitors
     ): void {
         $this->authenticator = $authenticator;
         $this->mailer = $mailer;
         $this->teamsService = $teamsService;
-        $this->competitorsService = $competitorsService;
+        $this->serviceCompetitors = $serviceCompetitors;
     }
 
     /**
@@ -38,25 +37,25 @@ class RecoverFormComponent extends BaseComponent {
      * @return void
      * @throws AbortException
      * @throws InvalidLinkException
-     * @throws Exception
      */
     private function formSubmitted(Form $form): void {
         $values = $form->getValues();
-        $team = $this->teamsService->findByEmail($values['email']);
-        if (!$team) {
+
+        $competitor = $this->serviceCompetitors->findByEmail($values['email']);
+        if (!$competitor) {
             $this->getPresenter()->flashMessage(_('Tým nenalezen.'), 'danger');
             $this->getPresenter()->redirect('Default:default');
         }
-
-        $competitors = $this->competitorsService->findAllByTeam($team['id_team']);
-        $token = $this->authenticator->createRecoveryToken($team['id_team']);
+        $team = $competitor->getTeam();
+        $competitors = $this->serviceCompetitors->findAllByTeam($team);
+        $token = $this->authenticator->createRecoveryToken($team);
 
         if (is_null($token)) {
             $this->getPresenter()->flashMessage(_('Tým se již pokouší o obnovu hesla.'), 'danger');
             $this->getPresenter()->redirect('Default:default');
         }
 
-        $message = new Message;
+        $message = new Message();
         $prefs = $this->getPresenter()->context->parameters['mail'];
 
         //this way it works behind reverse proxy, but is ugly
@@ -70,7 +69,7 @@ class RecoverFormComponent extends BaseComponent {
             $message->addTo($competitor['email']);
         }
         $this->mailer->send($message);
-        $this->getPresenter()->flashMessage(_('E-mail pro obnovu byl odeslán.'), 'info');
+        $this->getPresenter()->flashMessage(_('E-mail pro obnovu byl odeslán.'));
         $this->getPresenter()->redirect('Default:default');
     }
 

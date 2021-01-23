@@ -4,7 +4,6 @@ namespace FOL\Model\Card;
 
 use Fykosak\Utils\Logging\Logger;
 use Nette\Forms\Container;
-use Nette\NotImplementedException;
 use Nette\Utils\Html;
 
 class ResetCard extends Card {
@@ -33,9 +32,5 @@ class ResetCard extends Card {
     public function getDescription(): Html {
         // TODO: Implement getDescription() method.
         return Html::el('span')->addText('TODO');
-    }
-
-    protected function innerRenderUsage(string $lang, Html $mainContainer): void {
-        throw new NotImplementedException();
     }
 }

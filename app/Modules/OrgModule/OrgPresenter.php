@@ -2,9 +2,8 @@
 
 namespace FOL\Modules\OrgModule;
 
-use Dibi\Exception;
 use FOL\Model\Authentication\OrgAuthenticator;
-use FOL\Model\ORM\TasksService;
+use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Components\AnswerStats\AnswerStatsComponent;
 use FOL\Components\LoginForm\LoginFormComponent;
 use FOL\Components\Results\ResultsComponent;
@@ -16,11 +15,11 @@ class OrgPresenter extends BasePresenter {
     const STATS_TAG = 'orgStats';
 
     protected OrgAuthenticator $authenticator;
-    protected TasksService $tasksModel;
+    private ServiceTask $serviceTask;
 
-    public function injectSecondary(TasksService $tasksModel, OrgAuthenticator $authenticator): void {
-        $this->tasksModel = $tasksModel;
+    public function injectSecondary(OrgAuthenticator $authenticator, ServiceTask $serviceTask): void {
         $this->authenticator = $authenticator;
+        $this->serviceTask = $serviceTask;
     }
 
     protected function startUp(): void {
@@ -41,12 +40,11 @@ class OrgPresenter extends BasePresenter {
     /**
      * @param int $taskId
      * @return void
-     * @throws Exception
      */
     public function renderAnswerStats($taskId = 1): void {
         $this->setPageTitle(_('Statistiky odpovědí'));
         $this->template->taskId = $taskId;
-        $this->template->tasks = $this->tasksModel->findAll()->fetchAll();
+        $this->template->tasks = $this->serviceTask->getTable();
     }
 
     public function renderStats(): void {

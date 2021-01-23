@@ -2,9 +2,8 @@
 
 namespace FOL\Components\PasswordChangeForm;
 
-use Dibi\Exception;
 use FOL\Model\ORM\Models\ModelTeam;
-use FOL\Model\ORM\TeamsService;
+use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Components\BaseForm;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
@@ -14,32 +13,29 @@ use Nette\DI\Container;
 
 class PasswordChangeFormComponent extends BaseComponent {
 
-    protected TeamsService $teamsService;
     private ModelTeam $team;
+    private ServiceTeam $serviceTeam;
 
     public function __construct(Container $container, ModelTeam $team) {
         parent::__construct($container);
         $this->team = $team;
     }
 
-    public function injectTeamsService(TeamsService $teamsService): void {
-        $this->teamsService = $teamsService;
+    public function injectTeamsService(ServiceTeam $serviceTeam): void {
+        $this->serviceTeam = $serviceTeam;
     }
 
     /**
      * @param Form $form
-     * @return void
-     * @throws Exception
      * @throws AbortException
      */
     private function formSubmitted(Form $form): void {
         $values = $form->getValues();
-        $changes = [
+        $this->serviceTeam->updateModel2($this->team, [
             'password' => TeamAuthenticator::passwordHash($values['password']),
-        ];
-        $this->teamsService->update($changes)->where('[id_team] = %i', $this->team->id_team)->execute();
+        ]);
 
-        $this->getPresenter()->flashMessage(_('Heslo bylo změněno.'), 'info');
+        $this->getPresenter()->flashMessage(_('Heslo bylo změněno.'));
         $this->getPresenter()->redirect('Team:default');
     }
 

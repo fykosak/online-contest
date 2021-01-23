@@ -1,0 +1,17 @@
+{layout ./@layout.latte}
+{block usage}
+    {varType FOL\Model\Card\SkipCard $card}
+    {varType string $lang}
+    {var $data = $card->getUsage()->getData()}
+    <ul>
+        {foreach $data as $taskId => $skip}
+            {continueIf !$skip}
+            {varType FOL\Model\ORM\Models\ModelTask $task}
+            {var $task = $card->serviceTask->findByPrimary($taskId)}
+            <li>
+                <strong>{$task->getGroup()->code_name}{$task->number}</strong>
+                <span>{Fykosak\Utils\Localization\GettextTranslator::i18nHelper($task, 'name', $lang)}</span>
+            </li>
+        {/foreach}
+    </ul>
+{/block}

@@ -2,32 +2,26 @@
 
 namespace FOL\Modules\GameModule;
 
-use Dibi\Exception;
-use FOL\Model\ORM\NotificationService;
+use FOL\Model\ORM\Services\ServiceNotification;
 use Nette\Application\AbortException;
 use Nette\Application\Responses\JsonResponse;
 use Nette\NotSupportedException;
 
 class NoticeboardPresenter extends BasePresenter {
 
-    protected NotificationService $notificationModel;
+    protected ServiceNotification $serviceNotification;
 
-    public function injectSecondary(NotificationService $notificationModel): void {
-        $this->notificationModel = $notificationModel;
+    public function injectSecondary(ServiceNotification $serviceNotification): void {
+        $this->serviceNotification = $serviceNotification;
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     public function renderDefault(): void {
-        $this->template->notifications = $this->notificationModel->findActive($this->lang);
+        $this->template->notifications = $this->serviceNotification->getActive($this->lang);
         $this->setPageTitle(_('Důležitá oznámení'));
     }
 
     /**
      * @return void
-     * @throws Exception
      * @throws AbortException
      */
     public function actionAjax(): void {
@@ -43,7 +37,7 @@ class NoticeboardPresenter extends BasePresenter {
         if ($lastAsked == null) {
             $notifications = [];
         } else {
-            $notifications = $this->notificationModel->findNew($lastAsked, $lang);
+            $notifications = $this->serviceNotification->getNew($lastAsked, $lang);
         }
 
         $this->template->setFile(__DIR__ . '/templates/Noticeboard/@notificationsContainer.latte');

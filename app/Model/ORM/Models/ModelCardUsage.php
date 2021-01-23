@@ -15,4 +15,11 @@ use Fykosak\Utils\ORM\AbstractModel;
  */
 class ModelCardUsage extends AbstractModel {
 
+    public static function serializeData(array $values): string {
+        return serialize($values);
+    }
+
+    public function getData(): array {
+        return unserialize($this->data);
+    }
 }

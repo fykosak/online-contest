@@ -12,7 +12,6 @@
     "php": ">= 7.4.0",
     "nette/nette": "v3.1.0",
     "dg/adminer-custom": ">= 1.6",
-    "dibi/dibi": "~v4.2.0",
     "fykosak/nette-fks-utils": "dev-master",
     "texy/texy": "^2.6",
     "ext-gettext": "*"

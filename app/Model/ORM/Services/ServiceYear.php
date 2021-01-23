@@ -18,4 +18,8 @@ class ServiceYear extends AbstractService {
         $year = $this->getTable()->fetch();
         return $year;
     }
+
+    public function isGameMigrated(): bool {
+        return $this->getCurrent()->isRegistrationEnd() && ($this->context->table('team')->count() != 0);
+    }
 }

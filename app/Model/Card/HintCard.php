@@ -2,7 +2,6 @@
 
 namespace FOL\Model\Card;
 
-use Dibi\Exception;
 use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
 use FOL\Model\Card\Exceptions\NoTasksWithHintAvailableException;
 use FOL\Model\Card\Exceptions\TaskDoesNotHaveHintException;
@@ -10,7 +9,6 @@ use FOL\Model\Card\Exceptions\TaskNotAvailableException;
 use FOL\Model\ORM\Services\ServiceTaskHint;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Forms\Container;
-use Nette\NotImplementedException;
 use Nette\Utils\Html;
 
 class HintCard extends Card {
@@ -24,7 +22,6 @@ class HintCard extends Card {
     /**
      * @param Logger $logger
      * @param array $values
-     * @throws Exception
      * @throws TaskDoesNotHaveHintException
      * @throws TaskNotAvailableException
      */
@@ -51,11 +48,6 @@ class HintCard extends Card {
         return Html::el('span')->addText('TODO');
     }
 
-    /**
-     * @param Container $container
-     * @param string $lang
-     * @throws Exception
-     */
     public function decorateFormContainer(Container $container, string $lang): void {
         $items = [];
         foreach ($this->tasksService->findSubmitAvailable($this->team)->fetchAll() as $task) {
@@ -66,10 +58,6 @@ class HintCard extends Card {
         $container->addSelect('task', _('Task'), $items);
     }
 
-    /**
-     * @return bool
-     * @throws Exception
-     */
     private function hasAnyTaskHint(): bool {
         foreach ($this->getTasks() as $task) {
             if ($this->serviceTaskHint->getTaskHint($task->id_task)) {
@@ -80,7 +68,6 @@ class HintCard extends Card {
     }
 
     /**
-     * @throws Exception
      * @throws NoTasksWithHintAvailableException
      * @throws CardCannotBeUsedException
      */
@@ -89,9 +76,5 @@ class HintCard extends Card {
         if (!$this->hasAnyTaskHint()) {
             throw new NoTasksWithHintAvailableException();
         }
-    }
-
-    protected function innerRenderUsage(string $lang, Html $mainContainer): void {
-        throw new NotImplementedException();
     }
 }

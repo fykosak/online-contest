@@ -10,7 +10,6 @@ use Fykosak\Utils\Localization\GettextTranslator;
 use FOL\Components\NotificationMessages\NotificationMessagesComponent;
 use FOL\Tools\InterlosTemplate;
 use FOL\Components\Navigation\Navigation;
-use FOL\Model\ORM\YearsService;
 use Fykosak\Utils\Localization\UnsupportedLanguageException;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
@@ -25,7 +24,6 @@ abstract class BasePresenter extends Presenter {
 
     private ?ModelTeam $loggedTeam2;
 
-    public YearsService $yearsService;
 
     protected GettextTranslator $translator;
     protected ServiceTeam $serviceTeam;
@@ -33,8 +31,7 @@ abstract class BasePresenter extends Presenter {
 
     private ModelYear $currentYear;
 
-    public function injectServices(YearsService $yearsService, GettextTranslator $translator, ServiceTeam $serviceTeam, ServiceYear $serviceYear): void {
-        $this->yearsService = $yearsService;
+    public function injectServices( GettextTranslator $translator, ServiceTeam $serviceTeam, ServiceYear $serviceYear): void {
         $this->translator = $translator;
         $this->serviceTeam = $serviceTeam;
         $this->serviceYear = $serviceYear;

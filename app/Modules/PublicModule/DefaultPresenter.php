@@ -2,23 +2,7 @@
 
 namespace FOL\Modules\PublicModule;
 
-use FOL\Model\Authentication\TeamAuthenticator;
-use FOL\Model\ORM\ChatService;
-use Nette\Mail\Mailer;
-
 class DefaultPresenter extends BasePresenter {
-
-    protected ChatService $chatService;
-
-    protected TeamAuthenticator $authenticator;
-
-    protected Mailer $mailer;
-
-    public function injectSecondary(Mailer $mailer, TeamAuthenticator $authenticator, ChatService $chatService): void {
-        $this->mailer = $mailer;
-        $this->authenticator = $authenticator;
-        $this->chatService = $chatService;
-    }
 
     protected function startUp(): void {
         parent::startUp();

@@ -2,9 +2,8 @@
 
 namespace FOL\Components\NotificationForm;
 
-use Dibi\Exception;
-use FOL\Model\ORM\NotificationService;
 use FOL\Components\BaseForm;
+use FOL\Model\ORM\Services\ServiceNotification;
 use Nette\Application\AbortException;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
@@ -13,16 +12,15 @@ use FOL\Components\BaseComponent;
 
 class NotificationFormComponent extends BaseComponent {
 
-    protected NotificationService $notificationModel;
+    protected ServiceNotification $serviceNotification;
 
-    public function injectNotificationService(NotificationService $notificationModel): void {
-        $this->notificationModel = $notificationModel;
+    public function injectNotificationService(ServiceNotification $serviceNotification): void {
+        $this->serviceNotification = $serviceNotification;
     }
 
     /**
      * @param Form $form
      * @return void
-     * @throws Exception
      * @throws AbortException
      * @throws BadRequestException
      */
@@ -32,8 +30,13 @@ class NotificationFormComponent extends BaseComponent {
         }
 
         $values = $form->getValues();
-        $this->notificationModel->insert($values['message'], $this->translator->getSupportedLanguages()[$values['lang']]);
-        $this->getPresenter()->flashMessage(_('Notifikace byla vložena'), 'info');
+        $this->serviceNotification->createNewModel(
+            [
+                'message' => $values['message'],
+                'lang' => $this->translator->getSupportedLanguages()[$values['lang']],
+            ]
+        );
+        $this->getPresenter()->flashMessage(_('Notifikace byla vložena'));
         $this->getPresenter()->redirect('Noticeboard:add');
     }
 

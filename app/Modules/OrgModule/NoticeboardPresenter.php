@@ -2,18 +2,11 @@
 
 namespace FOL\Modules\OrgModule;
 
-use FOL\Model\ORM\NotificationService;
 use FOL\Components\NotificationForm\NotificationFormComponent;
 use Nette\Application\BadRequestException;
 use Nette\Http\Response;
 
 class NoticeboardPresenter extends BasePresenter {
-
-    protected NotificationService $notificationModel;
-
-    public function injectSecondary(NotificationService $notificationModel): void {
-        $this->notificationModel = $notificationModel;
-    }
 
     /**
      * @return void

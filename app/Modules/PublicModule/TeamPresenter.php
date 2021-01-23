@@ -3,7 +3,7 @@
 namespace FOL\Modules\PublicModule;
 
 use FOL\Model\Authentication\TeamAuthenticator;
-use Dibi\Exception;
+use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Model\ORM\TeamsService;
 use FOL\Components\PasswordChangeForm\PasswordChangeFormComponent;
 use FOL\Components\TeamList\TeamListComponent;
@@ -16,13 +16,12 @@ use Nette\Utils\Html;
 
 class TeamPresenter extends BasePresenter {
 
-    protected TeamsService $teamsService;
-
     protected TeamAuthenticator $authenticator;
+    protected ServiceTeam $serviceTeam;
 
-    public function injectSecondary(TeamAuthenticator $teamAuthenticator, TeamsService $teamsService): void {
+    public function injectSecondary(TeamAuthenticator $teamAuthenticator, ServiceTeam $serviceTeam): void {
         $this->authenticator = $teamAuthenticator;
-        $this->teamsService = $teamsService;
+        $this->serviceTeam = $serviceTeam;
     }
 
     /**
@@ -43,7 +42,6 @@ class TeamPresenter extends BasePresenter {
     /**
      * @param string|null $token
      * @return void
-     * @throws Exception
      * @throws AbortException
      * @throws BadRequestException
      */
@@ -89,16 +87,12 @@ class TeamPresenter extends BasePresenter {
         }
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     public function renderList(): void {
         $this->setPageTitle(_('Seznam týmů'));
         $this->getComponent('teamList')->setSource(
-            $this->teamsService->findAll()
+            $this->serviceTeam->getTable()
         );
-        $this->template->categories = $this->teamsService->getCategoryNames();
+        $this->template->categories = TeamsService::getCategoryNames();
     }
 
     public function renderRegistration(): void {

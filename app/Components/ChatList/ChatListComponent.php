@@ -2,25 +2,26 @@
 
 namespace FOL\Components\ChatList;
 
-use Dibi\Exception;
-use FOL\Model\ORM\ChatService;
+use DateTime;
 use FOL\Components\BaseForm;
 use FOL\Components\VisualPaginator\VisualPaginatorComponent;
+use FOL\Model\ORM\Models\ModelChat;
 use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Services\ServiceChat;
+use Fykosak\Utils\ORM\Exceptions\ModelException;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
-use Dibi\DriverException;
 use FOL\Components\BaseListComponent;
 use Nette\ComponentModel\IComponent;
 use Nette\DI\Container;
 
 class ChatListComponent extends BaseListComponent {
 
-    protected ChatService $chatService;
+    private ServiceChat $serviceChat;
     private ?ModelTeam $team;
 
-    public function injectChatService(ChatService $chatService): void {
-        $this->chatService = $chatService;
+    public function injectChatService(ServiceChat $serviceChat): void {
+        $this->serviceChat = $serviceChat;
     }
 
     public function __construct(Container $container, ?ModelTeam $team) {
@@ -31,7 +32,6 @@ class ChatListComponent extends BaseListComponent {
     /**
      * @param Form $form
      * @return void
-     * @throws Exception
      * @throws AbortException
      */
     private function handleChatSuccess(Form $form): void {
@@ -48,42 +48,39 @@ class ChatListComponent extends BaseListComponent {
 
         // Insert a chat post
         try {
-            $this->chatService->insert(
-                isset($this->team) ? $this->team->id_team : null,
-                isset($this->team) ? 0 : 1,
-                $values['content'],
-                $values['parent_id'],
-                $this->getPresenter()->lang
-            );
+            $this->serviceChat->createNewModel([
+                'id_parent' => $values['parent_id'],
+                'id_team' => isset($this->team) ? $this->team->id_team : null,
+                'org' => isset($this->team) ? 0 : 1,
+                'content' => $values['content'],
+                'lang' => $this->getPresenter()->lang,
+                'inserted' => new DateTime(),
+            ]);
+            $this->serviceLog->log(isset($this->team) ? $this->team->id_team : null, 'chat_inserted', 'The team successfuly contributed to the chat.');
+
             $this->getPresenter()->flashMessage(_('Příspěvek byl vložen.'), 'success');
             $this->getPresenter()->redirect('this');
-        } catch (DriverException $e) {
+        } catch (ModelException $e) {
             $this->flashMessage(_('Chyba při práci s databází.'), 'danger');
             error_log($e->getTraceAsString());
         }
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     protected function beforeRender(): void {
         // Paginator
         $paginator = $this->getPaginator();
         $lang = $this->getPresenter()->lang;
         //$this->getSource()->applyLimit($paginator->itemsPerPage, $paginator->offset);
-        $rootPosts = $this->chatService->findAllRoot($lang)->orderBy('inserted', 'DESC')
-            ->applyLimit($paginator->itemsPerPage, $paginator->offset)
-            ->fetchAll();
+        $rootPosts = $this->serviceChat->getAllRoot($lang)
+            ->order('inserted DESC')
+            ->limit($paginator->itemsPerPage, $paginator->offset);
 
+        /** @var ModelChat[] $rootPosts */
         $posts = [];
         foreach ($rootPosts as $rootPost) {
-            $rootPost['root'] = true;
             $posts[] = $rootPost;
-
-            $descendants = $this->chatService->findDescendants($rootPost['id_chat'], $lang)->orderBy('inserted')->fetchAll();
+            $descendants = $this->serviceChat->getDescendants($rootPost->id_chat, $lang)->order('inserted');
             foreach ($descendants as $descendant) {
-                $descendant['root'] = false;
                 $posts[] = $descendant;
             }
         }
@@ -92,12 +89,12 @@ class ChatListComponent extends BaseListComponent {
     }
 
     /** Override paginator to count only root posts
-     * @throws Exception
+     * @return VisualPaginatorComponent
      */
     protected function createComponentPaginator(): VisualPaginatorComponent {
         $paginator = new VisualPaginatorComponent($this->getContext());
         $paginator->getPaginator()->itemsPerPage = $this->getLimit();
-        $paginator->getPaginator()->itemCount = $this->chatService->findAllRoot($this->getPresenter()->lang)->count();
+        $paginator->getPaginator()->itemCount = $this->serviceChat->getAllRoot($this->getPresenter()->lang)->count();
         return $paginator;
     }
 

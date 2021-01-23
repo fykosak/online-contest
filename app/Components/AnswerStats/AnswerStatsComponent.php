@@ -2,32 +2,25 @@
 
 namespace FOL\Components\AnswerStats;
 
-use Dibi\Exception;
-use FOL\Model\ORM\AnswersService;
-use FOL\Model\ORM\TasksService;
-use FOL\Model\ORM\TeamsService;
+use FOL\Model\ORM\Models\ModelAnswer;
+use FOL\Model\ORM\Models\ModelTask;
+use FOL\Model\ORM\Services\ServiceAnswer;
+use FOL\Model\ORM\Services\ServiceTask;
 use Nette\NotSupportedException;
 use FOL\Components\BaseComponent;
 
 class AnswerStatsComponent extends BaseComponent {
 
-    private AnswersService $answersModel;
-    private TasksService $tasksModel;
-    private TeamsService $teamsModel;
+    private ServiceTask $serviceTask;
+    private ServiceAnswer $serviceAnswer;
 
     private $taskId;
 
-    public function injectPrimary(AnswersService $answersModel, TeamsService $teamsModel, TasksService $tasksModel): void {
-        $this->answersModel = $answersModel;
-        $this->teamsModel = $teamsModel;
-        $this->tasksModel = $tasksModel;
+    public function injectPrimary(ServiceTask $serviceTask, ServiceAnswer $serviceAnswer): void {
+        $this->serviceTask = $serviceTask;
+        $this->serviceAnswer = $serviceAnswer;
     }
 
-    /**
-     * @param int|null $taskId
-     * @return void
-     * @throws Exception
-     */
     public function render(?int $taskId = null): void {
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'answerStats.latte');
         if (!is_numeric($taskId)) {
@@ -38,27 +31,23 @@ class AnswerStatsComponent extends BaseComponent {
         $this->getTemplate()->render();
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     protected function beforeRender(): void {
-        $answers = $this->answersModel->findByTaskId($this->taskId)->fetchAll();
+        $answers = $this->serviceAnswer->findByTaskId($this->taskId);
         //$tasks = $this->tasksModel->findAll()->fetchAssoc('id_task');
-        $task = $this->tasksModel->find($this->taskId);
-        $teams = $this->teamsModel->findAll()->fetchAssoc('id_team');
+        /** @var ModelTask $modelTask */
+        $modelTask = $this->serviceTask->findByPrimary($this->taskId);
 
         //$taskNo = $task['id_group'].'_'.$task['number'];
-
-        if ($task['answer_type'] == 'int') {
-            $correctValue = $task['answer_int'];
+        $tolerance = null;
+        if ($modelTask->answer_type == 'int') {
+            $correctValue = $modelTask->answer_int;
         } else {
-            $correctValue = $task['answer_real'];
-            $tolerance = $task['real_tolerance'];
+            $correctValue = $modelTask->answer_real;
+            $tolerance = $modelTask->real_tolerance;
         }
 
         $taskData = [];
-
+        /** @var ModelAnswer $answer */
         foreach ($answers as $answer) {
             if (isset($answer->answer_int)) {
                 $trueValue = $answer->answer_int;
@@ -71,7 +60,7 @@ class AnswerStatsComponent extends BaseComponent {
             $taskData['answers'][] = [
                 'value' => $value,
                 'trueValue' => $trueValue,
-                'team' => $teams[$answer->id_team]['name'],
+                'team' => $answer->getTeam()->name,
                 'inserted' => $answer->inserted->getTimestamp(),
             ];
         }

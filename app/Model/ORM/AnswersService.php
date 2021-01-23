@@ -3,12 +3,14 @@
 namespace FOL\Model\ORM;
 
 use DateTime;
-use Dibi\DataSource;
-use Dibi\DriverException;
-use Dibi\Exception;
-use Dibi\Row;
+use FOL\Model\ORM\Models\ModelAnswer;
+use FOL\Model\ORM\Models\ModelPeriod;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Services\ServiceAnswer;
+use FOL\Model\ORM\Services\ServiceLog;
+use Nette\Database\Explorer;
+use Nette\Database\Table\Selection;
 use Nette\InvalidStateException;
 
 class AnswersService extends AbstractService {
@@ -18,49 +20,17 @@ class AnswersService extends AbstractService {
     const ERROR_SKIP_OF_PERIOD = 30;
     const ERROR_SKIP_OF_ANSWERED = 31;
 
-    /**
-     * @param $id
-     * @return Row|null
-     * @throws Exception
-     */
-    public function find(int $id): ?Row {
-        return $this->findAll()->where('[id_answer] = %i', $id)->fetch();
+    private ServiceAnswer $serviceAnswer;
+
+    public function __construct(ServiceAnswer $serviceAnswer, ServiceLog $serviceLog, Explorer $explorer) {
+        parent::__construct($explorer,  $serviceLog);
+        $this->serviceAnswer = $serviceAnswer;
     }
 
-    /**
-     * @param $taskId
-     * @return DataSource
-     * @throws Exception
-     */
-    public function findByTaskId(int $taskId): DataSource {
-        return $this->findAll()->where('[id_task] = %i', $taskId);
-    }
-
-    /**
-     * @param null $groupId
-     * @return DataSource
-     * @throws Exception
-     */
-    public function findAll($groupId = null): DataSource {
-        if ($groupId === null) {
-            return $this->getDibiConnection()->dataSource('SELECT * FROM [view_answer]');
-        } else {
-            return $this->getDibiConnection()->dataSource(
-                'SELECT [view_answer].*
-                     FROM [view_answer]
-                     RIGHT JOIN [view_task] ON [view_task].[id_task] = [view_answer].[id_task] AND [view_task].[id_group] = %i', $groupId);
-        }
-    }
-
-    /**
-     * @param int|null $team
-     * @return DataSource
-     * @throws Exception
-     */
-    public function findAllCorrect(?int $team = null): DataSource {
-        $source = $this->getDibiConnection()->dataSource('SELECT * FROM [view_correct_answer]');
-        if (!is_null($team)) {
-            $source->where('[id_team] = %i', $team);
+    public function findAllCorrect(?int $teamId = null): Selection {
+        $source = $this->explorer->table('view_correct_answer');
+        if (!is_null($teamId)) {
+            $source->where('id_team', $teamId);
         }
         return $source;
     }
@@ -73,29 +43,28 @@ class AnswersService extends AbstractService {
      * @param $correct
      * @param bool $isDoublePoints
      * @return int
-     * @throws Exception
-     * @throws DriverException
      * TODO double points
      */
-    public function insert(ModelTeam $team, ModelTask $task, $solution, $period, bool $correct, bool $isDoublePoints): int {
-        $this->getDibiConnection()->begin();
+    public function insert(ModelTeam $team, ModelTask $task, $solution, ModelPeriod $period, bool $correct, bool $isDoublePoints): int {
+        $this->explorer->beginTransaction();
         // Correct answers of the team
         $correctAnswers = $this->findAllCorrect($team->id_team)
             ->fetchPairs('id_answer', 'id_answer');
         // Last answer from same group has to be older than XX seconds
-        $query = $this->findAll($task->id_group)
-            ->where('[id_team] = %i', $team->id_team)
-            ->where('[inserted] > NOW() - INTERVAL %i SECOND', $period['time_penalty']);
+        $query = $this->serviceAnswer->getTable()->where('task.id_group', $task->id_group)
+            ->where('id_team', $team->id_team)
+            ->where('inserted > NOW() - INTERVAL ? SECOND', $period->time_penalty);
         if (!empty($correctAnswers)) {
-            $query->where('[id_answer] NOT IN %l', $correctAnswers);
+            $query->where('id_answer NOT IN ?', $correctAnswers);
         }
+        /** @var ModelAnswer $row */
         $row = $query->fetch();
         // Check it
         if ($row) {
-            $timestamp = strtotime($row['inserted']);
+            $timestamp = strtotime($row->inserted);
             $this->log($team->id_team, 'solution_tried', 'The team tried to insert the solution of task [$task->id_task] with code [$solution].');
-            $remaining = $period['time_penalty'] - (time() - $timestamp);
-            $this->getDibiConnection()->commit();
+            $remaining = $period->time_penalty - (time() - $timestamp);
+            $this->explorer->commit();
             throw new InvalidStateException($remaining, self::ERROR_TIME_LIMIT);
         }
         $answer = [
@@ -115,19 +84,15 @@ class AnswersService extends AbstractService {
                 break;
         }
         // Insert a new answer
-        $this->getDibiConnection()->insert('answer', [
+        $modelAnswer = $this->serviceAnswer->createNewModel([
                 'id_team' => $team->id_team,
                 'id_task' => $task->id_task,
                 'correct' => $correct,
                 'inserted' => new DateTime(),
-            ] + $answer)->execute();
+            ] + $answer);
         // Log the action
         $this->log($team->id_team, 'solution_inserted', 'The team successfully inserted the solution of task [$task->id_task] with code [$solution].');
-        $this->getDibiConnection()->commit();
-        return $this->getDibiConnection()->getInsertId();
-    }
-
-    protected function getTableName(): string {
-        return 'answer';
+        $this->explorer->commit();
+        return $modelAnswer->getPrimary();
     }
 }

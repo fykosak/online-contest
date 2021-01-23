@@ -3,7 +3,6 @@
 namespace FOL\Modules\GameModule;
 
 use FOL\Model\Authentication\TeamAuthenticator;
-use Dibi\Exception;
 use FOL\Components\LoginForm\LoginFormComponent;
 use FOL\Components\RecoverForm\RecoverFormComponent;
 use Nette\Application\AbortException;
@@ -35,12 +34,11 @@ class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
 
     /**
      * @return void
-     * @throws Exception
      * @throws AbortException
      */
     public function renderRecover(): void {
         $this->setPageTitle(_('Obnova hesla'));
-        if (!$this->yearsService->isGameMigrated()) {
+        if (!$this->serviceYear->isGameMigrated()) {
             $this->flashMessage(_('Změnu hesla proveďte editací vaší přihlášky.'), 'danger');
             $this->redirect(':Public:Default:default');
         }

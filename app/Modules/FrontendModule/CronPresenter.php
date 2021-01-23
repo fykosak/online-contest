@@ -2,8 +2,6 @@
 
 namespace FOL\Modules\FrontendModule;
 
-use Dibi\Connection;
-use Dibi\Exception;
 use FOL\Model\ORM\TasksService;
 use FOL\Modules\OrgModule\OrgPresenter;
 use Nette\Application\AbortException;
@@ -11,39 +9,31 @@ use Nette\Application\BadRequestException;
 use Nette\Caching\Cache;
 use FOL\Model\Authentication\CronAuthenticator;
 use Nette\Caching\Storage;
+use Nette\Database\Explorer;
 use Nette\Http\IResponse;
 use Nette\Security\AuthenticationException;
 use Tracy\Debugger;
 
-class CronPresenter extends BasePresenter {
+final class CronPresenter extends BasePresenter {
 
     private Cache $cache;
 
     private CronAuthenticator $authenticator;
     private TasksService $tasksService;
-    protected Connection $connection;
+    private Explorer $explorer;
 
-    public function injectSecondary(Storage $storage, CronAuthenticator $authenticator, TasksService $tasksService, Connection $connection): void {
+    public function injectSecondary(Storage $storage, CronAuthenticator $authenticator, TasksService $tasksService, Explorer $explorer): void {
         $this->cache = new Cache($storage);
         $this->authenticator = $authenticator;
-        $this->connection = $connection;
         $this->tasksService = $tasksService;
+        $this->explorer = $explorer;
     }
 
-    /**
-     * @param false $freezed
-     * @return void
-     * @throws Exception
-     */
-    public function renderDatabase($freezed = false): void {
+    public function renderDatabase(bool $freezed = false): void {
         $this->resetTemporaryTables();
         $this->invalidateCache($freezed);
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     private function resetTemporaryTables(): void {
         $src = 'view_'; // view
         $result = 'tmp_'; // resulting cache
@@ -58,16 +48,12 @@ class CronPresenter extends BasePresenter {
 
         foreach ($tables as $view => $table) {
             Debugger::timer();
-            $this->connection->query("DROP TABLE IF EXISTS [$result$table]");
-            $this->connection->query("CREATE TABLE [$result$table] AS SELECT * FROM [$src$view]");
+            $this->explorer->query("DROP TABLE IF EXISTS [$result$table]");
+            $this->explorer->query("CREATE TABLE [$result$table] AS SELECT * FROM [$src$view]");
             echo "$table: " . Debugger::timer() . '<br>';
         }
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     public function renderCounters(): void {
         $this->tasksService->updateCounter(true);
     }

@@ -2,7 +2,6 @@
 
 namespace FOL\Model\Card;
 
-use Dibi\Exception;
 use FOL\Model\Card\Exceptions\CardAlreadyUsedException;
 use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
 use FOL\Model\ORM\Models\ModelCardUsage;
@@ -11,7 +10,6 @@ use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceCardUsage;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\TasksService;
-use Fykosak\Utils\Localization\GettextTranslator;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Database\Explorer;
 use Nette\Forms\Container;
@@ -27,7 +25,7 @@ abstract class Card {
     protected ServiceCardUsage $serviceCardUsage;
     protected ModelTeam $team;
     protected TasksService $tasksService;
-    protected ServiceTask $serviceTask;
+    public ServiceTask $serviceTask;
     /* cache*/
     private array $tasks;
 
@@ -54,16 +52,8 @@ abstract class Card {
         $this->serviceCardUsage->createNewModel([
             'team_id' => $this->team->id_team,
             'card_type' => $this->getType(),
-            'data' => $this->serializeData($values),
+            'data' => ModelCardUsage::serializeData($values),
         ]);
-    }
-
-    protected function serializeData(array $values): string {
-        return serialize($values);
-    }
-
-    protected function deserializeData(): array {
-        return unserialize($this->getUsage()->data);
     }
 
     /**
@@ -84,31 +74,15 @@ abstract class Card {
         }
     }
 
-    /**
-     * @return array
-     * @throws Exception
-     */
     protected function getTasks(): array {
         if (!isset($this->tasks)) {
             $this->tasks = [];
+            /** @var ModelTask $task */
             foreach ($this->tasksService->findSubmitAvailable($this->team)->fetchAll() as $task) {
                 $this->tasks[$task->id_task] = $task;
             }
         }
         return $this->tasks;
-    }
-
-    public final function renderUsage(string $lang): Html {
-        $usage = $this->getUsage();
-        $mainContainer = Html::el('div');
-        $mainContainer->addHtml(Html::el('div')
-            ->setAttribute('class', 'row')
-            ->addHtml(Html::el('b')->setAttribute('class', 'col')->addText(_('Used')))
-            ->addHtml(Html::el('span')->setAttribute('class', 'col')->addText($usage->created))
-        );
-        $mainContainer->addHtml(Html::el('hr'));
-        $this->innerRenderUsage($lang, $mainContainer);
-        return $mainContainer;
     }
 
     /**
@@ -134,6 +108,4 @@ abstract class Card {
     abstract public function getTitle(): string;
 
     abstract public function getDescription(): Html;
-
-    abstract protected function innerRenderUsage(string $lang, Html $mainContainer): void;
 }

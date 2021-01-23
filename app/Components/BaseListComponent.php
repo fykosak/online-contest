@@ -2,8 +2,8 @@
 
 namespace FOL\Components;
 
-use Dibi\DataSource;
 use FOL\Components\VisualPaginator\VisualPaginatorComponent;
+use Nette\Database\Table\Selection;
 use Nette\Utils\Paginator;
 
 abstract class BaseListComponent extends BaseComponent {
@@ -11,12 +11,12 @@ abstract class BaseListComponent extends BaseComponent {
     private int $limit = 10;
 
     /** @persistent */
-    public $orderBy;
+    public ?string $orderBy = null;
 
     /** @persistent */
-    public $sorting;
+    public ?string $sorting = null;
 
-    private DataSource $source;
+    private Selection $source;
 
     public function getLimit(): int {
         return $this->limit;
@@ -29,7 +29,7 @@ abstract class BaseListComponent extends BaseComponent {
      * @param string $sorting
      */
     public function setDefaultSorting(string $column, string $sorting = 'ASC'): void {
-        if (empty($this->orderBy)) {
+        if (!isset($this->orderBy)) {
             $this->sort($column, $sorting);
         }
     }
@@ -38,15 +38,15 @@ abstract class BaseListComponent extends BaseComponent {
         $this->limit = $limit;
     }
 
-    public function setSource(DataSource $source): void {
+    public function setSource(Selection $source): void {
         $this->source = $source;
     }
 
     // ---- PROTECTED METHODS
     protected function beforeRender(): void {
         parent::beforeRender();
-        if (!empty($this->orderBy)) {
-            $this->getSource()->orderBy($this->orderBy, $this->sorting);
+        if (isset($this->orderBy)) {
+            $this->getSource()->order($this->orderBy, $this->sorting);
         }
     }
 
@@ -61,7 +61,7 @@ abstract class BaseListComponent extends BaseComponent {
         return $this->getComponent('paginator')->getPaginator();
     }
 
-    protected function getSource(): DataSource {
+    protected function getSource(): Selection {
         return $this->source;
     }
 

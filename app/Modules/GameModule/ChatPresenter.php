@@ -2,24 +2,19 @@
 
 namespace FOL\Modules\GameModule;
 
-use Dibi\Exception;
-use FOL\Model\ORM\ChatService;
 use FOL\Components\ChatList\ChatListComponent;
+use FOL\Model\ORM\Services\ServiceChat;
 
 class ChatPresenter extends BasePresenter {
 
-    protected ChatService $chatService;
+    protected ServiceChat $serviceChat;
 
-    public function injectSecondary(ChatService $chatService): void {
-        $this->chatService = $chatService;
+    public function injectSecondary(ServiceChat $serviceChat): void {
+        $this->serviceChat = $serviceChat;
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     public function renderDefault(): void {
-        $this->getComponent('chat')->setSource($this->chatService->findAll($this->lang));
+        $this->getComponent('chat')->setSource($this->serviceChat->getAll($this->lang));
         $this->setPageTitle(_('Diskuse (česká verze)'));
     }
 

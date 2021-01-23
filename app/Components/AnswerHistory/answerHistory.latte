@@ -1,27 +1,27 @@
 {block content}
-    <table class="table table-condensed table-sm">
+    <table class="table table-condensed">
         <thead>
         <th>#</th>
         <th>{_'úkol'}</th>
         <th>{_'vloženo'}</th>
         <th>{_'odpověď'}</th>
         </thead>
+        {varType FOL\Model\ORM\Models\ModelAnswer $answer}
         {foreach $history AS $answer}
-            <tr{if isset($correct[$answer->id_answer])} class="bg-success"{else} class="bg-danger"{/if}>
+            {dump $answer}
+            <tr class="{isset($correct[$answer->id_answer])?'bg-success':'bg-danger'}">
                 <td>{$answer->id_answer}</td>
-                <td>{$tasks[$answer->id_task]->code_name}</td>
+                <td>{$answer->getTask()->getGroup()->code_name}</td>
                 <td>{$answer->inserted->format($timeFormat)}</td>
-                <td>{if $tasks[$answer->id_task]->answer_type == \FOL\Model\ORM\TasksService::TYPE_STR}
+                <td>{if $answer->getTask()->answer_type == \FOL\Model\ORM\TasksService::TYPE_STR}
                         {$answer->answer_str}
-                    {elseif $tasks[$answer->id_task]->answer_type == \FOL\Model\ORM\TasksService::TYPE_INT}
+                    {elseif $answer->getTask()->answer_type == \FOL\Model\ORM\TasksService::TYPE_INT}
                         {$answer->answer_int}
-                    {elseif $tasks[$answer->id_task]->answer_type == \FOL\Model\ORM\TasksService::TYPE_REAL}
+                    {elseif $answer->getTask()->answer_type == \FOL\Model\ORM\TasksService::TYPE_REAL}
                         {$answer->answer_real}
                     {/if}
                 </td>
             </tr>
         {/foreach}
     </table>
-
-    {control paginator}
 {/block}

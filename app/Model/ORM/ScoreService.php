@@ -3,86 +3,57 @@
 namespace FOL\Model\ORM;
 
 use DateTime;
-use Dibi\Connection as DibiConnection;
-use Dibi\DataSource;
-use Dibi\Row;
 use Exception;
 use FOL\Model\ORM\Models\ModelGroup;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceGroup;
+use FOL\Model\ORM\Services\ServiceLog;
+use FOL\Model\ORM\Services\ServicePeriod;
+use FOL\Model\ORM\Services\ServiceTask;
 use Nette\Database\Explorer;
-use Nette\NotSupportedException;
+use Nette\Database\Table\ActiveRow;
+use Nette\Database\Table\Selection;
 use Tracy\Debugger;
 
 class ScoreService extends AbstractService {
 
-    protected PeriodService $periodService;
     protected TasksService $tasksService;
-    protected GroupsService $groupsService;
     private ServiceGroup $serviceGroup;
+    private ServicePeriod $servicePeriod;
+    private ServiceTask $serviceTask;
 
     public function __construct(
         Explorer $explorer,
-        DibiConnection $dibiConnection,
-        PeriodService $periodService,
+        ServicePeriod $servicePeriod,
         TasksService $tasksService,
-        GroupsService $groupsService,
-        ServiceGroup $serviceGroup
+        ServiceGroup $serviceGroup,
+        ServiceLog $serviceLog
     ) {
-        parent::__construct($explorer, $dibiConnection);
-        $this->periodService = $periodService;
+        parent::__construct($explorer, $serviceLog);
         $this->tasksService = $tasksService;
-        $this->groupsService = $groupsService;
         $this->serviceGroup = $serviceGroup;
+        $this->servicePeriod = $servicePeriod;
     }
 
-    public function find(int $id): ?Row {
-        throw new NotSupportedException();
+    public function findAllBonus(): Selection {
+        return $this->explorer->table('tmp_bonus');
     }
 
-    public function findAll(): DataSource {
-        throw new NotSupportedException();
+    public function findAllTasks(): Selection {
+        return $this->explorer->table('task_state');
     }
 
-    /**
-     * @return DataSource
-     * @throws \Dibi\Exception
-     */
-    public function findAllBonus(): DataSource {
-        return $this->getDibiConnection()->dataSource('SELECT * FROM [tmp_bonus]');
+    public function findAllPenality(): Selection {
+        return $this->explorer->table('tmp_penality');
     }
 
-    /**
-     * @return DataSource
-     * @throws \Dibi\Exception
-     */
-    public function findAllTasks(): DataSource {
-        return $this->getDibiConnection()->dataSource('SELECT * FROM [task_state]');
+    public function findAllSkips(): Selection {
+        return $this->explorer->table('task_state')->where('skipped = 1');
     }
 
-    /**
-     * @return DataSource
-     * @throws \Dibi\Exception
-     */
-    public function findAllPenality(): DataSource {
-        return $this->getDibiConnection()->dataSource('SELECT * FROM [tmp_penality]');
-    }
-
-    /**
-     * @return DataSource
-     * @throws \Dibi\Exception
-     */
-    public function findAllSkips(): DataSource {
-        return $this->getDibiConnection()->dataSource('SELECT * FROM [task_state] WHERE skipped = 1');
-    }
-
-    /**
-     * @param ModelTeam $team
-     * @throws \Dibi\Exception
-     */
     public function updateAfterSkip(ModelTeam $team): void {
-        $this->getDibiConnection()->query('UPDATE [team] SET score_exp = score_exp-1 WHERE id_team = %i', $team->id_team);
+        $this->explorer->query('UPDATE team SET score_exp = score_exp-1 WHERE id_team = ?', $team->id_team);
     }
 
     public function updateAfterInsert(ModelTeam $team, ModelTask $task): void {
@@ -90,28 +61,29 @@ class ScoreService extends AbstractService {
             $hurry = ($task->id_group == 1) ? false : true; //dle SQL id_group=2,3,4
 
             $score = $this->getSingleTaskScore($team, $task);
-            $this->getDibiConnection()->insert('task_state', [
+            $this->explorer->table('task_state')->insert([
                 'id_team' => $team->id_team,
                 'id_task' => $task->id_task,
                 'inserted' => new DateTime(),
                 'skipped' => 0,
-                'points' => $score,])->execute();
+                'points' => $score,]);
 
             /* vypocet bonusu */
             if ($hurry) {
                 $solvedTasks = $this->tasksService->findSolved($team);
-                $hurryTasks = $this->tasksService->findAll()
-                    ->where('[id_task] IN %l', $solvedTasks)
-                    ->where('[number] = %i', $task->number)
-                    ->where('[id_group] <> 1')->fetchAll();
-                if (count($hurryTasks) == 3 && $this->periodService->findCurrent($task->id_group)->has_bonus == 1) {
+                $hurryTasks = $this->serviceTask->getTable()
+                    ->where('id_task IN', $solvedTasks)
+                    ->where('number', $task->number)
+                    ->where('id_group <> 1');
+                if (count($hurryTasks) == 3 && $this->servicePeriod->findCurrent($task->getGroup())->has_bonus == 1) {
+                    /** @var ModelTask $hurryTask */
                     foreach ($hurryTasks as $hurryTask) {
                         $score += $this->getSingleTaskScore($team, $hurryTask);
                     }
                 }
             }
 
-            $this->getDibiConnection()->query('UPDATE [team] SET score_exp = score_exp + %i', $score, 'WHERE id_team = %i', $team->id_team);
+            $this->explorer->query('UPDATE team SET score_exp = score_exp + ?', $score, 'WHERE id_team = ?', $team->id_team);
         } catch (Exception $e) {
             Debugger::log($e);
         }
@@ -119,18 +91,16 @@ class ScoreService extends AbstractService {
 
     /**
      * @param ModelTeam $team
-     * @param $task
+     * @param ModelTask|ActiveRow $task
      * @return int
-     * @throws \Dibi\Exception
      */
     public function getSingleTaskScore(ModelTeam $team, $task): int {
         /** @var ModelGroup $group */
         $group = $this->serviceGroup->findByPrimary($task->id_group);
-        $wrongTries = $this->getDibiConnection()->query('SELECT COUNT(*) FROM [answer] WHERE %and', [
-            ['id_team = %i', $team->id_team],
-            ['id_task = %i', $task->id_task],
-            ['correct = %i', 0],
-        ])->fetchSingle();
+        $wrongTries = $this->explorer->table('answer')
+            ->where('id_team', $team->id_team)
+            ->where('id_task', $task->id_task)
+            ->where('correct', 0)->count();
 
         return $this->getPointCount($task->points, $wrongTries, $group->allow_zeroes);
     }
@@ -171,9 +141,5 @@ class ScoreService extends AbstractService {
      */
     private function isHurryUp(bool $allowZeroes): bool {
         return $allowZeroes;
-    }
-
-    protected function getTableName(): string {
-        return 'schools';
     }
 }

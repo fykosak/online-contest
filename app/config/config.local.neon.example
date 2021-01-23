@@ -1,12 +1,3 @@
-dibi:
-    driver: mysqli
-    charset: utf8
-    host: localhost
-    database: fol
-    user: user
-    password: pwd
-    lazy: true
-    profiler: true
 database:
     dsn: 'mysql:host=localhost;dbname=fol'
     user:

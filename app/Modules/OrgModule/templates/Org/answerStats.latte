@@ -1,18 +1,16 @@
 {block #bigcontent}
-<select id="answer-stats-select">
-    {foreach $tasks as $task}
-        <option value="{link :Org:Org:answerStats $task['id_task']}"
-                {if $task['id_task'] == $taskId}selected="selected"{/if}>{$task['id_group']}-{$task['number']}: {$task['name_cs']}</option>
-    {/foreach}
-</select>
+{varType FOL\Model\ORM\Models\ModelTask $task}
+{varType int $taskId}
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+        {_'-- select task --'}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {foreach $tasks as $task}
+            <a class="dropdown-item"
+               href="{link :Org:Org:answerStats $task->id_task}">{$task->id_group}-{$task->number}: {$task->name_cs}</a>
+        {/foreach}
+    </div>
+</div>
 
 {control answerStats $taskId}
-
-{capture $script}
-    <script n:syntax="off">
-        $("#answer-stats-select").change(function () {
-            $(location).attr('href', $("#answer-stats-select option:selected").val());
-        });
-    </script>
-{/capture}
-{$presenter->addCustomScript($script)}

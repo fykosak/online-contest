@@ -8,6 +8,7 @@ use Nette\Security\User;
 use Nette\SmartObject;
 
 abstract class AbstractAuthenticator {
+
     use SmartObject;
 
     protected User $user;
@@ -23,7 +24,7 @@ abstract class AbstractAuthenticator {
      * @throws AuthenticationException
      */
     public function login($id = null, $password = null): void {
-        $identity = $this->authenticate(func_get_args());
+        $identity = $this->authenticate([$id, $password]);
         $this->user->login($identity);
     }
 

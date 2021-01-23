@@ -4,10 +4,11 @@ namespace FOL\Model\Authentication;
 
 use DateInterval;
 use DateTime;
-use Dibi\Connection;
-use Dibi\DataSource;
-use Dibi\Exception;
-use FOL\Model\ORM\TeamsService;
+use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Models\ModelToken;
+use FOL\Model\ORM\Services\ServiceTeam;
+use FOL\Model\ORM\Services\ServiceToken;
+use Fykosak\Utils\ORM\TypedTableSelection;
 use Nette\Security\Authenticator;
 use Nette\Security\SimpleIdentity;
 use Nette\Security\AuthenticationException;
@@ -23,92 +24,83 @@ class TeamAuthenticator extends AbstractAuthenticator {
     const TOKEN_LENGTH = 10;
     const TOKEN_LIFETIME = 'PT10M';
 
-    protected Connection $connection;
+    private ServiceTeam $serviceTeam;
+    private ServiceToken $serviceToken;
 
-    protected TeamsService $teamsService;
-
-    public function __construct(User $user, Connection $connection, TeamsService $teamsService) {
+    public function __construct(User $user, ServiceTeam $serviceTeam, ServiceToken $serviceToken) {
         parent::__construct($user);
-        $this->connection = $connection;
-        $this->teamsService = $teamsService;
+        $this->serviceTeam = $serviceTeam;
+        $this->serviceToken = $serviceToken;
     }
 
     /**
      * @param array $credentials
      * @return SimpleIdentity
      * @throws AuthenticationException
-     * @throws Exception
      */
     protected function authenticate(array $credentials): SimpleIdentity {
         $name = $credentials[Authenticator::USERNAME];
         $password = self::passwordHash($credentials[Authenticator::PASSWORD]);
-        $row = $this->teamsService->findAll()->where('[name] = %s', $name)->fetch();
-        if (empty($row)) {
+        /** @var ModelTeam $modelTeam */
+        $modelTeam = $this->serviceTeam->getTable()->where('name', $name)->fetch();
+        if (!isset($modelTeam)) {
             throw new AuthenticationException(
                 sprintf('Tým %s neexistuje.', $name),
                 Authenticator::IDENTITY_NOT_FOUND
             );
         }
-        if ($row['password'] != $password) {
+        if ($modelTeam->password != $password) {
             throw new AuthenticationException(
                 'Heslo se neshoduje.',
                 Authenticator::INVALID_CREDENTIAL
             );
         }
-        return new SimpleIdentity($name, self::TEAM, ['id_team' => $row['id_team'], 'role' => self::TEAM]);
+        return new SimpleIdentity($name, self::TEAM, ['id_team' => $modelTeam->id_team, 'role' => self::TEAM]);
     }
 
     /**
      * @param string $token
      * @return void
      * @throws AuthenticationException
-     * @throws Exception
      */
     public function authenticateByToken(string $token): void {
-        $res = $this->findValidRecoveryTokens()->where('[token] = %s', $token)->fetch();
-        if (empty($res)) {
+        /** @var ModelToken $res */
+        $res = $this->findValidRecoveryTokens()->where('token', $token)->fetch();
+        if (!$res) {
             throw new AuthenticationException(
                 sprintf('Token %s není validní.', $token),
                 Authenticator::INVALID_CREDENTIAL
             );
         }
-        $this->connection->delete('token')->where('[id_token] = %i', $res['id_token'])->execute();
+        $this->serviceToken->dispose($res);
 
-        $team = $this->teamsService->find($res['id_team']);
-        $identity = new SimpleIdentity($team['name'], self::TEAM, ['id_team' => $team['id_team'], 'role' => self::TEAM]);
+        /** @var ModelTeam $modelTeam */
+        $modelTeam = $this->serviceTeam->findByPrimary($res['id_team']);
+        $identity = new SimpleIdentity($modelTeam->name, self::TEAM, ['id_team' => $modelTeam->id_team, 'role' => self::TEAM]);
         $this->user->login($identity);
     }
 
-    /**
-     * @param int $teamId
-     * @return string|null
-     * @throws Exception
-     */
-    public function createRecoveryToken(int $teamId): ?string {
+    public function createRecoveryToken(ModelTeam $team): ?ModelToken {
         $token = Random::generate(self::TOKEN_LENGTH);
-        if ($this->findValidRecoveryTokens()->where('[id_team] = %i', $teamId)->fetch()) {
+        if ($this->findValidRecoveryTokens()->where('id_team', $team->id_team)->fetch()) {
             return null;
         }
-
-        $this->connection->insert('token', [
-            'id_team' => $teamId,
-            'token' => $token,
-            'not_before' => new DateTime(),
-            'not_after' => (new DateTime())->add(new DateInterval(self::TOKEN_LIFETIME)),
-        ])->execute();
-        return $token;
+        /** @var ModelToken $modelToken */
+        $modelToken = $this->serviceToken->createNewModel([
+                'id_team' => $team->id_team,
+                'token' => $token,
+                'not_before' => new DateTime(),
+                'not_after' => (new DateTime())->add(new DateInterval(self::TOKEN_LIFETIME)),
+            ]
+        );
+        return $modelToken;
     }
 
     public static function passwordHash(string $password): string {
         return sha1($password);
     }
 
-    /**
-     * @return DataSource
-     * @throws Exception
-     */
-    private function findValidRecoveryTokens(): DataSource {
-        return $this->connection->dataSource('SELECT * FROM [token] WHERE [not_before] <= NOW() AND [not_after] >= NOW()');
+    private function findValidRecoveryTokens(): TypedTableSelection {
+        return $this->serviceToken->getTable()->where('not_before <= NOW()')->where('not_after >= NOW()');
     }
-
 }

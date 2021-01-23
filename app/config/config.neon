@@ -21,15 +21,10 @@ services:
 
     router: FOL\Model\Router\Router::createRouter
     - FOL\Model\ORM\AnswersService
-    - FOL\Model\ORM\ChatService
-    - FOL\Model\ORM\CompetitorsService
     - FOL\Model\ORM\GroupsService
-    - FOL\Model\ORM\NotificationService
-    - FOL\Model\ORM\PeriodService
     - FOL\Model\ORM\ScoreService
     - FOL\Model\ORM\TasksService
     - FOL\Model\ORM\TeamsService
-    - FOL\Model\ORM\YearsService
     #new ORM
     - FOL\Model\ORM\Services\ServiceCardUsage
     - FOL\Model\ORM\Services\ServiceAnswerOptions
@@ -38,6 +33,13 @@ services:
     - FOL\Model\ORM\Services\ServiceYear
     - FOL\Model\ORM\Services\ServiceTask
     - FOL\Model\ORM\Services\ServiceGroup
+    - FOL\Model\ORM\Services\ServiceAnswer
+    - FOL\Model\ORM\Services\ServiceChat
+    - FOL\Model\ORM\Services\ServiceLog
+    - FOL\Model\ORM\Services\ServiceNotification
+    - FOL\Model\ORM\Services\ServiceCompetitor
+    - FOL\Model\ORM\Services\ServicePeriod
+    - FOL\Model\ORM\Services\ServiceToken
 
     - FOL\Model\Card\CardFactory
 
@@ -47,8 +49,6 @@ services:
 
 database:
     conventions: 'discovered'
-extensions:
-    dibi: Dibi\Bridges\Nette\DibiExtension22
 
 includes:
         - acl.neon

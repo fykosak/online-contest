@@ -8,15 +8,15 @@
                 <button class="hideChatForm btn btn-default btn-sm btn-secondary">{_'Přidat příspěvek'}</button>
             </div>
         {/if}
-
+{varType FOL\Model\ORM\Models\ModelChat $post}
 {foreach $posts AS $post}
-            <div class="chat-item" {if !$post['root']}style="margin: 0 0 0 20px"{/if}>
+            <div class="chat-item" {if !$post->id_parent}style="margin: 0 0 0 20px"{/if}>
                 <h3 {if $post['org']}style="color: orange"{/if}>
-                    {if $post['org']}{_'Organizátoři'}{else}{$post['team_name']}{/if} <span
+                    {if $post['org']}{_'Organizátoři'}{else}{$post->getTeam()->name}{/if} <span
                             class="pull-right small">{$post['inserted']|time}</span>
                 </h3>
                 <div>{$post['content']}</div>
-                {if $user->isLoggedIn() && $post['root']}
+                {if $user->isLoggedIn() && !$post->id_parent}
                     <div>
                         <div id="chat-form{$post['id_chat']}" class="chat-form">
                             {control 'chatForm' . $post['id_chat']}

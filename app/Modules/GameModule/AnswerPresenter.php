@@ -2,9 +2,7 @@
 
 namespace FOL\Modules\GameModule;
 
-use Dibi\Exception;
 use FOL\Components\Rating\RatingComponent;
-use FOL\Model\ORM\AnswersService;
 use FOL\Components\AnswerForm\AnswerFormComponent;
 use FOL\Components\AnswerHistory\AnswerHistoryComponent;
 use FOL\Model\ORM\Models\ModelTask;
@@ -17,26 +15,10 @@ class AnswerPresenter extends BasePresenter {
      */
     public ?int $id = null;
 
-    private AnswersService $answersService;
     private ServiceTask $serviceTask;
 
-    public function injectSecondary(AnswersService $answersService, ServiceTask $serviceTask): void {
-        $this->answersService = $answersService;
+    public function injectSecondary(ServiceTask $serviceTask): void {
         $this->serviceTask = $serviceTask;
-    }
-
-    /**
-     * @return void
-     * @throws Exception
-     */
-    public function actionHistory(): void {
-        //has to be loaded in action due to pagination
-        $this->getComponent('answerHistory')->setSource(
-            $this->answersService->findAll()
-                ->where('[id_team] = %i', $this->getLoggedTeam()->id_team)
-                ->orderBy('inserted', 'DESC')
-        );
-        $this->getComponent('answerHistory')->setLimit(50);
     }
 
     public function renderDefault(): void {

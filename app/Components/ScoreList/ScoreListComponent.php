@@ -2,7 +2,6 @@
 
 namespace FOL\Components\ScoreList;
 
-use Dibi\Exception;
 use FOL\Model\ORM\ScoreService;
 use FOL\Model\ORM\TasksService;
 use FOL\Model\ORM\TeamsService;
@@ -24,10 +23,6 @@ class ScoreListComponent extends BaseComponent {
         $this->scoreService = $scoreService;
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     protected function beforeRender(): void {
         parent::beforeRender();
         $this->template->teams = $this->teamsService->findAllWithScore();

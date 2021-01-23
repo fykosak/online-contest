@@ -2,15 +2,14 @@
 
 namespace FOL\Components\AnswerForm;
 
-use Dibi\DriverException;
-use Dibi\Exception;
+use Exception;
 use FOL\Model\Card\CardFactory;
 use FOL\Model\Card\DoublePointsCard;
 use FOL\Model\ORM\AnswersService;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
-use FOL\Model\ORM\PeriodService;
 use FOL\Model\ORM\ScoreService;
+use FOL\Model\ORM\Services\ServicePeriod;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceYear;
 use FOL\Model\ORM\TasksService;
@@ -20,6 +19,7 @@ use Fykosak\Utils\Logging\MemoryLogger;
 use Nette\Application\AbortException;
 use Nette\Application\ForbiddenRequestException;
 use Nette\Application\UI\Form;
+use Nette\Database\DriverException;
 use Nette\DI\Container;
 use Nette\InvalidStateException;
 use Nette\Security\User;
@@ -35,7 +35,6 @@ class AnswerFormComponent extends BaseComponent {
     const SUBMIT_ELEMENT = 'solution_submit';
 
     protected TasksService $tasksService;
-    protected PeriodService $periodService;
     protected AnswersService $answersService;
     protected ScoreService $scoreService;
     protected ServiceYear $serviceYear;
@@ -43,6 +42,7 @@ class AnswerFormComponent extends BaseComponent {
     protected ModelTeam $team;
     protected DoublePointsCard $doublePointsCard;
     protected ServiceTask $serviceTask;
+    private ServicePeriod $servicePeriod;
 
     public function __construct(Container $container, ModelTeam $team) {
         $this->team = $team;
@@ -51,7 +51,7 @@ class AnswerFormComponent extends BaseComponent {
 
     public function injectSecondary(
         TasksService $tasksService,
-        PeriodService $periodService,
+        ServicePeriod $servicePeriod,
         AnswersService $answersService,
         ScoreService $scoreService,
         ServiceYear $serviceYear,
@@ -60,11 +60,11 @@ class AnswerFormComponent extends BaseComponent {
         CardFactory $cardFactory
     ): void {
         $this->tasksService = $tasksService;
-        $this->periodService = $periodService;
         $this->answersService = $answersService;
         $this->scoreService = $scoreService;
         $this->serviceYear = $serviceYear;
         $this->serviceTask = $serviceTask;
+        $this->servicePeriod = $servicePeriod;
         $this->user = $user;
         $this->doublePointsCard = $cardFactory->createForTeam($this->team)['double_points'];
     }
@@ -80,7 +80,7 @@ class AnswerFormComponent extends BaseComponent {
 
         try {
             $isDoublePoints = false;
-            if ($values['double_points']) {
+            if (isset($values['double_points'])) {
                 if ($this->doublePointsCard->wasUsed()) {
                     throw new ForbiddenRequestException();
                 }
@@ -89,12 +89,12 @@ class AnswerFormComponent extends BaseComponent {
             /** @var ModelTask $task */
             $task = $this->serviceTask->findByPrimary($values[self::TASK_ELEMENT]);
 
-            $period = $this->periodService->findCurrent($task->id_group);
+            $period = $this->servicePeriod->findCurrent($task->getGroup());
             $solution = trim($values['solution'], ' ');
             $solution = strtr($solution, ',', '.');
 
             if (!$period) {
-                $this->log($this->team->id_team, 'solution_tried', 'The team tried to insert the solution of task [$task->id_task] with solution [$solution].');
+                $this->serviceLog->log($this->team->id_team, 'solution_tried', 'The team tried to insert the solution of task [$task->id_task] with solution [$solution].');
                 throw new InvalidStateException('There is no active submit period.', AnswersService::ERROR_OUT_OF_PERIOD);
             }
             // Handle card usage
@@ -124,6 +124,7 @@ class AnswerFormComponent extends BaseComponent {
         } catch (AbortException $exception) {
             throw $exception;
         } catch (InvalidStateException $e) {
+            Debugger::barDump($e);
             if ($e->getCode() == AnswersService::ERROR_TIME_LIMIT) {
                 $this->getPresenter()->flashMessage(sprintf(_('Lze odpovídat až za <span class="timesec">%d</span> sekund.'), $e->getMessage()), '!warning');
                 return;
@@ -136,6 +137,7 @@ class AnswerFormComponent extends BaseComponent {
                 return;
             }
         } catch (DriverException $e) {
+            Debugger::barDump($e);
             if ($e->getCode() == 1062) {
                 $this->getPresenter()->flashMessage(_('Na zadaný úkol jste již takto jednou odpovídali.'), 'danger');
             } else {
@@ -143,7 +145,7 @@ class AnswerFormComponent extends BaseComponent {
                 Debugger::log($e);
             }
             return;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Debugger::barDump($e);
             $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
             Debugger::log($e);
@@ -206,10 +208,6 @@ class AnswerFormComponent extends BaseComponent {
         return $form;
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     protected function startUp(): void {
         parent::startUp();
         if (!$this->user->isLoggedIn()) {
@@ -232,10 +230,6 @@ class AnswerFormComponent extends BaseComponent {
     private ?array $tasks = null;
     private array $tasksInfo;
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     private function initTasks(): void {
         $this->tasks = $this->tasksService->findSubmitAvailable($this->team)->fetchAll();
 

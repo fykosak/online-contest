@@ -2,7 +2,6 @@
 
 namespace FOL\Modules\GameModule;
 
-use Dibi\Exception;
 use FOL\Model\ORM\ScoreService;
 use FOL\Model\ORM\TasksService;
 
@@ -16,10 +15,6 @@ class TaskPresenter extends BasePresenter {
         $this->scoreService = $scoreService;
     }
 
-    /**
-     * @return void
-     * @throws Exception
-     */
     public function renderDefault(): void {
         $this->setPageTitle(_('Zadání'));
         $team = $this->getLoggedTeam();

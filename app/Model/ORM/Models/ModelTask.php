@@ -30,6 +30,8 @@ use Nette\Database\Table\ActiveRow;
 class ModelTask extends AbstractModel {
 
     public function getGroup(): ModelGroup {
-        return ModelGroup::createFromActiveRow($this->group);
+        /** @var ModelGroup $group */
+        $group = ModelGroup::createFromActiveRow($this->group);
+        return $group;
     }
 }

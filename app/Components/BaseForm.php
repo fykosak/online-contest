@@ -7,7 +7,7 @@ use Nette\DI\Container;
 use Nette\Forms\Controls\SelectBox;
 use Nette\Forms\Controls\TextArea;
 use Nette\Forms\Controls\TextInput;
-use Nette\Forms\IFormRenderer;
+use Nette\Forms\FormRenderer;
 use Nette\Forms\Rendering\DefaultFormRenderer;
 use Nette\Localization\Translator;
 
@@ -26,7 +26,7 @@ class BaseForm extends Form {
         $this->translator = $translator;
     }
 
-    private function createRenderer(): IFormRenderer {
+    private function createRenderer(): FormRenderer {
         $this->getElementPrototype()->class = 'form-horizontal';
         $renderer = new DefaultFormRenderer();
         $renderer->wrappers['controls']['container'] = 'div';
