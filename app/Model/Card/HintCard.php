@@ -6,8 +6,10 @@ use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
 use FOL\Model\Card\Exceptions\NoTasksWithHintAvailableException;
 use FOL\Model\Card\Exceptions\TaskDoesNotHaveHintException;
 use FOL\Model\Card\Exceptions\TaskNotAvailableException;
+use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Services\ServiceTaskHint;
 use Fykosak\Utils\Logging\Logger;
+use Nette\Database\Table\ActiveRow;
 use Nette\Forms\Container;
 use Nette\Utils\Html;
 
@@ -50,6 +52,7 @@ class HintCard extends Card {
 
     public function decorateFormContainer(Container $container, string $lang): void {
         $items = [];
+        /** @var ModelTask|ActiveRow $task */
         foreach ($this->tasksService->findSubmitAvailable($this->team)->fetchAll() as $task) {
             if ($this->serviceTaskHint->getTaskHint($task->id_task)) {
                 $items[$task->id_task] = $task['name_' . $lang];

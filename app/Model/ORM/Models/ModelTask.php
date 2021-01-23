@@ -34,4 +34,14 @@ class ModelTask extends AbstractModel {
         $group = ModelGroup::createFromActiveRow($this->group);
         return $group;
     }
+
+    public function getHint(): ?ModelTaskHint {
+        $row = $this->related('task_hint')->fetch();
+        return $row ? ModelTaskHint::createFromActiveRow($row) : null;
+    }
+
+    public function getOptions(): ?ModelAnswerOptions {
+        $row = $this->related('answerOptions')->fetch();
+        return $row ? ModelAnswerOptions::createFromActiveRow($row) : null;
+    }
 }

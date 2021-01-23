@@ -3,6 +3,7 @@
 namespace FOL\Components\ScoreList;
 
 use FOL\Model\ORM\ScoreService;
+use FOL\Model\ORM\Services\ServiceTaskState;
 use FOL\Model\ORM\TasksService;
 use FOL\Model\ORM\TeamsService;
 use FOL\Components\BaseComponent;
@@ -12,21 +13,24 @@ class ScoreListComponent extends BaseComponent {
     protected TasksService $tasksService;
     protected TeamsService $teamsService;
     protected ScoreService $scoreService;
+    private ServiceTaskState $serviceTaskState;
 
     public function injectPrimary(
         TasksService $tasksService,
         TeamsService $teamsService,
-        ScoreService $scoreService
+        ScoreService $scoreService,
+        ServiceTaskState $serviceTaskState
     ): void {
         $this->tasksService = $tasksService;
         $this->teamsService = $teamsService;
         $this->scoreService = $scoreService;
+        $this->serviceTaskState = $serviceTaskState;
     }
 
     protected function beforeRender(): void {
         parent::beforeRender();
         $this->template->teams = $this->teamsService->findAllWithScore();
-        $this->template->score = $this->scoreService->findAllTasks();
+        $this->template->score = $this->serviceTaskState->getTable();
         $this->template->tasks = $this->tasksService
             ->findPossiblyAvailable();
         $this->template->bonus = $this->scoreService->findAllBonus();

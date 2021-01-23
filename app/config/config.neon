@@ -40,6 +40,7 @@ services:
     - FOL\Model\ORM\Services\ServiceCompetitor
     - FOL\Model\ORM\Services\ServicePeriod
     - FOL\Model\ORM\Services\ServiceToken
+    - FOL\Model\ORM\Services\ServiceTaskState
 
     - FOL\Model\Card\CardFactory
 

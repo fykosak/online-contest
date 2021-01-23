@@ -21,6 +21,13 @@ class CardPresenter extends BasePresenter {
         $this->cardFactory = $cardFactory;
     }
 
+    protected function startUp(): void {
+        parent::startUp();
+        if ($this->getAction() === 'default') {
+            $this->forward('list');
+        }
+    }
+
     public function renderList(): void {
         $this->setPageTitle(_('Cards'));
         $this->template->cards = $this->cardFactory->createForTeam($this->getLoggedTeam());

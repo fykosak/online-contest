@@ -6,11 +6,13 @@ use DateTime;
 use Exception;
 use FOL\Model\ORM\Models\ModelGroup;
 use FOL\Model\ORM\Models\ModelTask;
+use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Services\ServiceAnswer;
 use FOL\Model\ORM\Services\ServiceGroup;
 use FOL\Model\ORM\Services\ServiceLog;
 use FOL\Model\ORM\Services\ServicePeriod;
-use FOL\Model\ORM\Services\ServiceTask;
+use FOL\Model\ORM\Services\ServiceTaskState;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
@@ -18,38 +20,32 @@ use Tracy\Debugger;
 
 class ScoreService extends AbstractService {
 
-    protected TasksService $tasksService;
     private ServiceGroup $serviceGroup;
     private ServicePeriod $servicePeriod;
-    private ServiceTask $serviceTask;
+    private ServiceTaskState $serviceTaskState;
+    private ServiceAnswer $serviceAnswer;
 
     public function __construct(
         Explorer $explorer,
         ServicePeriod $servicePeriod,
-        TasksService $tasksService,
         ServiceGroup $serviceGroup,
-        ServiceLog $serviceLog
+        ServiceLog $serviceLog,
+        ServiceTaskState $serviceTaskState,
+        ServiceAnswer $serviceAnswer
     ) {
         parent::__construct($explorer, $serviceLog);
-        $this->tasksService = $tasksService;
         $this->serviceGroup = $serviceGroup;
         $this->servicePeriod = $servicePeriod;
+        $this->serviceTaskState = $serviceTaskState;
+        $this->serviceAnswer = $serviceAnswer;
     }
 
     public function findAllBonus(): Selection {
         return $this->explorer->table('tmp_bonus');
     }
 
-    public function findAllTasks(): Selection {
-        return $this->explorer->table('task_state');
-    }
-
     public function findAllPenality(): Selection {
         return $this->explorer->table('tmp_penality');
-    }
-
-    public function findAllSkips(): Selection {
-        return $this->explorer->table('task_state')->where('skipped = 1');
     }
 
     public function updateAfterSkip(ModelTeam $team): void {
@@ -70,19 +66,17 @@ class ScoreService extends AbstractService {
 
             /* vypocet bonusu */
             if ($hurry) {
-                $solvedTasks = $this->tasksService->findSolved($team);
-                $hurryTasks = $this->serviceTask->getTable()
-                    ->where('id_task IN', $solvedTasks)
-                    ->where('number', $task->number)
-                    ->where('id_group <> 1');
+                $solvedTasks = $this->serviceTaskState->findSolved($team);
+                $hurryTasks = $solvedTasks->where('id_task IN', $solvedTasks)
+                    ->where('task.number', $task->number)
+                    ->where('task.id_group <> 1');
                 if (count($hurryTasks) == 3 && $this->servicePeriod->findCurrent($task->getGroup())->has_bonus == 1) {
-                    /** @var ModelTask $hurryTask */
+                    /** @var ModelTaskState $hurryTask */
                     foreach ($hurryTasks as $hurryTask) {
-                        $score += $this->getSingleTaskScore($team, $hurryTask);
+                        $score += $this->getSingleTaskScore($team, $hurryTask->getTask());
                     }
                 }
             }
-
             $this->explorer->query('UPDATE team SET score_exp = score_exp + ?', $score, 'WHERE id_team = ?', $team->id_team);
         } catch (Exception $e) {
             Debugger::log($e);
@@ -97,7 +91,7 @@ class ScoreService extends AbstractService {
     public function getSingleTaskScore(ModelTeam $team, $task): int {
         /** @var ModelGroup $group */
         $group = $this->serviceGroup->findByPrimary($task->id_group);
-        $wrongTries = $this->explorer->table('answer')
+        $wrongTries = $this->serviceAnswer->getTable()
             ->where('id_team', $team->id_team)
             ->where('id_task', $task->id_task)
             ->where('correct', 0)->count();

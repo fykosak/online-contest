@@ -6,6 +6,7 @@ use DateTime;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceLog;
+use FOL\Model\ORM\Services\ServiceTaskState;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
@@ -22,11 +23,13 @@ class TasksService extends AbstractService {
     protected AnswersService $answersService;
 
     protected GroupsService $groupsService;
+    private ServiceTaskState $serviceTaskState;
 
-    public function __construct(AnswersService $answersService, GroupsService $groupsService, ServiceLog $serviceLog, Explorer $explorer) {
+    public function __construct(AnswersService $answersService, GroupsService $groupsService, ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState) {
         parent::__construct($explorer, $serviceLog);
         $this->answersService = $answersService;
         $this->groupsService = $groupsService;
+        $this->serviceTaskState = $serviceTaskState;
     }
 
     public function findPossiblyAvailable(): Selection {
@@ -36,20 +39,22 @@ class TasksService extends AbstractService {
     }
 
     public function findProblemAvailable(ModelTeam $team): Selection {
-        return $this->explorer->table('view_available_task')->where('id_team', $team->id_team)
+        return $this->explorer->table('view_available_task')
+            ->where('id_team', $team->id_team)
             ->order('id_group')
             ->order('number');
     }
 
     public function findSubmitAvailable(ModelTeam $team): Selection {
-        $source = $this->explorer->table('view_submit_available_task')->where('id_team', $team->id_team)
+        $source = $this->explorer->table('view_submit_available_task')
+            ->where('id_team', $team->id_team)
             ->order('id_group')
             ->order('number');
 
-        $solved = $this->findSolved($team);
+        $solved = $this->serviceTaskState->findSolved($team)->fetchPairs('id_task', 'id_task');
 
         // Remove solved tasks from the source
-        if (!empty($solved)) {
+        if (count($solved)) {
             $source->where('id_task NOT IN ?', $solved);
         }
         return $source;
@@ -76,28 +81,6 @@ class TasksService extends AbstractService {
      */
     public function findUnsolved(ModelTeam $team): array {
         return $this->findSubmitAvailable($team)->fetchPairs('id_task', 'id_task');
-    }
-
-    /**
-     * Find solved tasks
-     *
-     * @param ModelTeam $team
-     * @return array id_task => id_task
-     */
-    public function findSolved(ModelTeam $team): array {
-        $source = $this->explorer->table('task_state')->where('id_team', $team->id_team)->where('points IS NOT NULL');
-        return $source->fetchPairs('id_task', 'id_task');
-    }
-
-    /**
-     * Find skipped tasks
-     *
-     * @param ModelTeam $team
-     * @return array id_task => id_task
-     */
-    public function findSkipped(ModelTeam $team): array {
-        $source = $this->explorer->table('task_state')->where('id_team', $team->id_team)->where('skipped = 1');
-        return $source->fetchPairs('id_task', 'id_task');
     }
 
     public function findAllStats(): Selection {
@@ -134,7 +117,7 @@ class TasksService extends AbstractService {
 
         // Increase counter
         $sql = 'INSERT INTO group_state (id_group, id_team, task_counter)
-                    VALUES(%i, %i, 0)
+                    VALUES(?, ?, 0)
                 ON DUPLICATE KEY UPDATE task_counter = task_counter + 1';
         $this->explorer->query($sql, $task->id_group, $team->id_team);
 
@@ -207,7 +190,7 @@ class TasksService extends AbstractService {
                                 WHERE number <= gs.task_counter AND cancelled = 1
                              ), 0),
                     gs.task_counter)
-                WHERE gs.id_group = %i AND gs.id_team = %i';
+                WHERE gs.id_group = ? AND gs.id_team = ?';
 
         $this->explorer->query($sql, $task->id_group, $team->id_team);
     }

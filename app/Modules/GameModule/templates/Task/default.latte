@@ -1,73 +1,106 @@
-{block content}
-
-{*{cache "problems/$id_team", "problems"}*}
-
-{*{if $lang == 'cs'}
-<p><b>Věnujte prosím pár minut vyplnění <a href="https://forms.gle/Tyxoq5TETdcHqLPq6">ankety</a> o letošním FoLu.</b></p>
-{else}
-<p><b>Please, spend a few moments filling a <a href="https://forms.gle/5uJHPEgpC6x4vBYW9">survey</a> about this year's competition.</b></p>
-{/if}*}
-
-{if !$isGameStarted}
-<div class="alert alert-secondary">
-{if $lang == 'cs'}
-Jakmile hra začne, na této stránce se objeví zadání úloh. Úlohy budete moci odevzdávat na stránce <b>Odevzdat řešení</b>, která se objeví v menu po začátku hry.
-<hr>
-V mezičase, co takhle poslat nějakou fotku vašeho týmu na <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>?
-{else}
-Once the game starts, the task assignment will appear here. You will be able to submit the tasks on the <b>Submit the solution</b> page, which will appear in the menu after the game starts.
-<hr>
-In the meantime, how about sending a photo of your team to <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>?
-{/if}
-</div>
-{/if}
-
-<p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
-
-<h3>{_'Nevyřešené'}</h3>
-{if count($unsolvedTasks) == 0}
-<p>{_'Žádné úlohy.'}</p>
-{else}
-<ul>
-    {foreach $unsolvedTasks as $task}
-    {block task}
-    <li><del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}"><strong>{$task->code_name}</strong>&nbsp;{$task|i18n:'name',$lang} ({$task->curPoints} {_'b.'}, max. {$task->points} {_'b.'})</del>
-        <ul><li>
-            {foreach $mirrors as $mirror}
-            <a href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
-            {/foreach}
+{define task}
+    {varType bool $isGameStarted}
+    {varType string $lang}
+    {varType array $unsolvedTasks}
+    {varType array $solvedTasks}
+    {varType array $skippedTasks}
+    {varType FOL\Modules\GameModule\TaskPresenter $presenter}
+    {varType FOL\Modules\GameModule\TaskPresenter $control}
+    {varType Nette\Security\User $user}
+    {varType string $baseUrl}
+    {varType string $basePath}
+    {varType array $flashes}
+    {varType string $today}
+    {varType string $customScript}
+    {varType bool $isGameEnd}
+    {varType string $pageTitle}
+    {varType FOL\Model\ORM\Models\ModelTeam $team}
+    {varType array $mirrors}
+    {varType array $missedTasks}
+    {varType FOL\Model\ORM\Models\ModelTask $task}
+    <li>
+        <del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}">
+            <strong>{$task->getGroup()->code_name}</strong>&nbsp;{$task|i18n:'name',$lang} ({$control->scoreService->getSingleTaskScore($team, $task)} {_'b.'}, max. {$task->points} {_'b.'}
+            )
+        </del>
+        <ul>
+            <li>
+                {foreach $mirrors as $mirror}
+                    <a href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
+                {/foreach}
             </li>
         </ul>
     </li>
-    {/block}
-    {/foreach}
-</ul>
-{/if}
+{/define}
 
-<h3>{_'Vyřešené'}</h3>
-{if count($solvedTasks) == 0}
-<p>{_'Žádné úlohy.'}</p>
-{else}
-<ul>
-    {foreach $solvedTasks as $task}
-    {include #task}
-    {/foreach}
-</ul>
-{/if}
+{define tasks}
+    {if count($tasks) == 0}
+        <p>{_'Žádné úlohy.'}</p>
+    {else}
+        <ul>
+            {foreach $tasks as $task}
+                {include task}
+            {/foreach}
+        </ul>
+    {/if}
+{/define}
 
-<h3>{_'Přeskočené'}</h3>
-{if count($skippedTasks) == 0}
-<p>{_'Žádné úlohy.'}</p>
-{else}
-<ul>
-    {foreach $skippedTasks as $task}
-    {include #task}
-    {/foreach}
-</ul>
-{/if}
+{block content}
+    {varType bool $isGameStarted}
+    {varType string $lang}
+    {varType array $unsolvedTasks}
+    {varType array $solvedTasks}
+    {varType array $skippedTasks}
+    {varType FOL\Modules\GameModule\TaskPresenter $presenter}
+    {varType FOL\Modules\GameModule\TaskPresenter $control}
+    {varType Nette\Security\User $user}
+    {varType string $baseUrl}
+    {varType string $basePath}
+    {varType array $flashes}
+    {varType string $today}
+    {varType string $customScript}
+    {varType bool $isGameEnd}
+    {varType string $pageTitle}
+    {varType FOL\Model\ORM\Models\ModelTeam $team}
+    {varType array $mirrors}
+    {varType array $missedTasks}
 
-{*{/cache}*}
+    {*{cache "problems/$id_team", "problems"}*}
 
-{include @info.$lang.latte}
+    {*{if $lang == 'cs'}
+    <p><b>Věnujte prosím pár minut vyplnění <a href="https://forms.gle/Tyxoq5TETdcHqLPq6">ankety</a> o letošním FoLu.</b></p>
+    {else}
+    <p><b>Please, spend a few moments filling a <a href="https://forms.gle/5uJHPEgpC6x4vBYW9">survey</a> about this year's competition.</b></p>
+    {/if}*}
+
+    {if !$isGameStarted}
+        <div class="alert alert-secondary">
+            {if $lang == 'cs'}
+                Jakmile hra začne, na této stránce se objeví zadání úloh. Úlohy budete moci odevzdávat na stránce <b>Odevzdat
+                řešení</b>, která se objeví v menu po začátku hry.
+                <hr>
+                V mezičase, co takhle poslat nějakou fotku vašeho týmu na <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>?
+            {else}
+                Once the game starts, the task assignment will appear here. You will be able to submit the tasks on the
+                <b>Submit the solution</b> page, which will appear in the menu after the game starts.
+                <hr>
+                In the meantime, how about sending a photo of your team to <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>?
+            {/if}
+        </div>
+    {/if}
+
+    <p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
+    <h3>{_'Nevyřešené'}</h3>
+    {include tasks tasks=>$unsolvedTasks}
+
+    <h3>{_'Vyřešené'}</h3>
+    {include tasks tasks=>$solvedTasks}
+
+    <h3>{_'Přeskočené'}</h3>
+    {include tasks tasks=>$skippedTasks}
+
+    {*{/cache}*}
+
+    {include '@info.' . $lang . '.latte'}
 
 {/block}

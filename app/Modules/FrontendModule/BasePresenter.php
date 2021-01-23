@@ -22,7 +22,7 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
                 $navigation->addNavItem(new NavItem(':Public:Stats:default', [], _('Výsledky'), 'visible-sm-inline glyphicon glyphicon-stats'));
                 $navigation->addNavItem(new NavItem(':Frontend:Noticeboard:default', [], _('Nástěnka'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
                 if ($this->getUser()->isLoggedIn()) {
-                    $navigation->addNavItem(new NavItem(':Game:Game:default', [], _('Hra'), 'visible-sm-inline glyphicon glyphicon-tower'));
+                    $navigation->addNavItem(new NavItem(':Game:Task:default', [], _('Hra'), 'visible-sm-inline glyphicon glyphicon-tower'));
                 }
             }
         }

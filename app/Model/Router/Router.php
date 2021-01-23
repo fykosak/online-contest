@@ -15,17 +15,20 @@ class Router {
             'presenter' => 'Default',
             'action' => 'default',
         ], Route::ONE_WAY);
-        $router->addRoute('<lang>/<presenter cron>/<action>', [
+        $router->addRoute('<presenter cron>/<action>', [
             'module' => 'Frontend',
             'action' => 'default',
-            'lang' => 'en',
         ]);
 
-        $router->addRoute('<lang>/[<module>/[<presenter>/[<action>/[<id>]]]]', [
-            'module' => 'Public',
+        $router->addRoute('<module public|org>/[<presenter>/[<action>/[<id>]]]', [
             'presenter' => 'Default',
             'action' => 'default',
-            'lang' => 'en',
+        ]);
+
+        $router->addRoute('[<presenter>/[<action>/[<id>]]]', [
+            'module' => 'Game',
+            'presenter' => 'Default',
+            'action' => 'default',
         ]);
 
         return $router;
