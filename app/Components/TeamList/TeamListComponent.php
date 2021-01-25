@@ -3,7 +3,7 @@
 namespace FOL\Components\TeamList;
 
 use FOL\Model\ORM\Services\ServiceCompetitor;
-use FOL\Model\ORM\TeamsService;
+use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Components\BaseListComponent;
 
 class TeamListComponent extends BaseListComponent {
@@ -26,7 +26,7 @@ class TeamListComponent extends BaseListComponent {
         } else {
             $this->template->competitors = [];
         }
-        $this->template->categories = TeamsService::getCategoryNames();
+        $this->template->categories = ServiceTeam::getCategoryNames();
     }
 
     public function render(): void {

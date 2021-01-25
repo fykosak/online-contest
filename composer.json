@@ -14,7 +14,8 @@
     "dg/adminer-custom": ">= 1.6",
     "fykosak/nette-fks-utils": "dev-master",
     "texy/texy": "^2.6",
-    "ext-gettext": "*"
+    "ext-gettext": "*",
+    "ext-json": "*"
   },
   "require-dev": {
     "nette/tester": "~1.3"

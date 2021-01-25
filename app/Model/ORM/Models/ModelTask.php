@@ -44,4 +44,21 @@ class ModelTask extends AbstractModel {
         $row = $this->related('answerOptions')->fetch();
         return $row ? ModelAnswerOptions::createFromActiveRow($row) : null;
     }
+
+    /**
+     * @param ActiveRow|ModelTask $row
+     * @return array
+     * TODO implement task label
+     */
+    public static function __toArray(ActiveRow $row): array {
+        return [
+            'taskId' => $row->id_task,
+            'group' => $row->id_group,
+            'number' => $row->number,
+            'name' => [
+                'cs' => $row->name_cs,
+                'en' => $row->name_en,
+            ],
+        ];
+    }
 }

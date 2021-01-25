@@ -2,7 +2,7 @@
 
 namespace FOL\Modules\GameModule;
 
-use FOL\Model\ORM\TeamsService;
+use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Components\Results\ResultsComponent;
 use FOL\Components\ScoreList\ScoreListComponent;
 use FOL\Components\TaskStats\TaskStatsComponent;
@@ -10,13 +10,7 @@ use Nette\Application\BadRequestException;
 
 class ResultsPresenter extends BasePresenter {
 
-    const STATS_TAG = 'ctStats';
-
-    protected TeamsService $teamsService;
-
-    public function injectTeamsService(TeamsService $teamsService): void {
-        $this->teamsService = $teamsService;
-    }
+    public const STATS_TAG = 'ctStats';
 
     /**
      * @return void
@@ -27,7 +21,7 @@ class ResultsPresenter extends BasePresenter {
         if (!$this->getCurrentYear()->isGameStarted()) {
             $this->error('Statistiky nejsou dostupné.');
         }
-        $this->template->categories = $this->teamsService->getCategoryNames();
+        $this->template->categories = ServiceTeam::getCategoryNames();
     }
 
     /**

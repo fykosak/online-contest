@@ -28,4 +28,13 @@ class ModelTaskState extends AbstractModel {
         $team = ModelTeam::createFromActiveRow($this->task);
         return $team;
     }
+
+    public function __toArray(): array {
+        return [
+            'taskId' => $this->id_task,
+            'teamId' => $this->id_team,
+            'skipped' => $this->skipped,
+            'points' => $this->points,
+        ];
+    }
 }

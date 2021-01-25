@@ -7,12 +7,11 @@
  */
 
 use FOL\Bootstrap;
-use FOL\Model\ORM\TeamsService;
 
 require __DIR__ . '/../app/Bootstrap.php';
 
 $container = Bootstrap::boot()->createContainer();
-$teamsModel = $container->getByType(TeamsService::class);
+$teamsModel = $container->getByType(\FOL\Model\ORM\Services\ServiceTeam::class);
 $teams = $teamsModel->findAllWithScore()->fetchAll();
 
 $rank = [];

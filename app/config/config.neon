@@ -21,10 +21,8 @@ services:
 
     router: FOL\Model\Router\Router::createRouter
     - FOL\Model\ORM\AnswersService
-    - FOL\Model\ORM\GroupsService
     - FOL\Model\ORM\ScoreService
     - FOL\Model\ORM\TasksService
-    - FOL\Model\ORM\TeamsService
     #new ORM
     - FOL\Model\ORM\Services\ServiceCardUsage
     - FOL\Model\ORM\Services\ServiceAnswerOptions
@@ -41,6 +39,8 @@ services:
     - FOL\Model\ORM\Services\ServicePeriod
     - FOL\Model\ORM\Services\ServiceToken
     - FOL\Model\ORM\Services\ServiceTaskState
+
+    - FOL\Model\FOF2021ScoreStrategy
 
     - FOL\Model\Card\CardFactory
 

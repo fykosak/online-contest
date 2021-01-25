@@ -23,7 +23,7 @@ class AnswersService extends AbstractService {
     private ServiceAnswer $serviceAnswer;
 
     public function __construct(ServiceAnswer $serviceAnswer, ServiceLog $serviceLog, Explorer $explorer) {
-        parent::__construct($explorer,  $serviceLog);
+        parent::__construct($explorer, $serviceLog);
         $this->serviceAnswer = $serviceAnswer;
     }
 

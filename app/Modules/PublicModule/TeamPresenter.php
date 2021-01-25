@@ -4,7 +4,6 @@ namespace FOL\Modules\PublicModule;
 
 use FOL\Model\Authentication\TeamAuthenticator;
 use FOL\Model\ORM\Services\ServiceTeam;
-use FOL\Model\ORM\TeamsService;
 use FOL\Components\PasswordChangeForm\PasswordChangeFormComponent;
 use FOL\Components\TeamList\TeamListComponent;
 use Nette\Application\AbortException;
@@ -92,7 +91,7 @@ class TeamPresenter extends BasePresenter {
         $this->getComponent('teamList')->setSource(
             $this->serviceTeam->getTable()
         );
-        $this->template->categories = TeamsService::getCategoryNames();
+        $this->template->categories = ServiceTeam::getCategoryNames();
     }
 
     public function renderRegistration(): void {

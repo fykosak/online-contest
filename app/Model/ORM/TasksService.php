@@ -5,6 +5,7 @@ namespace FOL\Model\ORM;
 use DateTime;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Services\ServiceGroup;
 use FOL\Model\ORM\Services\ServiceLog;
 use FOL\Model\ORM\Services\ServiceTaskState;
 use Nette\Database\Explorer;
@@ -22,13 +23,13 @@ class TasksService extends AbstractService {
 
     protected AnswersService $answersService;
 
-    protected GroupsService $groupsService;
+    protected ServiceGroup $serviceGroup;
     private ServiceTaskState $serviceTaskState;
 
-    public function __construct(AnswersService $answersService, GroupsService $groupsService, ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState) {
+    public function __construct(AnswersService $answersService, ServiceGroup $serviceGroup, ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState) {
         parent::__construct($explorer, $serviceLog);
         $this->answersService = $answersService;
-        $this->groupsService = $groupsService;
+        $this->serviceGroup = $serviceGroup;
         $this->serviceTaskState = $serviceTaskState;
     }
 
@@ -101,7 +102,7 @@ class TasksService extends AbstractService {
         }
 
         // Check that skip is allowed in period
-        $skippAbleGroups = $this->groupsService->findAllSkippAble()->fetchPairs('id_group', 'id_group');
+        $skippAbleGroups = $this->serviceGroup->findAllSkippAble()->fetchPairs('id_group', 'id_group');
         if (!array_key_exists($task['id_group'], $skippAbleGroups)) {
             $this->log($team->id_team, 'skip_tried', 'The team tried to skip the task [$task->id_task].');
             throw new InvalidStateException('Skipping not allowed during this period.', AnswersService::ERROR_SKIP_OF_PERIOD);

@@ -4,6 +4,7 @@ namespace FOL\Model\ORM\Models;
 
 use DateTimeInterface;
 use Fykosak\Utils\ORM\AbstractModel;
+use Nette\Database\Table\ActiveRow;
 
 /**
  * @property-read int id_team
@@ -20,4 +21,15 @@ use Fykosak\Utils\ORM\AbstractModel;
  */
 class ModelTeam extends AbstractModel {
 
+    /**
+     * @param ActiveRow|ModelTeam $row
+     * @return array
+     */
+    public static function __toArray(ActiveRow $row): array {
+        return [
+            'teamId' => $row->id_team,
+            'name' => $row->name,
+            'category' => $row->category,
+        ];
+    }
 }

@@ -18,4 +18,5 @@ class ServiceAnswer extends AbstractService {
         return $this->getTable()->where('id_task', $taskId);
     }
 
+
 }

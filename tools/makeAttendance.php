@@ -7,13 +7,12 @@
  */
 
 use FOL\Bootstrap;
-use FOL\Model\ORM\TeamsService;
 
 $event_id = 122;
 
 require __DIR__ . '/../app/Bootstrap.php';
 $container = Bootstrap::boot()->createContainer();
-$teamsModel = $container->getByType(TeamsService::class);
+$teamsModel = $container->getByType(\FOL\Model\ORM\Services\ServiceTeam::class);
 $teams = $teamsModel->findAllWithScore()->fetchAll();
 
 foreach ($teams as $team) {

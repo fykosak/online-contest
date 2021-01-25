@@ -1,5 +1,4 @@
 {block #body}
-    {cache "scoreList/" . $presenter->lang, tags => [$presenter::STATS_TAG]}
-        {control scoreList}
-    {/cache}
+    {control scoreList}
+    <script src="{$basePath}/js/bundle.min.js"></script>
 {/block}

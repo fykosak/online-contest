@@ -14,6 +14,7 @@ use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceYear;
 use FOL\Model\ORM\TasksService;
 use FOL\Components\BaseForm;
+use FOL\Model\ScoreStrategy;
 use Fykosak\Utils\Logging\FlashMessageDump;
 use Fykosak\Utils\Logging\MemoryLogger;
 use Nette\Application\AbortException;
@@ -43,6 +44,7 @@ class AnswerFormComponent extends BaseComponent {
     protected DoublePointsCard $doublePointsCard;
     protected ServiceTask $serviceTask;
     private ServicePeriod $servicePeriod;
+    private ScoreStrategy $scoreStrategy;
 
     public function __construct(Container $container, ModelTeam $team) {
         $this->team = $team;
@@ -57,7 +59,8 @@ class AnswerFormComponent extends BaseComponent {
         ServiceYear $serviceYear,
         ServiceTask $serviceTask,
         User $user,
-        CardFactory $cardFactory
+        CardFactory $cardFactory,
+        ScoreStrategy $scoreStrategy
     ): void {
         $this->tasksService = $tasksService;
         $this->answersService = $answersService;
@@ -66,6 +69,7 @@ class AnswerFormComponent extends BaseComponent {
         $this->serviceTask = $serviceTask;
         $this->servicePeriod = $servicePeriod;
         $this->user = $user;
+        $this->scoreStrategy = $scoreStrategy;
         $this->doublePointsCard = $cardFactory->createForTeam($this->team)['double_points'];
     }
 
@@ -124,7 +128,6 @@ class AnswerFormComponent extends BaseComponent {
         } catch (AbortException $exception) {
             throw $exception;
         } catch (InvalidStateException $e) {
-            Debugger::barDump($e);
             if ($e->getCode() == AnswersService::ERROR_TIME_LIMIT) {
                 $this->getPresenter()->flashMessage(sprintf(_('Lze odpovídat až za <span class="timesec">%d</span> sekund.'), $e->getMessage()), '!warning');
                 return;
@@ -137,7 +140,6 @@ class AnswerFormComponent extends BaseComponent {
                 return;
             }
         } catch (DriverException $e) {
-            Debugger::barDump($e);
             if ($e->getCode() == 1062) {
                 $this->getPresenter()->flashMessage(_('Na zadaný úkol jste již takto jednou odpovídali.'), 'danger');
             } else {
@@ -146,7 +148,6 @@ class AnswerFormComponent extends BaseComponent {
             }
             return;
         } catch (Exception $e) {
-            Debugger::barDump($e);
             $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
             Debugger::log($e);
             return;
@@ -234,13 +235,15 @@ class AnswerFormComponent extends BaseComponent {
         $this->tasks = $this->tasksService->findSubmitAvailable($this->team)->fetchAll();
 
         $this->tasksInfo = [];
-        foreach ($this->tasks as $task) {
-            $this->tasksInfo[$task['id_task']] = [
-                'sig_digits' => $task['real_sig_digits'],
-                'unit' => $task['answer_unit'],
-                'type' => $task['answer_type'],
-                'maxPoints' => $task['points'],
-                'curPoints' => $this->scoreService->getSingleTaskScore($this->team, $task),
+        foreach ($this->tasks as $row) {
+            /** @var ModelTask $task */
+            $task = $this->serviceTask->findByPrimary($row->id_task);
+            $this->tasksInfo[$task->id_task] = [
+                'sig_digits' => $task->real_sig_digits,
+                'unit' => $task->answer_unit,
+                'type' => $task->answer_type,
+                'maxPoints' => $task->points,
+                'curPoints' => $this->scoreStrategy->getSingleTaskScore($this->team, $task),
             ];
         }
     }

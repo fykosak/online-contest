@@ -7,8 +7,8 @@ use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\ScoreService;
 use FOL\Model\ORM\Services\ServiceCompetitor;
 use FOL\Model\ORM\Services\ServiceTask;
+use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Model\ORM\TasksService;
-use FOL\Model\ORM\TeamsService;
 use FOL\Components\BaseComponent;
 
 class ResultsComponent extends BaseComponent {
@@ -16,14 +16,14 @@ class ResultsComponent extends BaseComponent {
     private $display;
 
     protected TasksService $tasksService;
-    protected TeamsService $teamsService;
+    protected ServiceTeam $teamsService;
     protected ScoreService $scoreService;
     protected ServiceCompetitor $serviceCompetitors;
     private ServiceTask $serviceTask;
 
     public function injectPrimary(
         TasksService $tasksService,
-        TeamsService $teamsService,
+        ServiceTeam $teamsService,
         ScoreService $scoreService,
         ServiceCompetitor $serviceCompetitors,
         ServiceTask $serviceTask
@@ -56,7 +56,7 @@ class ResultsComponent extends BaseComponent {
             if (!array_key_exists($competitor->id_team, $teamCountries)) {
                 $teamCountries[$competitor->id_team] = [];
             }
-            $teamCountries[$competitor->id_team][] = $competitor->country_iso;
+            $teamCountries[$competitor->id_team][] = $competitor->school->country_iso;
         }
         $this->template->teamCountries = $teamCountries;
         $this->template->categories = $this->teamsService->getCategoryNames();

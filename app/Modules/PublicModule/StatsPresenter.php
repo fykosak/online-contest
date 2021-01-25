@@ -2,7 +2,7 @@
 
 namespace FOL\Modules\PublicModule;
 
-use FOL\Model\ORM\TeamsService;
+use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Components\Results\ResultsComponent;
 use FOL\Components\ScoreList\ScoreListComponent;
 use FOL\Components\TaskStats\TaskStatsComponent;
@@ -12,9 +12,9 @@ class StatsPresenter extends BasePresenter {
 
     const STATS_TAG = 'ctStats';
 
-    protected TeamsService $teamsService;
+    protected ServiceTeam $teamsService;
 
-    public function injectTeamsService(TeamsService $teamsService): void {
+    public function injectTeamsService(ServiceTeam $teamsService): void {
         $this->teamsService = $teamsService;
     }
 

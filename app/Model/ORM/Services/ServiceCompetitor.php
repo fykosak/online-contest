@@ -12,7 +12,7 @@ use Nette\Database\Explorer;
 class ServiceCompetitor extends AbstractService {
 
     public function __construct(Explorer $connection, Conventions $conventions) {
-        parent::__construct($connection, $conventions, 'competitors', ModelCompetitor::class);
+        parent::__construct($connection, $conventions, 'competitor', ModelCompetitor::class);
     }
 
     public function findAllByTeam(ModelTeam $team): TypedTableSelection {

@@ -14,6 +14,7 @@ use Nette\Security\SimpleIdentity;
 use Nette\Security\AuthenticationException;
 use Nette\Utils\Random;
 use Nette\Security\User;
+use Tracy\Debugger;
 
 /**
  * @author Jan Papousek

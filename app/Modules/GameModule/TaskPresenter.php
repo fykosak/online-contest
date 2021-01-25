@@ -8,6 +8,7 @@ use FOL\Model\ORM\ScoreService;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceTaskState;
 use FOL\Model\ORM\TasksService;
+use FOL\Model\ScoreStrategy;
 use Nette\Database\Table\ActiveRow;
 
 class TaskPresenter extends BasePresenter {
@@ -16,12 +17,14 @@ class TaskPresenter extends BasePresenter {
     public ScoreService $scoreService;
     private ServiceTaskState $serviceTaskState;
     private ServiceTask $serviceTask;
+    public ScoreStrategy $scoreStrategy;
 
-    public function injectSecondary(TasksService $tasksService, ScoreService $scoreService, ServiceTaskState $serviceTaskState, ServiceTask $serviceTask): void {
+    public function injectSecondary(TasksService $tasksService, ScoreService $scoreService, ServiceTaskState $serviceTaskState, ServiceTask $serviceTask, ScoreStrategy $scoreStrategy): void {
         $this->tasksService = $tasksService;
         $this->scoreService = $scoreService;
         $this->serviceTaskState = $serviceTaskState;
         $this->serviceTask = $serviceTask;
+        $this->scoreStrategy = $scoreStrategy;
     }
 
     public function renderDefault(): void {

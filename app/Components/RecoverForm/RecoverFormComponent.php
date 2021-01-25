@@ -3,7 +3,6 @@
 namespace FOL\Components\RecoverForm;
 
 use FOL\Model\ORM\Services\ServiceCompetitor;
-use FOL\Model\ORM\TeamsService;
 use FOL\Components\BaseForm;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
@@ -17,18 +16,15 @@ class RecoverFormComponent extends BaseComponent {
 
     private TeamAuthenticator $authenticator;
     private Mailer $mailer;
-    protected TeamsService $teamsService;
     protected ServiceCompetitor $serviceCompetitors;
 
     public function injectPrimary(
         TeamAuthenticator $authenticator,
         Mailer $mailer,
-        TeamsService $teamsService,
         ServiceCompetitor $serviceCompetitors
     ): void {
         $this->authenticator = $authenticator;
         $this->mailer = $mailer;
-        $this->teamsService = $teamsService;
         $this->serviceCompetitors = $serviceCompetitors;
     }
 
