@@ -135,6 +135,7 @@ class AnswerFormComponent extends BaseComponent {
                 $this->getPresenter()->flashMessage(_('Není aktuální žádné odpovídací období.'), 'danger');
                 return;
             } else {
+                Debugger::barDump($e);
                 $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
                 Debugger::log($e);
                 return;
@@ -143,6 +144,7 @@ class AnswerFormComponent extends BaseComponent {
             if ($e->getCode() == 1062) {
                 $this->getPresenter()->flashMessage(_('Na zadaný úkol jste již takto jednou odpovídali.'), 'danger');
             } else {
+                Debugger::barDump($e);
                 $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
                 Debugger::log($e);
             }
@@ -150,6 +152,7 @@ class AnswerFormComponent extends BaseComponent {
         } catch (Exception $e) {
             $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
             Debugger::log($e);
+            Debugger::barDump($e);
             return;
         }
         $this->getPresenter()->redirect('this');

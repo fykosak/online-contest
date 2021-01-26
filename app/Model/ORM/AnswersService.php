@@ -53,7 +53,7 @@ class AnswersService extends AbstractService {
         // Last answer from same group has to be older than XX seconds
         $query = $this->serviceAnswer->getTable()->where('task.id_group', $task->id_group)
             ->where('id_team', $team->id_team)
-            ->where('inserted > NOW() - INTERVAL ? SECOND', $period->time_penalty);
+            ->where('answer.inserted > NOW() - INTERVAL ? SECOND', $period->time_penalty);
         if (!empty($correctAnswers)) {
             $query->where('id_answer NOT IN ?', $correctAnswers);
         }
