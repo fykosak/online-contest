@@ -13,11 +13,10 @@ export interface State {
     teams?: Team[];
     categories?: string[];
     availablePoints?: number[];
-    tasksOnBoard?: number;
 }
 
 const fetchSuccess = (state: State, action: ActionFetchSuccess<Response2<ResponseData>>): State => {
-    const {submits, tasks, teams, categories, availablePoints, tasksOnBoard} = action.data.data;
+    const {submits, tasks, teams, categories, availablePoints} = action.data.data;
     return {
         ...state,
         availablePoints: availablePoints.map((value) => +value),
@@ -27,7 +26,6 @@ const fetchSuccess = (state: State, action: ActionFetchSuccess<Response2<Respons
             ...submits,
         },
         tasks: tasks ? tasks : state.tasks,
-        tasksOnBoard,
         teams: teams ? teams : state.teams,
     };
 };

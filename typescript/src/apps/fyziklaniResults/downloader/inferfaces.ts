@@ -13,8 +13,6 @@ export interface ResponseData {
     lastUpdated: string;
     isOrg: boolean;
     refreshDelay: number;
-    tasksOnBoard: number;
-
     submits: Submit[];
     teams?: Team[];
     tasks?: Task[];

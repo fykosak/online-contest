@@ -2,6 +2,8 @@
 
 namespace FOL\Components\ScoreList;
 
+use FKSDB\Models\Fyziklani\NotSetGameParametersException;
+use FOL\Model\GameSetup;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Models\ModelTeam;
@@ -9,14 +11,16 @@ use FOL\Model\ORM\ScoreService;
 use FOL\Model\ORM\Services\ServiceTaskState;
 use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Model\ORM\TasksService;
-use Fykosak\Utils\FrontEndComponents\FrontEndComponent;
+use Fykosak\Utils\FrontEndComponents\AjaxComponent;
+use Nette\Application\AbortException;
+use Nette\Application\UI\InvalidLinkException;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
 use Nette\DI\Container;
 use Nette\Utils\DateTime;
 use Throwable;
 
-class ScoreListComponent extends FrontEndComponent {
+class ScoreListComponent extends AjaxComponent {
 
     protected TasksService $tasksService;
     protected ServiceTeam $serviceTeam;
@@ -24,6 +28,8 @@ class ScoreListComponent extends FrontEndComponent {
     private ServiceTaskState $serviceTaskState;
     private Storage $storage;
     private Cache $cache;
+    private GameSetup $gameSetup;
+    private ?string $lastUpdated = null;
 
     public function __construct(Container $container) {
         parent::__construct($container, 'score-list');
@@ -35,13 +41,25 @@ class ScoreListComponent extends FrontEndComponent {
         ServiceTeam $serviceTeam,
         ScoreService $scoreService,
         ServiceTaskState $serviceTaskState,
-        Storage $storage
+        Storage $storage,
+        GameSetup $gameSetup
     ): void {
         $this->tasksService = $tasksService;
         $this->serviceTeam = $serviceTeam;
         $this->scoreService = $scoreService;
         $this->serviceTaskState = $serviceTaskState;
         $this->storage = $storage;
+        $this->gameSetup = $gameSetup;
+    }
+
+    /**
+     * @param string $lastUpdated
+     * @return void
+     * @throws AbortException
+     */
+    public function handleRefresh(string $lastUpdated): void {
+        $this->lastUpdated = $lastUpdated;
+        $this->sendAjaxResponse();
     }
 
     /**
@@ -49,27 +67,23 @@ class ScoreListComponent extends FrontEndComponent {
      * @throws Throwable
      */
     protected function getData(): array {
+        $isOrg = true; // TODO
         return array_merge([
-            'times' => [
-                'toEnd' => 160 * 1000,
-                'toStart' => -160 * 1000,
-                'visible' => true,
-            ],
+            'times' => $this->calculateTimes(),
             'gameStart' => new \DateTime('2021-01-25 00:00:00'),
             'gameEnd' => new \DateTime('2021-02-25 00:00:00'),
             'lastUpdated' => (new DateTime())->format('c'),
-            'refreshDelay' => 30 * 1000,
-            'isOrg' => true,
-        ], $this->cache->load('results5', function (&$dependencies): array {
-            // $dependencies[Cache::EXPIRE] = '1 seconds';
+            'refreshDelay' => 30, // TODO to config
+            'isOrg' => $isOrg,
+        ], $this->cache->load('results-3', function (&$dependencies) use ($isOrg): array {
+            $dependencies[Cache::EXPIRE] = '1 minute';
             return [
                 'availablePoints' => [5, 3, 2, 1],
                 'categories' => array_keys(ServiceTeam::getCategoryNames()),
-                'basePath' => '/',
+                'basePath' => $this->getHttpRequest()->getUrl()->getBasePath(),
                 'teams' => $this->serialiseTeams(),
                 'tasks' => $this->serialiseTasks(),
-                'submits' => $this->serialiseSubmits(),
-                'tasksOnBoard' => 7,
+                'submits' => ($this->isResultsVisible() || $isOrg) ? $this->serialiseSubmits() : [],
             ];
         }));
         /*
@@ -78,6 +92,23 @@ class ScoreListComponent extends FrontEndComponent {
         $this->template->lang = $this->presenter->lang;
         $this->template->categories = $this->serviceTeam->getCategoryNames();
          */
+    }
+
+    /**
+     * @return array
+     * @throws InvalidLinkException
+     */
+    protected function getResponseData(): array {
+        $this->addAction('refresh', 'refresh!', ['lastUpdated' => (new DateTime())->format('c')]);
+        return parent::getResponseData();
+    }
+
+    private function calculateTimes(): array {
+        return [
+            'toEnd' => strtotime($this->gameSetup->gameStart) - time(),
+            'toStart' => strtotime($this->gameSetup->gameEnd) - time(),
+            'visible' => $this->isResultsVisible(),
+        ];
     }
 
     private function serialiseTeams(): array {
@@ -103,5 +134,17 @@ class ScoreListComponent extends FrontEndComponent {
             $submits[] = $submit->__toArray();
         }
         return $submits;
+    }
+
+    /**
+     *  Take care, this function is not state-less!!!
+     */
+    public function isResultsVisible(): bool {
+        if ($this->gameSetup->hardVisible) {
+            return true;
+        }
+        $before = (time() < strtotime($this->gameSetup->resultsHide));
+        $after = (time() > strtotime($this->gameSetup->resultsDisplay));
+        return ($before && $after);
     }
 }

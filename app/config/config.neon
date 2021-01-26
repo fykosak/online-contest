@@ -44,6 +44,8 @@ services:
 
     - FOL\Model\Card\CardFactory
 
+    - FOL\Model\GameSetup(%gameSetup%)
+
     nette.userStorage:
         setup:
             - setNamespace("olfyziklani")
