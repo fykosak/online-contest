@@ -2,8 +2,8 @@
 
 namespace FOL\Model\ORM\Models;
 
-use Fykosak\Utils\ORM\AbstractService;
+use Fykosak\Utils\ORM\AbstractModel;
 
-class ModelLog extends AbstractService {
+class ModelLog extends AbstractModel {
 
 }
