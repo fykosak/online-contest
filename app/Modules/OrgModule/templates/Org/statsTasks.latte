@@ -1,3 +1,5 @@
 {block #content}
-    {control taskStats}
+    {cache "taskStats/" . $presenter->lang, tags => [$presenter::STATS_TAG]}
+        {control taskStats}
+    {/cache}
 {/block}
