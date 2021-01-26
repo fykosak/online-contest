@@ -17,6 +17,4 @@ class ServiceAnswer extends AbstractService {
     public function findByTaskId(int $taskId): TypedTableSelection {
         return $this->getTable()->where('id_task', $taskId);
     }
-
-
 }

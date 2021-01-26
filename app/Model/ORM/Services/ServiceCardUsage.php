@@ -19,5 +19,4 @@ class ServiceCardUsage extends AbstractService {
         $results = $this->getTable()->where('team_id', $team->id_team)->where('card_type', $type)->fetch();
         return $results;
     }
-
 }

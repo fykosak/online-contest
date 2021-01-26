@@ -29,7 +29,6 @@ class ScoreListComponent extends AjaxComponent {
     private Storage $storage;
     private Cache $cache;
     private GameSetup $gameSetup;
-    private ?string $lastUpdated = null;
 
     public function __construct(Container $container) {
         parent::__construct($container, 'score-list');
@@ -53,12 +52,10 @@ class ScoreListComponent extends AjaxComponent {
     }
 
     /**
-     * @param string $lastUpdated
      * @return void
      * @throws AbortException
      */
-    public function handleRefresh(string $lastUpdated): void {
-        $this->lastUpdated = $lastUpdated;
+    public function handleRefresh(): void {
         $this->sendAjaxResponse();
     }
 
@@ -68,24 +65,29 @@ class ScoreListComponent extends AjaxComponent {
      */
     protected function getData(): array {
         $isOrg = true; // TODO
-        return array_merge([
+        $data = array_merge([
             'times' => $this->calculateTimes(),
-            'gameStart' => new \DateTime('2021-01-25 00:00:00'),
-            'gameEnd' => new \DateTime('2021-02-25 00:00:00'),
             'lastUpdated' => (new DateTime())->format('c'),
-            'refreshDelay' => 30, // TODO to config
+            'refreshDelay' => $this->gameSetup->refreshDelay, // TODO to config
             'isOrg' => $isOrg,
-        ], $this->cache->load('results-3', function (&$dependencies) use ($isOrg): array {
-            $dependencies[Cache::EXPIRE] = '1 minute';
+
+        ], $this->cache->load('results', function (&$dependencies) use ($isOrg): array {
+            $dependencies[Cache::EXPIRE] = '2 minute';
             return [
+                'gameStart' => new \DateTime('2021-01-25 00:00:00'),
+                'gameEnd' => new \DateTime('2021-02-25 00:00:00'),
                 'availablePoints' => [5, 3, 2, 1],
                 'categories' => array_keys(ServiceTeam::getCategoryNames()),
                 'basePath' => $this->getHttpRequest()->getUrl()->getBasePath(),
                 'teams' => $this->serialiseTeams(),
                 'tasks' => $this->serialiseTasks(),
-                'submits' => ($this->isResultsVisible() || $isOrg) ? $this->serialiseSubmits() : [],
+                'submits' => $this->serialiseSubmits(),
             ];
         }));
+        if (!$this->isResultsVisible() && !$isOrg) {
+            $data['submits'] = []; // unset submits
+        }
+        return $data;
         /*
          *  $this->template->bonus = $this->scoreService->findAllBonus()->fetchAssoc('id_team');
         $this->template->penality = $this->scoreService->findAllPenality()->fetchAssoc('id_team');
@@ -99,7 +101,7 @@ class ScoreListComponent extends AjaxComponent {
      * @throws InvalidLinkException
      */
     protected function getResponseData(): array {
-        $this->addAction('refresh', 'refresh!', ['lastUpdated' => (new DateTime())->format('c')]);
+        $this->addAction('refresh', 'refresh!');
         return parent::getResponseData();
     }
 

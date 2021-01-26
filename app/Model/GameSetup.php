@@ -12,6 +12,8 @@ class GameSetup {
 
     public bool $hardVisible;
 
+    public int $refreshDelay;
+
     public function __construct(array $config) {
         $this->gameStart = $config['game']['start'];
         $this->gameEnd = $config['game']['end'];
@@ -20,5 +22,6 @@ class GameSetup {
         $this->resultsDisplay = $config['results']['show'];
 
         $this->hardVisible = $config['hardVisible'];
+        $this->refreshDelay = $config['refreshDelay'];
     }
 }

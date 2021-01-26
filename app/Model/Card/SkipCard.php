@@ -39,7 +39,6 @@ final class SkipCard extends Card {
             // TODO label
             $logger->log(new Message(sprintf(_('Úloha %s přeskočena.'), $taskId), 'success'));
             $this->tasksService->updateSingleCounter($this->team, $task);
-            $this->scoreService->updateAfterSkip($this->team);
         }
     }
 

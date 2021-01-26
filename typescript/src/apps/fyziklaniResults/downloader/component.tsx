@@ -31,11 +31,10 @@ interface OwnProps {
 
 class Downloader extends React.Component<DispatchProps & StateProps & OwnProps, {}> {
 
-    public componentDidUpdate(nextProps: DispatchProps & StateProps & OwnProps) {
-        const {lastUpdated: oldLastUpdated} = this.props;
-        if (oldLastUpdated !== nextProps.lastUpdated) {
+    public componentDidUpdate(prevProps: DispatchProps & StateProps & OwnProps) {
+        const {lastUpdated: oldLastUpdated, refreshDelay, onWaitForFetch} = this.props;
+        if (oldLastUpdated !== prevProps.lastUpdated) {
 
-            const {onWaitForFetch, refreshDelay} = nextProps;
             if (refreshDelay) {
                 const url = this.props.actions.getAction('refresh');
                 onWaitForFetch(refreshDelay, url);

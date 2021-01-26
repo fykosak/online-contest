@@ -4,7 +4,6 @@ namespace FOL\Modules\GameModule;
 
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTaskState;
-use FOL\Model\ORM\ScoreService;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceTaskState;
 use FOL\Model\ORM\TasksService;
@@ -14,14 +13,12 @@ use Nette\Database\Table\ActiveRow;
 class TaskPresenter extends BasePresenter {
 
     private TasksService $tasksService;
-    public ScoreService $scoreService;
     private ServiceTaskState $serviceTaskState;
     private ServiceTask $serviceTask;
     public ScoreStrategy $scoreStrategy;
 
-    public function injectSecondary(TasksService $tasksService, ScoreService $scoreService, ServiceTaskState $serviceTaskState, ServiceTask $serviceTask, ScoreStrategy $scoreStrategy): void {
+    public function injectSecondary(TasksService $tasksService, ServiceTaskState $serviceTaskState, ServiceTask $serviceTask, ScoreStrategy $scoreStrategy): void {
         $this->tasksService = $tasksService;
-        $this->scoreService = $scoreService;
         $this->serviceTaskState = $serviceTaskState;
         $this->serviceTask = $serviceTask;
         $this->scoreStrategy = $scoreStrategy;

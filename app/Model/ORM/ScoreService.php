@@ -4,48 +4,34 @@ namespace FOL\Model\ORM;
 
 use DateTime;
 use Exception;
-use FOL\Model\ORM\Models\ModelGroup;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Models\ModelTeam;
-use FOL\Model\ORM\Services\ServiceAnswer;
-use FOL\Model\ORM\Services\ServiceGroup;
 use FOL\Model\ORM\Services\ServiceLog;
 use FOL\Model\ORM\Services\ServicePeriod;
-use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceTaskState;
 use FOL\Model\ScoreStrategy;
 use Nette\Database\Explorer;
-use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 use Tracy\Debugger;
 
 class ScoreService extends AbstractService {
 
-    private ServiceGroup $serviceGroup;
     private ServicePeriod $servicePeriod;
     private ServiceTaskState $serviceTaskState;
-    private ServiceAnswer $serviceAnswer;
     private ScoreStrategy $scoreStrategy;
-    private ServiceTask $serviceTask;
 
     public function __construct(
         Explorer $explorer,
         ServicePeriod $servicePeriod,
-        ServiceGroup $serviceGroup,
         ServiceLog $serviceLog,
         ServiceTaskState $serviceTaskState,
-        ServiceAnswer $serviceAnswer,
-        ScoreStrategy $scoreStrategy,
-        ServiceTask $serviceTask
+        ScoreStrategy $scoreStrategy
     ) {
         parent::__construct($explorer, $serviceLog);
-        $this->serviceGroup = $serviceGroup;
         $this->servicePeriod = $servicePeriod;
         $this->serviceTaskState = $serviceTaskState;
-        $this->serviceAnswer = $serviceAnswer;
         $this->scoreStrategy = $scoreStrategy;
-        $this->serviceTask = $serviceTask;
     }
 
     public function findAllBonus(): Selection {
@@ -54,10 +40,6 @@ class ScoreService extends AbstractService {
 
     public function findAllPenality(): Selection {
         return $this->explorer->table('tmp_penality');
-    }
-
-    public function updateAfterSkip(ModelTeam $team): void {
-        $this->explorer->query('UPDATE team SET score_exp = score_exp-1 WHERE id_team = ?', $team->id_team);
     }
 
     public function updateAfterInsert(ModelTeam $team, ModelTask $task): void {

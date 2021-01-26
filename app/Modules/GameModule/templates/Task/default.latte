@@ -4,19 +4,9 @@
     {varType array $unsolvedTasks}
     {varType array $solvedTasks}
     {varType array $skippedTasks}
-    {varType FOL\Modules\GameModule\TaskPresenter $presenter}
     {varType FOL\Modules\GameModule\TaskPresenter $control}
-    {varType Nette\Security\User $user}
-    {varType string $baseUrl}
-    {varType string $basePath}
-    {varType array $flashes}
-    {varType string $today}
-    {varType string $customScript}
-    {varType bool $isGameEnd}
-    {varType string $pageTitle}
     {varType FOL\Model\ORM\Models\ModelTeam $team}
     {varType array $mirrors}
-    {varType array $missedTasks}
     {varType FOL\Model\ORM\Models\ModelTask $task}
     <li>
         <del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}">
@@ -51,19 +41,6 @@
     {varType array $unsolvedTasks}
     {varType array $solvedTasks}
     {varType array $skippedTasks}
-    {varType FOL\Modules\GameModule\TaskPresenter $presenter}
-    {varType FOL\Modules\GameModule\TaskPresenter $control}
-    {varType Nette\Security\User $user}
-    {varType string $baseUrl}
-    {varType string $basePath}
-    {varType array $flashes}
-    {varType string $today}
-    {varType string $customScript}
-    {varType bool $isGameEnd}
-    {varType string $pageTitle}
-    {varType FOL\Model\ORM\Models\ModelTeam $team}
-    {varType array $mirrors}
-    {varType array $missedTasks}
 
     {*{cache "problems/$id_team", "problems"}*}
 
