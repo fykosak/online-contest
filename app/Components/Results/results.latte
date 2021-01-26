@@ -1,5 +1,6 @@
+{varType Nette\Database\Table\Selection $teams}
 {block content}
-    {var $teams = $teams->fetchAssoc("category,id_team")}
+    {var $teams = $teams->fetchAssoc("category|id_team")}
     {var $bonus = $bonus->fetchAssoc("id_team")}
     {var $penality = $penality->fetchAssoc("id_team")}
     {foreach $categories AS $category => $name}
@@ -22,7 +23,9 @@
             {if isset($teams[$category])}
                 {var $i = 1}
                 {foreach $teams[$category] AS $team}
+                    {php $team = (object)$team}
                     {continueIf $display == 'czsk' && count(array_diff($teamCountries[$team->id_team], ['CZ','SK'])) != 0}
+                    {dump $team}
                     <tr n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted">
                         <td>{if $team->disqualified == 0}{$i++}{else}DSQ{/if}</td>
                         <td>
@@ -39,14 +42,14 @@
                         </td>
                         <td>
                             {if isset($bonus[$team->id_team]) && $team->disqualified == 0}
-                                {$bonus[$team->id_team]->score}
+                                {$bonus[$team->id_team]['score']}
                             {else}
                                 0
                             {/if}
                         </td>
                         <td>
                             {if isset($penality[$team->id_team]) && $team->disqualified == 0}
-                                {$penality[$team->id_team]->score}
+                                {$penality[$team->id_team]['score']}
                             {else}
                                 0
                             {/if}

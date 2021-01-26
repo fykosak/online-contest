@@ -15,14 +15,14 @@ class TeamListComponent extends BaseListComponent {
     }
 
     protected function beforeRender(): void {
-        $this->template->teams = $this->getSource()->fetchAssoc('category,id_team');
+        $this->template->teams = $this->getSource()->fetchAssoc('category|id_team');
         $ids = $this->getSource()->fetchPairs('id_team', 'id_team');
         if (count($ids) > 0) {
             $this->template->competitors = $this->serviceCompetitor->getTable()
                 ->where('id_team', $ids)
                 ->order('id_school')
                 ->order('name')
-                ->fetchAssoc('id_team,id_competitor');
+                ->fetchAssoc('id_team|id_competitor');
         } else {
             $this->template->competitors = [];
         }
