@@ -3,26 +3,6 @@
 -- TODO doimplementovat chování pro skupiny typu 'set' (skipped příznak etc.)
 --
 
-DROP VIEW IF EXISTS `view_current_year`;
-CREATE VIEW `view_current_year` AS
-SELECT *
-FROM `year`
-ORDER BY `id_year` DESC
-LIMIT 1;
-
-DROP VIEW IF EXISTS `view_team`;
-CREATE VIEW `view_team` AS
-SELECT `team`.*
-FROM `team`
-         INNER JOIN `view_current_year` USING (`id_year`)
-ORDER BY `category`, `inserted`;
-
-DROP VIEW IF EXISTS `view_group`;
-CREATE VIEW `view_group` AS
-SELECT `group`.*
-FROM `group`
-         INNER JOIN `view_current_year` USING (`id_year`);
-
 DROP VIEW IF EXISTS `view_task`;
 CREATE VIEW `view_task` AS
 SELECT `task`.*,
@@ -31,7 +11,6 @@ SELECT `task`.*,
        `group`.`type`                               AS `group_type`
 FROM `task`
          INNER JOIN `group` USING (`id_group`)
-         INNER JOIN `view_current_year` USING (`id_year`)
 ORDER BY `task`.`id_group`, `task`.`number`;
 
 -- úlohy přístupné týmu jako zadání
@@ -39,9 +18,9 @@ ORDER BY `task`.`id_group`, `task`.`number`;
 -- TODO matoucí, zrušit
 DROP VIEW IF EXISTS `view_available_task`;
 CREATE VIEW `view_available_task` AS
-SELECT `view_team`.`id_team`,
+SELECT `team`.`id_team`,
        `view_task`.*
-FROM (`view_task`, `view_team`)
+FROM (`view_task`, `team`)
          LEFT JOIN `group_state` USING (`id_group`, `id_team`)
 WHERE `group_to_show` <= NOW()
   AND (
@@ -78,8 +57,7 @@ CREATE VIEW `view_answer` AS
 SELECT `answer`.*
 FROM `answer`
          INNER JOIN `task` USING (`id_task`)
-         INNER JOIN `group` USING (`id_group`)
-         INNER JOIN `view_current_year` USING (`id_year`);
+         INNER JOIN `group` USING (`id_group`);
 
 DROP VIEW IF EXISTS `view_seemingly_correct_answer`;
 CREATE VIEW `view_seemingly_correct_answer` AS
@@ -169,16 +147,16 @@ delimiter ;
 DROP VIEW IF EXISTS `view_bonus_help`;
 CREATE VIEW `view_bonus_help` AS
 SELECT `team`.`id_team`,
-       `view_task`.`number`,
+       `task`.`number`,
        COUNT(`view_correct_answer`.`id_task`) AS `complete`
-FROM `view_team` AS `team`
+FROM `team`
          LEFT JOIN `view_correct_answer` USING (`id_team`)
-         LEFT JOIN `view_task` USING (`id_task`)
+         LEFT JOIN `task` USING (`id_task`)
          LEFT JOIN `period` ON
-        `period`.`id_group` = `view_task`.`id_group`
+        `period`.`id_group` = `task`.`id_group`
         AND `period`.`begin` <= `view_correct_answer`.`inserted`
         AND `period`.`end` > `view_correct_answer`.`inserted`
-WHERE `view_task`.`id_group` IN (2, 3, 4) -- vazba na data, skupiny ke kompletovani (hurry up)
+WHERE `task`.`id_group` IN (2, 3, 4) -- vazba na data, skupiny ke kompletovani (hurry up)
   AND `period`.`has_bonus` = 1
 GROUP BY `id_team`, `number`;
 
@@ -187,8 +165,8 @@ CREATE VIEW `view_bonus` AS
 SELECT `id_team`,
        SUM(`task_state`.`points`) AS `score`
 FROM `view_bonus_help`
-         LEFT JOIN `view_task`
-                   ON `view_task`.`number` = `view_bonus_help`.`number` AND `view_task`.`id_group` IN (2, 3, 4)
+         LEFT JOIN `task`
+                   ON `task`.`number` = `view_bonus_help`.`number` AND `task`.`id_group` IN (2, 3, 4)
          LEFT JOIN `task_state` USING (`id_task`, `id_team`)
 WHERE `view_bonus_help`.`complete` = 3 -- vazba na data, skupiny ke kompletovani (hurry up) a jejich počet
 GROUP BY `id_team`;
@@ -198,10 +176,10 @@ DROP VIEW IF EXISTS `view_penality`;
 CREATE VIEW `view_penality` AS
 SELECT `team`.`id_team`,
        COUNT(`task_state`.`id_task`) AS `score` -- body dolů za přeskakování
-FROM `view_team` AS `team`
+FROM `team`
          LEFT JOIN `task_state` ON `task_state`.`id_team` = `team`.`id_team` AND `task_state`.`skipped` = 1
-         LEFT JOIN `view_task` ON `view_task`.`id_task` = `task_state`.`id_task`
-WHERE `view_task`.`cancelled` = 0
+         LEFT JOIN `task` ON `task`.`id_task` = `task_state`.`id_task`
+WHERE `task`.`cancelled` = 0
 GROUP BY `id_team`;
 
 
@@ -220,14 +198,14 @@ SELECT `t`.*,
                        + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `t`.`id_team`) > 0
            , 1, 0)                              AS `activity`,
        `view_last_correct_answer`.`last_time`
-FROM `view_team` `t`
+FROM `team` `t`
          LEFT JOIN `task_state` `ts` ON `ts`.`id_team` = `t`.`id_team`
          LEFT JOIN `view_penality` ON `t`.`id_team` = `view_penality`.`id_team`
          LEFT JOIN `view_bonus` ON `t`.`id_team` = `view_bonus`.`id_team`
          LEFT JOIN `view_last_correct_answer` ON `t`.`id_team` = `view_last_correct_answer`.`id_team`
-         LEFT JOIN `view_task` ON `view_task`.`id_task` = `ts`.`id_task`
-WHERE `view_task`.`cancelled` = 0
-   OR `view_task`.`cancelled` IS NULL
+         LEFT JOIN `task` ON `task`.`id_task` = `ts`.`id_task`
+WHERE `task`.`cancelled` = 0
+   OR `task`.`cancelled` IS NULL
 GROUP BY `t`.`id_team`
 ORDER BY `disqualified` ASC, `activity` DESC, `score` DESC, `last_time` ASC;
 
@@ -299,7 +277,7 @@ SELECT `t`.*,
                        + (SELECT COUNT(`id_team`) FROM `view_answer` WHERE `id_team` = `t`.`id_team`) > 0
            , 1, 0)                             AS `activity`,
        `view_last_correct_answer`.`last_time`
-FROM `view_team` `t`
+FROM `team` `t`
          LEFT JOIN `task_state` `ts` ON `ts`.`id_team` = `t`.`id_team`
          LEFT JOIN `tmp_penality` ON `tmp_penality`.`id_team` = `t`.`id_team`
          LEFT JOIN `tmp_bonus` ON `tmp_bonus`.`id_team` = `t`.`id_team`

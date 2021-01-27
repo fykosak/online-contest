@@ -48,9 +48,7 @@ class TasksService extends AbstractService {
 
     public function findSubmitAvailable(ModelTeam $team): Selection {
         $source = $this->explorer->table('view_submit_available_task')
-            ->where('id_team', $team->id_team)
-            ->order('id_group')
-            ->order('number');
+            ->where('id_team', $team->id_team);
 
         $solved = $this->serviceTaskState->findSolved($team)->fetchPairs('id_task', 'id_task');
 
@@ -131,7 +129,7 @@ class TasksService extends AbstractService {
         // Initialize with zeroes
         $sql = 'INSERT INTO group_state (id_group, id_team, task_counter)
                     SELECT id_group, id_team, 0
-                    FROM view_group, view_team
+                    FROM `group`, team
                 ON DUPLICATE KEY UPDATE task_counter = task_counter';
         if ($full) {
             $this->explorer->query($sql);
@@ -145,12 +143,12 @@ class TasksService extends AbstractService {
                             (
                                 SELECT COUNT(id_answer)
                                 FROM view_correct_answer AS ca
-                                LEFT JOIN view_task tsk USING (id_task)
+                                LEFT JOIN task tsk USING (id_task)
                                 WHERE ca.id_team = gs.id_team AND tsk.id_group = gs.id_group
                             ) + (
                                 SELECT COUNT(id_task)
                                 FROM task_state AS ts
-                                LEFT JOIN view_task tsk2 USING (id_task)
+                                LEFT JOIN task tsk2 USING (id_task)
                                 WHERE ts.id_team = gs.id_team AND tsk2.id_group = gs.id_group AND skipped = 1
                             ) + (
                                 SELECT reserve_size
@@ -158,7 +156,7 @@ class TasksService extends AbstractService {
                                 WHERE p.id_group = gs.id_group AND p.begin <= NOW() AND p.end > NOW()
                             ) + (
                                 SELECT COUNT(id_task)
-                                FROM view_task
+                                FROM task
                                 WHERE number <= gs.task_counter AND cancelled = 1
                             ), 0),
                     gs.task_counter)';
@@ -174,12 +172,12 @@ class TasksService extends AbstractService {
                             (
                                 SELECT COUNT(id_answer)
                                 FROM view_correct_answer AS ca
-                                LEFT JOIN view_task tsk USING (id_task)
+                                LEFT JOIN task tsk USING (id_task)
                                 WHERE ca.id_team = gs.id_team AND tsk.id_group = gs.id_group
                              ) + (
                                 SELECT COUNT(id_task)
                                 FROM task_state AS ts
-                                LEFT JOIN view_task tsk2 USING (id_task)
+                                LEFT JOIN task tsk2 USING (id_task)
                                 WHERE ts.id_team = gs.id_team AND tsk2.id_group = gs.id_group AND skipped = 1
                              ) + (
                                 SELECT reserve_size
@@ -187,7 +185,7 @@ class TasksService extends AbstractService {
                                 WHERE p.id_group = gs.id_group AND p.begin <= NOW() AND p.end > NOW()
                              ) + (
                                 SELECT COUNT(id_task)
-                                FROM view_task
+                                FROM task
                                 WHERE number <= gs.task_counter AND cancelled = 1
                              ), 0),
                     gs.task_counter)

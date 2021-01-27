@@ -230,7 +230,9 @@ class AnswerFormComponent extends BaseComponent {
 
     private function initTasks(): void {
         $this->tasks = $this->serviceTask->getTable()
-            ->where('id_task', $this->tasksService->findSubmitAvailable($this->team)->fetchPairs('id_task', 'id_task'));
+            ->where('id_task', $this->tasksService->findSubmitAvailable($this->team)->fetchPairs('id_task', 'id_task'))
+            ->order('id_group')
+            ->order('number');
 
         $this->tasksInfo = [];
         /** @var ModelTask $task */
