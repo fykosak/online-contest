@@ -1,19 +1,12 @@
-{varType array $tasks}
+{varType Fykosak\Utils\ORM\TypedTableSelection $tasks}
 {varType string $basePath}
 {varType string $tasksInfoElement}
 {varType FOL\Components\AnswerForm\AnswerFormComponent $control}
 {varType array $tasksInfo}
-{varType string $submitElement}
 {varType FOL\Modules\GameModule\AnswerPresenter$presenter}
-{varType Nette\Security\User $user}
-{varType string $baseUrl}
-{varType string $baseUri}
-{varType array $flashes}
-{varType Nette\Caching\Storages\FileStorage $netteCacheStorage}
-{varType bool $valid}
 
 {block content}
-    {if !is_null($tasks)}
+    {if $tasks->count()}
         {control form}
 
         {capture $script}

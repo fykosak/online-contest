@@ -14,6 +14,7 @@ use Fykosak\Utils\Localization\UnsupportedLanguageException;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
+use Tracy\Debugger;
 
 abstract class BasePresenter extends Presenter {
 
@@ -24,14 +25,13 @@ abstract class BasePresenter extends Presenter {
 
     private ?ModelTeam $loggedTeam2;
 
-
     protected GettextTranslator $translator;
     protected ServiceTeam $serviceTeam;
     public ServiceYear $serviceYear;
 
     private ModelYear $currentYear;
 
-    public function injectServices( GettextTranslator $translator, ServiceTeam $serviceTeam, ServiceYear $serviceYear): void {
+    public function injectServices(GettextTranslator $translator, ServiceTeam $serviceTeam, ServiceYear $serviceYear): void {
         $this->translator = $translator;
         $this->serviceTeam = $serviceTeam;
         $this->serviceYear = $serviceYear;

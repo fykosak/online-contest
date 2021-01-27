@@ -15,8 +15,10 @@ use FOL\Model\ORM\Services\ServiceYear;
 use FOL\Model\ORM\TasksService;
 use FOL\Components\BaseForm;
 use FOL\Model\ScoreStrategy;
+use Fykosak\Utils\Localization\GettextTranslator;
 use Fykosak\Utils\Logging\FlashMessageDump;
 use Fykosak\Utils\Logging\MemoryLogger;
+use Fykosak\Utils\ORM\TypedTableSelection;
 use Nette\Application\AbortException;
 use Nette\Application\ForbiddenRequestException;
 use Nette\Application\UI\Form;
@@ -135,7 +137,6 @@ class AnswerFormComponent extends BaseComponent {
                 $this->getPresenter()->flashMessage(_('Není aktuální žádné odpovídací období.'), 'danger');
                 return;
             } else {
-                Debugger::barDump($e);
                 $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
                 Debugger::log($e);
                 return;
@@ -144,7 +145,6 @@ class AnswerFormComponent extends BaseComponent {
             if ($e->getCode() == 1062) {
                 $this->getPresenter()->flashMessage(_('Na zadaný úkol jste již takto jednou odpovídali.'), 'danger');
             } else {
-                Debugger::barDump($e);
                 $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
                 Debugger::log($e);
             }
@@ -152,7 +152,6 @@ class AnswerFormComponent extends BaseComponent {
         } catch (Exception $e) {
             $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
             Debugger::log($e);
-            Debugger::barDump($e);
             return;
         }
         $this->getPresenter()->redirect('this');
@@ -169,10 +168,10 @@ class AnswerFormComponent extends BaseComponent {
             TasksService::TYPE_INT => [],
             TasksService::TYPE_REAL => [],
         ];
-
+        /** @var ModelTask $task */
         foreach ($this->tasks as $task) {
-            $options[$task['id_task']] = $task['code_name'] . ': ' . $task['name_' . $this->getPresenter()->lang];
-            $rules[$task['answer_type']][] = $task['id_task'];
+            $options[$task->id_task] = $task->getGroup()->code_name . ': ' . GettextTranslator::i18nHelper($task, 'name', $this->getPresenter()->lang);
+            $rules[$task->answer_type][] = $task->id_task;
         }
         $tasks = $options;
         $select = $form->addSelect(self::TASK_ELEMENT, 'Úkol', $tasks)
@@ -219,28 +218,23 @@ class AnswerFormComponent extends BaseComponent {
         }
         if ($this->serviceYear->getCurrent()->isGameEnd()) {
             $this->flashMessage(_('Čas vypršel.'), 'danger');
-            $this->valid = false;
         } elseif (!$this->serviceYear->getCurrent()->isGameStarted()) {
             $this->flashMessage(_('Hra ještě nezačala.'), 'danger');
-            $this->valid = false;
         } else {
-            $this->valid = true;
             $this->initTasks();
         }
     }
 
-    private bool $valid;
-
-    private ?array $tasks = null;
+    private ?TypedTableSelection $tasks = null;
     private array $tasksInfo;
 
     private function initTasks(): void {
-        $this->tasks = $this->tasksService->findSubmitAvailable($this->team)->fetchAll();
+        $this->tasks = $this->serviceTask->getTable()
+            ->where('id_task', $this->tasksService->findSubmitAvailable($this->team)->fetchPairs('id_task', 'id_task'));
 
         $this->tasksInfo = [];
-        foreach ($this->tasks as $row) {
-            /** @var ModelTask $task */
-            $task = $this->serviceTask->findByPrimary($row->id_task);
+        /** @var ModelTask $task */
+        foreach ($this->tasks as $task) {
             $this->tasksInfo[$task->id_task] = [
                 'sig_digits' => $task->real_sig_digits,
                 'unit' => $task->answer_unit,
@@ -253,7 +247,6 @@ class AnswerFormComponent extends BaseComponent {
 
     public function render(): void {
         $this->template->tasks = $this->tasks;
-        $this->template->valid = $this->valid;
         $this->template->tasksInfo = $this->tasksInfo;
         $this->template->tasksInfoElement = self::TASK_INFO_ELEMENT;
         $this->template->submitElement = self::SUBMIT_ELEMENT;
