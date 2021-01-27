@@ -73,13 +73,13 @@ class AnswersService extends AbstractService {
             'answer_real' => null,
         ];
         switch ($task->answer_type) {
-            case TasksService::TYPE_STR:
+            case ModelTask::TYPE_STR:
                 $answer['answer_str'] = $solution;
                 break;
-            case TasksService::TYPE_INT:
+            case  ModelTask::TYPE_INT:
                 $answer['answer_int'] = $solution;
                 break;
-            case TasksService::TYPE_REAL:
+            case ModelTask::TYPE_REAL:
                 $answer['answer_real'] = $solution;
                 break;
         }

@@ -14,11 +14,11 @@
                 <td>{$answer->id_answer}</td>
                 <td>{$answer->getTask()->getGroup()->code_name}</td>
                 <td>{$answer->inserted->format($timeFormat)}</td>
-                <td>{if $answer->getTask()->answer_type == \FOL\Model\ORM\TasksService::TYPE_STR}
+                <td>{if $answer->getTask()->answer_type == FOL\Model\ORM\Models\ModelTask::TYPE_STR}
                         {$answer->answer_str}
-                    {elseif $answer->getTask()->answer_type == \FOL\Model\ORM\TasksService::TYPE_INT}
+                    {elseif $answer->getTask()->answer_type == FOL\Model\ORM\Models\ModelTask::TYPE_INT}
                         {$answer->answer_int}
-                    {elseif $answer->getTask()->answer_type == \FOL\Model\ORM\TasksService::TYPE_REAL}
+                    {elseif $answer->getTask()->answer_type == FOL\Model\ORM\Models\ModelTask::TYPE_REAL}
                         {$answer->answer_real}
                     {/if}
                 </td>

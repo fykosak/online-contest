@@ -105,7 +105,7 @@ class AnswerFormComponent extends BaseComponent {
             }
             // Handle card usage
 
-            $correct = TasksService::checkAnswer($task, $solution);
+            $correct = $task->checkAnswer($solution);
             $results = $this->answersService->insert($this->team, $task, $solution, $period, $correct, $isDoublePoints);
             //Environment::getCache()->clean(array(Cache::TAGS => array('problems/$team'))); // not used
 
@@ -172,9 +172,9 @@ class AnswerFormComponent extends BaseComponent {
 
         $options = [];
         $rules = [
-            TasksService::TYPE_STR => [],
-            TasksService::TYPE_INT => [],
-            TasksService::TYPE_REAL => [],
+            ModelTask::TYPE_STR => [],
+            ModelTask::TYPE_INT => [],
+            ModelTask::TYPE_REAL => [],
         ];
         /** @var ModelTask $task */
         foreach ($this->tasks as $task) {
@@ -195,12 +195,12 @@ class AnswerFormComponent extends BaseComponent {
             $checkBox->setDisabled(true);
         }
 
-        if (count($rules[TasksService::TYPE_INT])) {
-            $text->addConditionOn($select, Form::IS_IN, $rules[TasksService::TYPE_INT])
+        if (count($rules[ModelTask::TYPE_INT])) {
+            $text->addConditionOn($select, Form::IS_IN, $rules[ModelTask::TYPE_INT])
                 ->addRule(Form::INTEGER, 'Výsledek musí být celé číslo.');
         }
-        if (count($rules[TasksService::TYPE_REAL])) {
-            $text->addConditionOn($select, Form::IS_IN, $rules[TasksService::TYPE_REAL])
+        if (count($rules[ModelTask::TYPE_REAL])) {
+            $text->addConditionOn($select, Form::IS_IN, $rules[ModelTask::TYPE_REAL])
                 ->addRule(Form::PATTERN, 'Výsledek musí být reálné číslo.', '[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?');
         }
 

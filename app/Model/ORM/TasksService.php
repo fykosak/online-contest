@@ -11,15 +11,10 @@ use FOL\Model\ORM\Services\ServiceTaskState;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
-use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
 use Traversable;
 
 class TasksService extends AbstractService {
-
-    const TYPE_STR = 'str';
-    const TYPE_INT = 'int';
-    const TYPE_REAL = 'real';
 
     protected AnswersService $answersService;
 
@@ -192,17 +187,5 @@ class TasksService extends AbstractService {
                 WHERE gs.id_group = ? AND gs.id_team = ?';
 
         $this->explorer->query($sql, $task->id_group, $team->id_team);
-    }
-
-    public static function checkAnswer(ModelTask $task, string $solution): bool {
-        switch ($task->answer_type) {
-            case self::TYPE_STR:
-                return $solution == $task->answer_str;
-            case self::TYPE_INT:
-                return $solution == $task->answer_int;
-            case self::TYPE_REAL:
-                return ($task->answer_real - $task->real_tolerance <= $solution) && ($solution <= $task->answer_real + $task->real_tolerance);
-        }
-        throw new InvalidArgumentException();
     }
 }

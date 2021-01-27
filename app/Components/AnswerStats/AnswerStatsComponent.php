@@ -14,7 +14,7 @@ class AnswerStatsComponent extends BaseComponent {
     private ServiceTask $serviceTask;
     private ServiceAnswer $serviceAnswer;
 
-    private $taskId;
+    private ?int $taskId;
 
     public function injectPrimary(ServiceTask $serviceTask, ServiceAnswer $serviceAnswer): void {
         $this->serviceTask = $serviceTask;
