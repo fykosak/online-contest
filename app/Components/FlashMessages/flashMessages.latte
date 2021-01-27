@@ -1,0 +1,12 @@
+<div>
+    {foreach $control->getParent()->getTemplate()->flashes AS $flash}
+        {var $type = substr($flash->type, 0, 1) == '!' ? substr($flash->type, 1) : $flash->type}
+        <div class="alert alert-{$type}">
+            {if substr($flash->type, 0, 1) == '!'}
+                {$flash->message|noescape}
+            {else}
+                {$flash->message}
+            {/if}
+        </div>
+    {/foreach}
+</div>

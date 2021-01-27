@@ -1,0 +1,17 @@
+    {block #bigcontent}
+{varType FOL\Model\ORM\Models\ModelTask $task}
+{varType null|int $taskId}
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+        {_'-- select task --'}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {foreach $tasks as $task}
+            <a class="dropdown-item"
+               href="{link :Org:Default:answerStats $task->id_task}">{$task->id_group}-{$task->number}: {$task->name_cs}</a>
+        {/foreach}
+    </div>
+</div>
+{if $taskId !== null}
+    {control answerStats $taskId}
+{/if}
