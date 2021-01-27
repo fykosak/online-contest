@@ -36,7 +36,6 @@ class AnswerHistoryComponent extends BaseComponent {
             ->where('id_team', $this->team->id_team)
             ->order('inserted DESC');
         $this->template->correct = $this->answersService->findAllCorrect($this->team->id_team)->fetchPairs('id_answer', 'id_answer');
-        $this->template->tasks = $this->serviceTask->getTable()->fetchAssoc('id_task');
         $this->template->timeFormat = 'H:i:s';//_('__time'); // TODO i18n
     }
 

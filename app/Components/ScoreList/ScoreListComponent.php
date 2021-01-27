@@ -2,7 +2,6 @@
 
 namespace FOL\Components\ScoreList;
 
-use FKSDB\Models\Fyziklani\NotSetGameParametersException;
 use FOL\Model\GameSetup;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTaskState;

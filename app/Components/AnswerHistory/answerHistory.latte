@@ -7,6 +7,7 @@
         <th>{_'odpověď'}</th>
         </thead>
         {varType FOL\Model\ORM\Models\ModelAnswer $answer}
+        {varType Fykosak\Utils\ORM\TypedTableSelection $history}
         {foreach $history AS $answer}
             {dump $answer}
             <tr class="{isset($correct[$answer->id_answer])?'bg-success':'bg-danger'}">

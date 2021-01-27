@@ -13,7 +13,7 @@ use FOL\Components\BaseComponent;
 
 class ResultsComponent extends BaseComponent {
 
-    private $display;
+    private string $display;
 
     protected TasksService $tasksService;
     protected ServiceTeam $teamsService;
@@ -35,10 +35,7 @@ class ResultsComponent extends BaseComponent {
         $this->serviceTask = $serviceTask;
     }
 
-    /**
-     * @param string $display
-     */
-    public function render($display = 'all'): void {
+    public function render(string $display = 'all'): void {
         $this->display = $display;
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'results.latte');
         parent::render();

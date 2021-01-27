@@ -131,7 +131,15 @@ class AnswerFormComponent extends BaseComponent {
             throw $exception;
         } catch (InvalidStateException $e) {
             if ($e->getCode() == AnswersService::ERROR_TIME_LIMIT) {
-                $this->getPresenter()->flashMessage(sprintf(_('Lze odpovídat až za <span class="timesec">%d</span> sekund.'), $e->getMessage()), '!warning');
+                $this->getPresenter()->flashMessage(
+                    Html::el('span')
+                        ->addText(_('Lze odpovídat až za'))
+                        ->addHtml(
+                            Html::el('span')
+                                ->addAttributes(['class' => 'timesec'])
+                                ->addHtml($e->getMessage())
+                        )
+                        ->addText(_('sekund.')), 'warning');
                 return;
             } elseif ($e->getCode() == AnswersService::ERROR_OUT_OF_PERIOD) {
                 $this->getPresenter()->flashMessage(_('Není aktuální žádné odpovídací období.'), 'danger');

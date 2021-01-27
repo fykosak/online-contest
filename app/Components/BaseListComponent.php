@@ -16,7 +16,7 @@ abstract class BaseListComponent extends BaseComponent {
     /** @persistent */
     public ?string $sorting = null;
 
-    private Selection $source;
+    private ?Selection $source = null;
 
     public function getLimit(): int {
         return $this->limit;
@@ -38,7 +38,7 @@ abstract class BaseListComponent extends BaseComponent {
         $this->limit = $limit;
     }
 
-    public function setSource(Selection $source): void {
+    public function setSource(?Selection $source): void {
         $this->source = $source;
     }
 
@@ -53,7 +53,7 @@ abstract class BaseListComponent extends BaseComponent {
     protected function createComponentPaginator(): VisualPaginatorComponent {
         $paginator = new VisualPaginatorComponent($this->getContext());
         $paginator->getPaginator()->itemsPerPage = $this->getLimit();
-        $paginator->getPaginator()->itemCount = $this->getSource()->count();
+        $paginator->getPaginator()->itemCount = $this->getSource() ? $this->getSource()->count() : 0;
         return $paginator;
     }
 
@@ -61,7 +61,7 @@ abstract class BaseListComponent extends BaseComponent {
         return $this->getComponent('paginator')->getPaginator();
     }
 
-    protected function getSource(): Selection {
+    protected function getSource(): ?Selection {
         return $this->source;
     }
 
