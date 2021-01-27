@@ -3,7 +3,7 @@
 namespace FOL\Modules\FrontendModule;
 
 use FOL\Model\ORM\TasksService;
-use FOL\Modules\OrgModule\OrgPresenter;
+use FOL\Modules\OrgModule\DefaultPresenter;
 use Nette\Application\AbortException;
 use Nette\Application\BadRequestException;
 use Nette\Caching\Cache;
@@ -48,8 +48,8 @@ final class CronPresenter extends BasePresenter {
 
         foreach ($tables as $view => $table) {
             Debugger::timer();
-            $this->explorer->query("DROP TABLE IF EXISTS [$result$table]");
-            $this->explorer->query("CREATE TABLE [$result$table] AS SELECT * FROM [$src$view]");
+            $this->explorer->query("DROP TABLE IF EXISTS ?name", $result . $table);
+            $this->explorer->query("CREATE TABLE ?name AS SELECT * FROM ?name", $result . $table, $src . $view);
             echo "$table: " . Debugger::timer() . '<br>';
         }
     }
@@ -61,7 +61,7 @@ final class CronPresenter extends BasePresenter {
     private function invalidateCache(bool $freezed): void {
         //$cache = Environment::getCache('Nette.Template.Curly');
         if ($freezed) {
-            $this->cache->clean([Cache::TAGS => [OrgPresenter::STATS_TAG]]);
+            $this->cache->clean([Cache::TAGS => [DefaultPresenter::STATS_TAG]]);
             echo '<br>FREEZED<br>';
         } else {
             $this->cache->clean([Cache::ALL => true]);

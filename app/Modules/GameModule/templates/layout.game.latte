@@ -89,11 +89,7 @@
     <main class="container">
         {block main}
             {block #title}<h1 n:ifset="$pageTitle">{$pageTitle}</h1>{/block}
-            {foreach $flashes as $flash}
-                <div class="alert alert-{$flash->type}">
-                    {$flash->message}
-                </div>
-            {/foreach}
+            {control flashMessages}
             {if $control->serviceYear->getCurrent()->isGameActive()}
                 {control notificationMessages}
             {/if}

@@ -170,7 +170,7 @@ class AnswerFormComponent extends BaseComponent {
         ];
         /** @var ModelTask $task */
         foreach ($this->tasks as $task) {
-            $options[$task->id_task] = $task->getGroup()->code_name . ': ' . GettextTranslator::i18nHelper($task, 'name', $this->getPresenter()->lang);
+            $options[$task->id_task] = $task->getGroup()->code_name . $task->number . ': ' . GettextTranslator::i18nHelper($task, 'name', $this->getPresenter()->lang);
             $rules[$task->answer_type][] = $task->id_task;
         }
         $tasks = $options;
@@ -230,7 +230,8 @@ class AnswerFormComponent extends BaseComponent {
 
     private function initTasks(): void {
         $this->tasks = $this->serviceTask->getTable()
-            ->where('id_task', $this->tasksService->findSubmitAvailable($this->team)->fetchPairs('id_task', 'id_task'));
+            ->where('id_task', $this->tasksService->findSubmitAvailable($this->team)->fetchPairs('id_task', 'id_task'))
+            ->order('id_group, number');
 
         $this->tasksInfo = [];
         /** @var ModelTask $task */
