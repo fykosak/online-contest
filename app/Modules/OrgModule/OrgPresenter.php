@@ -16,6 +16,8 @@ class OrgPresenter extends BasePresenter {
 
     protected OrgAuthenticator $authenticator;
     private ServiceTask $serviceTask;
+    /** @persistent */
+    public ?int $id = null;
 
     public function injectSecondary(OrgAuthenticator $authenticator, ServiceTask $serviceTask): void {
         $this->authenticator = $authenticator;
@@ -37,13 +39,8 @@ class OrgPresenter extends BasePresenter {
         $this->setPageTitle(_('Přihlásit se'));
     }
 
-    /**
-     * @param int $taskId
-     * @return void
-     */
-    public function renderAnswerStats($taskId = 1): void {
+    public function renderAnswerStats(): void {
         $this->setPageTitle(_('Statistiky odpovědí'));
-        $this->template->taskId = $taskId;
         $this->template->tasks = $this->serviceTask->getTable();
     }
 
@@ -64,7 +61,7 @@ class OrgPresenter extends BasePresenter {
     }
 
     protected function createComponentAnswerStats(): AnswerStatsComponent {
-        return new AnswerStatsComponent($this->getContext());
+        return new AnswerStatsComponent($this->getContext(), $this->id);
     }
 
     protected function createComponentResults(): ResultsComponent {

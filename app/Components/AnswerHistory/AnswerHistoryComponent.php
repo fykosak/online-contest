@@ -15,7 +15,6 @@ class AnswerHistoryComponent extends BaseComponent {
     protected AnswersService $answersService;
     protected TasksService $tasksService;
     private ModelTeam $team;
-    private ServiceTask $serviceTask;
     private ServiceAnswer $serviceAnswer;
 
     public function __construct(Container $container, ModelTeam $team) {
@@ -23,10 +22,9 @@ class AnswerHistoryComponent extends BaseComponent {
         $this->team = $team;
     }
 
-    public function injectPrimary(TasksService $tasksService, AnswersService $answersService, ServiceTask $serviceTask, ServiceAnswer $serviceAnswer): void {
+    public function injectPrimary(TasksService $tasksService, AnswersService $answersService, ServiceAnswer $serviceAnswer): void {
         $this->tasksService = $tasksService;
         $this->answersService = $answersService;
-        $this->serviceTask = $serviceTask;
         $this->serviceAnswer = $serviceAnswer;
     }
 

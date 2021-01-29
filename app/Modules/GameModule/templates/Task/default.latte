@@ -1,4 +1,4 @@
-{define task}
+{define tasks}
     {varType bool $isGameStarted}
     {varType string $lang}
     {varType array $unsolvedTasks}
@@ -8,28 +8,29 @@
     {varType FOL\Model\ORM\Models\ModelTeam $team}
     {varType array $mirrors}
     {varType FOL\Model\ORM\Models\ModelTask $task}
-    <li>
-        <del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}">
-            <strong>{$task->getGroup()->code_name}</strong>&nbsp;{$task|i18n:'name',$lang} ({$control->scoreStrategy->getSingleTaskScore($team, $task)} {_'b.'}, max. {$task->points} {_'b.'}
-            )
-        </del>
-        <ul>
-            <li>
-                {foreach $mirrors as $mirror}
-                    <a href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
-                {/foreach}
-            </li>
-        </ul>
-    </li>
-{/define}
-
-{define tasks}
+    {varType Fykosak\Utils\ORM\TypedTableSelection $tasks}
     {if count($tasks) == 0}
         <p>{_'Žádné úlohy.'}</p>
     {else}
         <ul>
             {foreach $tasks as $task}
-                {include task}
+                <li>
+                    <del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}">
+                        <strong>{$task->getGroup()->code_name}</strong>&nbsp;{$task|i18n:'name',$lang} ({$control->scoreStrategy->getSingleTaskScore($team, $task)} {_'b.'}, max. {$task->points} {_'b.'}
+                        )
+                    </del>
+                    <ul>
+                        <li>
+                            {foreach $mirrors as $mirror}
+                                <a href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
+                            {/foreach}
+                        </li>
+                    </ul>
+                    {if $link}
+                        <a class="btn btn-primary"
+                           href="{plink :Game:Answer:default id=>$task->id_task}">{_'Odpovedať'}</a>
+                    {/if}
+                </li>
             {/foreach}
         </ul>
     {/if}
@@ -68,13 +69,13 @@
 
     <p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
     <h3>{_'Nevyřešené'}</h3>
-    {include tasks tasks=>$unsolvedTasks}
+    {include tasks tasks=>$unsolvedTasks,link=>true}
 
     <h3>{_'Vyřešené'}</h3>
-    {include tasks tasks=>$solvedTasks}
+    {include tasks tasks=>$solvedTasks,link=>false}
 
     <h3>{_'Přeskočené'}</h3>
-    {include tasks tasks=>$skippedTasks}
+    {include tasks tasks=>$skippedTasks,link=>false}
 
     {*{/cache}*}
 

@@ -39,7 +39,6 @@ class LoginFormComponent extends BaseComponent {
         $values = $form->getValues();
 
         try {
-            //$this->getPresenter()->user->login($values['name'], $values['password']);
             $this->authenticator->login($values['name'], $values['password']);
         } catch (AuthenticationException $e) {
             if ($e->getCode() == Authenticator::IDENTITY_NOT_FOUND) {

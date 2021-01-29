@@ -6,24 +6,14 @@ class DefaultPresenter extends BasePresenter {
 
     protected function startUp(): void {
         parent::startUp();
-        if ($this->getAction() === 'chat') {
-            $this->forward(':Game:Chat:default');
+        switch ($this->getAction()) {
+            case 'lastYears':
+            case 'default':
+                $this->redirect(':Game:Auth:login');
+            case 'chat':
+                $this->redirect(':Game:Chat:default');
         }
     }
-
-
-
-    public function renderDefault(): void {
-        $this->setPageTitle(_('Mezinárodní soutež ve fyzice'));
-        $this->template->year = $this->getCurrentYear();
-        $this->changeViewByLang();
-    }
-
-    public function renderLastYears(): void {
-        $this->setPageTitle(_('Minulé ročníky'));
-        $this->changeViewByLang();
-    }
-
 
     public function renderRules(): void {
         $this->setPageTitle(_('Pravidla'));

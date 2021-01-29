@@ -3,6 +3,7 @@
 namespace FOL\Model\ORM\Models;
 
 use DateTimeInterface;
+use Fykosak\Utils\Localization\GettextTranslator;
 use Fykosak\Utils\ORM\AbstractModel;
 use Nette\Database\Table\ActiveRow;
 use Nette\InvalidArgumentException;
@@ -65,6 +66,10 @@ class ModelTask extends AbstractModel {
                 'en' => $row->name_en,
             ],
         ];
+    }
+
+    public function getLabel(string $lang): string {
+        return $this->getGroup()->code_name . ': ' . GettextTranslator::i18nHelper($this, 'name', $lang);
     }
 
     public function checkAnswer(string $solution): bool {

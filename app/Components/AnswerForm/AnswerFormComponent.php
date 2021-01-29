@@ -18,7 +18,6 @@ use FOL\Model\ScoreStrategy;
 use Fykosak\Utils\Localization\GettextTranslator;
 use Fykosak\Utils\Logging\FlashMessageDump;
 use Fykosak\Utils\Logging\MemoryLogger;
-use Fykosak\Utils\ORM\TypedTableSelection;
 use Nette\Application\AbortException;
 use Nette\Application\ForbiddenRequestException;
 use Nette\Application\UI\Form;
@@ -47,10 +46,15 @@ class AnswerFormComponent extends BaseComponent {
     protected ServiceTask $serviceTask;
     private ServicePeriod $servicePeriod;
     private ScoreStrategy $scoreStrategy;
+    private ModelTask $task;
 
-    public function __construct(Container $container, ModelTeam $team) {
+    public function __construct(Container $container, ModelTeam $team, ModelTask $task) {
         $this->team = $team;
         parent::__construct($container);
+        $this->task = $task;
+        if (!$this->tasksService->findSubmitAvailable($this->team)->where('id_task', $this->task->id_task)->fetch()) {
+            throw new ForbiddenRequestException();
+        }
     }
 
     public function injectSecondary(
@@ -92,10 +96,8 @@ class AnswerFormComponent extends BaseComponent {
                 }
                 $isDoublePoints = true; // TODO continue implementation
             }
-            /** @var ModelTask $task */
-            $task = $this->serviceTask->findByPrimary($values[self::TASK_ELEMENT]);
 
-            $period = $this->servicePeriod->findCurrent($task->getGroup());
+            $period = $this->servicePeriod->findCurrent($this->task->getGroup());
             $solution = trim($values['solution'], ' ');
             $solution = strtr($solution, ',', '.');
 
@@ -105,8 +107,8 @@ class AnswerFormComponent extends BaseComponent {
             }
             // Handle card usage
 
-            $correct = $task->checkAnswer($solution);
-            $results = $this->answersService->insert($this->team, $task, $solution, $period, $correct, $isDoublePoints);
+            $correct = $this->task->checkAnswer($solution);
+            $results = $this->answersService->insert($this->team, $this->task, $solution, $period, $correct, $isDoublePoints);
             //Environment::getCache()->clean(array(Cache::TAGS => array('problems/$team'))); // not used
 
             if ($isDoublePoints) {
@@ -114,16 +116,16 @@ class AnswerFormComponent extends BaseComponent {
                 $this->doublePointsCard->handle($logger, [
                     'correct' => $correct,
                     'answer_id' => $results,
-                    'task_id' => $task->id_task,
+                    'task_id' => $this->task->id_task,
                 ]);
                 FlashMessageDump::dump($logger, $this->getPresenter());
             }
 
             if ($correct) {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je správně.'), 'success');
-                $this->tasksService->updateSingleCounter($this->team, $task);
-                $this->scoreService->updateAfterInsert($this->team, $task); //musi byt az po updatu counteru
-                $this->getPresenter()->redirect('rating', ['id' => $task->id_task]);
+                $this->tasksService->updateSingleCounter($this->team, $this->task);
+                $this->scoreService->updateAfterInsert($this->team, $this->task); //musi byt az po updatu counteru
+                $this->getPresenter()->redirect('rating', ['id' => $this->task->id_task]);
             } else {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je špatně.'), 'danger');
             }
@@ -168,24 +170,6 @@ class AnswerFormComponent extends BaseComponent {
     protected function createComponentForm(): BaseForm {
         $form = new BaseForm($this->getContext());
 
-        // Tasks
-
-        $options = [];
-        $rules = [
-            ModelTask::TYPE_STR => [],
-            ModelTask::TYPE_INT => [],
-            ModelTask::TYPE_REAL => [],
-        ];
-        /** @var ModelTask $task */
-        foreach ($this->tasks as $task) {
-            $options[$task->id_task] = $task->getGroup()->code_name . ': ' . GettextTranslator::i18nHelper($task, 'name', $this->getPresenter()->lang);
-            $rules[$task->answer_type][] = $task->id_task;
-        }
-        $tasks = $options;
-        $select = $form->addSelect(self::TASK_ELEMENT, 'Úkol', $tasks)
-            ->setPrompt(' ---- Vybrat ---- ')
-            ->addRule(Form::FILLED, 'Vyberte prosím řešený úkol.');
-
         // Solution
         $text = $form->addText('solution', _('Odpověď'))
             ->addRule(Form::FILLED, _('Vyplňte prosím řešení úkolu.'));
@@ -195,23 +179,18 @@ class AnswerFormComponent extends BaseComponent {
             $checkBox->setDisabled(true);
         }
 
-        if (count($rules[ModelTask::TYPE_INT])) {
-            $text->addConditionOn($select, Form::IS_IN, $rules[ModelTask::TYPE_INT])
-                ->addRule(Form::INTEGER, 'Výsledek musí být celé číslo.');
+        if ($this->task->answer_type === ModelTask::TYPE_INT) {
+            $text->addRule(Form::INTEGER, 'Výsledek musí být celé číslo.');
         }
-        if (count($rules[ModelTask::TYPE_REAL])) {
-            $text->addConditionOn($select, Form::IS_IN, $rules[ModelTask::TYPE_REAL])
-                ->addRule(Form::PATTERN, 'Výsledek musí být reálné číslo.', '[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?');
+        if ($this->task->answer_type === ModelTask::TYPE_REAL) {
+            $text->addRule(Form::PATTERN, 'Výsledek musí být reálné číslo.', '[-+]?[0-9]*[\.,]?[0-9]+([eE][-+]?[0-9]+)?');
         }
 
         $desc = Html::el('span');
         $desc->addAttributes(['id' => self::TASK_INFO_ELEMENT]);
         $text->setOption('description', $desc);
 
-        $submit = $form->addSubmit(self::SUBMIT_ELEMENT, 'Odeslat řešení');
-        if (count($options) == 0) {
-            $submit->setDisabled(true);
-        }
+        $form->addSubmit(self::SUBMIT_ELEMENT, 'Odeslat řešení');
         $form->onSuccess[] = function (Form $form) {
             $this->formSubmitted($form);
         };
@@ -229,37 +208,17 @@ class AnswerFormComponent extends BaseComponent {
         } elseif (!$this->serviceYear->getCurrent()->isGameStarted()) {
             $this->flashMessage(_('Hra ještě nezačala.'), 'danger');
         } else {
-            $this->initTasks();
-        }
-    }
-
-    private ?TypedTableSelection $tasks = null;
-    private array $tasksInfo;
-
-    private function initTasks(): void {
-        $this->tasks = $this->serviceTask->getTable()
-            ->where('id_task', $this->tasksService->findSubmitAvailable($this->team)->fetchPairs('id_task', 'id_task'))
-            ->order('id_group')
-            ->order('number');
-
-        $this->tasksInfo = [];
-        /** @var ModelTask $task */
-        foreach ($this->tasks as $task) {
-            $this->tasksInfo[$task->id_task] = [
-                'sig_digits' => $task->real_sig_digits,
-                'unit' => $task->answer_unit,
-                'type' => $task->answer_type,
-                'maxPoints' => $task->points,
-                'curPoints' => $this->scoreStrategy->getSingleTaskScore($this->team, $task),
-            ];
         }
     }
 
     public function render(): void {
-        $this->template->tasks = $this->tasks;
-        $this->template->tasksInfo = $this->tasksInfo;
-        $this->template->tasksInfoElement = self::TASK_INFO_ELEMENT;
-        $this->template->submitElement = self::SUBMIT_ELEMENT;
+        $this->template->taskInfo = [
+            'sig_digits' => $this->task->real_sig_digits,
+            'unit' => $this->task->answer_unit,
+            'type' => $this->task->answer_type,
+            'maxPoints' => $this->task->points,
+            'curPoints' => $this->scoreStrategy->getSingleTaskScore($this->team, $this->task),
+        ];;
 
         $this->template->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'answerForm.latte');
         parent::render();

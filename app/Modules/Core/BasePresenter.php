@@ -14,7 +14,6 @@ use Fykosak\Utils\Localization\UnsupportedLanguageException;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
-use Tracy\Debugger;
 
 abstract class BasePresenter extends Presenter {
 

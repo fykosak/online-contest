@@ -89,6 +89,7 @@ class AnswersService extends AbstractService {
                 'id_task' => $task->id_task,
                 'correct' => $correct,
                 'inserted' => new DateTime(),
+                'double_points' => $isDoublePoints,
             ] + $answer);
         // Log the action
         $this->log($team->id_team, 'solution_inserted', 'The team successfully inserted the solution of task [$task->id_task] with code [$solution].');

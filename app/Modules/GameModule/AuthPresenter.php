@@ -25,7 +25,7 @@ class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
      */
     public function actionLogout(): void {
         $this->getUser()->logout();
-        $this->redirect(':Public:Default:default');
+        $this->redirect(':Game:Auth:login');
     }
 
     public function renderLogin(): void {
@@ -44,7 +44,7 @@ class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
         }
     }
 
-    protected function createComponentLogin(): LoginFormComponent{
+    protected function createComponentLogin(): LoginFormComponent {
         return new LoginFormComponent($this->getContext(), $this->authenticator, ':Game:Task:default');
     }
 

@@ -6,44 +6,39 @@ use FOL\Model\ORM\Models\ModelAnswer;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Services\ServiceAnswer;
 use FOL\Model\ORM\Services\ServiceTask;
-use Nette\NotSupportedException;
+use Nette\DI\Container;
 use FOL\Components\BaseComponent;
 
 class AnswerStatsComponent extends BaseComponent {
 
     private ServiceTask $serviceTask;
     private ServiceAnswer $serviceAnswer;
+    private ?ModelTask $task;
 
-    private ?int $taskId;
+    public function __construct(Container $container, ?int $taskId) {
+        parent::__construct($container);
+        $this->task = $taskId ? $this->serviceTask->findByPrimary($taskId) : null;
+    }
 
     public function injectPrimary(ServiceTask $serviceTask, ServiceAnswer $serviceAnswer): void {
         $this->serviceTask = $serviceTask;
         $this->serviceAnswer = $serviceAnswer;
     }
 
-    public function render(?int $taskId = null): void {
+    public function render(): void {
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'answerStats.latte');
-        if (!is_numeric($taskId)) {
-            throw new NotSupportedException();
-        }
-        $this->taskId = $taskId;
         $this->beforeRender();
         $this->getTemplate()->render();
     }
 
     protected function beforeRender(): void {
-        $answers = $this->serviceAnswer->findByTaskId($this->taskId);
-        //$tasks = $this->tasksModel->findAll()->fetchAssoc('id_task');
-        /** @var ModelTask $modelTask */
-        $modelTask = $this->serviceTask->findByPrimary($this->taskId);
-
-        //$taskNo = $task['id_group'].'_'.$task['number'];
+        $answers = $this->serviceAnswer->findByTaskId($this->task->id_task);
         $tolerance = null;
-        if ($modelTask->answer_type == 'int') {
-            $correctValue = $modelTask->answer_int;
+        if ($this->task->answer_type == 'int') {
+            $correctValue = $this->task->answer_int;
         } else {
-            $correctValue = $modelTask->answer_real;
-            $tolerance = $modelTask->real_tolerance;
+            $correctValue = $this->task->answer_real;
+            $tolerance = $this->task->real_tolerance;
         }
 
         $taskData = [];
