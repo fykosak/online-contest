@@ -18,6 +18,7 @@ use Nette\Database\Table\ActiveRow;
  * @property-read bool correct
  * @property-read DateTimeInterface inserted
  * @property-read DateTimeInterface updated
+ * @property-read bool double_points
  */
 class ModelAnswer extends AbstractModel {
 

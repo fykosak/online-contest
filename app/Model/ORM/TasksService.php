@@ -3,9 +3,11 @@
 namespace FOL\Model\ORM;
 
 use DateTime;
+use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceAnswer;
+use FOL\Model\ORM\Services\ServiceCardUsage;
 use FOL\Model\ORM\Services\ServiceGroup;
 use FOL\Model\ORM\Services\ServiceLog;
 use FOL\Model\ORM\Services\ServiceTaskState;
@@ -22,8 +24,9 @@ class TasksService extends AbstractService {
     protected ServiceGroup $serviceGroup;
     private ServiceTaskState $serviceTaskState;
     private ServiceAnswer $serviceAnswer;
+    private ServiceCardUsage $serviceCardUsage;
 
-    public function __construct(AnswersService $answersService, ServiceGroup $serviceGroup, ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState, ServiceAnswer $serviceAnswer) {
+    public function __construct(ServiceCardUsage $serviceCardUsage, AnswersService $answersService, ServiceGroup $serviceGroup, ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState, ServiceAnswer $serviceAnswer) {
         parent::__construct($explorer, $serviceLog);
         $this->answersService = $answersService;
         $this->serviceGroup = $serviceGroup;
@@ -130,7 +133,6 @@ class TasksService extends AbstractService {
                     FROM `group`, team
                 ON DUPLICATE KEY UPDATE task_counter = task_counter');
         }
-
         // Update according to current period
         $this->explorer->query('UPDATE group_state AS gs
                 SET task_counter = 
@@ -159,6 +161,12 @@ class TasksService extends AbstractService {
     }
 
     public function updateSingleCounter(ModelTeam $team, ModelTask $task): void {
+        /** @var ModelCardUsage|null $usage */
+        $usage = $this->serviceCardUsage->getTable()->where('team_id', $team)->where('card_type', 'add_task')->fetch();
+        $extraTask = 0;
+        if ($usage && $usage->getData()['group'] === $task->id_group) {
+            $extraTask = 1;
+        }
         $this->explorer->query('UPDATE group_state AS gs
                 SET task_counter = 
                     GREATEST(
@@ -181,8 +189,8 @@ class TasksService extends AbstractService {
                                 SELECT COUNT(id_task)
                                 FROM task
                                 WHERE number <= gs.task_counter AND cancelled = 1
-                             ), 0),
+                             )+?, 0),
                     gs.task_counter)
-                WHERE gs.id_group = ? AND gs.id_team = ?', $task->id_group, $team->id_team);
+                WHERE gs.id_group = ? AND gs.id_team = ?', $extraTask, $task->id_group, $team->id_team);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace FOL\Model;
 
+use FOL\Model\ORM\Models\ModelAnswer;
 use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
@@ -22,17 +23,22 @@ class FOF2021ScoreStrategy extends ScoreStrategy {
         $this->serviceCardUsage = $serviceCardUsage;
     }
 
-    protected function getPoints(ModelTask $task, int $wrongTries): int {
+    protected function getPoints(ModelTask $task, int $wrongTries, bool $hasDoublePoints = false): int {
+        $rawPoints = null;
         switch ($wrongTries) {
             case 0:
-                return 5;
+                $rawPoints = 5;
+                break;
             case 1:
-                return 3;
+                $rawPoints = 3;
+                break;
             case 2:
-                return 2;
+                $rawPoints = 2;
+                break;
             default:
-                return 1;
+                $rawPoints = 1;
         }
+        return $hasDoublePoints ? $rawPoints * 2 : $rawPoints;
     }
 
     public function getSingleTaskScore(ModelTeam $team, ModelTask $task): int {
@@ -40,15 +46,21 @@ class FOF2021ScoreStrategy extends ScoreStrategy {
             ->where('id_team', $team->id_team)
             ->where('id_task', $task->id_task)
             ->where('correct', 0);
+        /** @var ModelAnswer $correctAnswer */
+        $correctAnswer = $this->serviceAnswer->getTable()
+            ->where('id_team', $team->id_team)
+            ->where('id_task', $task->id_task)
+            ->where('correct', 1)
+            ->fetch();
 
         /** @var ModelCardUsage|null $usage */
-        $usage = $this->serviceCardUsage->where('team_id', $team->id_team)->where('type', 'reset')->fetch();
+        $usage = $this->serviceCardUsage->where('team_id', $team->id_team)->where('card_type', 'reset')->fetch();
         if ($usage) {
             $taskId = $usage->getData()['task'];
             if ($taskId == $task->id_task) {
                 $query->where('created >= ?', $usage->created);
             }
         }
-        return $this->getPoints($task, $query->count());
+        return $this->getPoints($task, $query->count(), $correctAnswer->double_points);
     }
 }
