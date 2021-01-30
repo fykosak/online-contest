@@ -5,6 +5,7 @@ namespace FOL\Model\ORM;
 use DateTime;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Services\ServiceAnswer;
 use FOL\Model\ORM\Services\ServiceGroup;
 use FOL\Model\ORM\Services\ServiceLog;
 use FOL\Model\ORM\Services\ServiceTaskState;
@@ -20,12 +21,14 @@ class TasksService extends AbstractService {
 
     protected ServiceGroup $serviceGroup;
     private ServiceTaskState $serviceTaskState;
+    private ServiceAnswer $serviceAnswer;
 
-    public function __construct(AnswersService $answersService, ServiceGroup $serviceGroup, ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState) {
+    public function __construct(AnswersService $answersService, ServiceGroup $serviceGroup, ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState, ServiceAnswer $serviceAnswer) {
         parent::__construct($explorer, $serviceLog);
         $this->answersService = $answersService;
         $this->serviceGroup = $serviceGroup;
         $this->serviceTaskState = $serviceTaskState;
+        $this->serviceAnswer = $serviceAnswer;
     }
 
     public function findPossiblyAvailable(): Selection {
@@ -88,7 +91,7 @@ class TasksService extends AbstractService {
      */
     public function skip(ModelTeam $team, ModelTask $task) {
         // Check that skip is allowed for task
-        $answers = $this->answersService->findAllCorrect($team->id_team)->where('id_task = ?', $task->id_task);
+        $answers = $this->serviceAnswer->findAllCorrect($team)->where('id_task = ?', $task->id_task);
         if ($answers->count() > 0) {
             $this->log($team->id_team, 'skip_tried', sprintf('The team tried to skip the task [%i].', $task->id_task));
             throw new InvalidStateException(sprintf('Skipping not allowed for the task %i.', $task->id_task), AnswersService::ERROR_SKIP_OF_ANSWERED);
@@ -110,10 +113,9 @@ class TasksService extends AbstractService {
         ]);
 
         // Increase counter
-        $sql = 'INSERT INTO group_state (id_group, id_team, task_counter)
+        $this->explorer->query('INSERT INTO group_state (id_group, id_team, task_counter)
                     VALUES(?, ?, 0)
-                ON DUPLICATE KEY UPDATE task_counter = task_counter + 1';
-        $this->explorer->query($sql, $task->id_group, $team->id_team);
+                ON DUPLICATE KEY UPDATE task_counter = task_counter + 1', $task->id_group, $team->id_team);
 
         // Log the action
         $this->log($team->id_team, 'task_skipped', 'The team successfuly skipped the task [$task->id_task].');
@@ -122,16 +124,15 @@ class TasksService extends AbstractService {
 
     public function updateCounter(bool $full = false): void {
         // Initialize with zeroes
-        $sql = 'INSERT INTO group_state (id_group, id_team, task_counter)
+        if ($full) {
+            $this->explorer->query('INSERT INTO group_state (id_group, id_team, task_counter)
                     SELECT id_group, id_team, 0
                     FROM `group`, team
-                ON DUPLICATE KEY UPDATE task_counter = task_counter';
-        if ($full) {
-            $this->explorer->query($sql);
+                ON DUPLICATE KEY UPDATE task_counter = task_counter');
         }
 
         // Update according to current period
-        $sql = 'UPDATE group_state AS gs
+        $this->explorer->query('UPDATE group_state AS gs
                 SET task_counter = 
                     GREATEST(
                         IFNULL(
@@ -154,13 +155,11 @@ class TasksService extends AbstractService {
                                 FROM task
                                 WHERE number <= gs.task_counter AND cancelled = 1
                             ), 0),
-                    gs.task_counter)';
-
-        $this->explorer->query($sql);
+                    gs.task_counter)');
     }
 
     public function updateSingleCounter(ModelTeam $team, ModelTask $task): void {
-        $sql = 'UPDATE group_state AS gs
+        $this->explorer->query('UPDATE group_state AS gs
                 SET task_counter = 
                     GREATEST(
                         IFNULL(
@@ -184,8 +183,6 @@ class TasksService extends AbstractService {
                                 WHERE number <= gs.task_counter AND cancelled = 1
                              ), 0),
                     gs.task_counter)
-                WHERE gs.id_group = ? AND gs.id_team = ?';
-
-        $this->explorer->query($sql, $task->id_group, $team->id_team);
+                WHERE gs.id_group = ? AND gs.id_team = ?', $task->id_group, $team->id_team);
     }
 }

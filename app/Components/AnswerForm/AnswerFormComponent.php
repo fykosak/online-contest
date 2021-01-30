@@ -15,7 +15,6 @@ use FOL\Model\ORM\Services\ServiceYear;
 use FOL\Model\ORM\TasksService;
 use FOL\Components\BaseForm;
 use FOL\Model\ScoreStrategy;
-use Fykosak\Utils\Localization\GettextTranslator;
 use Fykosak\Utils\Logging\FlashMessageDump;
 use Fykosak\Utils\Logging\MemoryLogger;
 use Nette\Application\AbortException;
@@ -31,10 +30,6 @@ use Tracy\Debugger;
 use FOL\Components\BaseComponent;
 
 class AnswerFormComponent extends BaseComponent {
-
-    const TASK_ELEMENT = 'task';
-    const TASK_INFO_ELEMENT = 'answer-info';
-    const SUBMIT_ELEMENT = 'solution_submit';
 
     protected TasksService $tasksService;
     protected AnswersService $answersService;
@@ -52,9 +47,6 @@ class AnswerFormComponent extends BaseComponent {
         $this->team = $team;
         parent::__construct($container);
         $this->task = $task;
-        if (!$this->tasksService->findSubmitAvailable($this->team)->where('id_task', $this->task->id_task)->fetch()) {
-            throw new ForbiddenRequestException();
-        }
     }
 
     public function injectSecondary(
@@ -97,20 +89,20 @@ class AnswerFormComponent extends BaseComponent {
                 $isDoublePoints = true; // TODO continue implementation
             }
 
-            $period = $this->servicePeriod->findCurrent($this->task->getGroup());
             $solution = trim($values['solution'], ' ');
             $solution = strtr($solution, ',', '.');
 
+            $period = $this->servicePeriod->findCurrent($this->task->getGroup());
             if (!$period) {
                 $this->serviceLog->log($this->team->id_team, 'solution_tried', 'The team tried to insert the solution of task [$task->id_task] with solution [$solution].');
                 throw new InvalidStateException('There is no active submit period.', AnswersService::ERROR_OUT_OF_PERIOD);
             }
-            // Handle card usage
 
             $correct = $this->task->checkAnswer($solution);
             $results = $this->answersService->insert($this->team, $this->task, $solution, $period, $correct, $isDoublePoints);
             //Environment::getCache()->clean(array(Cache::TAGS => array('problems/$team'))); // not used
 
+            // Handle card usage
             if ($isDoublePoints) {
                 $logger = new MemoryLogger();
                 $this->doublePointsCard->handle($logger, [
@@ -187,10 +179,9 @@ class AnswerFormComponent extends BaseComponent {
         }
 
         $desc = Html::el('span');
-        $desc->addAttributes(['id' => self::TASK_INFO_ELEMENT]);
         $text->setOption('description', $desc);
 
-        $form->addSubmit(self::SUBMIT_ELEMENT, 'Odeslat řešení');
+        $form->addSubmit('submit', 'Odeslat řešení');
         $form->onSuccess[] = function (Form $form) {
             $this->formSubmitted($form);
         };
@@ -207,7 +198,9 @@ class AnswerFormComponent extends BaseComponent {
             $this->flashMessage(_('Čas vypršel.'), 'danger');
         } elseif (!$this->serviceYear->getCurrent()->isGameStarted()) {
             $this->flashMessage(_('Hra ještě nezačala.'), 'danger');
-        } else {
+        }
+        if (!$this->tasksService->findSubmitAvailable($this->team)->where('id_task', $this->task->id_task)->fetch()) {
+            throw new ForbiddenRequestException();
         }
     }
 

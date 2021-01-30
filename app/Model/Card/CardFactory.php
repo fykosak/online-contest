@@ -9,8 +9,6 @@ use Nette\DI\Container;
 final class CardFactory {
 
     private Container $container;
-    /** @var Card[] */
-    private array $cards = [];
 
     /**
      * CardFactory constructor.
@@ -21,33 +19,49 @@ final class CardFactory {
     }
 
     /**
-     * @param string $type
-     * @return Card
+     * @param ModelTeam $team
+     * @return Card[]
      * @throws BadRequestException
      */
-    public function getByType(string $type): Card {
-        if (isset($this->cards[$type])) {
-            return $this->cards[$type];
+    public function createForTeam(ModelTeam $team): array {
+        $cards = ['skip', 'reset', 'double_points', 'add_task', 'hint', 'options',];
+        foreach ($cards as $card) {
+            $this->create($team, $card);
         }
-        throw new BadRequestException();
+        return $cards;
     }
 
     /**
      * @param ModelTeam $team
-     * @return Card[]
+     * @param string $type
+     * @return Card
+     * @throws BadRequestException
      */
-    public function createForTeam(ModelTeam $team): array {
-        $cards = [
-            'skip' => new SkipCard($team),
-            'reset' => new ResetCard($team),
-            'double_points' => new DoublePointsCard($team),
-            'add_task' => new AddTaskCard($team),
-            'hint' => new HintCard($team),
-            'options' => new OptionsCard($team),
-        ];
-        foreach ($cards as $card) {
-            $this->container->callInjects($card);
+    public function create(ModelTeam $team, string $type): Card {
+        switch ($type) {
+            case 'skip' :
+                $card = new SkipCard($team);
+                break;
+            case 'reset' :
+                $card = new ResetCard($team);
+                break;
+            case 'double_points'  :
+                $card = new DoublePointsCard($team);
+                break;
+            case 'add_task'  :
+                $card = new AddTaskCard($team);
+                break;
+            case 'hint'  :
+                $card = new HintCard($team);
+                break;
+            case 'options'  :
+                $card = new OptionsCard($team);
+                break;
+            default:
+                throw new BadRequestException();
         }
-        return $cards;
+
+        $this->container->callInjects($card);
+        return $card;
     }
 }

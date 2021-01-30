@@ -11,6 +11,7 @@ use Nette\Database\Table\ActiveRow;
  * @property-read int id_team
  * @property-read ActiveRow team
  * @property-read int id_school
+ * @property-read ActiveRow school
  * @property-read string name
  * @property-read string email
  * @property-read int study_year

@@ -22,13 +22,8 @@ class NotificationFormComponent extends BaseComponent {
      * @param Form $form
      * @return void
      * @throws AbortException
-     * @throws BadRequestException
      */
     private function formSucceeded(Form $form): void {
-        if (!$this->getPresenter()->user->isAllowed('noticeboard', 'add')) {
-            $this->getPresenter()->error('Nemáte oprávnění pro přidání notifikace.', Response::S403_FORBIDDEN);
-        }
-
         $values = $form->getValues();
         $this->serviceNotification->createNewModel([
             'message' => $values['message'],

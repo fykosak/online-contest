@@ -22,7 +22,7 @@ abstract class BasePresenter extends Presenter {
 
     private string $customScript = '';
 
-    private ?ModelTeam $loggedTeam2;
+    private ?ModelTeam $loggedTeam;
 
     protected GettextTranslator $translator;
     protected ServiceTeam $serviceTeam;
@@ -128,14 +128,14 @@ abstract class BasePresenter extends Presenter {
     }
 
     public function getLoggedTeam(): ?ModelTeam {
-        if (!isset($this->loggedTeam2)) {
+        if (!isset($this->loggedTeam)) {
             if ($this->getUser()->isLoggedIn()) {
-                $this->loggedTeam2 = $this->serviceTeam->findByPrimary($this->getUser()->getIdentity()->id_team);
+                $this->loggedTeam = $this->serviceTeam->findByPrimary($this->getUser()->getIdentity()->id_team);
             } else {
-                $this->loggedTeam2 = null;
+                $this->loggedTeam = null;
             }
         }
-        return $this->loggedTeam2;
+        return $this->loggedTeam;
     }
 
     protected function createComponentNavigation(): Navigation {
