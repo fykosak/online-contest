@@ -52,7 +52,7 @@ abstract class Card {
         $this->serviceCardUsage->createNewModel([
             'team_id' => $this->team->id_team,
             'card_type' => $this->getType(),
-            'data' => ModelCardUsage::serializeData($values),
+            'data' => ModelCardUsage::serializeData($this->getType(), $values),
         ]);
     }
 

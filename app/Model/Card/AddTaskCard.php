@@ -48,12 +48,11 @@ final class AddTaskCard extends SingleFormCard {
     }
 
     public function getTitle(): string {
-        return _('Add task');
+        return _('Add one problem from a series');
     }
 
     public function getDescription(): Html {
-        // TODO: Implement getDescription() method.
-        return Html::el('span')->addText('TODO');
+        return Html::el('span')->addText('the next problem from a chosen series is revealed, the team can therefore solve more problems from the series at once.');
     }
 
     /**

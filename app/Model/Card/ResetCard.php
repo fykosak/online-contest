@@ -28,13 +28,13 @@ final class ResetCard extends SingleFormCard {
         foreach ($unsolved as $taskId) {
             /** @var ModelTask $task */
             $task = $this->serviceTask->findByPrimary($taskId);
-            $items[$task->id_task] = $task->getLabel($lang) . ' - ' . $this->scoreStrategy->getSingleTaskScore($this->team, $task).'b.';
+            $items[$task->id_task] = $task->getLabel($lang) . ' - ' . $this->scoreStrategy->getSingleTaskScore($this->team, $task) . 'b.';
         }
         $container->addSelect('task', _('Task'), $items);
     }
 
     protected function innerHandle(Logger $logger, array $values): void {
-        // TODO: Implement innerHandle() method.
+        // intentionally blank!
     }
 
     public function getType(): string {
@@ -46,7 +46,7 @@ final class ResetCard extends SingleFormCard {
     }
 
     public function getDescription(): Html {
-        // TODO: Implement getDescription() method.
-        return Html::el('span')->addText('TODO');
+        // TODO
+        return Html::el('span')->addText('The marking scheme of the problem is reset, the team can get 5 points for a correct answer again.');
     }
 }

@@ -83,7 +83,7 @@ final class TasksService extends AbstractService {
 
     public function skip(ModelTeam $team, ModelTask $task): ModelTaskState {
         // Check that skip is allowed for task
-        $answers = $this->serviceAnswer->findAllCorrect($team)->where('id_task = ?', $task->id_task);
+        $answers = $this->serviceAnswer->findAllCorrect($team)->where('answer.id_task = ?', $task->id_task);
         if ($answers->count() > 0) {
             $this->log($team->id_team, 'skip_tried', sprintf('The team tried to skip the task [%i].', $task->id_task));
             throw new InvalidStateException(sprintf('Skipping not allowed for the task %i.', $task->id_task), AnswersService::ERROR_SKIP_OF_ANSWERED);
@@ -145,17 +145,15 @@ final class TasksService extends AbstractService {
                                 SELECT COUNT(id_task)
                                 FROM task
                                 WHERE number <= gs.task_counter AND cancelled = 1
+                            )+(
+                                SELECT COUNT(*) 
+                                FROM `card_usage` cu
+                                WHERE `cu`.card_type=? AND team_id=gs.id_team AND cu.data=gs.id_group                                
                             ), 0),
-                    gs.task_counter)');
+                    gs.task_counter)', ModelCardUsage::TYPE_ADD_TASK);
     }
 
     public function updateSingleCounter(ModelTeam $team, ModelTask $task): void {
-        /** @var ModelCardUsage|null $usage */
-        $usage = $this->serviceCardUsage->findByTypeAndTeam($team, ModelCardUsage::TYPE_ADD_TASK);
-        $extraTask = 0;
-        if ($usage && $usage->getData()['group'] === $task->id_group) {
-            $extraTask = 1;
-        }
         $this->explorer->query('UPDATE group_state AS gs
                 SET task_counter = 
                     GREATEST(
@@ -178,8 +176,12 @@ final class TasksService extends AbstractService {
                                 SELECT COUNT(id_task)
                                 FROM task
                                 WHERE number <= gs.task_counter AND cancelled = 1
-                             )+?, 0),
+                             )+(
+                                SELECT COUNT(*) 
+                                FROM `card_usage` cu
+                                WHERE `cu`.card_type=? AND team_id=gs.id_team AND cu.data=gs.id_group                                
+                            ), 0),
                     gs.task_counter)
-                WHERE gs.id_group = ? AND gs.id_team = ?', $extraTask, $task->id_group, $team->id_team);
+                WHERE gs.id_group = ? AND gs.id_team = ?', ModelCardUsage::TYPE_ADD_TASK, $task->id_group, $team->id_team);
     }
 }

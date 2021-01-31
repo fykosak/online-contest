@@ -1,23 +1,18 @@
 {block content}
-    {foreach $cards as $card}
-        {if $card->wasUsed()}
-            <div class="card">
-                <div class="card-header bg-secondary text-white">
-                    <del>{$card->getTitle()}</del>
+    <div class="d-flex justify-content-around flex-wrap align-content-stretch">
+        {varType FOL\Model\Card\Card $card}
+        {varType array $cards}
+        {foreach $cards as $card}
+            <div class="card mx-3 my-3" style="max-width: 20rem">
+                <div class="{$card->wasUsed()?'card-header bg-inactive text-white':'card-header bg-active text-white'}">
+                    {$card->getTitle()}
                 </div>
                 <div class="card-body">
                     <p class="card-text">{$card->getDescription()}</p>
-                    <a href="{plink use id=>$card->getType()}" class="btn btn-secondary">{_'View usage'}</a>
+                    <a href="{plink use id=>$card->getType()}"
+                       class="btn btn-secondary">{$card->wasUsed()?_('View usage'):_('Use')}</a>
                 </div>
             </div>
-        {else}
-            <div class="card">
-                <div class="card-header bg-success">{$card->getTitle()}</div>
-                <div class="card-body">
-                    <p class="card-text">{$card->getDescription()}</p>
-                    <a href="{plink use id=>$card->getType()}" class="btn btn-primary">{_'Use'}</a>
-                </div>
-            </div>
-        {/if}
-    {/foreach}
+        {/foreach}
+    </div>
 {/block}

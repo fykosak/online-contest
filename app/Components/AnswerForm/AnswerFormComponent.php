@@ -40,7 +40,6 @@ class AnswerFormComponent extends BaseComponent {
     protected ModelTeam $team;
     protected DoublePointsCard $doublePointsCard;
     protected ServiceTask $serviceTask;
-    private ServicePeriod $servicePeriod;
     private ScoreStrategy $scoreStrategy;
     private ModelTask $task;
 
@@ -52,7 +51,6 @@ class AnswerFormComponent extends BaseComponent {
 
     public function injectSecondary(
         TasksService $tasksService,
-        ServicePeriod $servicePeriod,
         AnswersService $answersService,
         ScoreService $scoreService,
         ServiceYear $serviceYear,
@@ -66,7 +64,6 @@ class AnswerFormComponent extends BaseComponent {
         $this->scoreService = $scoreService;
         $this->serviceYear = $serviceYear;
         $this->serviceTask = $serviceTask;
-        $this->servicePeriod = $servicePeriod;
         $this->user = $user;
         $this->scoreStrategy = $scoreStrategy;
         $this->doublePointsCard = $cardFactory->create($this->team, ModelCardUsage::TYPE_DOUBLE_POINTS);

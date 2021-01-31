@@ -22,3 +22,10 @@ footer {
 main {
     min-height: 100%;
 }
+
+.card .card-header.bg-active {
+    background-color: #f44336;
+}
+.card .card-header.bg-inactive {
+    background-color: #434343;
+}

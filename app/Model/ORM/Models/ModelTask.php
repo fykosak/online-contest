@@ -69,7 +69,7 @@ final class ModelTask extends AbstractModel {
     }
 
     public function getLabel(string $lang): string {
-        return $this->getGroup()->code_name . ': ' . GettextTranslator::i18nHelper($this, 'name', $lang);
+        return $this->getGroup()->code_name . $this->number . ': ' . GettextTranslator::i18nHelper($this, 'name', $lang);
     }
 
     public function checkAnswer(string $solution): bool {

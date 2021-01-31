@@ -15,18 +15,44 @@ use Fykosak\Utils\ORM\AbstractModel;
  */
 final class ModelCardUsage extends AbstractModel {
 
+    // array of tasks
     public const TYPE_SKIP = 'skip';
+    // task
     public const TYPE_RESET = 'reset';
-    public const TYPE_DOUBLE_POINTS = 'double_points';
-    public const TYPE_ADD_TASK = 'add_task';
     public const TYPE_HINT = 'hint';
     public const TYPE_OPTIONS = 'options';
+    // group
+    public const TYPE_ADD_TASK = 'add_task';
+    // answer
+    public const TYPE_DOUBLE_POINTS = 'double_points';
 
-    public static function serializeData(array $values): string {
-        return serialize($values);
+    /**
+     * @return int[]|int
+     */
+    public function getData() {
+        switch ($this->card_type) {
+            case self::TYPE_SKIP:
+                return explode(',', $this->data);
+            default:
+                return +$this->data;
+        }
     }
 
-    public function getData(): array {
-        return unserialize($this->data);
+    /**
+     * @param string $type
+     * @param array|int $data
+     * @return string
+     */
+    public static function serializeData(string $type, $data): string {
+        switch ($type) {
+            case self::TYPE_SKIP:
+                return join(',', array_keys(array_filter($data, fn($v) => (bool)$v)));
+            case self::TYPE_DOUBLE_POINTS:
+                return $data['answer'];
+            case self::TYPE_ADD_TASK:
+                return $data['group'];
+            default:
+                return $data['task'];
+        }
     }
 }

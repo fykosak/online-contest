@@ -3,10 +3,9 @@
     {varType FOL\Model\Card\OptionsCard $card}
     {varType string $lang}
 
-    {var $data = $card->getUsage()->getData()}
     {varType FOL\Model\ORM\Models\ModelTask $task}
-    {var $task = $card->serviceTask->findByPrimary($data['task'])}
-    {var $answerOptions =$task->getOptions()}
+    {var $task = $card->serviceTask->findByPrimary($card->getUsage()->getData())}
+    {var $answerOptions = $task->getOptions()}
     <ol>
         {for $i = 1; $i <= 4; $i++}
             <li>{\Fykosak\Utils\Localization\GettextTranslator::i18nHelper($answerOptions, 'option_' . $i, $lang)}</li>

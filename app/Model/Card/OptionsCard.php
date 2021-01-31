@@ -25,12 +25,11 @@ final class OptionsCard extends SingleFormCard {
     }
 
     public function getTitle(): string {
-        return _('4 options');
+        return _('Multiple choice');
     }
 
     public function getDescription(): Html {
-        // TODO: Implement getDescription() method.
-        return Html::el('span')->addText('TODO');
+        return Html::el('span')->addText('the team receives 4 possible answers to the question, one of them is correct.');
     }
 
     public function decorateFormContainer(Container $container, string $lang): void {

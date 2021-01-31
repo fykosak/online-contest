@@ -14,7 +14,7 @@
     {else}
         <div class="row">
             {foreach $tasks as $task}
-                <div class="col-md-3 col-lg-3">
+                <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="card">
                         {var $color = $task->getGroup()->getColorByGroup()}
                         <h5 class="card-header"
