@@ -44,14 +44,14 @@ class ScoreService extends AbstractService {
     public function updateAfterInsert(ModelTeam $team, ModelTask $task): void {
         try {
             $score = $this->scoreStrategy->getSingleTaskScore($team, $task);
-            $this->explorer->table('task_state')->insert([
+            $this->serviceTaskState->createNewModel([
                 'id_team' => $team->id_team,
                 'id_task' => $task->id_task,
                 'inserted' => new DateTime(),
                 'skipped' => 0,
                 'points' => $score,
             ]);
-
+// TODO
             /* vypocet bonusu */
             /*    if ($hurry) {
                     $solvedTasks = $this->serviceTaskState->findSolved($team);

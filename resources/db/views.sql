@@ -19,15 +19,16 @@ ORDER BY `task`.`id_group`, `task`.`number`;
 DROP VIEW IF EXISTS `view_available_task`;
 CREATE VIEW `view_available_task` AS
 SELECT `team`.`id_team`,
-       `view_task`.*
-FROM (`view_task`, `team`)
+       `task`.*
+FROM (`task`, `team`)
+         INNER JOIN `group` USING (`id_group`)
          LEFT JOIN `group_state` USING (`id_group`, `id_team`)
-WHERE `group_to_show` <= NOW()
+WHERE `to_show` <= NOW()
   AND (
-        (`group_type` = 'serie' AND `view_task`.`number` <= `group_state`.`task_counter`)
-        OR (`group_type` = 'set')
+        (`group`.`type` = 'serie' AND `task`.`number` <= `group_state`.`task_counter`)
+        OR (`group`.`type` = 'set')
     )
-ORDER BY `view_task`.`id_group`, `view_task`.`number`;
+ORDER BY `task`.`id_group`, `task`.`number`;
 
 -- úlohy přístupné týmu pro odeslání zadání
 DROP VIEW IF EXISTS `view_submit_available_task`;
@@ -79,70 +80,6 @@ SELECT `answer`.`id_team`,
        MAX(`answer`.`inserted`) AS `last_time`
 FROM `view_correct_answer` AS `answer`
 GROUP BY `id_team`;
-
-DROP VIEW IF EXISTS `view_incorrect_answer`;
-CREATE VIEW `view_incorrect_answer` AS
-SELECT `answer`.*
-FROM `view_answer` AS `answer`
-         INNER JOIN `view_task` USING (`id_task`)
-WHERE `view_task`.`cancelled` = 0
-  AND `answer`.`correct` = 0;
-
-/*
-DROP FUNCTION IF EXISTS `task_points_with_discount`;
-delimiter //
-CREATE FUNCTION `task_points_with_discount`(maximum int(2), allow_zeroes tinyint(1), wrong_tries int(25))
-RETURNS int(2)
-DETERMINISTIC
-BEGIN
-DECLARE RetVal int(2);
-    IF maximum >= 4 THEN
-        SET RetVal =
-            CASE wrong_tries
-                WHEN 0 THEN maximum
-                WHEN 1 THEN CEILING(maximum * 0.6)
-                WHEN 2 THEN CEILING(maximum * 0.4)
-                WHEN 3 THEN CEILING(maximum * 0.2)
-                ELSE 0
-            END;
-    ELSEIF maximum = 0 THEN
-        RETURN 0;
-    ELSE
-        SET RetVal = maximum - wrong_tries;
-    END IF;
-    RETURN CASE allow_zeroes
-        WHEN 1 THEN GREATEST(0, RetVal)
-        WHEN 0 THEN GREATEST(1, RetVal)
-    END;
-END//
-delimiter ;
-
-
-
- DROP VIEW IF EXISTS `view_task_result`;
- CREATE VIEW `view_task_result` AS
- 	SELECT
- 		`view_task`.`id_team`,
- 		`view_task`.`id_task`,
- 		`answer`.`inserted`,
- 		(
- 			IF(
- 				`answer`.`inserted` IS NULL,
- 				0,
- 				task_points_with_discount(
-                                    `view_task`.`points`,
-                                    `view_group`.`allow_zeroes`,
-                                    (SELECT COUNT(1)
-                                     FROM `view_incorrect_answer` AS `wrong`
-                                     WHERE `wrong`.`id_team` = `view_task`.`id_team` AND `wrong`.`id_task` = `view_task`.`id_task`
-                                    )
-                                )
- 			)
- 		) AS `score`
- 	FROM (`view_available_task` AS `view_task`)
- 	LEFT JOIN `view_correct_answer` AS `answer` USING(`id_task`, `id_team`)
-        LEFT JOIN `view_group` USING(`id_group`);
-*/
 
 DROP VIEW IF EXISTS `view_bonus_help`;
 CREATE VIEW `view_bonus_help` AS

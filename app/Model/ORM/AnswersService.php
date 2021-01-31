@@ -4,7 +4,6 @@ namespace FOL\Model\ORM;
 
 use DateTime;
 use FOL\Model\ORM\Models\ModelAnswer;
-use FOL\Model\ORM\Models\ModelPeriod;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceAnswer;
@@ -30,12 +29,17 @@ class AnswersService extends AbstractService {
      * @param ModelTeam $team
      * @param ModelTask $task
      * @param int|float|string $solution
-     * @param ModelPeriod $period
      * @param bool $correct
      * @param bool $isDoublePoints
-     * @return int
+     * @return ModelAnswer
      */
-    public function insert(ModelTeam $team, ModelTask $task, $solution, ModelPeriod $period, bool $correct, bool $isDoublePoints): int {
+    public function insert(ModelTeam $team, ModelTask $task, $solution, bool $correct, bool $isDoublePoints): ModelAnswer {
+        $period = $task->getGroup()->getActivePeriod();
+        if (!$period) {
+            $this->log($team->id_team, 'solution_tried', sprintf('The team tried to insert the solution of task [%i] with solution [%s].', $this->task->id_task, $solution));
+            throw new InvalidStateException('There is no active submit period.', AnswersService::ERROR_OUT_OF_PERIOD);
+        }
+
         $this->explorer->beginTransaction();
         // Correct answers of the team
         $correctAnswers = $this->serviceAnswer->findAllCorrect($team)
@@ -84,6 +88,6 @@ class AnswersService extends AbstractService {
         // Log the action
         $this->log($team->id_team, 'solution_inserted', 'The team successfully inserted the solution of task [$task->id_task] with code [$solution].');
         $this->explorer->commit();
-        return $modelAnswer->getPrimary();
+        return $modelAnswer;
     }
 }

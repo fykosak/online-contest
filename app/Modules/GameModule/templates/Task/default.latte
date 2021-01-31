@@ -12,27 +12,36 @@
     {if count($tasks) == 0}
         <p>{_'Žádné úlohy.'}</p>
     {else}
-        <ul>
+        <div class="row">
             {foreach $tasks as $task}
-                <li>
-                    <del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}">
-                        <strong>{$task->getGroup()->code_name}</strong>&nbsp;{$task|i18n:'name',$lang} ({$control->scoreStrategy->getSingleTaskScore($team, $task)} {_'b.'}, max. {$task->points} {_'b.'}
-                        )
-                    </del>
-                    <ul>
-                        <li>
-                            {foreach $mirrors as $mirror}
-                                <a href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
-                            {/foreach}
-                        </li>
-                    </ul>
-                    {if $link}
-                        <a class="btn btn-primary"
-                           href="{plink :Game:Answer:default id=>$task->id_task}">{_'Odpovedať'}</a>
-                    {/if}
-                </li>
+                <div class="col-md-3 col-lg-3">
+                    <div class="card">
+                        {var $color = $task->getGroup()->getColorByGroup()}
+                        <h5 class="card-header"
+                            style="{('background-color:' . $color )|noescape}">{$task->getLabel($lang)}</h5>
+                        <div class="card-body">
+                            <small class="text-muted">
+                                ({$control->scoreStrategy->getSingleTaskScore($team, $task)} {_'b.'}, max. {$task->points} {_'b.'}
+                                )
+                            </small>
+                            <hr/>
+                            <div class="row">
+                                {foreach $mirrors as $mirror}
+                                    <a class="col-12"
+                                       href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>
+                                {/foreach}
+                            </div>
+
+                            <hr/>
+                            {if $link}
+                                <a class="btn btn-primary"
+                                   href="{plink :Game:Answer:default id=>$task->id_task}">{_'Odpovedať'}</a>
+                            {/if}
+                        </div>
+                    </div>
+                </div>
             {/foreach}
-        </ul>
+        </div>
     {/if}
 {/define}
 

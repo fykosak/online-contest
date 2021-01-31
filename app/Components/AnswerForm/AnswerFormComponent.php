@@ -80,7 +80,6 @@ class AnswerFormComponent extends BaseComponent {
      */
     private function formSubmitted(Form $form): void {
         $values = $form->getValues();
-
         try {
             $isDoublePoints = false;
             if (isset($values['double_points'])) {
@@ -93,22 +92,15 @@ class AnswerFormComponent extends BaseComponent {
             $solution = trim($values['solution'], ' ');
             $solution = strtr($solution, ',', '.');
 
-            $period = $this->servicePeriod->findCurrent($this->task->getGroup());
-            if (!$period) {
-                $this->serviceLog->log($this->team->id_team, 'solution_tried', 'The team tried to insert the solution of task [$task->id_task] with solution [$solution].');
-                throw new InvalidStateException('There is no active submit period.', AnswersService::ERROR_OUT_OF_PERIOD);
-            }
-
             $correct = $this->task->checkAnswer($solution);
-            $results = $this->answersService->insert($this->team, $this->task, $solution, $period, $correct, $isDoublePoints);
-            //Environment::getCache()->clean(array(Cache::TAGS => array('problems/$team'))); // not used
+            $answer = $this->answersService->insert($this->team, $this->task, $solution, $correct, $isDoublePoints);
 
             // Handle card usage
             if ($isDoublePoints) {
                 $logger = new MemoryLogger();
                 $this->doublePointsCard->handle($logger, [
                     'correct' => $correct,
-                    'answer_id' => $results,
+                    'answer_id' => $answer->id_answer,
                     'task_id' => $this->task->id_task,
                 ]);
                 FlashMessageDump::dump($logger, $this->getPresenter());

@@ -5,31 +5,24 @@ namespace FOL\Model\ORM;
 use DateTime;
 use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
+use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceAnswer;
 use FOL\Model\ORM\Services\ServiceCardUsage;
-use FOL\Model\ORM\Services\ServiceGroup;
 use FOL\Model\ORM\Services\ServiceLog;
 use FOL\Model\ORM\Services\ServiceTaskState;
 use Nette\Database\Explorer;
-use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 use Nette\InvalidStateException;
-use Traversable;
 
 final class TasksService extends AbstractService {
 
-    private AnswersService $answersService;
-
-    private ServiceGroup $serviceGroup;
     private ServiceTaskState $serviceTaskState;
     private ServiceAnswer $serviceAnswer;
     private ServiceCardUsage $serviceCardUsage;
 
-    public function __construct(ServiceCardUsage $serviceCardUsage, AnswersService $answersService, ServiceGroup $serviceGroup, ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState, ServiceAnswer $serviceAnswer) {
+    public function __construct(ServiceCardUsage $serviceCardUsage, ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState, ServiceAnswer $serviceAnswer) {
         parent::__construct($explorer, $serviceLog);
-        $this->answersService = $answersService;
-        $this->serviceGroup = $serviceGroup;
         $this->serviceTaskState = $serviceTaskState;
         $this->serviceAnswer = $serviceAnswer;
         $this->serviceCardUsage = $serviceCardUsage;
@@ -88,12 +81,7 @@ final class TasksService extends AbstractService {
         return $this->explorer->table('tmp_task_stat')->order('id_group')->order('number');
     }
 
-    /**
-     * @param ModelTeam $team
-     * @param ModelTask $task
-     * @return array|bool|int|iterable|ActiveRow|Selection|Traversable
-     */
-    public function skip(ModelTeam $team, ModelTask $task) {
+    public function skip(ModelTeam $team, ModelTask $task): ModelTaskState {
         // Check that skip is allowed for task
         $answers = $this->serviceAnswer->findAllCorrect($team)->where('id_task = ?', $task->id_task);
         if ($answers->count() > 0) {
@@ -102,15 +90,15 @@ final class TasksService extends AbstractService {
         }
 
         // Check that skip is allowed in period
-        $skippAbleGroups = $this->serviceGroup->findAllSkippAble()->fetchPairs('id_group', 'id_group');
-        if (!array_key_exists($task['id_group'], $skippAbleGroups)) {
-            $this->log($team->id_team, 'skip_tried', 'The team tried to skip the task [$task->id_task].');
-            throw new InvalidStateException('Skipping not allowed during this period.', AnswersService::ERROR_SKIP_OF_PERIOD);
-        }
+        /* $skippAbleGroups = $this->serviceGroup->findAllSkippAble()->fetchPairs('id_group', 'id_group');
+        if (!array_key_exists($task->id_group, $skippAbleGroups)) {
+             $this->log($team->id_team, 'skip_tried', 'The team tried to skip the task [$task->id_task].');
+             throw new InvalidStateException('Skipping not allowed during this period.', AnswersService::ERROR_SKIP_OF_PERIOD);
+         }*/
         // Insert a skip record
-        $return = $this->explorer->table('task_state')->insert([
+        $return = $this->serviceTaskState->createNewModel([
             'id_team' => $team->id_team,
-            'id_task' => $task['id_task'],
+            'id_task' => $task->id_task,
             'inserted' => new DateTime(),
             'skipped' => 1,
             'points' => null,

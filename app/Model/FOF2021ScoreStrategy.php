@@ -9,7 +9,6 @@ use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceAnswer;
 use FOL\Model\ORM\Services\ServiceCardUsage;
 use FOL\Model\ORM\Services\ServiceLog;
-use Tracy\Debugger;
 
 class FOF2021ScoreStrategy extends ScoreStrategy {
 
