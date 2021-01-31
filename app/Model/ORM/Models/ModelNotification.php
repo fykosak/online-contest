@@ -11,6 +11,6 @@ use Fykosak\Utils\ORM\AbstractModel;
  * @property-read string lang
  * @property-read DateTimeInterface created
  */
-class ModelNotification extends AbstractModel {
+final class ModelNotification extends AbstractModel {
 
 }

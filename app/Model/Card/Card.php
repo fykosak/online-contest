@@ -94,8 +94,6 @@ abstract class Card {
         }
     }
 
-    abstract public function decorateFormContainer(Container $container, string $lang): void;
-
     /**
      * @param Logger $logger
      * @param array $values

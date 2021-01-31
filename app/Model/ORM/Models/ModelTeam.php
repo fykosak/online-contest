@@ -20,7 +20,7 @@ use Nette\Database\Table\GroupedSelection;
  * @property-read DateTimeInterface updated
  * @property-read int score_exp
  */
-class ModelTeam extends AbstractModel {
+final class ModelTeam extends AbstractModel {
 
     public function getCompetitors():GroupedSelection{
         return $this->related('competitor','id_team');

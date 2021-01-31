@@ -7,7 +7,7 @@ use Fykosak\Utils\ORM\AbstractService;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 
-class ServiceToken extends AbstractService {
+final class ServiceToken extends AbstractService {
 
     public function __construct(Explorer $connection, Conventions $conventions) {
         parent::__construct($connection, $conventions, 'token', ModelToken::class);

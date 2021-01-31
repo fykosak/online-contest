@@ -17,7 +17,7 @@ use Nette\Database\Table\ActiveRow;
  * @property-read int time_penalty
  * @property-read int reserve_size
  */
-class ModelPeriod extends AbstractModel {
+final class ModelPeriod extends AbstractModel {
 
     public function isActive(): bool {
         return $this->begin <= new \DateTime() && $this->end > new \DateTime();

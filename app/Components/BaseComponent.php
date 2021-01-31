@@ -3,7 +3,7 @@
 namespace FOL\Components;
 
 use FOL\Model\ORM\Services\ServiceLog;
-use FOL\tools\Helpers;
+use FOL\Tools\Helpers;
 use Nette\Application\UI\Template;
 use Nette\DI\Container;
 

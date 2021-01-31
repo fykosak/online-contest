@@ -67,7 +67,7 @@ class ScoreListComponent extends AjaxComponent {
         $data = array_merge([
             'times' => $this->calculateTimes(),
             'lastUpdated' => (new DateTime())->format('c'),
-            'refreshDelay' => $this->gameSetup->refreshDelay, // TODO to config
+            'refreshDelay' => $this->gameSetup->refreshDelay,
             'isOrg' => $isOrg,
 
         ], $this->cache->load('results', function (&$dependencies) use ($isOrg): array {
@@ -83,7 +83,7 @@ class ScoreListComponent extends AjaxComponent {
                 'submits' => $this->serialiseSubmits(),
             ];
         }));
-        if (!$this->isResultsVisible() && !$isOrg) {
+        if (!$this->gameSetup->isResultsVisible() && !$isOrg) {
             $data['submits'] = []; // unset submits
         }
         return $data;
@@ -108,7 +108,7 @@ class ScoreListComponent extends AjaxComponent {
         return [
             'toEnd' => strtotime($this->gameSetup->gameStart) - time(),
             'toStart' => strtotime($this->gameSetup->gameEnd) - time(),
-            'visible' => $this->isResultsVisible(),
+            'visible' => $this->gameSetup->isResultsVisible(),
         ];
     }
 
@@ -135,17 +135,5 @@ class ScoreListComponent extends AjaxComponent {
             $submits[] = $submit->__toArray();
         }
         return $submits;
-    }
-
-    /**
-     *  Take care, this function is not state-less!!!
-     */
-    public function isResultsVisible(): bool {
-        if ($this->gameSetup->hardVisible) {
-            return true;
-        }
-        $before = (time() < strtotime($this->gameSetup->resultsHide));
-        $after = (time() > strtotime($this->gameSetup->resultsDisplay));
-        return ($before && $after);
     }
 }

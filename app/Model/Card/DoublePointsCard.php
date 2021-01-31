@@ -2,27 +2,18 @@
 
 namespace FOL\Model\Card;
 
+use FOL\Model\ORM\Models\ModelCardUsage;
 use Fykosak\Utils\Logging\Logger;
-use Nette\Forms\Container;
 use Nette\Utils\Html;
 
-class DoublePointsCard extends Card {
-
-    public function checkRequirements(?array $values = null): void {
-        parent::checkRequirements();
-        // TODO: Implement isInnerAvailable() method.
-    }
-
-    public function decorateFormContainer(Container $container, string $lang): void {
-        // TODO: Implement decorateForm() method.
-    }
+final class DoublePointsCard extends Card {
 
     protected function innerHandle(Logger $logger, array $values): void {
         // intentionally blank!
     }
 
     public function getType(): string {
-        return 'double_points';
+        return ModelCardUsage::TYPE_DOUBLE_POINTS;
     }
 
     public function getTitle(): string {

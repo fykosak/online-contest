@@ -7,7 +7,7 @@ use Fykosak\Utils\ORM\AbstractService;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 
-class ServiceYear extends AbstractService {
+final class ServiceYear extends AbstractService {
 
     private ModelYear $year;
 

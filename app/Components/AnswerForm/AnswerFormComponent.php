@@ -6,6 +6,7 @@ use Exception;
 use FOL\Model\Card\CardFactory;
 use FOL\Model\Card\DoublePointsCard;
 use FOL\Model\ORM\AnswersService;
+use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\ScoreService;
@@ -45,8 +46,8 @@ class AnswerFormComponent extends BaseComponent {
 
     public function __construct(Container $container, ModelTeam $team, ModelTask $task) {
         $this->team = $team;
-        parent::__construct($container);
         $this->task = $task;
+        parent::__construct($container);
     }
 
     public function injectSecondary(
@@ -68,7 +69,7 @@ class AnswerFormComponent extends BaseComponent {
         $this->servicePeriod = $servicePeriod;
         $this->user = $user;
         $this->scoreStrategy = $scoreStrategy;
-        $this->doublePointsCard = $cardFactory->createForTeam($this->team)['double_points'];
+        $this->doublePointsCard = $cardFactory->create($this->team, ModelCardUsage::TYPE_DOUBLE_POINTS);
     }
 
     /**
@@ -86,7 +87,7 @@ class AnswerFormComponent extends BaseComponent {
                 if ($this->doublePointsCard->wasUsed()) {
                     throw new ForbiddenRequestException();
                 }
-                $isDoublePoints = true; // TODO continue implementation
+                $isDoublePoints = true;
             }
 
             $solution = trim($values['solution'], ' ');

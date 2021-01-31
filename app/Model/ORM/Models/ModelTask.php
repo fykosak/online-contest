@@ -29,7 +29,7 @@ use Nette\InvalidArgumentException;
  * @property-read DateTimeInterface inserted
  * @property-read DateTimeInterface updated
  */
-class ModelTask extends AbstractModel {
+final class ModelTask extends AbstractModel {
 
     public const TYPE_STR = 'str';
     public const TYPE_INT = 'int';

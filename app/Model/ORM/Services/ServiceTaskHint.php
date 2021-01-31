@@ -7,7 +7,7 @@ use Fykosak\Utils\ORM\AbstractService;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 
-class ServiceTaskHint extends AbstractService {
+final class ServiceTaskHint extends AbstractService {
 
     public function __construct(Explorer $connection, Conventions $conventions) {
         parent::__construct($connection, $conventions, 'task_hint', ModelTaskHint::class);

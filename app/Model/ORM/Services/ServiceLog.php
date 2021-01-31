@@ -8,7 +8,7 @@ use Fykosak\Utils\ORM\AbstractService;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 
-class ServiceLog extends AbstractService {
+final class ServiceLog extends AbstractService {
 
     public function __construct(Explorer $connection, Conventions $conventions) {
         parent::__construct($connection, $conventions, 'log', ModelLog::class);

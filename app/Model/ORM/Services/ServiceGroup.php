@@ -8,7 +8,7 @@ use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 use Nette\Database\ResultSet;
 
-class ServiceGroup extends AbstractService {
+final class ServiceGroup extends AbstractService {
 
     public function __construct(Explorer $connection, Conventions $conventions) {
         parent::__construct($connection, $conventions, 'group', ModelGroup::class);

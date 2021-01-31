@@ -9,6 +9,7 @@ use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceAnswer;
 use FOL\Model\ORM\Services\ServiceCardUsage;
 use FOL\Model\ORM\Services\ServiceLog;
+use Tracy\Debugger;
 
 class FOF2021ScoreStrategy extends ScoreStrategy {
 
@@ -52,15 +53,13 @@ class FOF2021ScoreStrategy extends ScoreStrategy {
             ->where('id_task', $task->id_task)
             ->where('correct', 1)
             ->fetch();
-
-        /** @var ModelCardUsage|null $usage */
-        $usage = $this->serviceCardUsage->where('team_id', $team->id_team)->where('card_type', 'reset')->fetch();
+        $usage = $this->serviceCardUsage->findByTypeAndTeam($team, ModelCardUsage::TYPE_RESET);
         if ($usage) {
             $taskId = $usage->getData()['task'];
             if ($taskId == $task->id_task) {
-                $query->where('created >= ?', $usage->created);
+                $query->where('inserted >= ?', $usage->created);
             }
         }
-        return $this->getPoints($task, $query->count(), $correctAnswer->double_points);
+        return $this->getPoints($task, $query->count(), $correctAnswer ? $correctAnswer->double_points : false);
     }
 }

@@ -43,7 +43,7 @@ abstract class BasePresenter extends Presenter {
 // ----- PROTECTED METHODS
 
     protected function createComponentNotificationMessages(): NotificationMessagesComponent {
-        return new NotificationMessagesComponent($this->getContext());
+        return new NotificationMessagesComponent($this->getContext(), $this->lang);
     }
 
     protected function createTemplate(): Template {

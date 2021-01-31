@@ -2,6 +2,7 @@
 
 namespace FOL\Model\Card;
 
+use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTeam;
 use Nette\Application\BadRequestException;
 use Nette\DI\Container;
@@ -23,10 +24,18 @@ final class CardFactory {
      * @return Card[]
      * @throws BadRequestException
      */
-    public function createForTeam(ModelTeam $team): array {
-        $cards = ['skip', 'reset', 'double_points', 'add_task', 'hint', 'options',];
-        foreach ($cards as $card) {
-            $this->create($team, $card);
+    public function createAll(ModelTeam $team): array {
+        $cardTypes = [
+            ModelCardUsage::TYPE_SKIP,
+            ModelCardUsage::TYPE_RESET,
+            ModelCardUsage::TYPE_DOUBLE_POINTS,
+            ModelCardUsage::TYPE_ADD_TASK,
+            ModelCardUsage::TYPE_HINT,
+            ModelCardUsage::TYPE_OPTIONS,
+        ];
+        $cards = [];
+        foreach ($cardTypes as $card) {
+            $cards[] = $this->create($team, $card);
         }
         return $cards;
     }
@@ -39,22 +48,22 @@ final class CardFactory {
      */
     public function create(ModelTeam $team, string $type): Card {
         switch ($type) {
-            case 'skip' :
+            case ModelCardUsage::TYPE_SKIP:
                 $card = new SkipCard($team);
                 break;
-            case 'reset' :
+            case ModelCardUsage::TYPE_RESET:
                 $card = new ResetCard($team);
                 break;
-            case 'double_points'  :
+            case ModelCardUsage::TYPE_DOUBLE_POINTS:
                 $card = new DoublePointsCard($team);
                 break;
-            case 'add_task'  :
+            case ModelCardUsage::TYPE_ADD_TASK:
                 $card = new AddTaskCard($team);
                 break;
-            case 'hint'  :
+            case ModelCardUsage::TYPE_HINT:
                 $card = new HintCard($team);
                 break;
-            case 'options'  :
+            case ModelCardUsage::TYPE_OPTIONS:
                 $card = new OptionsCard($team);
                 break;
             default:

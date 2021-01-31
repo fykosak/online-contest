@@ -16,6 +16,6 @@ use Fykosak\Utils\ORM\AbstractModel;
  * @property-read DateTimeInterface inserted
  * @property-read DateTimeInterface updated
  */
-class ModelGroup extends AbstractModel {
+final class ModelGroup extends AbstractModel {
 
 }

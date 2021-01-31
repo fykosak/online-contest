@@ -21,16 +21,9 @@ class CardPresenter extends BasePresenter {
         $this->cardFactory = $cardFactory;
     }
 
-    protected function startUp(): void {
-        parent::startUp();
-        if ($this->getAction() === 'default') {
-            $this->forward('list');
-        }
-    }
-
     public function renderList(): void {
         $this->setPageTitle(_('Cards'));
-        $this->template->cards = $this->cardFactory->createForTeam($this->getLoggedTeam());
+        $this->template->cards = $this->cardFactory->createAll($this->getLoggedTeam());
         $this->template->team = $this->getLoggedTeam();
     }
 
@@ -48,11 +41,7 @@ class CardPresenter extends BasePresenter {
      */
     protected function getCard(): Card {
         if (!isset($this->card)) {
-            $cards = $this->cardFactory->createForTeam($this->getLoggedTeam());
-            if (!isset($cards[$this->id])) {
-                throw new BadRequestException();
-            }
-            $this->card = $cards[$this->id];
+            $this->card = $this->cardFactory->create($this->getLoggedTeam(), $this->id);
         }
         return $this->card;
     }

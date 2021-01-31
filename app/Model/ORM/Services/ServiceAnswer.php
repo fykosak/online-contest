@@ -9,7 +9,7 @@ use Fykosak\Utils\ORM\TypedTableSelection;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 
-class ServiceAnswer extends AbstractService {
+final class ServiceAnswer extends AbstractService {
 
     public function __construct(Explorer $connection, Conventions $conventions) {
         parent::__construct($connection, $conventions, 'answer', ModelAnswer::class);

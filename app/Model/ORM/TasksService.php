@@ -17,11 +17,11 @@ use Nette\Database\Table\Selection;
 use Nette\InvalidStateException;
 use Traversable;
 
-class TasksService extends AbstractService {
+final class TasksService extends AbstractService {
 
-    protected AnswersService $answersService;
+    private AnswersService $answersService;
 
-    protected ServiceGroup $serviceGroup;
+    private ServiceGroup $serviceGroup;
     private ServiceTaskState $serviceTaskState;
     private ServiceAnswer $serviceAnswer;
     private ServiceCardUsage $serviceCardUsage;
@@ -32,6 +32,7 @@ class TasksService extends AbstractService {
         $this->serviceGroup = $serviceGroup;
         $this->serviceTaskState = $serviceTaskState;
         $this->serviceAnswer = $serviceAnswer;
+        $this->serviceCardUsage = $serviceCardUsage;
     }
 
     public function findPossiblyAvailable(): Selection {
@@ -162,7 +163,7 @@ class TasksService extends AbstractService {
 
     public function updateSingleCounter(ModelTeam $team, ModelTask $task): void {
         /** @var ModelCardUsage|null $usage */
-        $usage = $this->serviceCardUsage->getTable()->where('team_id', $team)->where('card_type', 'add_task')->fetch();
+        $usage = $this->serviceCardUsage->findByTypeAndTeam($team, ModelCardUsage::TYPE_ADD_TASK);
         $extraTask = 0;
         if ($usage && $usage->getData()['group'] === $task->id_group) {
             $extraTask = 1;

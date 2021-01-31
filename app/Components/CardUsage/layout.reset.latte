@@ -1,0 +1,9 @@
+{layout ./@layout.latte}
+{block usage}
+    {varType FOL\Model\Card\ResetCard $card}
+    {varType string $lang}
+    {var $data = $card->getUsage()->getData()}
+    {varType FOL\Model\ORM\Models\ModelTask $task}
+    {var $task = $card->serviceTask->findByPrimary($data['task'])}
+    <span>{_($task->getLabel($lang))}</span>
+{/block}

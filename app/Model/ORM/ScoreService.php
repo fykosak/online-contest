@@ -5,7 +5,6 @@ namespace FOL\Model\ORM;
 use DateTime;
 use Exception;
 use FOL\Model\ORM\Models\ModelTask;
-use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceLog;
 use FOL\Model\ORM\Services\ServicePeriod;

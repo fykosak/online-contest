@@ -28,13 +28,12 @@ class AnswersService extends AbstractService {
 
     /**
      * @param ModelTeam $team
-     * @param $task
-     * @param $solution
-     * @param $period
-     * @param $correct
+     * @param ModelTask $task
+     * @param int|float|string $solution
+     * @param ModelPeriod $period
+     * @param bool $correct
      * @param bool $isDoublePoints
      * @return int
-     * TODO double points
      */
     public function insert(ModelTeam $team, ModelTask $task, $solution, ModelPeriod $period, bool $correct, bool $isDoublePoints): int {
         $this->explorer->beginTransaction();
