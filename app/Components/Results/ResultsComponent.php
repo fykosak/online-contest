@@ -8,6 +8,8 @@ use FOL\Model\ORM\ScoreService;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Components\BaseComponent;
+use Nette\Caching\Cache;
+use Nette\Caching\Storage;
 
 class ResultsComponent extends BaseComponent {
 
@@ -15,17 +17,20 @@ class ResultsComponent extends BaseComponent {
     private GameSetup $gameSetup;
     private ServiceTeam $serviceTeam;
     private ServiceTask $serviceTask;
+    private Cache $cache;
 
     public function injectPrimary(
         ScoreService $scoreService,
         GameSetup $gameSetup,
         ServiceTeam $serviceTeam,
-        ServiceTask $serviceTask
+        ServiceTask $serviceTask,
+        Storage $storage
     ): void {
         $this->scoreService = $scoreService;
         $this->serviceTeam = $serviceTeam;
         $this->gameSetup = $gameSetup;
         $this->serviceTask = $serviceTask;
+        $this->cache = new Cache($storage, static::class);
     }
 
     public function render(): void {
@@ -36,11 +41,20 @@ class ResultsComponent extends BaseComponent {
     }
 
     protected function beforeRender(): void {
-        $this->template->teams = $this->serviceTeam->getTable();
-        $this->template->teamsScore = $this->serviceTeam->findAllWithScore()->fetchAssoc('id_team');
+        $data = $this->cache->load('data', function (&$dep) {
+            $dep[Cache::EXPIRATION] = '+30 second';
+            return [
+                'teams' => $this->serviceTeam->getTable(),
+                'teamsScore' => $this->serviceTeam->findAllWithScore()->fetchAssoc('id_team'),
+                'bonus' => $this->scoreService->findAllBonus()->fetchAssoc('id_team'),
+                'penality' => $this->scoreService->findAllPenality(),
+            ];
+        });
         $this->template->categories = ServiceTeam::getCategoryNames();
-        $this->template->bonus = $this->scoreService->findAllBonus()->fetchAssoc('id_team');
-        $this->template->penality = $this->scoreService->findAllPenality();
+
+        foreach ($data as $key => $datum) {
+            $this->template->$key = $datum;
+        }
 
         $maxBonus = 0;
         $maxPoints = 0;
