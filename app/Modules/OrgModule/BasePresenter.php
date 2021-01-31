@@ -9,14 +9,14 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
 
     protected function createComponentNavigation(): Navigation {
         $navigation = parent::createComponentNavigation();
-        $navigation->addNavItem(new NavItem(':Org:Noticeboard:add', [], _('Přidat notifikaci'), 'visible-sm-inline glyphicon glyphicon-comment'));
-        $navigation->addNavItem(new NavItem(':Org:Chat:default', [], _('Přidat příspěvek do fóra.'), 'visible-sm-inline glyphicon glyphicon-comment'));
-        $navigation->addNavItem(new NavItem(':Org:Org:answerStats', [], _('pokusy o odevzdání'), 'visible-sm-inline glyphicon glyphicon-comment'));
+        $navigation->addNavItem(new NavItem(':Org:Noticeboard:add', [], _('Notifikace'), 'visible-sm-inline glyphicon glyphicon-comment'));
+        $navigation->addNavItem(new NavItem(':Org:Chat:default', [], _('Chat'), 'visible-sm-inline glyphicon glyphicon-comment'));
+        $navigation->addNavItem(new NavItem(':Org:Default:answerStats', [], _('Pokusy o odevzdání'), 'visible-sm-inline glyphicon glyphicon-comment'));
 
 
-        $navigation->addNavItem(new NavItem(':Org:Org:statsDetail', [], _('výsledky'), 'visible-sm-inline glyphicon glyphicon-comment'));
-        $navigation->addNavItem(new NavItem(':Org:Org:answerStats', [], _('podrobné výsledky'), 'visible-sm-inline glyphicon glyphicon-comment'));
-        $navigation->addNavItem(new NavItem(':Org:Org:statsTasks', [], _('statistiky úkolů'), 'visible-sm-inline glyphicon glyphicon-comment'));
+        $navigation->addNavItem(new NavItem(':Org:Default:statsDetail', [], _('Výsledky'), 'visible-sm-inline glyphicon glyphicon-comment'));
+        $navigation->addNavItem(new NavItem(':Org:Default:answerStats', [], _('Podrobné výsledky'), 'visible-sm-inline glyphicon glyphicon-comment'));
+        $navigation->addNavItem(new NavItem(':Org:Default:statsTasks', [], _('Statistiky úkolů'), 'visible-sm-inline glyphicon glyphicon-comment'));
         $navigation->addNavItem(new NavItem(':Game:Auth:logout', [], _('Logout'), 'visible-sm-inline glyphicon glyphicon-comment'));
         return $navigation;
     }

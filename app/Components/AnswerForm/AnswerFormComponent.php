@@ -194,6 +194,7 @@ class AnswerFormComponent extends BaseComponent {
         }
         if (!$this->tasksService->findSubmitAvailable($this->team)->where('id_task', $this->task->id_task)->fetch()) {
             throw new ForbiddenRequestException();
+
         }
     }
 

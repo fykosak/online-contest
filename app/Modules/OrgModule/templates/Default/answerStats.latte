@@ -1,4 +1,4 @@
-{block #bigcontent}
+    {block #bigcontent}
 {varType FOL\Model\ORM\Models\ModelTask $task}
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
@@ -7,7 +7,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         {foreach $tasks as $task}
             <a class="dropdown-item"
-               href="{link :Org:Org:answerStats id=>$task->id_task}">{$task->id_group}-{$task->number}: {$task->name_cs}</a>
+               href="{link :Org:Default:answerStats id=>$task->id_task}">{$task->id_group}-{$task->number}: {$task->name_cs}</a>
         {/foreach}
     </div>
 </div>

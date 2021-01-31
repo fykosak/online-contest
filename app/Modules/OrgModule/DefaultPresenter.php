@@ -10,7 +10,7 @@ use FOL\Components\Results\ResultsComponent;
 use FOL\Components\ScoreList\ScoreListComponent;
 use FOL\Components\TaskStats\TaskStatsComponent;
 
-class OrgPresenter extends BasePresenter {
+class DefaultPresenter extends BasePresenter {
 
     const STATS_TAG = 'orgStats';
 
@@ -57,7 +57,7 @@ class OrgPresenter extends BasePresenter {
     }
 
     protected function createComponentLogin(): LoginFormComponent {
-        return new LoginFormComponent($this->getContext(), $this->authenticator, ':Org:Org:default');
+        return new LoginFormComponent($this->getContext(), $this->authenticator, ':Org:Default:default');
     }
 
     protected function createComponentAnswerStats(): AnswerStatsComponent {

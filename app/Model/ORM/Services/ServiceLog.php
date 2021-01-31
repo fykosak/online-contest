@@ -14,7 +14,7 @@ final class ServiceLog extends AbstractService {
         parent::__construct($connection, $conventions, 'log', ModelLog::class);
     }
 
-    public final function log(int $teamId, string $type, string $text): ModelLog {
+    public final function log(?int $teamId, string $type, string $text): ModelLog {
         /** @var ModelLog $log */
         $log = $this->createNewModel([
             'id_team' => $teamId,

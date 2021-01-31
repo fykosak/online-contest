@@ -2,6 +2,7 @@
 
 namespace FOL\Modules\Core;
 
+use FOL\Components\FlashMessages\FlashMessagesComponent;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Models\ModelYear;
 use FOL\Model\ORM\Services\ServiceTeam;
@@ -147,5 +148,10 @@ abstract class BasePresenter extends Presenter {
             $this->currentYear = $this->serviceYear->getCurrent();
         }
         return $this->currentYear;
+    }
+
+    protected function createComponentFlashMessages(): FlashMessagesComponent
+    {
+        return new FlashMessagesComponent($this->getContext());
     }
 }
