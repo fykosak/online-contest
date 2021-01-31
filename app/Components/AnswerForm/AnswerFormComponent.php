@@ -105,7 +105,7 @@ class AnswerFormComponent extends BaseComponent {
 
             if ($correct) {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je správně.'), 'success');
-                $this->tasksService->updateSingleCounter($this->team, $this->task);
+                $this->tasksService->updateSingleCounter($this->team, $this->task->getGroup());
                 $this->scoreService->updateAfterInsert($this->team, $this->task); //musi byt az po updatu counteru
                 $this->getPresenter()->redirect('rating', ['id' => $this->task->id_task]);
             } else {

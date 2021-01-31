@@ -7,6 +7,7 @@ use FOL\Model\ORM\Models\ModelGroup;
 use FOL\Model\ORM\Models\ModelPeriod;
 use FOL\Model\ORM\Services\ServiceGroup;
 use FOL\Model\ORM\Services\ServicePeriod;
+use FOL\Model\ORM\TasksService;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Application\BadRequestException;
 use Nette\Forms\Container;
@@ -18,7 +19,7 @@ final class AddTaskCard extends SingleFormCard {
 
     public ServiceGroup $serviceGroup;
 
-    public function injectServicePeriod(ServicePeriod $servicePeriod, ServiceGroup $serviceGroup): void {
+    public function injectServicePeriod(ServicePeriod $servicePeriod, ServiceGroup $serviceGroup, TasksService $tasksService): void {
         $this->servicePeriod = $servicePeriod;
         $this->serviceGroup = $serviceGroup;
     }
@@ -40,7 +41,9 @@ final class AddTaskCard extends SingleFormCard {
     }
 
     protected function innerHandle(Logger $logger, array $values): void {
-        // TODO: Implement innerHandle() method.
+        /** @var ModelGroup|null $group */
+        $group = $this->serviceGroup->findByPrimary($values['group']);
+        $this->tasksService->updateSingleCounter($this->team, $group);
     }
 
     public function getType(): string {

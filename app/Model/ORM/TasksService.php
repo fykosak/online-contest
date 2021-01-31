@@ -4,6 +4,7 @@ namespace FOL\Model\ORM;
 
 use DateTime;
 use FOL\Model\ORM\Models\ModelCardUsage;
+use FOL\Model\ORM\Models\ModelGroup;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Models\ModelTeam;
@@ -153,7 +154,7 @@ final class TasksService extends AbstractService {
                     gs.task_counter)', ModelCardUsage::TYPE_ADD_TASK);
     }
 
-    public function updateSingleCounter(ModelTeam $team, ModelTask $task): void {
+    public function updateSingleCounter(ModelTeam $team, ModelGroup $group): void {
         $this->explorer->query('UPDATE group_state AS gs
                 SET task_counter = 
                     GREATEST(
@@ -182,6 +183,6 @@ final class TasksService extends AbstractService {
                                 WHERE `cu`.card_type=? AND team_id=gs.id_team AND cu.data=gs.id_group                                
                             ), 0),
                     gs.task_counter)
-                WHERE gs.id_group = ? AND gs.id_team = ?', ModelCardUsage::TYPE_ADD_TASK, $task->id_group, $team->id_team);
+                WHERE gs.id_group = ? AND gs.id_team = ?', ModelCardUsage::TYPE_ADD_TASK, $group->id_group, $team->id_team);
     }
 }

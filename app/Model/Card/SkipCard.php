@@ -39,7 +39,7 @@ final class SkipCard extends SingleFormCard {
             $this->tasksService->skip($this->team, $task);
             // TODO label
             $logger->log(new Message(sprintf(_('Úloha %s přeskočena.'), $taskId), 'success'));
-            $this->tasksService->updateSingleCounter($this->team, $task);
+            $this->tasksService->updateSingleCounter($this->team, $task->getGroup());
         }
     }
 
