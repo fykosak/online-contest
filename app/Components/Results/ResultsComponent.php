@@ -2,66 +2,59 @@
 
 namespace FOL\Components\Results;
 
-use FOL\Model\ORM\Models\ModelCompetitor;
+use FOL\Model\GameSetup;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\ScoreService;
-use FOL\Model\ORM\Services\ServiceCompetitor;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceTeam;
-use FOL\Model\ORM\TasksService;
 use FOL\Components\BaseComponent;
+use Nette\Caching\Cache;
+use Nette\Caching\Storage;
 
 class ResultsComponent extends BaseComponent {
 
-    private $display;
-
-    protected TasksService $tasksService;
-    protected ServiceTeam $teamsService;
     protected ScoreService $scoreService;
-    protected ServiceCompetitor $serviceCompetitors;
+    private GameSetup $gameSetup;
+    private ServiceTeam $serviceTeam;
     private ServiceTask $serviceTask;
+    private Cache $cache;
 
     public function injectPrimary(
-        TasksService $tasksService,
-        ServiceTeam $teamsService,
         ScoreService $scoreService,
-        ServiceCompetitor $serviceCompetitors,
-        ServiceTask $serviceTask
+        GameSetup $gameSetup,
+        ServiceTeam $serviceTeam,
+        ServiceTask $serviceTask,
+        Storage $storage
     ): void {
-        $this->tasksService = $tasksService;
-        $this->teamsService = $teamsService;
         $this->scoreService = $scoreService;
-        $this->serviceCompetitors = $serviceCompetitors;
+        $this->serviceTeam = $serviceTeam;
+        $this->gameSetup = $gameSetup;
         $this->serviceTask = $serviceTask;
+        $this->cache = new Cache($storage, static::class);
     }
 
-    /**
-     * @param string $display
-     */
-    public function render($display = 'all'): void {
-        $this->display = $display;
+    public function render(): void {
+        $isOrg = true; // TODO
+        $this->template->visible = $isOrg || $this->gameSetup->isResultsVisible();
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'results.latte');
         parent::render();
     }
 
     protected function beforeRender(): void {
-        $this->template->display = $this->display;
+        $data = $this->cache->load('data', function (&$dep) {
+            $dep[Cache::EXPIRATION] = '+30 second';
+            return [
+                'teams' => $this->serviceTeam->getTable(),
+                'teamsScore' => $this->serviceTeam->findAllWithScore()->fetchAssoc('id_team'),
+                'bonus' => $this->scoreService->findAllBonus()->fetchAssoc('id_team'),
+                'penality' => $this->scoreService->findAllPenality(),
+            ];
+        });
+        $this->template->categories = ServiceTeam::getCategoryNames();
 
-        $this->template->teams = $this->teamsService->findAllWithScore();
-
-        $competitors = $this->serviceCompetitors->getTable();
-        $teamCountries = [];
-        /** @var ModelCompetitor $competitor */
-        foreach ($competitors as $competitor) {
-            if (!array_key_exists($competitor->id_team, $teamCountries)) {
-                $teamCountries[$competitor->id_team] = [];
-            }
-            $teamCountries[$competitor->id_team][] = $competitor->school->country_iso;
+        foreach ($data as $key => $datum) {
+            $this->template->$key = $datum;
         }
-        $this->template->teamCountries = $teamCountries;
-        $this->template->categories = $this->teamsService->getCategoryNames();
-        $this->template->bonus = $this->scoreService->findAllBonus();
-        $this->template->penality = $this->scoreService->findAllPenality();
 
         $maxBonus = 0;
         $maxPoints = 0;

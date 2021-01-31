@@ -15,6 +15,6 @@ use Fykosak\Utils\ORM\AbstractModel;
  * @property-read string option_4_cs
  * @property-read string option_4_en
  */
-class ModelAnswerOptions extends AbstractModel {
+final class ModelAnswerOptions extends AbstractModel {
 
 }

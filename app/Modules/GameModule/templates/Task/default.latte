@@ -1,4 +1,4 @@
-{define task}
+{define tasks}
     {varType bool $isGameStarted}
     {varType string $lang}
     {varType array $unsolvedTasks}
@@ -8,29 +8,40 @@
     {varType FOL\Model\ORM\Models\ModelTeam $team}
     {varType array $mirrors}
     {varType FOL\Model\ORM\Models\ModelTask $task}
-    <li>
-        <del n:tag-if="$task->cancelled == 1" title="{_'Zrušená úloha'}">
-            <strong>{$task->getGroup()->code_name}{$task->number}</strong>&nbsp;{$task|i18n:'name',$lang} <small>({$control->scoreStrategy->getSingleTaskScore($team, $task)} {_'b.'})</small>
-        </del>
-        <ul>
-            <li>
-                {foreach $mirrors as $mirror}
-                    <a href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>{if !$iterator->isLast()}, {/if}
-                {/foreach}
-            </li>
-        </ul>
-    </li>
-{/define}
-
-{define tasks}
+    {varType Fykosak\Utils\ORM\TypedTableSelection $tasks}
     {if count($tasks) == 0}
         <p>{_'Žádné úlohy.'}</p>
     {else}
-        <ul>
+        <div class="row">
             {foreach $tasks as $task}
-                {include task}
+                <div class="col-md-3 col-lg-3">
+                    <div class="card">
+                        {var $color = $task->getGroup()->getColorByGroup()}
+                        <h5 class="card-header"
+                            style="{('background-color:' . $color )|noescape}">{$task->getLabel($lang)}</h5>
+                        <div class="card-body">
+                            <small class="text-muted">
+                                ({$control->scoreStrategy->getSingleTaskScore($team, $task)} {_'b.'}, max. {$task->points} {_'b.'}
+                                )
+                            </small>
+                            <hr/>
+                            <div class="row">
+                                {foreach $mirrors as $mirror}
+                                    <a class="col-12"
+                                       href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>
+                                {/foreach}
+                            </div>
+
+                            <hr/>
+                            {if $link}
+                                <a class="btn btn-primary"
+                                   href="{plink :Game:Answer:default id=>$task->id_task}">{_'Odpovedať'}</a>
+                            {/if}
+                        </div>
+                    </div>
+                </div>
             {/foreach}
-        </ul>
+        </div>
     {/if}
 {/define}
 
@@ -67,13 +78,13 @@
 
     <p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
     <h3>{_'Nevyřešené'}</h3>
-    {include tasks tasks=>$unsolvedTasks}
+    {include tasks tasks=>$unsolvedTasks,link=>true}
 
     <h3>{_'Vyřešené'}</h3>
-    {include tasks tasks=>$solvedTasks}
+    {include tasks tasks=>$solvedTasks,link=>false}
 
     <h3>{_'Přeskočené'}</h3>
-    {include tasks tasks=>$skippedTasks}
+    {include tasks tasks=>$skippedTasks,link=>false}
 
     {*{/cache}*}
 

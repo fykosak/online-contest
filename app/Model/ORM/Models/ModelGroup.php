@@ -16,6 +16,29 @@ use Fykosak\Utils\ORM\AbstractModel;
  * @property-read DateTimeInterface inserted
  * @property-read DateTimeInterface updated
  */
-class ModelGroup extends AbstractModel {
+final class ModelGroup extends AbstractModel {
+
+    public function getActivePeriod(): ?ModelPeriod {
+        $row = $this->related('period')->where('begin <= NOW() AND end > NOW()')->fetch();
+        return $row ? ModelPeriod::createFromActiveRow($row) : null;
+    }
+
+    public function getColorByGroup(): string {
+        switch ($this->id_group) {
+            default:
+            case 1:
+                return '#00f';
+            case 2:
+                return '#0f0';
+            case 3:
+                return '#f00';
+            case 4:
+                return '#ff0';
+            case 5:
+                return '#f0f';
+            case 6:
+                return '#0ff';
+        }
+    }
 
 }

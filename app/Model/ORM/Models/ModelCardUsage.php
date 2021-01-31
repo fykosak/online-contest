@@ -13,7 +13,14 @@ use Fykosak\Utils\ORM\AbstractModel;
  * @property-read DateTimeInterface created
  * @property-read string data
  */
-class ModelCardUsage extends AbstractModel {
+final class ModelCardUsage extends AbstractModel {
+
+    public const TYPE_SKIP = 'skip';
+    public const TYPE_RESET = 'reset';
+    public const TYPE_DOUBLE_POINTS = 'double_points';
+    public const TYPE_ADD_TASK = 'add_task';
+    public const TYPE_HINT = 'hint';
+    public const TYPE_OPTIONS = 'options';
 
     public static function serializeData(array $values): string {
         return serialize($values);

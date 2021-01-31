@@ -10,6 +10,6 @@ use Fykosak\Utils\ORM\AbstractModel;
  * @property-read string hint_cs
  * @property-read string hint_en
  */
-class ModelTaskHint extends AbstractModel {
+final class ModelTaskHint extends AbstractModel {
 
 }

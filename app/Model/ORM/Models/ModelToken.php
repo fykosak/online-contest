@@ -14,7 +14,7 @@ use Nette\Database\Table\ActiveRow;
  * @property-read DateTimeInterface not_before
  * @property-read DateTimeInterface not_after
  */
-class ModelToken extends AbstractModel {
+final class ModelToken extends AbstractModel {
 
     public function getTeam(): ModelTeam {
         /** @var ModelToken $token */

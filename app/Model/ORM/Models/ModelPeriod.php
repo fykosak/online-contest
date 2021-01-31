@@ -4,10 +4,12 @@ namespace FOL\Model\ORM\Models;
 
 use DateTimeInterface;
 use Fykosak\Utils\ORM\AbstractModel;
+use Nette\Database\Table\ActiveRow;
 
 /**
  * @property-read int id_period
  * @property-read int id_group
+ * @property-read ActiveRow group
  * @property-read DateTimeInterface begin
  * @property-read DateTimeInterface end
  * @property-read bool allow_skip
@@ -15,6 +17,13 @@ use Fykosak\Utils\ORM\AbstractModel;
  * @property-read int time_penalty
  * @property-read int reserve_size
  */
-class ModelPeriod extends AbstractModel {
+final class ModelPeriod extends AbstractModel {
 
+    public function isActive(): bool {
+        return $this->begin <= new \DateTime() && $this->end > new \DateTime();
+    }
+
+    public function getGroup(): ModelGroup {
+        return ModelGroup::createFromActiveRow($this->group);
+    }
 }

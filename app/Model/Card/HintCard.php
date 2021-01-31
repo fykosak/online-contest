@@ -6,6 +6,7 @@ use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
 use FOL\Model\Card\Exceptions\NoTasksWithHintAvailableException;
 use FOL\Model\Card\Exceptions\TaskDoesNotHaveHintException;
 use FOL\Model\Card\Exceptions\TaskNotAvailableException;
+use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Services\ServiceTaskHint;
 use Fykosak\Utils\Logging\Logger;
@@ -13,7 +14,7 @@ use Nette\Database\Table\ActiveRow;
 use Nette\Forms\Container;
 use Nette\Utils\Html;
 
-class HintCard extends Card {
+final class HintCard extends SingleFormCard {
 
     private ServiceTaskHint $serviceTaskHint;
 
@@ -38,7 +39,7 @@ class HintCard extends Card {
     }
 
     public function getType(): string {
-        return 'hint';
+        return ModelCardUsage::TYPE_HINT;
     }
 
     public function getTitle(): string {

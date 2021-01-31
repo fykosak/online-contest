@@ -5,6 +5,7 @@ namespace FOL\Model\ORM\Models;
 use DateTimeInterface;
 use Fykosak\Utils\ORM\AbstractModel;
 use Nette\Database\Table\ActiveRow;
+use Nette\Database\Table\GroupedSelection;
 
 /**
  * @property-read int id_team
@@ -19,7 +20,11 @@ use Nette\Database\Table\ActiveRow;
  * @property-read DateTimeInterface updated
  * @property-read int score_exp
  */
-class ModelTeam extends AbstractModel {
+final class ModelTeam extends AbstractModel {
+
+    public function getCompetitors():GroupedSelection{
+        return $this->related('competitor','id_team');
+    }
 
     /**
      * @param ActiveRow|ModelTeam $row

@@ -4,6 +4,7 @@ namespace FOL\Model\Card;
 
 use FOL\Model\Card\Exceptions\NoTasksAvailableException;
 use FOL\Model\Card\Exceptions\TaskNotAvailableException;
+use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
 use Fykosak\Utils\Logging\Logger;
 use Fykosak\Utils\Logging\Message;
@@ -11,7 +12,7 @@ use FOL\Model\ORM\ScoreService;
 use Nette\Forms\Container;
 use Nette\Utils\Html;
 
-final class SkipCard extends Card {
+final class SkipCard extends SingleFormCard {
 
     protected ScoreService $scoreService;
 
@@ -43,7 +44,7 @@ final class SkipCard extends Card {
     }
 
     public function getType(): string {
-        return 'skip';
+        return ModelCardUsage::TYPE_SKIP;
     }
 
     public function getTitle(): string {

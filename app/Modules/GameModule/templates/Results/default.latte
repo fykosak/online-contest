@@ -1,12 +1,5 @@
 {block #content}
-    {cache "results/" . $presenter->lang . $display, tags => [$presenter::STATS_TAG]}
-        <p>{_'V průběhu hry nejsou statistiky okamžité, údaje jsou řádově po minutách přepočítávány.'}</p>
-        <p>{_'Šedé jsou týmy, jež neprojevily během hry aktivitu.'}</p>
-        {if $display == 'czsk'}
-            <a class="btn btn-primary" href="{link this 'display'=>'all'}">{_'Zobrazit všechny výsledky'}</a>
-        {else}
-            <a class="btn btn-primary" href="{link this 'display'=>'czsk'}">{_'Zobrazit pouze CZ&SK výsledky'}</a>
-        {/if}
-        {control results $display}
-    {/cache}
+    <p>{_'V průběhu hry nejsou statistiky okamžité, údaje jsou řádově po minutách přepočítávány.'}</p>
+    <p>{_'Šedé jsou týmy, jež neprojevily během hry aktivitu.'}</p>
+    {control results $display}
 {/block}

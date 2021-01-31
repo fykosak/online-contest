@@ -88,9 +88,6 @@ class TeamPresenter extends BasePresenter {
 
     public function renderList(): void {
         $this->setPageTitle(_('Seznam týmů'));
-        $this->getComponent('teamList')->setSource(
-            $this->serviceTeam->getTable()
-        );
         $this->template->categories = ServiceTeam::getCategoryNames();
     }
 

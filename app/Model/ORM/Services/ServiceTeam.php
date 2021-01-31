@@ -8,7 +8,7 @@ use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 use Nette\Database\Table\Selection;
 
-class ServiceTeam extends AbstractService {
+final class ServiceTeam extends AbstractService {
 
     const OPEN = 'open';
     const HIGH_SCHOOL_A = 'hs_a';

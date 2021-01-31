@@ -2,12 +2,13 @@
 
 namespace FOL\Model\Card;
 
+use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Services\ServiceAnswerOptions;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Forms\Container;
 use Nette\Utils\Html;
 
-class OptionsCard extends Card {
+final class OptionsCard extends SingleFormCard {
 
     public ServiceAnswerOptions $serviceAnswerOptions;
 
@@ -20,7 +21,7 @@ class OptionsCard extends Card {
     }
 
     public function getType(): string {
-        return 'options';
+        return ModelCardUsage::TYPE_OPTIONS;
     }
 
     public function getTitle(): string {

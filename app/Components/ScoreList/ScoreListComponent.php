@@ -2,7 +2,6 @@
 
 namespace FOL\Components\ScoreList;
 
-use FKSDB\Models\Fyziklani\NotSetGameParametersException;
 use FOL\Model\GameSetup;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTaskState;
@@ -68,11 +67,11 @@ class ScoreListComponent extends AjaxComponent {
         $data = array_merge([
             'times' => $this->calculateTimes(),
             'lastUpdated' => (new DateTime())->format('c'),
-            'refreshDelay' => $this->gameSetup->refreshDelay, // TODO to config
+            'refreshDelay' => $this->gameSetup->refreshDelay,
             'isOrg' => $isOrg,
 
         ], $this->cache->load('results', function (&$dependencies) use ($isOrg): array {
-            $dependencies[Cache::EXPIRE] = '2 minute';
+            $dependencies[Cache::EXPIRE] = '1 minute';
             return [
                 'gameStart' => new \DateTime('2021-01-25 00:00:00'),
                 'gameEnd' => new \DateTime('2021-02-25 00:00:00'),
@@ -84,7 +83,7 @@ class ScoreListComponent extends AjaxComponent {
                 'submits' => $this->serialiseSubmits(),
             ];
         }));
-        if (!$this->isResultsVisible() && !$isOrg) {
+        if (!$this->gameSetup->isResultsVisible() && !$isOrg) {
             $data['submits'] = []; // unset submits
         }
         return $data;
@@ -109,7 +108,7 @@ class ScoreListComponent extends AjaxComponent {
         return [
             'toEnd' => strtotime($this->gameSetup->gameStart) - time(),
             'toStart' => strtotime($this->gameSetup->gameEnd) - time(),
-            'visible' => $this->isResultsVisible(),
+            'visible' => $this->gameSetup->isResultsVisible(),
         ];
     }
 
@@ -136,17 +135,5 @@ class ScoreListComponent extends AjaxComponent {
             $submits[] = $submit->__toArray();
         }
         return $submits;
-    }
-
-    /**
-     *  Take care, this function is not state-less!!!
-     */
-    public function isResultsVisible(): bool {
-        if ($this->gameSetup->hardVisible) {
-            return true;
-        }
-        $before = (time() < strtotime($this->gameSetup->resultsHide));
-        $after = (time() > strtotime($this->gameSetup->resultsDisplay));
-        return ($before && $after);
     }
 }

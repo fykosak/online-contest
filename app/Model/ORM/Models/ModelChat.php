@@ -17,7 +17,7 @@ use Nette\Database\Table\ActiveRow;
  * @property-read DateTimeInterface inserted
  * @property-read DateTimeInterface updated
  */
-class ModelChat extends AbstractModel {
+final class ModelChat extends AbstractModel {
 
     public function getTeam(): ModelTeam {
         /** @var ModelTeam $team */

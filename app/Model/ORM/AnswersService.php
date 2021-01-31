@@ -4,13 +4,11 @@ namespace FOL\Model\ORM;
 
 use DateTime;
 use FOL\Model\ORM\Models\ModelAnswer;
-use FOL\Model\ORM\Models\ModelPeriod;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceAnswer;
 use FOL\Model\ORM\Services\ServiceLog;
 use Nette\Database\Explorer;
-use Nette\Database\Table\Selection;
 use Nette\InvalidStateException;
 
 class AnswersService extends AbstractService {
@@ -27,28 +25,24 @@ class AnswersService extends AbstractService {
         $this->serviceAnswer = $serviceAnswer;
     }
 
-    public function findAllCorrect(?int $teamId = null): Selection {
-        $source = $this->explorer->table('view_correct_answer');
-        if (!is_null($teamId)) {
-            $source->where('id_team', $teamId);
-        }
-        return $source;
-    }
-
     /**
      * @param ModelTeam $team
-     * @param $task
-     * @param $solution
-     * @param $period
-     * @param $correct
+     * @param ModelTask $task
+     * @param int|float|string $solution
+     * @param bool $correct
      * @param bool $isDoublePoints
-     * @return int
-     * TODO double points
+     * @return ModelAnswer
      */
-    public function insert(ModelTeam $team, ModelTask $task, $solution, ModelPeriod $period, bool $correct, bool $isDoublePoints): int {
+    public function insert(ModelTeam $team, ModelTask $task, $solution, bool $correct, bool $isDoublePoints): ModelAnswer {
+        $period = $task->getGroup()->getActivePeriod();
+        if (!$period) {
+            $this->log($team->id_team, 'solution_tried', sprintf('The team tried to insert the solution of task [%i] with solution [%s].', $this->task->id_task, $solution));
+            throw new InvalidStateException('There is no active submit period.', AnswersService::ERROR_OUT_OF_PERIOD);
+        }
+
         $this->explorer->beginTransaction();
         // Correct answers of the team
-        $correctAnswers = $this->findAllCorrect($team->id_team)
+        $correctAnswers = $this->serviceAnswer->findAllCorrect($team)
             ->fetchPairs('id_answer', 'id_answer');
         // Last answer from same group has to be older than XX seconds
         $query = $this->serviceAnswer->getTable()->where('task.id_group', $task->id_group)
@@ -62,7 +56,7 @@ class AnswersService extends AbstractService {
         // Check it
         if ($row) {
             $timestamp = strtotime($row->inserted);
-            $this->log($team->id_team, 'solution_tried', 'The team tried to insert the solution of task [$task->id_task] with code [$solution].');
+            $this->log($team->id_team, 'solution_tried', sprintf('The team tried to insert the solution of task [%i] with code [%s]', $task->id_task, $solution));
             $remaining = $period->time_penalty - (time() - $timestamp);
             $this->explorer->commit();
             throw new InvalidStateException($remaining, self::ERROR_TIME_LIMIT);
@@ -73,13 +67,13 @@ class AnswersService extends AbstractService {
             'answer_real' => null,
         ];
         switch ($task->answer_type) {
-            case TasksService::TYPE_STR:
+            case ModelTask::TYPE_STR:
                 $answer['answer_str'] = $solution;
                 break;
-            case TasksService::TYPE_INT:
+            case  ModelTask::TYPE_INT:
                 $answer['answer_int'] = $solution;
                 break;
-            case TasksService::TYPE_REAL:
+            case ModelTask::TYPE_REAL:
                 $answer['answer_real'] = $solution;
                 break;
         }
@@ -89,10 +83,11 @@ class AnswersService extends AbstractService {
                 'id_task' => $task->id_task,
                 'correct' => $correct,
                 'inserted' => new DateTime(),
+                'double_points' => $isDoublePoints,
             ] + $answer);
         // Log the action
         $this->log($team->id_team, 'solution_inserted', 'The team successfully inserted the solution of task [$task->id_task] with code [$solution].');
         $this->explorer->commit();
-        return $modelAnswer->getPrimary();
+        return $modelAnswer;
     }
 }

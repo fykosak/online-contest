@@ -5,7 +5,6 @@ namespace FOL\Model\ORM;
 use DateTime;
 use Exception;
 use FOL\Model\ORM\Models\ModelTask;
-use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceLog;
 use FOL\Model\ORM\Services\ServicePeriod;
@@ -44,29 +43,28 @@ class ScoreService extends AbstractService {
 
     public function updateAfterInsert(ModelTeam $team, ModelTask $task): void {
         try {
-            $hurry = ($task->id_group == 1) ? false : true; //dle SQL id_group=2,3,4
-
             $score = $this->scoreStrategy->getSingleTaskScore($team, $task);
-            $this->explorer->table('task_state')->insert([
+            $this->serviceTaskState->createNewModel([
                 'id_team' => $team->id_team,
                 'id_task' => $task->id_task,
                 'inserted' => new DateTime(),
                 'skipped' => 0,
-                'points' => $score,]);
-
+                'points' => $score,
+            ]);
+// TODO
             /* vypocet bonusu */
-            if ($hurry) {
-                $solvedTasks = $this->serviceTaskState->findSolved($team);
-                $hurryTasks = $solvedTasks->where('id_task IN', $solvedTasks)
-                    ->where('task.number', $task->number)
-                    ->where('task.id_group <> 1');
-                if (count($hurryTasks) == 3 && $this->servicePeriod->findCurrent($task->getGroup())->has_bonus == 1) {
-                    /** @var ModelTaskState $hurryTask */
-                    foreach ($hurryTasks as $hurryTask) {
-                        $score += $this->scoreStrategy->getSingleTaskScore($team, $hurryTask->getTask());
+            /*    if ($hurry) {
+                    $solvedTasks = $this->serviceTaskState->findSolved($team);
+                    $hurryTasks = $solvedTasks->where('id_task IN', $solvedTasks)
+                        ->where('task.number', $task->number)
+                        ->where('task.id_group <> 1');
+                    if (count($hurryTasks) == 3 && $this->servicePeriod->findCurrent($task->getGroup())->has_bonus == 1) {
+                        /** @var ModelTaskState $hurryTask
+                        foreach ($hurryTasks as $hurryTask) {
+                            $score += $this->scoreStrategy->getSingleTaskScore($team, $hurryTask->getTask());
+                        }
                     }
-                }
-            }
+                }*/
             $this->explorer->query('UPDATE team SET score_exp = score_exp + ?', $score, 'WHERE id_team = ?', $team->id_team);
         } catch (Exception $e) {
             Debugger::log($e);

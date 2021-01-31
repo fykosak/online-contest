@@ -15,7 +15,7 @@ use Nette\Database\Table\ActiveRow;
  * @property-read int points
  * @property-read \DateTimeInterface inserted
  */
-class ModelTaskState extends AbstractModel {
+final class ModelTaskState extends AbstractModel {
 
     public function getTask(): ModelTask {
         /** @var ModelTask $task */

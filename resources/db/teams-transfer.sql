@@ -6,7 +6,7 @@ START TRANSACTION;
 
 -- TRUNCATE TABLE `team`;
 INSERT into team(id_team, id_year, name, password, category, email, address, disqualified, inserted, updated)
-SELECT id_team, id_year, name, password, category, email, address, disqualified, inserted, updated from `view_team`;
+SELECT id_team, id_year, name, password, category, email, address, disqualified, inserted, updated from `team`;
 
 -- TRUNCATE TABLE `school`;
 INSERT into school(id_school, name, country_iso)

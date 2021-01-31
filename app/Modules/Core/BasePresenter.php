@@ -15,7 +15,6 @@ use Fykosak\Utils\Localization\UnsupportedLanguageException;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
-use Tracy\Debugger;
 
 abstract class BasePresenter extends Presenter {
 
@@ -24,7 +23,7 @@ abstract class BasePresenter extends Presenter {
 
     private string $customScript = '';
 
-    private ?ModelTeam $loggedTeam2;
+    private ?ModelTeam $loggedTeam;
 
     protected GettextTranslator $translator;
     protected ServiceTeam $serviceTeam;
@@ -45,7 +44,7 @@ abstract class BasePresenter extends Presenter {
 // ----- PROTECTED METHODS
 
     protected function createComponentNotificationMessages(): NotificationMessagesComponent {
-        return new NotificationMessagesComponent($this->getContext());
+        return new NotificationMessagesComponent($this->getContext(), $this->lang);
     }
 
     protected function createTemplate(): Template {
@@ -130,14 +129,14 @@ abstract class BasePresenter extends Presenter {
     }
 
     public function getLoggedTeam(): ?ModelTeam {
-        if (!isset($this->loggedTeam2)) {
+        if (!isset($this->loggedTeam)) {
             if ($this->getUser()->isLoggedIn()) {
-                $this->loggedTeam2 = $this->serviceTeam->findByPrimary($this->getUser()->getIdentity()->id_team);
+                $this->loggedTeam = $this->serviceTeam->findByPrimary($this->getUser()->getIdentity()->id_team);
             } else {
-                $this->loggedTeam2 = null;
+                $this->loggedTeam = null;
             }
         }
-        return $this->loggedTeam2;
+        return $this->loggedTeam;
     }
 
     protected function createComponentNavigation(): Navigation {

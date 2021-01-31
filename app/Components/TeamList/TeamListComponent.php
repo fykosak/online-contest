@@ -2,30 +2,22 @@
 
 namespace FOL\Components\TeamList;
 
+use FOL\Components\BaseComponent;
 use FOL\Model\ORM\Services\ServiceCompetitor;
 use FOL\Model\ORM\Services\ServiceTeam;
-use FOL\Components\BaseListComponent;
 
-class TeamListComponent extends BaseListComponent {
+class TeamListComponent extends BaseComponent {
 
+    protected ServiceTeam $serviceTeam;
     protected ServiceCompetitor $serviceCompetitor;
 
-    public function injectPrimary(ServiceCompetitor $serviceCompetitor): void {
+    public function injectPrimary(ServiceCompetitor $serviceCompetitor, ServiceTeam $serviceTeam): void {
         $this->serviceCompetitor = $serviceCompetitor;
+        $this->serviceTeam = $serviceTeam;
     }
 
     protected function beforeRender(): void {
-        $this->template->teams = $this->getSource()->fetchAssoc('category|id_team');
-        $ids = $this->getSource()->fetchPairs('id_team', 'id_team');
-        if (count($ids) > 0) {
-            $this->template->competitors = $this->serviceCompetitor->getTable()
-                ->where('id_team', $ids)
-                ->order('id_school')
-                ->order('name')
-                ->fetchAssoc('id_team|id_competitor');
-        } else {
-            $this->template->competitors = [];
-        }
+        $this->template->teams = $this->serviceTeam->getTable();
         $this->template->categories = ServiceTeam::getCategoryNames();
     }
 

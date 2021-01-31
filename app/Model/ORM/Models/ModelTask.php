@@ -3,8 +3,10 @@
 namespace FOL\Model\ORM\Models;
 
 use DateTimeInterface;
+use Fykosak\Utils\Localization\GettextTranslator;
 use Fykosak\Utils\ORM\AbstractModel;
 use Nette\Database\Table\ActiveRow;
+use Nette\InvalidArgumentException;
 
 /**
  * @property-read int id_task
@@ -27,7 +29,11 @@ use Nette\Database\Table\ActiveRow;
  * @property-read DateTimeInterface inserted
  * @property-read DateTimeInterface updated
  */
-class ModelTask extends AbstractModel {
+final class ModelTask extends AbstractModel {
+
+    public const TYPE_STR = 'str';
+    public const TYPE_INT = 'int';
+    public const TYPE_REAL = 'real';
 
     public function getGroup(): ModelGroup {
         /** @var ModelGroup $group */
@@ -41,7 +47,7 @@ class ModelTask extends AbstractModel {
     }
 
     public function getOptions(): ?ModelAnswerOptions {
-        $row = $this->related('answerOptions')->fetch();
+        $row = $this->related('answer_options')->fetch();
         return $row ? ModelAnswerOptions::createFromActiveRow($row) : null;
     }
 
@@ -60,5 +66,21 @@ class ModelTask extends AbstractModel {
                 'en' => $row->name_en,
             ],
         ];
+    }
+
+    public function getLabel(string $lang): string {
+        return $this->getGroup()->code_name . ': ' . GettextTranslator::i18nHelper($this, 'name', $lang);
+    }
+
+    public function checkAnswer(string $solution): bool {
+        switch ($this->answer_type) {
+            case self::TYPE_STR:
+                return $solution == $this->answer_str;
+            case self::TYPE_INT:
+                return $solution == $this->answer_int;
+            case self::TYPE_REAL:
+                return ($this->answer_real - $this->real_tolerance <= $solution) && ($solution <= $this->answer_real + $this->real_tolerance);
+        }
+        throw new InvalidArgumentException();
     }
 }

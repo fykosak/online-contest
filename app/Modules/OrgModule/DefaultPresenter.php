@@ -16,6 +16,8 @@ class DefaultPresenter extends BasePresenter {
 
     protected OrgAuthenticator $authenticator;
     private ServiceTask $serviceTask;
+    /** @persistent */
+    public ?int $id = null;
 
     public function injectSecondary(OrgAuthenticator $authenticator, ServiceTask $serviceTask): void {
         $this->authenticator = $authenticator;
@@ -37,14 +39,9 @@ class DefaultPresenter extends BasePresenter {
         $this->setPageTitle(_('Přihlásit se'));
     }
 
-    /**
-     * @param int|null $taskId
-     * @return void
-     */
-    public function renderAnswerStats(?int $taskId = null): void {
+    public function renderAnswerStats(): void {
         $this->setPageTitle(_('Statistiky odpovědí'));
-        $this->template->taskId = $taskId;
-        $this->template->tasks = $this->serviceTask->getTable()->order('id_group, number');
+        $this->template->tasks = $this->serviceTask->getTable();
     }
 
     public function renderStats(): void {
@@ -64,7 +61,7 @@ class DefaultPresenter extends BasePresenter {
     }
 
     protected function createComponentAnswerStats(): AnswerStatsComponent {
-        return new AnswerStatsComponent($this->getContext());
+        return new AnswerStatsComponent($this->getContext(), $this->id);
     }
 
     protected function createComponentResults(): ResultsComponent {

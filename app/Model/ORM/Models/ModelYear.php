@@ -15,7 +15,7 @@ use Fykosak\Utils\ORM\AbstractModel;
  * @property-read DateTimeInterface inserted
  * @property-read DateTimeInterface updated
  */
-class ModelYear extends AbstractModel {
+final class ModelYear extends AbstractModel {
 
     public function isGameActive(): bool {
         return $this->isGameStarted() && !$this->isGameEnd();

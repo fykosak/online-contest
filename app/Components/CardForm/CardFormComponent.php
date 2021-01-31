@@ -3,9 +3,9 @@
 namespace FOL\Components\CardForm;
 
 use FOL\Components\BaseComponent;
-use FOL\Model\Card\Card;
 use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
 use FOL\Components\BaseForm;
+use FOL\Model\Card\SingleFormCard;
 use Fykosak\Utils\Logging\FlashMessageDump;
 use Fykosak\Utils\Logging\MemoryLogger;
 use Nette\Application\UI\Form;
@@ -15,10 +15,10 @@ use Nette\DI\Container;
 class CardFormComponent extends BaseComponent {
 
     private string $lang;
-    private Card $card;
+    private SingleFormCard $card;
     protected const CONTAINER = 'options';
 
-    public function __construct(Container $container, Card $card, string $lang) {
+    public function __construct(Container $container, SingleFormCard $card, string $lang) {
         parent::__construct($container);
         $this->lang = $lang;
         $this->card = $card;

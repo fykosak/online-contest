@@ -61,18 +61,3 @@
 
     {include parent}
 {/block}
-
-{block #subnavigation}
-    <ul class="nav">
-        <li>
-            <a href="{plink Stats:default}" title="{_'Výsledky'}">{_'Výsledky'}</a>
-            <ul>
-                {foreach $categories AS $category => $name}
-                    <li><a href="{plink Stats:default}#{$category}" title="{$name}">{$name}</a></li>
-                {/foreach}
-            </ul>
-        </li>
-        <li><a href="{plink Stats:detail}" title="{_'Podrobné výsledky'}">{_'Podrobné výsledky'}</a></li>
-        <li><a href="{plink Stats:tasks}" title="{_'Statistiky úkolů'}">{_'Statistiky úkolů'}</a></li>
-    </ul>
-{/block}

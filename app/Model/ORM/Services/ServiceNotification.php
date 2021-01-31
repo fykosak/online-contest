@@ -8,7 +8,7 @@ use Fykosak\Utils\ORM\TypedTableSelection;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 
-class ServiceNotification extends AbstractService {
+final class ServiceNotification extends AbstractService {
 
     public function __construct(Explorer $connection, Conventions $conventions) {
         parent::__construct($connection, $conventions, 'notification', ModelNotification::class);

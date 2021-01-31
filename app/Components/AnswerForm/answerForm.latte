@@ -1,47 +1,36 @@
-{varType Fykosak\Utils\ORM\TypedTableSelection $tasks}
-{varType string $basePath}
-{varType string $tasksInfoElement}
-{varType FOL\Components\AnswerForm\AnswerFormComponent $control}
-{varType array $tasksInfo}
-{varType FOL\Modules\GameModule\AnswerPresenter$presenter}
+{varType array $taskInfo}
 
 {block content}
-    {if $tasks->count()}
-        {control form}
-
-        {capture $script}
-            <script type="text/javascript" src="{$basePath}/js/taskInfo.js"></script>
-
-            <script type="text/javascript">
-                $('#' +{$tasksInfoElement}).infoElement($('#' +{$control['form']['task']->getHtmlId()}), {
-                    'data': {$tasksInfo},
-                    'realHint': {_("Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1.")},
-                    'expected': {_("Očekávaný počet platných cifer")},
-                    'unit': {_("Jednotka")},
-                    'maxPoints': {_("Maximum bodů")},
-                    'curPoints':{_("Aktuálně bodů")}});
-                $(function () {
-                    var timesecs = $('.timesec');
-                    var button = $('#' +{$control['form'][$submitElement]->getHtmlId()});
-                    if (timesecs.length) {
-                        button.attr('disabled', 'disabled');
-                    }
-                    timesecs.timeElement({
-                        'handler': function () {
-                            button.removeAttr('disabled');
-                        }
-                    });
-                });
-            </script>
-        {/capture}
-        {php $presenter->addCustomScript($script)}
-
-        {* <ul>
-             {foreach $tasks as $task}
-                 <li>
-                     <a href="{plink Answer:entry,'id'=>$task['id_task']}">{$task["name_" . $control->getPresenter()->lang]}</a>
-                 </li>
-             {/foreach}
-         </ul>*}
-    {/if}
+    {control form}
+    <div>
+        {if isset($taskInfo['sig_digits'])}
+            <div class="row">
+                <strong class="col-4"> {_"Očekávaný počet platných cifer"}:</strong>
+                <span>{$taskInfo['sig_digits']}</span>
+            </div>
+        {/if}
+            {if isset($taskInfo['unit'])}
+            <div class="row">
+                <strong class="col-4">{_'Jednotka'}:</strong>
+                <span class="unit">{$taskInfo['unit']|noescape}</span>
+            </div>
+        {/if}
+            {if isset($taskInfo['curPoints'])}
+            <div class="row">
+                <strong class="col-4">{_'Aktuálně bodů'}</strong>
+                <span>{$taskInfo['curPoints']}</span>
+            </div>
+        {/if}
+            {if isset($taskInfo['maxPoints'])}
+            <div class="row">
+                <strong class="col-4">{_'Maximum bodů'}:</strong>
+                <span>{$taskInfo['maxPoints']}</span>
+            </div>
+        {/if}
+            {if $taskInfo['type'] == 'real'}
+            <div class="row">
+                <strong class="col-12">{_'Pí lze zapsat jako: 3.14; 3,14; 314e-2 nebo 0.314e1.'}</strong>
+            </div>
+        {/if}
+    </div>
 {/block}

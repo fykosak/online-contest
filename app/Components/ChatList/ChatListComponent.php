@@ -20,13 +20,13 @@ class ChatListComponent extends BaseListComponent {
     private ServiceChat $serviceChat;
     private ?ModelTeam $team;
 
-    public function injectChatService(ServiceChat $serviceChat): void {
-        $this->serviceChat = $serviceChat;
-    }
-
     public function __construct(Container $container, ?ModelTeam $team) {
         parent::__construct($container);
         $this->team = $team;
+    }
+
+    public function injectChatService(ServiceChat $serviceChat): void {
+        $this->serviceChat = $serviceChat;
     }
 
     /**
@@ -56,7 +56,7 @@ class ChatListComponent extends BaseListComponent {
                 'lang' => $this->getPresenter()->lang,
                 'inserted' => new DateTime(),
             ]);
-            $this->serviceLog->log(isset($this->team) ? $this->team->id_team : null, 'chat_inserted', 'The team successfuly contributed to the chat.');
+            $this->serviceLog->log(isset($this->team) ? $this->team->id_team : null, 'chat_inserted', 'The team successfully contributed to the chat.');
 
             $this->getPresenter()->flashMessage(_('Příspěvek byl vložen.'), 'success');
             $this->getPresenter()->redirect('this');

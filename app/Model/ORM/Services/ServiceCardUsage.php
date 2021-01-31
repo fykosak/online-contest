@@ -8,7 +8,7 @@ use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 use Fykosak\Utils\ORM\AbstractService;
 
-class ServiceCardUsage extends AbstractService {
+final class ServiceCardUsage extends AbstractService {
 
     public function __construct(Explorer $connection, Conventions $conventions) {
         parent::__construct($connection, $conventions, 'card_usage', ModelCardUsage::class);

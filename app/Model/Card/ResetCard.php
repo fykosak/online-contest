@@ -2,11 +2,20 @@
 
 namespace FOL\Model\Card;
 
+use FOL\Model\ORM\Models\ModelCardUsage;
+use FOL\Model\ORM\Models\ModelTask;
+use FOL\Model\ScoreStrategy;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Forms\Container;
 use Nette\Utils\Html;
 
-class ResetCard extends Card {
+final class ResetCard extends SingleFormCard {
+
+    private ScoreStrategy $scoreStrategy;
+
+    public function injectScoreStrategy(ScoreStrategy $scoreStrategy): void {
+        $this->scoreStrategy = $scoreStrategy;
+    }
 
     public function checkRequirements(): void {
         parent::checkRequirements();
@@ -14,7 +23,14 @@ class ResetCard extends Card {
     }
 
     public function decorateFormContainer(Container $container, string $lang): void {
-        // TODO: Implement decorateForm() method.
+        $unsolved = $this->tasksService->findUnsolved($this->team);
+        $items = [];
+        foreach ($unsolved as $taskId) {
+            /** @var ModelTask $task */
+            $task = $this->serviceTask->findByPrimary($taskId);
+            $items[$task->id_task] = $task->getLabel($lang) . ' - ' . $this->scoreStrategy->getSingleTaskScore($this->team, $task).'b.';
+        }
+        $container->addSelect('task', _('Task'), $items);
     }
 
     protected function innerHandle(Logger $logger, array $values): void {
@@ -22,7 +38,7 @@ class ResetCard extends Card {
     }
 
     public function getType(): string {
-        return 'reset';
+        return ModelCardUsage::TYPE_RESET;
     }
 
     public function getTitle(): string {

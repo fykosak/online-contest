@@ -7,6 +7,7 @@ use FOL\Components\AnswerForm\AnswerFormComponent;
 use FOL\Components\AnswerHistory\AnswerHistoryComponent;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Services\ServiceTask;
+use Nette\Application\BadRequestException;
 
 class AnswerPresenter extends BasePresenter {
 
@@ -17,12 +18,14 @@ class AnswerPresenter extends BasePresenter {
 
     private ServiceTask $serviceTask;
 
+    private ?ModelTask $task;
+
     public function injectSecondary(ServiceTask $serviceTask): void {
         $this->serviceTask = $serviceTask;
     }
 
     public function renderDefault(): void {
-        $this->setPageTitle(_('Odevzdat řešení'));
+        $this->setPageTitle(sprintf(_('Odevzdat řešení "%s"'), $this->getTask()->getLabel($this->lang)));
     }
 
     public function renderHistory(): void {
@@ -30,24 +33,22 @@ class AnswerPresenter extends BasePresenter {
     }
 
     public function renderRating(): void {
-        $this->setPageTitle(_('Rate this task'));
+        $this->setPageTitle(sprintf(_('Rate the task "%s"'), $this->getTask()->getLabel($this->lang)));
     }
 
     protected function createComponentAnswerForm(): AnswerFormComponent {
-        return new AnswerFormComponent($this->getContext(), $this->getLoggedTeam());
+        return new AnswerFormComponent($this->getContext(), $this->getLoggedTeam(), $this->getTask());
     }
 
-    protected function createComponentAnswerHistory(): AnswerHistoryComponent {
-        return new AnswerHistoryComponent($this->getContext(), $this->getLoggedTeam());
-    }
-
-    private ?ModelTask $task;
-
-    protected function getTask(): ?ModelTask {
+    protected function getTask(): ModelTask {
         if (!isset($this->task)) {
             $this->task = $this->serviceTask->findByPrimary($this->id);
         }
         return $this->task;
+    }
+
+    protected function createComponentAnswerHistory(): AnswerHistoryComponent {
+        return new AnswerHistoryComponent($this->getContext(), $this->getLoggedTeam());
     }
 
     protected function createComponentRating(): RatingComponent {

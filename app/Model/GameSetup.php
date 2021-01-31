@@ -24,4 +24,13 @@ class GameSetup {
         $this->hardVisible = $config['hardVisible'];
         $this->refreshDelay = $config['refreshDelay'];
     }
+
+    public function isResultsVisible(): bool {
+        if ($this->hardVisible) {
+            return true;
+        }
+        $before = (time() < strtotime($this->resultsHide));
+        $after = (time() > strtotime($this->resultsDisplay));
+        return ($before && $after);
+    }
 }
