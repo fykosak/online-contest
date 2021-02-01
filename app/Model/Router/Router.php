@@ -15,10 +15,6 @@ class Router {
             'presenter' => 'Default',
             'action' => 'default',
         ], Route::ONE_WAY);
-        $router->addRoute('<presenter cron>/<action>', [
-            'module' => 'Frontend',
-            'action' => 'default',
-        ]);
 
         $router->addRoute('<module public|org>/[<presenter>/[<action>/[<id>]]]', [
             'presenter' => 'Default',

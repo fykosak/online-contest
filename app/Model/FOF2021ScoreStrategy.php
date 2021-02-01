@@ -40,17 +40,18 @@ class FOF2021ScoreStrategy extends ScoreStrategy {
     }
 
     public function getSingleTaskScore(ModelTeam $team, ModelTask $task): int {
-        $query = $this->serviceAnswer->getTable()
+        $query = $task->related('answer', 'id_task')
             ->where('id_team', $team->id_team)
-            ->where('id_task', $task->id_task)
             ->where('correct', 0);
         /** @var ModelAnswer $correctAnswer */
-        $correctAnswer = $this->serviceAnswer->getTable()
+        $correctAnswer = $task->related('answer', 'id_task')
             ->where('id_team', $team->id_team)
-            ->where('id_task', $task->id_task)
             ->where('correct', 1)
             ->fetch();
-        $usage = $this->serviceCardUsage->findByTypeAndTeam($team, ModelCardUsage::TYPE_RESET);
+
+        $row = $team->related('card_usage')->where('card_type', ModelCardUsage::TYPE_RESET)->fetch();
+        /** @var ModelCardUsage $usage */
+        $usage = ModelCardUsage::createFromActiveRow($row);
         if ($usage) {
             if ($usage->getData() == $task->id_task) {
                 $query->where('inserted >= ?', $usage->created);

@@ -2,12 +2,8 @@
 
 namespace FOL\Tools;
 
-use FOL\Model\Authentication\CronAuthenticator;
 use FOL\Model\ORM\TasksService;
 use Nette\Database\Explorer;
-use Nette\Http\IRequest;
-use Nette\Http\IResponse;
-use Nette\Security\User;
 use Tracy\Debugger;
 
 use FOL\Bootstrap;
@@ -23,17 +19,8 @@ $configurator = Bootstrap::boot();
 
 $container = $configurator->createContainer();
 
-$authenticator = $container->getByType(CronAuthenticator::class);
 $tasksService = $container->getByType(TasksService::class);
 $explorer = $container->getByType(Explorer::class);
-$request = $container->getByType(IRequest::class);
-$user = $container->getByType(User::class);
-
-$key = $request->getQuery('cron-key');
-$authenticator->login($key);
-if (!$user->isAllowed('cron')) {
-    $this->error('PERMISSION DENIED', IResponse::S403_FORBIDDEN);
-}
 
 function resetTemporaryTables(Explorer $explorer): void {
     $src = 'view_'; // view

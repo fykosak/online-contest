@@ -9,34 +9,38 @@
     {varType array $mirrors}
     {varType FOL\Model\ORM\Models\ModelTask $task}
     {varType Fykosak\Utils\ORM\TypedTableSelection $tasks}
+
     {if count($tasks) == 0}
         <p>{_'Žádné úlohy.'}</p>
     {else}
         <div class="row">
             {foreach $tasks as $task}
+
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="card">
                         {var $color = $task->getGroup()->getColorByGroup()}
                         <h5 class="card-header"
                             style="{('background-color:' . $color )|noescape}">{$task->getLabel($lang)}</h5>
                         <div class="card-body">
-                            <small class="text-muted">
-                                ({$control->scoreStrategy->getSingleTaskScore($team, $task)} {_'b.'}, max. {$task->points} {_'b.'}
-                                )
-                                {if $task->getHint()}
-                                    <br>{_('má nápovědu')}
-                                {/if}
-                            </small>
-                            <hr/>
+                            {if $link}
+                                <small class="text-muted">
+                                    ({$control->scoreStrategy->getSingleTaskScore($team, $task)} {_'b.'}, max. {$task->points} {_'b.'}
+                                        )
+                                    {if $task->getHint()}
+                                        <br>{_('má nápovědu')}
+                                    {/if}
+                                </small>
+                                <hr/>
+                            {/if}
+
                             <div class="row">
                                 {foreach $mirrors as $mirror}
                                     <a class="col-12"
                                        href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>
                                 {/foreach}
                             </div>
-
-                            <hr/>
                             {if $link}
+                                <hr/>
                                 <a class="btn btn-primary"
                                    href="{plink :Game:Answer:default id=>$task->id_task}">{_'Odpovedať'}</a>
                             {/if}

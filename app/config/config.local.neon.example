@@ -3,9 +3,6 @@ database:
     user:
     password:
 parameters:
-    cron:
-        # key that's checked when invoking HTTP request for stats refresh
-        key: nejaky-klic
     # login:password pairs for organizers' login
     orgs:
         user: password

@@ -15,6 +15,7 @@ use Fykosak\Utils\Localization\UnsupportedLanguageException;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
+use Tracy\Debugger;
 
 abstract class BasePresenter extends Presenter {
 
@@ -78,9 +79,9 @@ abstract class BasePresenter extends Presenter {
      * @throws UnsupportedLanguageException
      */
     protected function startUp(): void {
+        $this->localize();
         parent::startup();
         $this->machineRedirect();
-        $this->localize();
     }
 
 // -------------- l12n ------------------
@@ -92,6 +93,7 @@ abstract class BasePresenter extends Presenter {
         $i18nConf = $this->context->parameters['i18n'];
         $this->detectLang($i18nConf);
         $this->translator->setLang($this->lang);
+        Debugger::barDump($this->translator);
     }
 
     protected function detectLang(array $i18nConf): void {
@@ -150,8 +152,7 @@ abstract class BasePresenter extends Presenter {
         return $this->currentYear;
     }
 
-    protected function createComponentFlashMessages(): FlashMessagesComponent
-    {
+    protected function createComponentFlashMessages(): FlashMessagesComponent {
         return new FlashMessagesComponent($this->getContext());
     }
 }

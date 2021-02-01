@@ -9,6 +9,7 @@ use FOL\Model\ORM\Services\ServiceTaskState;
 use FOL\Model\ORM\TasksService;
 use FOL\Model\ScoreStrategy;
 use Nette\Database\Table\ActiveRow;
+use Tracy\Debugger;
 
 class TaskPresenter extends BasePresenter {
 
@@ -43,22 +44,21 @@ class TaskPresenter extends BasePresenter {
         $solvedTasks = [];
         $missedTasks = [];
         /** @var ActiveRow|ModelTaskState $row */
-        foreach ($this->tasksService->findProblemAvailable($team) as $row) {
-            /** @var ModelTask $task */
-            $task = $this->serviceTask->findByPrimary($row->id_task);
-            if (isset($solved[$task->id_task])) {
-                $solvedTasks[] = $task;
-            } elseif (isset($skipped[$task->id_task])) {
-                $skippedTasks[] = $task;
-            } elseif (isset($unsolved[$task->id_task])) {
-                $unsolvedTasks[] = $task;
+        foreach ($this->tasksService->findProblemAvailable($team)->fetchAssoc('id_task') as $taskId => $datum) {
+            if (isset($solved[$taskId])) {
+                $solvedTasks[] = $taskId;
+            } elseif (isset($skipped[$taskId])) {
+                $skippedTasks[] = $taskId;
+            } elseif (isset($unsolved[$taskId])) {
+                $unsolvedTasks[] = $taskId;
             } else {
-                $missedTasks[] = $task;
+                $missedTasks[] = $taskId;
             }
         }
-        $this->template->solvedTasks = $solvedTasks;
-        $this->template->skippedTasks = $skippedTasks;
-        $this->template->unsolvedTasks = $unsolvedTasks;
-        $this->template->missedTasks = $missedTasks;
+        $this->template->serviceTask = $this->serviceTask;
+        $this->template->solvedTasks = $this->serviceTask->getTable()->where('id_task', $solvedTasks);
+        $this->template->skippedTasks = $this->serviceTask->getTable()->where('id_task', $skippedTasks);
+        $this->template->unsolvedTasks = $this->serviceTask->getTable()->where('id_task', $unsolvedTasks);
+        $this->template->missedTasks = $this->serviceTask->getTable()->where('id_task', $missedTasks);
     }
 }

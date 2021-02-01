@@ -18,9 +18,8 @@ abstract class ScoreStrategy {
     }
 
     public function getSingleTaskScore(ModelTeam $team, ModelTask $task): int {
-        $query = $this->serviceAnswer->getTable()
+        $query = $task->related('answer', 'id_task')
             ->where('id_team', $team->id_team)
-            ->where('id_task', $task->id_task)
             ->where('correct', 0);
 
         return $this->getPoints($task, $query->count());

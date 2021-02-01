@@ -16,7 +16,6 @@ session:
 services:
     - FOL\Model\Authentication\TeamAuthenticator
     - FOL\Model\Authentication\OrgAuthenticator(%orgs%)
-    - FOL\Model\Authentication\CronAuthenticator(%cron.key%)
     - Fykosak\Utils\Localization\GettextTranslator(%i18n.locales%,%i18n.dir%)
 
     router: FOL\Model\Router\Router::createRouter
