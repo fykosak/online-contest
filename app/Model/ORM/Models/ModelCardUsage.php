@@ -48,7 +48,7 @@ final class ModelCardUsage extends AbstractModel {
             case self::TYPE_SKIP:
                 return join(',', array_keys(array_filter($data, fn($v) => (bool)$v)));
             case self::TYPE_DOUBLE_POINTS:
-                return $data['answer'];
+                return $data['answer_id'];
             case self::TYPE_ADD_TASK:
                 return $data['group'];
             default:

@@ -8,6 +8,7 @@ use FOL\Model\ORM\Models\ModelPeriod;
 use FOL\Model\ORM\Services\ServiceGroup;
 use FOL\Model\ORM\Services\ServicePeriod;
 use FOL\Model\ORM\TasksService;
+use Fykosak\Utils\Localization\GettextTranslator;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Application\BadRequestException;
 use Nette\Forms\Container;
@@ -34,7 +35,7 @@ final class AddTaskCard extends SingleFormCard {
     public function decorateFormContainer(Container $container, string $lang): void {
         $items = [];
         foreach ($this->getActiveLines() as $key => $line) {
-            $items[$key] = _($line->text);
+            $items[$key] = $line->code_name . ": " . GettextTranslator::i18nHelper($line, 'text', $lang);
         }
 
         $container->addSelect('group', _('Line'), $items);

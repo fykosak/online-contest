@@ -2,7 +2,7 @@
 {block content}
     {varType FOL\Model\Card\Card $card}
     <div class="row">
-        <strong class="col">{_'Used'}</strong><span class="col">{$card->getUsage()->created->format('c')}</span>
+        <strong class="col">{_'Used'}</strong><span class="col">{$card->getUsage()->created->format('H:i:s')}</span>
     </div>
     <hr/>
     {include usage}

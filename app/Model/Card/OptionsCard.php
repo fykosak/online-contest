@@ -3,6 +3,7 @@
 namespace FOL\Model\Card;
 
 use FOL\Model\ORM\Models\ModelCardUsage;
+use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Services\ServiceAnswerOptions;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Forms\Container;
@@ -36,7 +37,9 @@ final class OptionsCard extends SingleFormCard {
         $items = [];
         foreach ($this->getTasks() as $task) {
             // TODO has every answer options?
-            $items[$task->id_task] = $task['name_' . $lang];
+            /** @var ModelTask $t */
+            $t = $this->serviceTask->findByPrimary($task->id_task);
+            $items[$task->id_task] = $t->getLabel($lang);
         }
         $container->addSelect('task', _('Task'), $items);
     }

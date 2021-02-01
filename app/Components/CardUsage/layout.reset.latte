@@ -4,5 +4,6 @@
     {varType string $lang}
     {varType FOL\Model\ORM\Models\ModelTask $task}
     {var $task = $card->serviceTask->findByPrimary($card->getUsage()->getData())}
-    <span>{_($task->getLabel($lang))}</span>
+    <strong>{$task->getGroup()->code_name}{$task->number}</strong>:
+    <span>{Fykosak\Utils\Localization\GettextTranslator::i18nHelper($task, 'name', $lang)}</span>
 {/block}

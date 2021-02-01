@@ -9,12 +9,14 @@ use Nette\DI\Container;
 
 class AnswerHistoryComponent extends BaseComponent {
 
+    private string $lang;
     private ModelTeam $team;
     private ServiceAnswer $serviceAnswer;
 
-    public function __construct(Container $container, ModelTeam $team) {
+    public function __construct(Container $container, ModelTeam $team, string $lang) {
         parent::__construct($container);
         $this->team = $team;
+        $this->lang = $lang;
     }
 
     public function injectPrimary(ServiceAnswer $serviceAnswer): void {
@@ -27,6 +29,7 @@ class AnswerHistoryComponent extends BaseComponent {
             ->where('id_team', $this->team->id_team)
             ->order('inserted DESC');
         $this->template->timeFormat = 'H:i:s';//_('__time'); // TODO i18n
+        $this->template->lang = $this->lang;
     }
 
     public function render(): void {

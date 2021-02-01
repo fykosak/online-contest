@@ -48,7 +48,7 @@ class AnswerPresenter extends BasePresenter {
     }
 
     protected function createComponentAnswerHistory(): AnswerHistoryComponent {
-        return new AnswerHistoryComponent($this->getContext(), $this->getLoggedTeam());
+        return new AnswerHistoryComponent($this->getContext(), $this->getLoggedTeam(), $this->lang);
     }
 
     protected function createComponentRating(): RatingComponent {

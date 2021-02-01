@@ -55,7 +55,9 @@ final class HintCard extends SingleFormCard {
         /** @var ModelTask|ActiveRow $task */
         foreach ($this->tasksService->findSubmitAvailable($this->team)->fetchAll() as $task) {
             if ($this->serviceTaskHint->getTaskHint($task->id_task)) {
-                $items[$task->id_task] = $task['name_' . $lang];
+                /** @var ModelTask $t */
+                $t = $this->serviceTask->findByPrimary($task->id_task);
+                $items[$task->id_task] = $t->getLabel($lang);
             }
         }
         $container->addSelect('task', _('Task'), $items);

@@ -8,7 +8,7 @@
             {varType FOL\Model\ORM\Models\ModelTask $task}
             {var $task = $card->serviceTask->findByPrimary($taskId)}
             <li>
-                <strong>{$task->getGroup()->code_name}{$task->number}</strong>
+                <strong>{$task->getGroup()->code_name}{$task->number}</strong>:
                 <span>{Fykosak\Utils\Localization\GettextTranslator::i18nHelper($task, 'name', $lang)}</span>
             </li>
         {/foreach}

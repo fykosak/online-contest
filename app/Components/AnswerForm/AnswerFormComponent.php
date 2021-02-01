@@ -79,7 +79,7 @@ class AnswerFormComponent extends BaseComponent {
         $values = $form->getValues();
         try {
             $isDoublePoints = false;
-            if (isset($values['double_points'])) {
+            if (isset($values['double_points']) && $values['double_points']) {
                 if ($this->doublePointsCard->wasUsed()) {
                     throw new ForbiddenRequestException();
                 }
@@ -101,6 +101,7 @@ class AnswerFormComponent extends BaseComponent {
                     'task_id' => $this->task->id_task,
                 ]);
                 FlashMessageDump::dump($logger, $this->getPresenter());
+                $this->getPresenter()->flashMessage(_('Použili jste kartičku za dvojnásobek bodů.'), 'info');
             }
 
             if ($correct) {
@@ -117,13 +118,13 @@ class AnswerFormComponent extends BaseComponent {
             if ($e->getCode() == AnswersService::ERROR_TIME_LIMIT) {
                 $this->getPresenter()->flashMessage(
                     Html::el('span')
-                        ->addText(_('Lze odpovídat až za'))
+                        ->addText(_('Lze odpovídat až za') . " ")
                         ->addHtml(
                             Html::el('span')
                                 ->addAttributes(['class' => 'timesec'])
                                 ->addHtml($e->getMessage())
                         )
-                        ->addText(_('sekund.')), 'warning');
+                        ->addText(" " . _('sekund.')), 'warning');
                 return;
             } elseif ($e->getCode() == AnswersService::ERROR_OUT_OF_PERIOD) {
                 $this->getPresenter()->flashMessage(_('Není aktuální žádné odpovídací období.'), 'danger');

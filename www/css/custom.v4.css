@@ -131,6 +131,10 @@ span.unimportant {
     color: #888;
 }
 
+label input[type=checkbox] {
+    margin-right: .5rem;
+}
+
 /******************** CLASSES AND IDS *****************************************/
 #logos {
     padding: 10px;

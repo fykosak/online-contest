@@ -10,11 +10,12 @@
         </thead>
         {varType FOL\Model\ORM\Models\ModelAnswer $answer}
         {varType Fykosak\Utils\ORM\TypedTableSelection $history}
+        {varType string $lang}
         {foreach $history AS $answer}
             {dump $answer}
-            <tr class="{($answer->correct && ($answer->getTask()->cancelled == 0)?'bg-success':'bg-danger'}">
+            <tr class="{($answer->correct && ($answer->getTask()->cancelled == 0))?'bg-success':'bg-danger'}">
                 <td>{$answer->id_answer}</td>
-                <td>{$answer->getTask()->getGroup()->code_name}</td>
+                <td>{$answer->getTask()->getLabel($lang)}</td>
                 <td>{$answer->inserted->format($timeFormat)}</td>
                 <td>{if $answer->getTask()->answer_type == FOL\Model\ORM\Models\ModelTask::TYPE_STR}
                         {$answer->answer_str}

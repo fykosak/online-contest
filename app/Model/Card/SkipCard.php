@@ -57,7 +57,9 @@ final class SkipCard extends SingleFormCard {
 
     public function decorateFormContainer(Container $container, string $lang): void {
         foreach ($this->getTasks() as $task) {
-            $container->addCheckbox($task->id_task, $task['name_' . $lang]);
+            /** @var ModelTask $t */
+            $t = $this->serviceTask->findByPrimary($task->id_task);
+            $container->addCheckbox($task->id_task, $t->getLabel($lang));
         }
     }
 

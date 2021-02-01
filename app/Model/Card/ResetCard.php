@@ -28,7 +28,7 @@ final class ResetCard extends SingleFormCard {
         foreach ($unsolved as $taskId) {
             /** @var ModelTask $task */
             $task = $this->serviceTask->findByPrimary($taskId);
-            $items[$task->id_task] = $task->getLabel($lang) . ' - ' . $this->scoreStrategy->getSingleTaskScore($this->team, $task) . 'b.';
+            $items[$task->id_task] = $task->getLabel($lang) . ' - ' . $this->scoreStrategy->getSingleTaskScore($this->team, $task) . _('b.');
         }
         $container->addSelect('task', _('Task'), $items);
     }

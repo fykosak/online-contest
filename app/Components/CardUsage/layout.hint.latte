@@ -6,5 +6,7 @@
     {varType FOL\Model\ORM\Models\ModelTask $task}
     {var $task = $card->serviceTask->findByPrimary($card->getUsage()->getData())}
     {var $hint = $task->getHint()}
-    <p>{\Fykosak\Utils\Localization\GettextTranslator::i18nHelper($hint, 'hint', $lang)}</p>
+    <strong>{$task->getGroup()->code_name}{$task->number}</strong>:
+    <span>{Fykosak\Utils\Localization\GettextTranslator::i18nHelper($task, 'name', $lang)}</span>
+    <p>{\Fykosak\Utils\Localization\GettextTranslator::i18nHelper($hint, 'hint', $lang)|noescape}</p>
 {/block}

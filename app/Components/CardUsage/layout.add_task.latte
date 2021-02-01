@@ -5,5 +5,6 @@
 
     {varType FOL\Model\ORM\Models\ModelGroup $group}
     {var $group = $card->serviceGroup->findByPrimary($card->getUsage()->getData())}
-    <span>{_($group->text)}</span>
+    <strong>{$group->code_name}</strong>:
+    <span>{\Fykosak\Utils\Localization\GettextTranslator::i18nHelper($group, 'text', $lang)}</span>
 {/block}

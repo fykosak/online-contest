@@ -9,8 +9,10 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">{$card->getDescription()}</p>
+                    {if $card instanceof FOL\Model\Card\SingleFormCard}
                     <a href="{plink use id=>$card->getType()}"
                        class="btn btn-secondary">{$card->wasUsed()?_('View usage'):_('Use')}</a>
+                    {/if}
                 </div>
             </div>
         {/foreach}

@@ -11,7 +11,8 @@ use Fykosak\Utils\ORM\AbstractModel;
  * @property-read DateTimeInterface to_show
  * @property-read string type
  * @property-read string code_name
- * @property-read string text
+ * @property-read string text_cs
+ * @property-read string text_en
  * @property-read bool allow_zeroes
  * @property-read DateTimeInterface inserted
  * @property-read DateTimeInterface updated

@@ -23,6 +23,9 @@
                             <small class="text-muted">
                                 ({$control->scoreStrategy->getSingleTaskScore($team, $task)} {_'b.'}, max. {$task->points} {_'b.'}
                                 )
+                                {if $task->getHint()}
+                                    <br>{_('má nápovědu')}
+                                {/if}
                             </small>
                             <hr/>
                             <div class="row">
@@ -76,18 +79,12 @@
         </div>
     {/if}
 
-    <p>{_'K dispozici máte zadání těchto úloh dle podmínek v zadání:'}</p>
-    <h3>{_'Nevyřešené'}</h3>
     {include tasks tasks=>$unsolvedTasks,link=>true}
 
-    <h3>{_'Vyřešené'}</h3>
+    <h3 class="mt-3">{_'Vyřešené'}</h3>
     {include tasks tasks=>$solvedTasks,link=>false}
 
-    <h3>{_'Přeskočené'}</h3>
+    <h3 class="mt-3">{_'Přeskočené'}</h3>
     {include tasks tasks=>$skippedTasks,link=>false}
-
-    {*{/cache}*}
-
-    {include '@info.' . $lang . '.latte'}
 
 {/block}
