@@ -55,16 +55,12 @@ class ResultsComponent extends BaseComponent {
         foreach ($data as $key => $datum) {
             $this->template->$key = $datum;
         }
-
         $maxBonus = 0;
         $maxPoints = 0;
         /** @var ModelTask $task */
         foreach ($this->serviceTask->getTable() as $task) {
-            $hurry = ($task->id_group == 1) ? false : true; //dle SQL id_group=2,3,4
             $maxPoints += $task->points;
-            if ($hurry) {
-                $maxBonus += $task->points;
-            }
+            $maxBonus++;
         }
         $maxPoints += $maxBonus;
         $this->template->maxPoints = $maxPoints;
