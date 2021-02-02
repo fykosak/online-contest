@@ -51,6 +51,18 @@ class ScoreService extends AbstractService {
                 'skipped' => 0,
                 'points' => $score,
             ]);
+            $counter = 0;
+            $answers = $team->related('task_state')->where('task.id_group', $task->id_group);
+            $bonusScore = 0;
+            foreach ($answers as $row) {
+                $counter++;
+                if (!$row->skipped) {
+                    $bonusScore++;
+                }
+            }
+            if ($counter === $task->getGroup()->related('task')->count('*')) {
+                $score += $bonusScore;
+            }
 // TODO
             /* vypocet bonusu */
             /*    if ($hurry) {
