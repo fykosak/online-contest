@@ -11,7 +11,7 @@ use Nette\DI\Container;
 use Nette\Http\IRequest;
 use Nette\NotSupportedException;
 
-class NotificationMessagesComponent extends BaseComponent {
+final class NotificationMessagesComponent extends BaseComponent {
 
     private ServiceYear $serviceYear;
     private IRequest $httpRequest;

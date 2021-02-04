@@ -11,7 +11,7 @@ use FOL\Model\ORM\Services\ServiceLog;
 use Nette\Database\Explorer;
 use Nette\InvalidStateException;
 
-class AnswersService extends AbstractService {
+final class AnswersService extends AbstractService {
 
     const ERROR_TIME_LIMIT = 10;
     const ERROR_OUT_OF_PERIOD = 20;
@@ -36,7 +36,7 @@ class AnswersService extends AbstractService {
     public function insert(ModelTeam $team, ModelTask $task, $solution, bool $correct, bool $isDoublePoints): ModelAnswer {
         $period = $task->getGroup()->getActivePeriod();
         if (!$period) {
-            $this->log($team->id_team, 'solution_tried', sprintf('The team tried to insert the solution of task [%i] with solution [%s].', $this->task->id_task, $solution));
+            $this->log($team->id_team, 'solution_tried', sprintf('The team tried to insert the solution of task [%i] with solution [%s].', $task->id_task, $solution));
             throw new InvalidStateException('There is no active submit period.', AnswersService::ERROR_OUT_OF_PERIOD);
         }
 

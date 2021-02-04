@@ -13,10 +13,4 @@ final class ServiceCardUsage extends AbstractService {
     public function __construct(Explorer $connection, Conventions $conventions) {
         parent::__construct($connection, $conventions, 'card_usage', ModelCardUsage::class);
     }
-
-    public function findByTypeAndTeam(ModelTeam $team, string $type): ?ModelCardUsage {
-        /** @var ModelCardUsage|null $results */
-        $results = $this->getTable()->where('team_id', $team->id_team)->where('card_type', $type)->fetch();
-        return $results;
-    }
 }

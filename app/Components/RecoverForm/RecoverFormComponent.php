@@ -12,11 +12,11 @@ use Nette\Mail\Mailer;
 use FOL\Model\Authentication\TeamAuthenticator;
 use FOL\Components\BaseComponent;
 
-class RecoverFormComponent extends BaseComponent {
+final class RecoverFormComponent extends BaseComponent {
 
     private TeamAuthenticator $authenticator;
     private Mailer $mailer;
-    protected ServiceCompetitor $serviceCompetitors;
+    private ServiceCompetitor $serviceCompetitors;
 
     public function injectPrimary(
         TeamAuthenticator $authenticator,
@@ -43,7 +43,7 @@ class RecoverFormComponent extends BaseComponent {
             $this->getPresenter()->redirect('Default:default');
         }
         $team = $competitor->getTeam();
-        $competitors = $this->serviceCompetitors->findAllByTeam($team);
+        $competitors = $team->getCompetitors();
         $token = $this->authenticator->createRecoveryToken($team);
 
         if (is_null($token)) {

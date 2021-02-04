@@ -12,11 +12,11 @@ use Nette\Application\UI\Form;
 use Nette\ComponentModel\IComponent;
 use Nette\DI\Container;
 
-class CardFormComponent extends BaseComponent {
+final class CardFormComponent extends BaseComponent {
 
     private string $lang;
     private SingleFormCard $card;
-    protected const CONTAINER = 'options';
+    private const CONTAINER = 'options';
 
     public function __construct(Container $container, SingleFormCard $card, string $lang) {
         parent::__construct($container);

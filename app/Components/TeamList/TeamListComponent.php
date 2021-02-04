@@ -6,13 +6,11 @@ use FOL\Components\BaseComponent;
 use FOL\Model\ORM\Services\ServiceCompetitor;
 use FOL\Model\ORM\Services\ServiceTeam;
 
-class TeamListComponent extends BaseComponent {
+final class TeamListComponent extends BaseComponent {
 
-    protected ServiceTeam $serviceTeam;
-    protected ServiceCompetitor $serviceCompetitor;
+    private ServiceTeam $serviceTeam;
 
-    public function injectPrimary(ServiceCompetitor $serviceCompetitor, ServiceTeam $serviceTeam): void {
-        $this->serviceCompetitor = $serviceCompetitor;
+    public function injectPrimary(ServiceTeam $serviceTeam): void {
         $this->serviceTeam = $serviceTeam;
     }
 

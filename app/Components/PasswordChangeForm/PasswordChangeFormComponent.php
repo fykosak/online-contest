@@ -11,7 +11,7 @@ use FOL\Model\Authentication\TeamAuthenticator;
 use FOL\Components\BaseComponent;
 use Nette\DI\Container;
 
-class PasswordChangeFormComponent extends BaseComponent {
+final class PasswordChangeFormComponent extends BaseComponent {
 
     private ModelTeam $team;
     private ServiceTeam $serviceTeam;

@@ -12,7 +12,7 @@ require __DIR__ . '/../app/Bootstrap.php';
 
 $container = Bootstrap::boot()->createContainer();
 $teamsModel = $container->getByType(\FOL\Model\ORM\Services\ServiceTeam::class);
-$teams = $teamsModel->findAllWithScore()->fetchAll();
+//$teams = $teamsModel->findAllWithScore()->fetchAll();
 
 $rank = [];
 $rankTotal = 1;

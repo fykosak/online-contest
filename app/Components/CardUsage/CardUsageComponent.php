@@ -6,7 +6,7 @@ use FOL\Components\BaseComponent;
 use FOL\Model\Card\Card;
 use Nette\DI\Container;
 
-class CardUsageComponent extends BaseComponent {
+final class CardUsageComponent extends BaseComponent {
 
     private string $lang;
     private Card $card;

@@ -14,7 +14,7 @@ use Nette\DI\Container;
 use Nette\Forms\Controls\SubmitButton;
 use Throwable;
 
-class RatingComponent extends BaseComponent {
+final class RatingComponent extends BaseComponent {
 
     private ModelTask $task;
     private ModelTeam $team;

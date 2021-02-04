@@ -14,9 +14,9 @@ use Nette\Security\Authenticator;
 use Tracy\Debugger;
 use FOL\Components\BaseComponent;
 
-class LoginFormComponent extends BaseComponent {
+final class LoginFormComponent extends BaseComponent {
 
-    protected AbstractAuthenticator $authenticator;
+    private AbstractAuthenticator $authenticator;
     private string $redirectDestination;
     private ServiceYear $serviceYear;
 

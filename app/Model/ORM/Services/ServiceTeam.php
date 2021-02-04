@@ -19,14 +19,6 @@ final class ServiceTeam extends AbstractService {
         parent::__construct($connection, $conventions, 'team', ModelTeam::class);
     }
 
-    public function findAllWithScore(): Selection {
-        return $this->explorer->table('tmp_total_result')
-            ->order('disqualified ASC')
-            ->order('activity DESC')
-            ->order('score DESC')
-            ->order('last_time ASC');
-    }
-
     public static function getCategoryNames(): array {
         return [
             self::HIGH_SCHOOL_A => _('Středoškoláci A'),

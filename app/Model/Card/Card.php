@@ -45,7 +45,8 @@ abstract class Card {
     }
 
     public final function getUsage(): ?ModelCardUsage {
-        return $this->serviceCardUsage->findByTypeAndTeam($this->team, $this->getType());
+        $row = $this->team->related('card_usage')->where('card_type',$this->getType());
+        return $row?ModelCardUsage::createFromActiveRow($row):null;
     }
 
     public final function logUsage(array $values): void {

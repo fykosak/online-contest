@@ -5,7 +5,7 @@ namespace FOL\Components\TaskStats;
 use FOL\Model\ORM\TasksService;
 use FOL\Components\BaseComponent;
 
-class TaskStatsComponent extends BaseComponent {
+final class TaskStatsComponent extends BaseComponent {
 
     private TasksService $tasksService;
 

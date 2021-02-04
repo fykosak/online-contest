@@ -10,7 +10,7 @@ use Nette\Application\UI\Form;
 use Nette\Http\Response;
 use FOL\Components\BaseComponent;
 
-class NotificationFormComponent extends BaseComponent {
+final class NotificationFormComponent extends BaseComponent {
 
     protected ServiceNotification $serviceNotification;
 

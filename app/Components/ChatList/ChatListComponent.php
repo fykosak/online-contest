@@ -15,7 +15,7 @@ use FOL\Components\BaseListComponent;
 use Nette\ComponentModel\IComponent;
 use Nette\DI\Container;
 
-class ChatListComponent extends BaseListComponent {
+final class ChatListComponent extends BaseListComponent {
 
     private ServiceChat $serviceChat;
     private ?ModelTeam $team;

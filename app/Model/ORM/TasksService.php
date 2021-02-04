@@ -29,12 +29,6 @@ final class TasksService extends AbstractService {
         $this->serviceCardUsage = $serviceCardUsage;
     }
 
-    public function findPossiblyAvailable(): Selection {
-        return $this->explorer->table('view_possibly_available_task')
-            ->order('id_group')
-            ->order('number');
-    }
-
     public function findProblemAvailable(ModelTeam $team): Selection {
         return $this->explorer->table('view_available_task')
             ->where('id_team', $team->id_team)
@@ -130,9 +124,12 @@ final class TasksService extends AbstractService {
                         IFNULL(
                             (
                                 SELECT COUNT(id_answer)
-                                FROM view_correct_answer AS ca
-                                LEFT JOIN task tsk USING (id_task)
-                                WHERE ca.id_team = gs.id_team AND tsk.id_group = gs.id_group
+                                FROM `answer`
+                                INNER JOIN `task` USING (`id_task`)          
+                                WHERE answer.id_team = gs.id_team 
+                                    AND task.id_group = gs.id_group
+                                    AND `task`.`cancelled` = 0
+                                    AND `answer`.`correct` = 1
                             ) + (
                                 SELECT COUNT(id_task)
                                 FROM task_state AS ts
@@ -161,9 +158,12 @@ final class TasksService extends AbstractService {
                         IFNULL(
                             (
                                 SELECT COUNT(id_answer)
-                                FROM view_correct_answer AS ca
-                                LEFT JOIN task tsk USING (id_task)
-                                WHERE ca.id_team = gs.id_team AND tsk.id_group = gs.id_group
+                                FROM `answer`
+                                INNER JOIN `task` USING (`id_task`)          
+                                WHERE answer.id_team = gs.id_team 
+                                    AND task.id_group = gs.id_group
+                                    AND `task`.`cancelled` = 0
+                                    AND `answer`.`correct` = 1
                              ) + (
                                 SELECT COUNT(id_task)
                                 FROM task_state AS ts

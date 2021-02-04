@@ -6,7 +6,7 @@ use FOL\Model\GameSetup;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Models\ModelTeam;
-use FOL\Model\ORM\ScoreService;
+use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceTaskState;
 use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Model\ORM\TasksService;
@@ -19,15 +19,15 @@ use Nette\DI\Container;
 use Nette\Utils\DateTime;
 use Throwable;
 
-class ScoreListComponent extends AjaxComponent {
+final class ScoreListComponent extends AjaxComponent {
 
-    protected TasksService $tasksService;
-    protected ServiceTeam $serviceTeam;
-    protected ScoreService $scoreService;
+    private TasksService $tasksService;
+    private ServiceTeam $serviceTeam;
     private ServiceTaskState $serviceTaskState;
     private Storage $storage;
     private Cache $cache;
     private GameSetup $gameSetup;
+    private ServiceTask $serviceTask;
 
     public function __construct(Container $container) {
         parent::__construct($container, 'score-list');
@@ -37,17 +37,17 @@ class ScoreListComponent extends AjaxComponent {
     public function injectPrimary(
         TasksService $tasksService,
         ServiceTeam $serviceTeam,
-        ScoreService $scoreService,
         ServiceTaskState $serviceTaskState,
+        ServiceTask $serviceTask,
         Storage $storage,
         GameSetup $gameSetup
     ): void {
         $this->tasksService = $tasksService;
         $this->serviceTeam = $serviceTeam;
-        $this->scoreService = $scoreService;
         $this->serviceTaskState = $serviceTaskState;
         $this->storage = $storage;
         $this->gameSetup = $gameSetup;
+        $this->serviceTask = $serviceTask;
     }
 
     /**
@@ -70,8 +70,8 @@ class ScoreListComponent extends AjaxComponent {
             'refreshDelay' => $this->gameSetup->refreshDelay,
             'isOrg' => $isOrg,
 
-        ], $this->cache->load('results', function (&$dependencies) use ($isOrg): array {
-            $dependencies[Cache::EXPIRE] = '1 minute';
+        ], $this->cache->load('resultsa2', function (&$dependencies) use ($isOrg): array {
+            $dependencies[Cache::EXPIRE] = '30 second';
             return [
                 'gameStart' => new \DateTime('2021-01-25 00:00:00'),
                 'gameEnd' => new \DateTime('2021-02-25 00:00:00'),
@@ -87,12 +87,6 @@ class ScoreListComponent extends AjaxComponent {
             $data['submits'] = []; // unset submits
         }
         return $data;
-        /*
-         *  $this->template->bonus = $this->scoreService->findAllBonus()->fetchAssoc('id_team');
-        $this->template->penality = $this->scoreService->findAllPenality()->fetchAssoc('id_team');
-        $this->template->lang = $this->presenter->lang;
-        $this->template->categories = $this->serviceTeam->getCategoryNames();
-         */
     }
 
     /**
@@ -114,16 +108,18 @@ class ScoreListComponent extends AjaxComponent {
 
     private function serialiseTeams(): array {
         $teams = [];
-        foreach ($this->serviceTeam->findAllWithScore() as $row) {
-            $teams[] = ModelTeam::__toArray($row);
+        /** @var ModelTeam $row */
+        foreach ($this->serviceTeam->getTable() as $row) {
+            $teams[] = $row->__toArray();
         }
         return $teams;
     }
 
     private function serialiseTasks(): array {
         $tasks = [];
-        foreach ($this->template->tasks = $this->tasksService->findPossiblyAvailable() as $row) {
-            $tasks[] = ModelTask::__toArray($row);
+        /** @var ModelTask $task */
+        foreach ($this->template->tasks = $this->serviceTask->getTable()->order('id_group')->order('number') as $task) {
+            $tasks[] = $task->__toArray();
         }
         return $tasks;
     }

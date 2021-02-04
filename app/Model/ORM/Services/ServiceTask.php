@@ -12,5 +12,4 @@ final class ServiceTask extends AbstractService {
     public function __construct(Explorer $connection, Conventions $conventions) {
         parent::__construct($connection, $conventions, 'task', ModelTask::class);
     }
-
 }

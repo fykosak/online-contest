@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Fykosak\Utils\Localization\GettextTranslator;
 use Fykosak\Utils\ORM\AbstractModel;
 use Nette\Database\Table\ActiveRow;
+use Nette\Database\Table\GroupedSelection;
 use Nette\InvalidArgumentException;
 
 /**
@@ -51,21 +52,20 @@ final class ModelTask extends AbstractModel {
         return $row ? ModelAnswerOptions::createFromActiveRow($row) : null;
     }
 
-    /**
-     * @param ActiveRow|ModelTask $row
-     * @return array
-     * TODO implement task label
-     */
-    public static function __toArray(ActiveRow $row): array {
+    public function __toArray(): array {
         return [
-            'taskId' => $row->id_task,
-            'group' => $row->id_group,
-            'number' => $row->number,
+            'taskId' => $this->id_task,
+            'group' => $this->id_group,
+            'number' => $this->number,
             'name' => [
-                'cs' => $row->name_cs,
-                'en' => $row->name_en,
+                'cs' => $this->getLabel('cs'),
+                'en' => $this->getLabel('en'),
             ],
         ];
+    }
+
+    public function getAnswers(): GroupedSelection {
+        return $this->related('answer');
     }
 
     public function getLabel(string $lang): string {

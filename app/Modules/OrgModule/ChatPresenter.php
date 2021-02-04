@@ -13,7 +13,6 @@ class ChatPresenter extends BasePresenter {
         $this->serviceChat = $serviceChat;
     }
 
-
     public function renderDefault(): void {
         $this->getComponent('chat')->setSource($this->serviceChat->getAll($this->lang));
         $this->setPageTitle(_('Diskuse (česká verze)'));

@@ -7,7 +7,7 @@ use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceAnswer;
 use Nette\DI\Container;
 
-class AnswerHistoryComponent extends BaseComponent {
+final class AnswerHistoryComponent extends BaseComponent {
 
     private string $lang;
     private ModelTeam $team;

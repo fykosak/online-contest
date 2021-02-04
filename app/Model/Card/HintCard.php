@@ -33,7 +33,7 @@ final class HintCard extends SingleFormCard {
         if (!isset($this->getTasks()[$taskId])) {
             throw new TaskNotAvailableException();
         }
-        if (!$this->serviceTaskHint->getTaskHint($taskId)) {
+        if (!$this->serviceTaskHint->findByPrimary($taskId)) {
             throw new TaskDoesNotHaveHintException();
         }
     }
@@ -54,7 +54,7 @@ final class HintCard extends SingleFormCard {
         $items = [];
         /** @var ModelTask|ActiveRow $task */
         foreach ($this->tasksService->findSubmitAvailable($this->team)->fetchAll() as $task) {
-            if ($this->serviceTaskHint->getTaskHint($task->id_task)) {
+            if ($this->serviceTaskHint->findByPrimary($task->id_task)) {
                 /** @var ModelTask $t */
                 $t = $this->serviceTask->findByPrimary($task->id_task);
                 $items[$task->id_task] = $t->getLabel($lang);
@@ -65,7 +65,7 @@ final class HintCard extends SingleFormCard {
 
     private function hasAnyTaskHint(): bool {
         foreach ($this->getTasks() as $task) {
-            if ($this->serviceTaskHint->getTaskHint($task->id_task)) {
+            if ($this->serviceTaskHint->findByPrimary($task->id_task)) {
                 return true;
             }
         }

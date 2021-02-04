@@ -10,8 +10,6 @@ use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\ScoreService;
-use FOL\Model\ORM\Services\ServicePeriod;
-use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceYear;
 use FOL\Model\ORM\TasksService;
 use FOL\Components\BaseForm;
@@ -30,16 +28,15 @@ use Throwable;
 use Tracy\Debugger;
 use FOL\Components\BaseComponent;
 
-class AnswerFormComponent extends BaseComponent {
+final class AnswerFormComponent extends BaseComponent {
 
-    protected TasksService $tasksService;
-    protected AnswersService $answersService;
-    protected ScoreService $scoreService;
-    protected ServiceYear $serviceYear;
-    protected User $user;
-    protected ModelTeam $team;
-    protected DoublePointsCard $doublePointsCard;
-    protected ServiceTask $serviceTask;
+    private TasksService $tasksService;
+    private AnswersService $answersService;
+    private ScoreService $scoreService;
+    private ServiceYear $serviceYear;
+    private User $user;
+    private ModelTeam $team;
+    private DoublePointsCard $doublePointsCard;
     private ScoreStrategy $scoreStrategy;
     private ModelTask $task;
 
@@ -54,7 +51,6 @@ class AnswerFormComponent extends BaseComponent {
         AnswersService $answersService,
         ScoreService $scoreService,
         ServiceYear $serviceYear,
-        ServiceTask $serviceTask,
         User $user,
         CardFactory $cardFactory,
         ScoreStrategy $scoreStrategy
@@ -63,7 +59,6 @@ class AnswerFormComponent extends BaseComponent {
         $this->answersService = $answersService;
         $this->scoreService = $scoreService;
         $this->serviceYear = $serviceYear;
-        $this->serviceTask = $serviceTask;
         $this->user = $user;
         $this->scoreStrategy = $scoreStrategy;
         $this->doublePointsCard = $cardFactory->create($this->team, ModelCardUsage::TYPE_DOUBLE_POINTS);

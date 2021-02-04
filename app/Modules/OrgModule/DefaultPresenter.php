@@ -12,8 +12,6 @@ use FOL\Components\TaskStats\TaskStatsComponent;
 
 class DefaultPresenter extends BasePresenter {
 
-    const STATS_TAG = 'orgStats';
-
     protected OrgAuthenticator $authenticator;
     private ServiceTask $serviceTask;
     /** @persistent */

@@ -22,19 +22,36 @@ use Nette\Database\Table\GroupedSelection;
  */
 final class ModelTeam extends AbstractModel {
 
-    public function getCompetitors():GroupedSelection{
-        return $this->related('competitor','id_team');
+    public function getCompetitors(): GroupedSelection {
+        return $this->related('competitor', 'id_team');
     }
 
-    /**
-     * @param ActiveRow|ModelTeam $row
-     * @return array
-     */
-    public static function __toArray(ActiveRow $row): array {
+    public function __toArray(): array {
         return [
-            'teamId' => $row->id_team,
-            'name' => $row->name,
-            'category' => $row->category,
+            'teamId' => $this->id_team,
+            'name' => $this->name,
+            'category' => $this->category,
         ];
+    }
+
+    public function getCorrect(): GroupedSelection {
+        return $this->related('answer')
+            ->where('task.cancelled', 0)
+            ->where('answer.correct', 1);
+    }
+
+    public function getCorrectOrSkipped(): GroupedSelection {
+        return $this->related('answer')
+            ->where('task.cancelled', 0)
+            ->where('answer.correct ? OR answer.skipped ?', 1, 1);
+    }
+
+    public function getCorrectedInGroup(ModelGroup $group): GroupedSelection {
+        return $this->getCorrect()
+            ->where('task.id_group', $group->id_group);
+    }
+
+    public function getAnswers(): GroupedSelection {
+        return $this->related('answer');
     }
 }

@@ -4,7 +4,6 @@ namespace FOL\Components\AnswerStats;
 
 use FOL\Model\ORM\Models\ModelAnswer;
 use FOL\Model\ORM\Models\ModelTask;
-use FOL\Model\ORM\Services\ServiceAnswer;
 use FOL\Model\ORM\Services\ServiceTask;
 use Nette\DI\Container;
 use FOL\Components\BaseComponent;
@@ -12,7 +11,6 @@ use FOL\Components\BaseComponent;
 class AnswerStatsComponent extends BaseComponent {
 
     private ServiceTask $serviceTask;
-    private ServiceAnswer $serviceAnswer;
     private ?ModelTask $task;
 
     public function __construct(Container $container, ?int $taskId) {
@@ -20,9 +18,8 @@ class AnswerStatsComponent extends BaseComponent {
         $this->task = $taskId ? $this->serviceTask->findByPrimary($taskId) : null;
     }
 
-    public function injectPrimary(ServiceTask $serviceTask, ServiceAnswer $serviceAnswer): void {
+    public function injectPrimary(ServiceTask $serviceTask): void {
         $this->serviceTask = $serviceTask;
-        $this->serviceAnswer = $serviceAnswer;
     }
 
     public function render(): void {
@@ -32,7 +29,7 @@ class AnswerStatsComponent extends BaseComponent {
     }
 
     protected function beforeRender(): void {
-        $answers = $this->serviceAnswer->findByTaskId($this->task->id_task);
+        $answers = $this->task->getAnswers();
         $tolerance = null;
         if ($this->task->answer_type == 'int') {
             $correctValue = $this->task->answer_int;
@@ -43,7 +40,8 @@ class AnswerStatsComponent extends BaseComponent {
 
         $taskData = [];
         /** @var ModelAnswer $answer */
-        foreach ($answers as $answer) {
+        foreach ($answers as $row) {
+            $answer = ModelAnswer::createFromActiveRow($row);
             if (isset($answer->answer_int)) {
                 $trueValue = $answer->answer_int;
                 $value = $trueValue - $correctValue;

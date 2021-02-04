@@ -1,4 +1,8 @@
 {block content}
+    {varType bool $visible}
+    {varType array $categories}
+    {varType array $teams}
+
     {if $visible}
         {foreach $categories AS $category => $categoryName}
 
@@ -10,31 +14,26 @@
                 <th>{_'celkem bodů'}</th>
                 <th>{_'bonusové body'}</th>
                 </thead>
-                {varType FOL\Model\ORM\Models\ModelTeam $team}
-            {var $i = 0}
-            {foreach $teams AS $team}
-                    {var $score = $teamsScore[$team->id_team]??null}
-                    {dump $score}
+                {var $i = 0}
+            {foreach $teams AS $teamRow}
+                    {continueIf $teamRow['model']['category'] == $category}
 
                     {*n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted"*}
                     <tr>
-                        <td>{if $team->disqualified == 0}{$i++}{else}DSQ{/if}</td>
+                        <td>{if $teamRow['model']['disqualified'] == 0}{$i++}{else}DSQ{/if}</td>
                         <td>
-                            {$team->name}
-                            {foreach $team->getCompetitors() as $competitor}
-                                <span class="flag-icon flag-icon-{$competitor->school->country_iso|lower}"></span>
-                            {/foreach}
+                            {$teamRow['model']['name']}
                         </td>
                         <td>
-                            {if $score && $team->disqualified == 0}
-                                {$score['score']}
+                            {if $teamRow['model']['disqualified'] == 0}
+                                {$teamRow['score']}
                             {else}
                                 0
                             {/if}
                         </td>
                         <td>
-                            {if $team->disqualified == 0}
-                                {isset($bonus[$team->id_team])?$bonus[$team->id_team]['score']:0}
+                            {if $teamRow['model']['disqualified'] == 0}
+                                {$teamRow['bonus']}
                             {else}
                                 0
                             {/if}

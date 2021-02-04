@@ -15,10 +15,6 @@ final class ServiceCompetitor extends AbstractService {
         parent::__construct($connection, $conventions, 'competitor', ModelCompetitor::class);
     }
 
-    public function findAllByTeam(ModelTeam $team): TypedTableSelection {
-        return $this->getTable()->where('id_team', $team->id_team);
-    }
-
     public function findByEmail(string $email): ?ModelCompetitor {
         /** @var ModelCompetitor $competitor */
         $competitor = $this->getTable()->where('email', $email)->fetch();

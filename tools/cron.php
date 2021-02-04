@@ -29,9 +29,6 @@ function resetTemporaryTables(Explorer $explorer): void {
     $tables = [
         //'task_result' => 'task_result',
         'task_stat' => 'task_stat',
-        'penality' => 'penality',
-        'bonus' => 'bonus',
-        'total_result_cached' => 'total_result',
     ];
 
     foreach ($tables as $view => $table) {
