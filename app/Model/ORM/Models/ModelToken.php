@@ -17,8 +17,6 @@ use Nette\Database\Table\ActiveRow;
 final class ModelToken extends AbstractModel {
 
     public function getTeam(): ModelTeam {
-        /** @var ModelToken $token */
-        $token = ModelTeam::createFromActiveRow($this->team);
-        return $token;
+        return ModelTeam::createFromActiveRow($this->team);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace FOL\Model\ORM\Models;
 
+use DateTimeInterface;
 use Fykosak\Utils\ORM\AbstractModel;
 use Nette\Database\Table\ActiveRow;
 
@@ -13,20 +14,16 @@ use Nette\Database\Table\ActiveRow;
  * @property-read bool skipped
  * @property-read bool substitute
  * @property-read int points
- * @property-read \DateTimeInterface inserted
+ * @property-read DateTimeInterface inserted
  */
 final class ModelTaskState extends AbstractModel {
 
     public function getTask(): ModelTask {
-        /** @var ModelTask $task */
-        $task = ModelTask::createFromActiveRow($this->task);
-        return $task;
+        return ModelTask::createFromActiveRow($this->task);
     }
 
     public function getTeam(): ModelTeam {
-        /** @var ModelTeam $task */
-        $team = ModelTeam::createFromActiveRow($this->task);
-        return $team;
+        return ModelTeam::createFromActiveRow($this->task);
     }
 
     public function __toArray(): array {

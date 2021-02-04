@@ -2,7 +2,6 @@
 
 namespace FOL\Components\TaskStats;
 
-use FOL\Model\ORM\TasksService;
 use FOL\Components\BaseComponent;
 
 final class TaskStatsComponent extends BaseComponent {

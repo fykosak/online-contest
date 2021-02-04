@@ -25,6 +25,11 @@ final class AddTaskCard extends SingleFormCard {
         $this->serviceGroup = $serviceGroup;
     }
 
+    /**
+     * @param array|null $values
+     * @throws BadRequestException
+     * @throws Exceptions\CardCannotBeUsedException
+     */
     public function checkRequirements(?array $values = null): void {
         parent::checkRequirements();
         if (!count($this->getActiveLines())) {
@@ -35,7 +40,7 @@ final class AddTaskCard extends SingleFormCard {
     public function decorateFormContainer(Container $container, string $lang): void {
         $items = [];
         foreach ($this->getActiveLines() as $key => $line) {
-            $items[$key] = $line->code_name . ": " . GettextTranslator::i18nHelper($line, 'text', $lang);
+            $items[$key] = $line->code_name . ': ' . GettextTranslator::i18nHelper($line, 'text', $lang);
         }
 
         $container->addSelect('group', _('Line'), $items);

@@ -2,23 +2,16 @@
 
 namespace FOL\Modules\GameModule;
 
-use FOL\Model\ORM\Models\ModelTask;
-use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Services\ServiceTask;
-use FOL\Model\ORM\Services\ServiceTaskState;
-use FOL\Model\ORM\TasksService;
 use FOL\Model\ScoreStrategy;
-use Nette\Database\Table\ActiveRow;
 use Tracy\Debugger;
 
 class TaskPresenter extends BasePresenter {
 
-    private TasksService $tasksService;
     private ServiceTask $serviceTask;
-    public ScoreStrategy $scoreStrategy;
+    private ScoreStrategy $scoreStrategy;
 
-    public function injectSecondary(TasksService $tasksService, ServiceTask $serviceTask, ScoreStrategy $scoreStrategy): void {
-        $this->tasksService = $tasksService;
+    public function injectSecondary(ServiceTask $serviceTask, ScoreStrategy $scoreStrategy): void {
         $this->serviceTask = $serviceTask;
         $this->scoreStrategy = $scoreStrategy;
     }
@@ -35,7 +28,9 @@ class TaskPresenter extends BasePresenter {
         // tasks
         $solved = $team->getSolved()->fetchPairs('id_task', 'id_task');
         $skipped = $team->getSkipped()->fetchPairs('id_task', 'id_task');
-        $unsolved = $team->getSubmitAvailableTasks()->select('group:task.id_task AS id_task')->fetchPairs('id_task', 'id_task');
+        $unsolved = $team->getSubmitAvailableTasks()
+            ->select('group:task.id_task')
+            ->fetchPairs('id_task', 'id_task');
 
         $unsolvedTasks = [];
         $skippedTasks = [];
@@ -44,22 +39,20 @@ class TaskPresenter extends BasePresenter {
 
         $query = $team->getAvailableTasks()
             ->order('group.id_group')
-            ->order('group:task.number')
-            ->select('group:task.id_task AS id_task')
-            ->fetchAssoc('id_task');
+            ->order('group:task.number')->select('group:task.id_task AS id_task');
 
-        /** @var ActiveRow|ModelTaskState $row */
-        foreach ($query as $taskId => $datum) {
-            if (isset($solved[$taskId])) {
-                $solvedTasks[] = $taskId;
-            } elseif (isset($skipped[$taskId])) {
-                $skippedTasks[] = $taskId;
-            } elseif (isset($unsolved[$taskId])) {
-                $unsolvedTasks[] = $taskId;
+        foreach ($query as $datum) {
+            if (isset($solved[$datum->id_task])) {
+                $solvedTasks[] = $datum->id_task;
+            } elseif (isset($skipped[$datum->id_task])) {
+                $skippedTasks[] = $datum->id_task;
+            } elseif (isset($unsolved[$datum->id_task])) {
+                $unsolvedTasks[] = $datum->id_task;
             } else {
-                $missedTasks[] = $taskId;
+                $missedTasks[] = $datum->id_task;
             }
         }
+        $this->template->scoreStrategy = $this->scoreStrategy;
         $this->template->solvedTasks = $this->serviceTask->getTable()->where('id_task', $solvedTasks);
         $this->template->skippedTasks = $this->serviceTask->getTable()->where('id_task', $skippedTasks);
         $this->template->unsolvedTasks = $this->serviceTask->getTable()->where('id_task', $unsolvedTasks);

@@ -3,9 +3,7 @@
 namespace FOL\Model\ORM\Services;
 
 use FOL\Model\ORM\Models\ModelCompetitor;
-use FOL\Model\ORM\Models\ModelTeam;
 use Fykosak\Utils\ORM\AbstractService;
-use Fykosak\Utils\ORM\TypedTableSelection;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 

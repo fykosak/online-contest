@@ -3,7 +3,6 @@
 namespace FOL\Components\TeamList;
 
 use FOL\Components\BaseComponent;
-use FOL\Model\ORM\Services\ServiceCompetitor;
 use FOL\Model\ORM\Services\ServiceTeam;
 
 final class TeamListComponent extends BaseComponent {

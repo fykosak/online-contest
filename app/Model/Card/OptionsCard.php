@@ -35,11 +35,10 @@ final class OptionsCard extends SingleFormCard {
 
     public function decorateFormContainer(Container $container, string $lang): void {
         $items = [];
-        foreach ($this->getTasks() as $task) {
+        foreach ($this->getTasks() as $row) {
+            $task = ModelTask::createFromActiveRow($row);
             // TODO has every answer options?
-            /** @var ModelTask $t */
-            $t = $this->serviceTask->findByPrimary($task->id_task);
-            $items[$task->id_task] = $t->getLabel($lang);
+            $items[$task->id_task] = $task->getLabel($lang);
         }
         $container->addSelect('task', _('Task'), $items);
     }

@@ -4,10 +4,7 @@ namespace FOL\Model\ORM\Models;
 
 use DateTimeInterface;
 use Fykosak\Utils\ORM\AbstractModel;
-use Fykosak\Utils\ORM\TypedTableSelection;
-use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\GroupedSelection;
-use Nette\Database\Table\Selection;
 
 /**
  * @property-read int id_team
@@ -64,7 +61,7 @@ final class ModelTeam extends AbstractModel {
             ->where('group:period.end > NOW()');
     }
 
-    public function getSubmitAvailableTasks(): Selection {
+    public function getSubmitAvailableTasks(): GroupedSelection {
         $source = $this->getAvailableTasks();
         $source->where('group:task.id_task NOT IN ?', $this->getSolved()->fetchPairs('id_task', 'id_task'));
         return $source;

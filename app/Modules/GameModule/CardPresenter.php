@@ -21,6 +21,9 @@ class CardPresenter extends BasePresenter {
         $this->cardFactory = $cardFactory;
     }
 
+    /**
+     * @throws BadRequestException
+     */
     public function renderList(): void {
         $this->setPageTitle(_('Cards'));
         $this->template->cards = $this->cardFactory->createAll($this->getLoggedTeam());

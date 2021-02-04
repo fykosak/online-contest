@@ -17,6 +17,7 @@ use FOL\Model\ScoreStrategy;
 use Fykosak\Utils\Logging\FlashMessageDump;
 use Fykosak\Utils\Logging\MemoryLogger;
 use Nette\Application\AbortException;
+use Nette\Application\BadRequestException;
 use Nette\Application\ForbiddenRequestException;
 use Nette\Application\UI\Form;
 use Nette\Database\DriverException;
@@ -46,6 +47,16 @@ final class AnswerFormComponent extends BaseComponent {
         parent::__construct($container);
     }
 
+    /**
+     * @param TasksService $tasksService
+     * @param AnswersService $answersService
+     * @param ScoreService $scoreService
+     * @param ServiceYear $serviceYear
+     * @param User $user
+     * @param CardFactory $cardFactory
+     * @param ScoreStrategy $scoreStrategy
+     * @throws BadRequestException
+     */
     public function injectSecondary(
         TasksService $tasksService,
         AnswersService $answersService,
@@ -96,7 +107,7 @@ final class AnswerFormComponent extends BaseComponent {
                     'task_id' => $this->task->id_task,
                 ]);
                 FlashMessageDump::dump($logger, $this->getPresenter());
-                $this->getPresenter()->flashMessage(_('Použili jste kartičku za dvojnásobek bodů.'), 'info');
+                $this->getPresenter()->flashMessage(_('Použili jste kartičku za dvojnásobek bodů.'));
             }
 
             if ($correct) {
@@ -113,13 +124,13 @@ final class AnswerFormComponent extends BaseComponent {
             if ($e->getCode() == AnswersService::ERROR_TIME_LIMIT) {
                 $this->getPresenter()->flashMessage(
                     Html::el('span')
-                        ->addText(_('Lze odpovídat až za') . " ")
+                        ->addText(_('Lze odpovídat až za') . ' ')
                         ->addHtml(
                             Html::el('span')
                                 ->addAttributes(['class' => 'timesec'])
                                 ->addHtml($e->getMessage())
                         )
-                        ->addText(" " . _('sekund.')), 'warning');
+                        ->addText(' ' . _('sekund.')), 'warning');
                 return;
             } elseif ($e->getCode() == AnswersService::ERROR_OUT_OF_PERIOD) {
                 $this->getPresenter()->flashMessage(_('Není aktuální žádné odpovídací období.'), 'danger');
@@ -175,6 +186,9 @@ final class AnswerFormComponent extends BaseComponent {
         return $form;
     }
 
+    /**
+     * @throws ForbiddenRequestException
+     */
     protected function startUp(): void {
         parent::startUp();
         if (!$this->user->isLoggedIn()) {
@@ -198,7 +212,7 @@ final class AnswerFormComponent extends BaseComponent {
             'type' => $this->task->answer_type,
             'maxPoints' => $this->task->points,
             'curPoints' => $this->scoreStrategy->getSingleTaskScore($this->team, $this->task),
-        ];;
+        ];
 
         $this->template->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'answerForm.latte');
         parent::render();

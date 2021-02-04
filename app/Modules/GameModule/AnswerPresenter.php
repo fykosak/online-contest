@@ -7,7 +7,6 @@ use FOL\Components\AnswerForm\AnswerFormComponent;
 use FOL\Components\AnswerHistory\AnswerHistoryComponent;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Services\ServiceTask;
-use Nette\Application\BadRequestException;
 
 class AnswerPresenter extends BasePresenter {
 

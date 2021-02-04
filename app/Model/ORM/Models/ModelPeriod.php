@@ -2,6 +2,7 @@
 
 namespace FOL\Model\ORM\Models;
 
+use DateTime;
 use DateTimeInterface;
 use Fykosak\Utils\ORM\AbstractModel;
 use Nette\Database\Table\ActiveRow;
@@ -20,7 +21,7 @@ use Nette\Database\Table\ActiveRow;
 final class ModelPeriod extends AbstractModel {
 
     public function isActive(): bool {
-        return $this->begin <= new \DateTime() && $this->end > new \DateTime();
+        return $this->begin <= new DateTime() && $this->end > new DateTime();
     }
 
     public function getGroup(): ModelGroup {

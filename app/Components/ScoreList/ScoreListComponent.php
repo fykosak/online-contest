@@ -9,7 +9,6 @@ use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceTaskState;
 use FOL\Model\ORM\Services\ServiceTeam;
-use FOL\Model\ORM\TasksService;
 use Fykosak\Utils\FrontEndComponents\AjaxComponent;
 use Nette\Application\AbortException;
 use Nette\Application\UI\InvalidLinkException;
@@ -21,7 +20,6 @@ use Throwable;
 
 final class ScoreListComponent extends AjaxComponent {
 
-    private TasksService $tasksService;
     private ServiceTeam $serviceTeam;
     private ServiceTaskState $serviceTaskState;
     private Storage $storage;
@@ -35,14 +33,12 @@ final class ScoreListComponent extends AjaxComponent {
     }
 
     public function injectPrimary(
-        TasksService $tasksService,
         ServiceTeam $serviceTeam,
         ServiceTaskState $serviceTaskState,
         ServiceTask $serviceTask,
         Storage $storage,
         GameSetup $gameSetup
     ): void {
-        $this->tasksService = $tasksService;
         $this->serviceTeam = $serviceTeam;
         $this->serviceTaskState = $serviceTaskState;
         $this->storage = $storage;

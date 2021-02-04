@@ -3,7 +3,6 @@
 namespace FOL\Model\ORM\Services;
 
 use FOL\Model\ORM\Models\ModelAnswerOptions;
-use FOL\Model\ORM\Models\ModelTask;
 use Fykosak\Utils\ORM\AbstractService;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;

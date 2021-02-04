@@ -43,6 +43,9 @@ final class ResultsComponent extends BaseComponent {
         parent::render();
     }
 
+    /**
+     * @throws \Throwable
+     */
     protected function beforeRender(): void {
         $this->template->teams = $this->cache->load('data', function (&$dep) {
             $dep[Cache::EXPIRATION] = '+30 second';

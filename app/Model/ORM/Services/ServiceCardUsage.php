@@ -3,7 +3,6 @@
 namespace FOL\Model\ORM\Services;
 
 use FOL\Model\ORM\Models\ModelCardUsage;
-use FOL\Model\ORM\Models\ModelTeam;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;
 use Fykosak\Utils\ORM\AbstractService;

@@ -5,9 +5,7 @@ namespace FOL\Components\NotificationForm;
 use FOL\Components\BaseForm;
 use FOL\Model\ORM\Services\ServiceNotification;
 use Nette\Application\AbortException;
-use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
-use Nette\Http\Response;
 use FOL\Components\BaseComponent;
 
 final class NotificationFormComponent extends BaseComponent {

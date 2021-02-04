@@ -10,7 +10,6 @@ use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Services\ServiceTaskHint;
 use Fykosak\Utils\Logging\Logger;
-use Nette\Database\Table\ActiveRow;
 use Nette\Forms\Container;
 use Nette\Utils\Html;
 
@@ -52,12 +51,10 @@ final class HintCard extends SingleFormCard {
 
     public function decorateFormContainer(Container $container, string $lang): void {
         $items = [];
-        /** @var ModelTask|ActiveRow $task */
-        foreach ($this->team->getSubmitAvailableTasks()->fetchAll() as $task) {
+        foreach ($this->team->getSubmitAvailableTasks() as $row) {
+            $task = ModelTask::createFromActiveRow($row);
             if ($this->serviceTaskHint->findByPrimary($task->id_task)) {
-                /** @var ModelTask $t */
-                $t = $this->serviceTask->findByPrimary($task->id_task);
-                $items[$task->id_task] = $t->getLabel($lang);
+                $items[$task->id_task] = $task->getLabel($lang);
             }
         }
         $container->addSelect('task', _('Task'), $items);
