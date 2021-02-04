@@ -4,7 +4,6 @@ namespace FOL\Modules\GameModule;
 
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ScoreStrategy;
-use Tracy\Debugger;
 
 class TaskPresenter extends BasePresenter {
 
