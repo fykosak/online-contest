@@ -14,13 +14,11 @@ use Tracy\Debugger;
 class TaskPresenter extends BasePresenter {
 
     private TasksService $tasksService;
-    private ServiceTaskState $serviceTaskState;
     private ServiceTask $serviceTask;
     public ScoreStrategy $scoreStrategy;
 
-    public function injectSecondary(TasksService $tasksService, ServiceTaskState $serviceTaskState, ServiceTask $serviceTask, ScoreStrategy $scoreStrategy): void {
+    public function injectSecondary(TasksService $tasksService, ServiceTask $serviceTask, ScoreStrategy $scoreStrategy): void {
         $this->tasksService = $tasksService;
-        $this->serviceTaskState = $serviceTaskState;
         $this->serviceTask = $serviceTask;
         $this->scoreStrategy = $scoreStrategy;
     }
@@ -35,16 +33,23 @@ class TaskPresenter extends BasePresenter {
         $this->template->mirrors = $mirrors;
 
         // tasks
-        $solved = $this->serviceTaskState->findSolved($team)->fetchPairs('id_task', 'id_task');
-        $skipped = $this->serviceTaskState->findSkipped($team)->fetchPairs('id_task', 'id_task');
-        $unsolved = $this->tasksService->findUnsolved($team);
+        $solved = $team->getSolved()->fetchPairs('id_task', 'id_task');
+        $skipped = $team->getSkipped()->fetchPairs('id_task', 'id_task');
+        $unsolved = $team->getSubmitAvailableTasks()->select('group:task.id_task AS id_task')->fetchPairs('id_task', 'id_task');
 
         $unsolvedTasks = [];
         $skippedTasks = [];
         $solvedTasks = [];
         $missedTasks = [];
+
+        $query = $team->getAvailableTasks()
+            ->order('group.id_group')
+            ->order('group:task.number')
+            ->select('group:task.id_task AS id_task')
+            ->fetchAssoc('id_task');
+
         /** @var ActiveRow|ModelTaskState $row */
-        foreach ($this->tasksService->findProblemAvailable($team)->fetchAssoc('id_task') as $taskId => $datum) {
+        foreach ($query as $taskId => $datum) {
             if (isset($solved[$taskId])) {
                 $solvedTasks[] = $taskId;
             } elseif (isset($skipped[$taskId])) {
@@ -55,7 +60,6 @@ class TaskPresenter extends BasePresenter {
                 $missedTasks[] = $taskId;
             }
         }
-        $this->template->serviceTask = $this->serviceTask;
         $this->template->solvedTasks = $this->serviceTask->getTable()->where('id_task', $solvedTasks);
         $this->template->skippedTasks = $this->serviceTask->getTable()->where('id_task', $skippedTasks);
         $this->template->unsolvedTasks = $this->serviceTask->getTable()->where('id_task', $unsolvedTasks);

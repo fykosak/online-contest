@@ -94,5 +94,4 @@ class FOF2021ScoreStrategy extends ScoreStrategy {
         }
         return $bonus;
     }
-
 }

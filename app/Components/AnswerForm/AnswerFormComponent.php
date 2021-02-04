@@ -185,7 +185,7 @@ final class AnswerFormComponent extends BaseComponent {
         } elseif (!$this->serviceYear->getCurrent()->isGameStarted()) {
             $this->flashMessage(_('Hra ještě nezačala.'), 'danger');
         }
-        if (!$this->tasksService->findSubmitAvailable($this->team)->where('id_task', $this->task->id_task)->fetch()) {
+        if (!$this->team->getSubmitAvailableTasks()->where('id_task', $this->task->id_task)->fetch()) {
             throw new ForbiddenRequestException();
 
         }

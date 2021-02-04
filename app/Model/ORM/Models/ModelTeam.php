@@ -4,8 +4,10 @@ namespace FOL\Model\ORM\Models;
 
 use DateTimeInterface;
 use Fykosak\Utils\ORM\AbstractModel;
+use Fykosak\Utils\ORM\TypedTableSelection;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\GroupedSelection;
+use Nette\Database\Table\Selection;
 
 /**
  * @property-read int id_team
@@ -53,5 +55,30 @@ final class ModelTeam extends AbstractModel {
 
     public function getAnswers(): GroupedSelection {
         return $this->related('answer');
+    }
+
+    public function getAvailableTasks(): GroupedSelection {
+        return $this->related('group_state')
+            ->where('group:task.number <= group_state.task_counter')
+            ->where('group:period.begin <= NOW()')
+            ->where('group:period.end > NOW()');
+    }
+
+    public function getSubmitAvailableTasks(): Selection {
+        $source = $this->getAvailableTasks();
+        $source->where('group:task.id_task NOT IN ?', $this->getSolved()->fetchPairs('id_task', 'id_task'));
+        return $source;
+    }
+
+    public function getTaskState(): GroupedSelection {
+        return $this->related('task_state');
+    }
+
+    public function getSolved(): GroupedSelection {
+        return $this->getTaskState()->where('points IS NOT NULL');
+    }
+
+    public function getSkipped(): GroupedSelection {
+        return $this->getTaskState()->where('skipped = 1');
     }
 }

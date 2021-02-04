@@ -7,14 +7,11 @@ use FOL\Components\BaseComponent;
 
 final class TaskStatsComponent extends BaseComponent {
 
-    private TasksService $tasksService;
-
-    public function injectTasksService(TasksService $tasksService): void {
-        $this->tasksService = $tasksService;
+    public function injectTasksService(): void {
     }
 
     protected function beforeRender(): void {
-        $this->template->tasks = $this->tasksService->findAllStats();
+      //  $this->template->tasks = $this->tasksService->findAllStats(); TODO
     }
 
     public function render(): void {

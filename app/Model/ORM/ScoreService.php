@@ -6,38 +6,26 @@ use DateTime;
 use Exception;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
-use FOL\Model\ORM\Services\ServiceGroup;
 use FOL\Model\ORM\Services\ServiceLog;
-use FOL\Model\ORM\Services\ServicePeriod;
 use FOL\Model\ORM\Services\ServiceTaskState;
-use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Model\ScoreStrategy;
 use Nette\Database\Explorer;
 use Tracy\Debugger;
 
 final class ScoreService extends AbstractService {
 
-    private ServicePeriod $servicePeriod;
     private ServiceTaskState $serviceTaskState;
     private ScoreStrategy $scoreStrategy;
-    private ServiceTeam $serviceTeam;
-    private ServiceGroup $serviceGroup;
 
     public function __construct(
         Explorer $explorer,
-        ServicePeriod $servicePeriod,
         ServiceLog $serviceLog,
         ServiceTaskState $serviceTaskState,
-        ScoreStrategy $scoreStrategy,
-        ServiceTeam $serviceTeam,
-        ServiceGroup $serviceGroup
+        ScoreStrategy $scoreStrategy
     ) {
         parent::__construct($explorer, $serviceLog);
-        $this->servicePeriod = $servicePeriod;
         $this->serviceTaskState = $serviceTaskState;
         $this->scoreStrategy = $scoreStrategy;
-        $this->serviceGroup = $serviceGroup;
-        $this->serviceTeam = $serviceTeam;
     }
 
     public function updateAfterInsert(ModelTeam $team, ModelTask $task): void {

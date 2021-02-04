@@ -12,6 +12,7 @@ use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\TasksService;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Database\Explorer;
+use Nette\Database\Table\ActiveRow;
 use Nette\Forms\Container;
 use Nette\SmartObject;
 use Nette\Utils\Html;
@@ -45,8 +46,8 @@ abstract class Card {
     }
 
     public final function getUsage(): ?ModelCardUsage {
-        $row = $this->team->related('card_usage')->where('card_type',$this->getType());
-        return $row?ModelCardUsage::createFromActiveRow($row):null;
+        $row = $this->team->related('card_usage')->where('card_type', $this->getType())->fetch();
+        return $row ? ModelCardUsage::createFromActiveRow($row) : null;
     }
 
     public final function logUsage(array $values): void {
@@ -78,9 +79,8 @@ abstract class Card {
     protected function getTasks(): array {
         if (!isset($this->tasks)) {
             $this->tasks = [];
-            /** @var ModelTask $task */
-            foreach ($this->tasksService->findSubmitAvailable($this->team)->fetchAll() as $task) {
-                $this->tasks[$task->id_task] = $task;
+            foreach ($this->team->getSubmitAvailableTasks() as $task) {
+                $this->tasks[$task->id_task] = ModelTask::createFromActiveRow($task);
             }
         }
         return $this->tasks;

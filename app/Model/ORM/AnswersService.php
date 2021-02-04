@@ -42,8 +42,7 @@ final class AnswersService extends AbstractService {
 
         $this->explorer->beginTransaction();
         // Correct answers of the team
-        $correctAnswers = $this->serviceAnswer->findAllCorrect($team)
-            ->fetchPairs('id_answer', 'id_answer');
+        $correctAnswers = $team->getCorrect()->fetchPairs('id_answer', 'id_answer');
         // Last answer from same group has to be older than XX seconds
         $query = $this->serviceAnswer->getTable()->where('task.id_group', $task->id_group)
             ->where('id_team', $team->id_team)

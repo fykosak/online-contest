@@ -8,78 +8,25 @@ use FOL\Model\ORM\Models\ModelGroup;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Models\ModelTeam;
-use FOL\Model\ORM\Services\ServiceAnswer;
-use FOL\Model\ORM\Services\ServiceCardUsage;
 use FOL\Model\ORM\Services\ServiceLog;
 use FOL\Model\ORM\Services\ServiceTaskState;
 use Nette\Database\Explorer;
-use Nette\Database\Table\Selection;
 use Nette\InvalidStateException;
 
 final class TasksService extends AbstractService {
 
     private ServiceTaskState $serviceTaskState;
-    private ServiceAnswer $serviceAnswer;
-    private ServiceCardUsage $serviceCardUsage;
 
-    public function __construct(ServiceCardUsage $serviceCardUsage, ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState, ServiceAnswer $serviceAnswer) {
+    public function __construct(ServiceLog $serviceLog, Explorer $explorer, ServiceTaskState $serviceTaskState) {
         parent::__construct($explorer, $serviceLog);
         $this->serviceTaskState = $serviceTaskState;
-        $this->serviceAnswer = $serviceAnswer;
-        $this->serviceCardUsage = $serviceCardUsage;
-    }
-
-    public function findProblemAvailable(ModelTeam $team): Selection {
-        return $this->explorer->table('view_available_task')
-            ->where('id_team', $team->id_team)
-            ->order('id_group')
-            ->order('number');
-    }
-
-    public function findSubmitAvailable(ModelTeam $team): Selection {
-        $source = $this->explorer->table('view_submit_available_task')
-            ->where('id_team', $team->id_team);
-
-        $solved = $this->serviceTaskState->findSolved($team)->fetchPairs('id_task', 'id_task');
-
-        // Remove solved tasks from the source
-        if (count($solved)) {
-            $source->where('id_task NOT IN ?', $solved);
-        }
-        return $source;
-    }
-
-    /**
-     * Find missed tasks (after end of hurry up)
-     *
-     * @param ModelTeam $team
-     * @return array id_task => id_task
-     */
-    public function findMissed(ModelTeam $team): array {
-        $source = $this->explorer->query('SELECT `view_available_task`.* FROM view_available_task
-            RIGHT JOIN `period` ON `period`.`id_group` = `view_available_task`.`id_group`
-            AND (`period`.`begin` > NOW() OR `period`.`end` < NOW()) WHERE id_team = ?', $team->id_team);
-        return $source->fetchPairs('id_task', 'id_task');
-    }
-
-    /**
-     * Find unsolved tasks, which can be submitted (i.e. not hurry up after its end)
-     *
-     * @param ModelTeam $team
-     * @return array id_task => id_task
-     */
-    public function findUnsolved(ModelTeam $team): array {
-        return $this->findSubmitAvailable($team)->fetchPairs('id_task', 'id_task');
-    }
-
-    public function findAllStats(): Selection {
-        return $this->explorer->table('tmp_task_stat')->order('id_group')->order('number');
     }
 
     public function skip(ModelTeam $team, ModelTask $task): ModelTaskState {
         // Check that skip is allowed for task
-        $answers = $this->serviceAnswer->findAllCorrect($team)->where('answer.id_task = ?', $task->id_task);
-        if ($answers->count() > 0) {
+
+        $answers = $team->getCorrect()->where('answer.id_task = ?', $task->id_task);
+        if ($answers->count('*') > 0) {
             $this->log($team->id_team, 'skip_tried', sprintf('The team tried to skip the task [%i].', $task->id_task));
             throw new InvalidStateException(sprintf('Skipping not allowed for the task %i.', $task->id_task), AnswersService::ERROR_SKIP_OF_ANSWERED);
         }

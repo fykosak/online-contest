@@ -53,7 +53,7 @@ final class HintCard extends SingleFormCard {
     public function decorateFormContainer(Container $container, string $lang): void {
         $items = [];
         /** @var ModelTask|ActiveRow $task */
-        foreach ($this->tasksService->findSubmitAvailable($this->team)->fetchAll() as $task) {
+        foreach ($this->team->getSubmitAvailableTasks()->fetchAll() as $task) {
             if ($this->serviceTaskHint->findByPrimary($task->id_task)) {
                 /** @var ModelTask $t */
                 $t = $this->serviceTask->findByPrimary($task->id_task);

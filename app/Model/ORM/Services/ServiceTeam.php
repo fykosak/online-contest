@@ -6,7 +6,6 @@ use FOL\Model\ORM\Models\ModelTeam;
 use Fykosak\Utils\ORM\AbstractService;
 use Nette\Database\Conventions;
 use Nette\Database\Explorer;
-use Nette\Database\Table\Selection;
 
 final class ServiceTeam extends AbstractService {
 
