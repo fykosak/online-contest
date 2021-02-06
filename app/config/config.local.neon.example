@@ -50,16 +50,3 @@ parameters:
         link:
             cs: http://online.fykos.local/cs/
             en: http://online.fykos.local/en/
-#TODO not reimplemented yet
-#[common]
-#debug.enable = TRUE
-#
-#; TODO is this necessary?
-#;smtp.host = ""
-#;smtp.username = ""
-#;smtp.password = ""
-#
-#
-#[development < common]
-#
-#[production < common]

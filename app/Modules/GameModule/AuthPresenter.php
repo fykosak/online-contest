@@ -9,7 +9,7 @@ use Nette\Application\AbortException;
 
 /**
  * Class AuthPresenter
- * TODO Take care thi presenter is not child of GameModule/BasePresenter
+ * @note Take care thi presenter is not child of GameModule/BasePresenter
  */
 class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
 

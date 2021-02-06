@@ -15,6 +15,11 @@ class Router {
             'presenter' => 'Default',
             'action' => 'default',
         ], Route::ONE_WAY);
+        $router->addRoute('error', [
+            'module' => 'Frontend',
+            'presenter' => 'Error',
+            'action' => 'default',
+        ]);
 
         $router->addRoute('<module public|org>/[<presenter>/[<action>/[<id>]]]', [
             'presenter' => 'Default',

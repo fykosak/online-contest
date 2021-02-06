@@ -13,10 +13,10 @@
 
             <div class="{($post->org?'callout-warning':'callout-primary') . ' chat-item callout'} "
                  {if !$post->id_parent}style="margin: 0 0 0 20px"{/if}>
-                <h3 {if $post->org}style="color: orange"{/if}>
-                    {if $post->org}{_'Organizátoři'}{else}{$post->getTeam()->name}{/if} <span
-                            class="pull-right small">{$post['inserted']|time}</span>
-                </h3>
+                <h4 {if $post->org}style="color: orange"{/if}>
+                    {if $post->org}{_'Organizátoři'}{else}{$post->getTeam()->name}{/if}
+                    <small class="pull-right small text-muted">{$post['inserted']|time}</small>
+                </h4>
                 <div>{$post['content']}</div>
                 {if $user->isLoggedIn() && !$post->id_parent}
                     <div>

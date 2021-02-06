@@ -852,3 +852,9 @@ footer {
 .callout-bdc h4 {
     color: #29527a;
 }
+
+.last-update-info {
+    position: fixed;
+    top: 0;
+    right: 0;
+}

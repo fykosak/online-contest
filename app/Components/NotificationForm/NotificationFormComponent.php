@@ -33,7 +33,7 @@ final class NotificationFormComponent extends BaseComponent {
 
     protected function createComponentForm(): BaseForm {
         $form = new BaseForm($this->getContext());
-        $form->addText('message', _('Message'))
+        $form->addTextArea('message', _('Message'))
             ->setRequired(true);
         $form->addSelect('lang', _('Lang'), $this->translator->getSupportedLanguages())
             ->setRequired(true);

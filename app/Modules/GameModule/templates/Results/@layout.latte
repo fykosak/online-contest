@@ -1,4 +1,4 @@
-{extends '../@layout.latte'}
+{layout '../@layout.latte'}
 
 {block #title}
     {if $control->serviceYear->getCurrent()->isGameEnd() && false}
@@ -58,7 +58,5 @@
             {/if}
         </div>
     {/if}
-
-
     {include parent}
 {/block}

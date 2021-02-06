@@ -3,78 +3,6 @@
     font-weight: bold;
 }
 
-/************************ SCORE STATS *****************************************/
-#score-stats-wrapper {
-    /*overflow: auto;*/
-}
-
-.score-stats td, .score-stats th {
-    min-width: 40px;
-    text-align: center;
-}
-
-.score-stats th {
-    background: #094c77;
-    color: #c1e2f8;
-    padding: 2px;
-}
-
-.score-stats td.team {
-    font-weight: bolder;
-    width: 140px;
-}
-
-.score-stats td.done {
-    color: white;
-}
-
-.ratio-0 {
-    background-color: #7ea !important;
-}
-
-.ratio-1 {
-    background-color: #4d4 !important;
-}
-
-.ratio-2 {
-    background-color: #4b4 !important;
-}
-
-.ratio-3 {
-    background-color: #392 !important;
-}
-
-.ratio-5 {
-    background-color: #148800 !important;
-}
-
-.score-stats td.skipped {
-    background-color: lightgray;
-}
-
-.score-stats tr.line td {
-    border-top: 1px dotted #dddddd;
-}
-
-#score-left {
-    float: left;
-    overflow: auto;
-    width: 25%;
-    margin-top: -50px;
-}
-
-#score-left table {
-    width: 100%;
-}
-
-#score-right {
-    float: left;
-    overflow: auto;
-    width: 75%;
-    margin-top: -50px;
-}
-
-
 #flashes .error, ul.error li {
     color: #7B0404;
     background-color: #ffeedd;
@@ -109,8 +37,8 @@
 
 
 /******************* BASIC ELEMENTS *******************************************/
-h1, h2, h3, h4, h5, h6, strong, a {
-    color: #448fda;
+h2, h3, h4, h5, h6, strong {
+    color: #434343;
 }
 
 h1 {

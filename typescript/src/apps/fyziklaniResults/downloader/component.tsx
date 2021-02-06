@@ -1,7 +1,6 @@
 import { ResponseData } from '@apps/fyziklaniResults/downloader/inferfaces';
 import { NetteActions } from '@appsCollector/netteActions';
 import { dispatchFetch } from '@fetchApi/netteFetch';
-import { lang } from '@i18n/i18n';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import {
@@ -9,6 +8,7 @@ import {
     Dispatch,
 } from 'redux';
 import { FyziklaniResultsCoreStore } from '../shared/reducers/coreStore';
+import { lang } from '@i18n/i18n';
 
 interface StateProps {
     error: Error | any;
@@ -21,8 +21,6 @@ interface StateProps {
 
 interface DispatchProps {
     onWaitForFetch(delay: number, url: string): void;
-
-    onFetch(url: string): void;
 }
 
 interface OwnProps {
@@ -43,17 +41,14 @@ class Downloader extends React.Component<DispatchProps & StateProps & OwnProps, 
     }
 
     public render() {
-        const {lastUpdated, isRefreshing, isSubmitting, onFetch, error} = this.props;
+        const {lastUpdated, isRefreshing, isSubmitting, error} = this.props;
         return (
             <div className="last-update-info bg-white">
                 <i
                     title={error ? (error.status + ' ' + error.statusText) : lastUpdated}
                     className={isRefreshing ? 'text-success fa fa-check' : 'text-danger fa fa-exclamation-triangle'}/>
                 {isSubmitting && (<i className="fa fa-spinner fa-spin"/>)}
-                {!isRefreshing && (<button className="btn btn-primary btn-sm" onClick={() => {
-                    const url = this.props.actions.getAction('refresh');
-                    return onFetch(url);
-                }}>{lang.getText('Fetch')}</button>)}
+                <span>{lang.getText('Last updated:') + ' ' + (new Date(lastUpdated)).toLocaleTimeString()}</span>
             </div>
         );
     }
@@ -72,7 +67,6 @@ const mapStateToProps = (state: FyziklaniResultsCoreStore): StateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch<Action<string>>): DispatchProps => {
     return {
-        onFetch: (url) => dispatchFetch<ResponseData>(url, dispatch, null),
         onWaitForFetch: (delay: number, url: string): number => setTimeout(() => {
             return dispatchFetch<ResponseData>(url, dispatch, null);
         }, delay),

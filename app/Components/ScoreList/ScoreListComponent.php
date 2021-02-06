@@ -15,6 +15,7 @@ use Nette\Application\UI\InvalidLinkException;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
 use Nette\DI\Container;
+use Nette\Security\User;
 use Nette\Utils\DateTime;
 use Throwable;
 
@@ -26,6 +27,7 @@ final class ScoreListComponent extends AjaxComponent {
     private Cache $cache;
     private GameSetup $gameSetup;
     private ServiceTask $serviceTask;
+    private User $user;
 
     public function __construct(Container $container) {
         parent::__construct($container, 'score-list');
@@ -37,13 +39,15 @@ final class ScoreListComponent extends AjaxComponent {
         ServiceTaskState $serviceTaskState,
         ServiceTask $serviceTask,
         Storage $storage,
-        GameSetup $gameSetup
+        GameSetup $gameSetup,
+        User $user
     ): void {
         $this->serviceTeam = $serviceTeam;
         $this->serviceTaskState = $serviceTaskState;
         $this->storage = $storage;
         $this->gameSetup = $gameSetup;
         $this->serviceTask = $serviceTask;
+        $this->user = $user;
     }
 
     /**
@@ -59,7 +63,7 @@ final class ScoreListComponent extends AjaxComponent {
      * @throws Throwable
      */
     protected function getData(): array {
-        $isOrg = true; // TODO
+        $isOrg = $this->user->isInRole('org');
         $data = array_merge([
             'times' => $this->calculateTimes(),
             'lastUpdated' => (new DateTime())->format('c'),
@@ -96,8 +100,8 @@ final class ScoreListComponent extends AjaxComponent {
 
     private function calculateTimes(): array {
         return [
-            'toEnd' => strtotime($this->gameSetup->gameStart) - time(),
-            'toStart' => strtotime($this->gameSetup->gameEnd) - time(),
+            'toEnd' => strtotime($this->gameSetup->gameEnd) - time(),
+            'toStart' => strtotime($this->gameSetup->gameStart) - time(),
             'visible' => $this->gameSetup->isResultsVisible(),
         ];
     }

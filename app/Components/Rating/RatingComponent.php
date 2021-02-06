@@ -39,7 +39,7 @@ final class RatingComponent extends BaseComponent {
             ->setHtmlAttribute('max', 100)
             ->setHtmlAttribute('step', 1)
             ->setOption('description', _('bad ⇔ good'))
-            ->setDefaultValue(50); // TODO copy paste this for new options
+            ->setDefaultValue(50);
 
         $control->addSubmit('submit', _('Send rating'))->onClick[] = function (SubmitButton $button) {
             $this->handleForm($button->getForm());

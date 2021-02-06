@@ -9,7 +9,6 @@ use Nette\Database\Explorer;
 
 final class ServiceTeam extends AbstractService {
 
-    const OPEN = 'open';
     const HIGH_SCHOOL_A = 'hs_a';
     const HIGH_SCHOOL_B = 'hs_b';
     const HIGH_SCHOOL_C = 'hs_c';
@@ -23,7 +22,6 @@ final class ServiceTeam extends AbstractService {
             self::HIGH_SCHOOL_A => _('Středoškoláci A'),
             self::HIGH_SCHOOL_B => _('Středoškoláci B'),
             self::HIGH_SCHOOL_C => _('Středoškoláci C'),
-            self::OPEN => _('Open'),
         ];
     }
 }

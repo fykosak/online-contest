@@ -32,7 +32,7 @@ class BaseForm extends Form {
         $renderer->wrappers['controls']['container'] = 'div';
         $renderer->wrappers['pair']['container'] = 'div class="form-group"';
         $renderer->wrappers['label']['container'] = '';
-        $renderer->wrappers['control']['container'] = 'div class="col-md-5"';
+        $renderer->wrappers['control']['container'] = 'div';
         $renderer->wrappers['control']['.submit'] = 'btn btn-primary';
         return $renderer;
     }

@@ -21,7 +21,6 @@ final class DoublePointsCard extends Card {
     }
 
     public function getDescription(): Html {
-        // TODO: Implement getDescription() method.
         return Html::el('span')->addText('If the first answer submitted after using this card is correct, the team receives doubled points for the answer.');
     }
 }

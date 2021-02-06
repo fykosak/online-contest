@@ -13,16 +13,19 @@ use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use FOL\Components\BaseListComponent;
 use Nette\ComponentModel\IComponent;
+use Nette\Database\Table\Selection;
 use Nette\DI\Container;
 
 final class ChatListComponent extends BaseListComponent {
 
     private ServiceChat $serviceChat;
     private ?ModelTeam $team;
+    private string $lang;
 
-    public function __construct(Container $container, ?ModelTeam $team) {
+    public function __construct(Container $container, ?ModelTeam $team, string $lang) {
         parent::__construct($container);
         $this->team = $team;
+        $this->lang = $lang;
     }
 
     public function injectChatService(ServiceChat $serviceChat): void {
@@ -124,6 +127,10 @@ final class ChatListComponent extends BaseListComponent {
         };
 
         return $form;
+    }
+
+    protected function getSource(): ?Selection {
+        return $this->serviceChat->getAll($this->lang);
     }
 
     public function render(): void {

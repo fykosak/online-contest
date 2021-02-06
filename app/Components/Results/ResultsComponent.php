@@ -6,12 +6,12 @@ use FOL\Model\FOF2021ScoreStrategy;
 use FOL\Model\GameSetup;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
-use FOL\Model\ORM\ScoreService;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Components\BaseComponent;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
+use Nette\Security\User;
 
 final class ResultsComponent extends BaseComponent {
 
@@ -20,33 +20,29 @@ final class ResultsComponent extends BaseComponent {
     private ServiceTask $serviceTask;
     private Cache $cache;
     private FOF2021ScoreStrategy $scoreStrategy;
+    private User $user;
 
     public function injectPrimary(
-        ScoreService $scoreService,
         GameSetup $gameSetup,
         ServiceTeam $serviceTeam,
         ServiceTask $serviceTask,
         Storage $storage,
-        FOF2021ScoreStrategy $scoreStrategy
+        FOF2021ScoreStrategy $scoreStrategy,
+        User $user
     ): void {
         $this->serviceTeam = $serviceTeam;
         $this->gameSetup = $gameSetup;
         $this->serviceTask = $serviceTask;
         $this->cache = new Cache($storage, self::class);
         $this->scoreStrategy = $scoreStrategy;
-    }
-
-    public function render(): void {
-        $isOrg = true; // TODO
-        $this->template->visible = $isOrg || $this->gameSetup->isResultsVisible();
-        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'results.latte');
-        parent::render();
+        $this->user = $user;
     }
 
     /**
      * @throws \Throwable
      */
-    protected function beforeRender(): void {
+    public function render(): void {
+        $isOrg = $this->user->isInRole('org');
         $this->template->teams = $this->cache->load('data', function (&$dep) {
             $dep[Cache::EXPIRATION] = '+30 second';
             $data = [];
@@ -73,6 +69,9 @@ final class ResultsComponent extends BaseComponent {
         $maxPoints += $maxBonus;
         $this->template->maxPoints = $maxPoints;
         $this->template->maxBonus = $maxBonus;
+        $this->template->visible = $isOrg || $this->gameSetup->isResultsVisible();
+        $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'results.latte');
+        parent::render();
     }
 }
 

@@ -2,39 +2,24 @@
 
 namespace FOL\Modules\OrgModule;
 
-use FOL\Model\Authentication\OrgAuthenticator;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Components\AnswerStats\AnswerStatsComponent;
-use FOL\Components\LoginForm\LoginFormComponent;
 use FOL\Components\Results\ResultsComponent;
 use FOL\Components\ScoreList\ScoreListComponent;
 use FOL\Components\TaskStats\TaskStatsComponent;
 
 class DefaultPresenter extends BasePresenter {
 
-    protected OrgAuthenticator $authenticator;
     private ServiceTask $serviceTask;
     /** @persistent */
     public ?int $id = null;
 
-    public function injectSecondary(OrgAuthenticator $authenticator, ServiceTask $serviceTask): void {
-        $this->authenticator = $authenticator;
+    public function injectSecondary(ServiceTask $serviceTask): void {
         $this->serviceTask = $serviceTask;
-    }
-
-    protected function startUp(): void {
-        if (!$this->user->isInRole('org') && $this->getAction() !== 'login') {
-            $this->redirect('login');
-        }
-        parent::startUp();
     }
 
     public function renderDefault(): void {
         $this->setPageTitle(_('Orgovský rozcestník'));
-    }
-
-    public function renderLogin(): void {
-        $this->setPageTitle(_('Přihlásit se'));
     }
 
     public function renderAnswerStats(): void {
@@ -52,10 +37,6 @@ class DefaultPresenter extends BasePresenter {
 
     public function renderStatsTasks(): void {
         $this->setPageTitle(_('Statistika úkolů'));
-    }
-
-    protected function createComponentLogin(): LoginFormComponent {
-        return new LoginFormComponent($this->getContext(), $this->authenticator, ':Org:Default:default');
     }
 
     protected function createComponentAnswerStats(): AnswerStatsComponent {
