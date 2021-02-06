@@ -15,14 +15,35 @@
             </button>
             <div class="navbar-collapse collapse" id="navbarNavDropdown">
                 <ul class="nav navbar-nav">
+                    {varType FOL\Components\Navigation\NavItem $item}
                     {foreach $items as $item}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{plink $item->destination,(expand)$item->linkParams}"
-                               title="{$item->title}">
-                                <span class="hidden-sm">{$item->title}</span>
-                                <span class="{$item->icon}" title="{$item->title}"/>
-                            </a>
-                        </li>
+                        {if count($item->children)}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"
+                                   href="{plink $item->destination,(expand)$item->linkParams}" id="navbarDropdown"
+                                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="hidden-sm">{$item->title}</span>
+                                    <span class="{$item->icon}" title="{$item->title}"/>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {varType FOL\Components\Navigation\NavItem $children}
+                                    {foreach $item->children as $children}
+                                        <a class="dropdown-item"
+                                           href="{plink $item->destination,(expand)$item->linkParams}">
+                                            <span class="hidden-sm">{$children->title}</span>
+                                            <span class="{$children->icon}" title="{$children->title}"/></a>
+                                    {/foreach}
+                                </div>
+                            </li>
+                        {else}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{plink $item->destination,(expand)$item->linkParams}"
+                                   title="{$item->title}">
+                                    <span class="hidden-sm">{$item->title}</span>
+                                    <span class="{$item->icon}" title="{$item->title}"/>
+                                </a>
+                            </li>
+                        {/if}
                     {/foreach}
                 </ul>
 

@@ -10,9 +10,11 @@
         {/if}
 {varType FOL\Model\ORM\Models\ModelChat $post}
 {foreach $posts AS $post}
-            <div class="chat-item" {if !$post->id_parent}style="margin: 0 0 0 20px"{/if}>
-                <h3 {if $post['org']}style="color: orange"{/if}>
-                    {if $post['org']}{_'Organizátoři'}{else}{$post->getTeam()->name}{/if} <span
+
+            <div class="{($post->org?'callout-warning':'callout-primary') . ' chat-item callout'} "
+                 {if !$post->id_parent}style="margin: 0 0 0 20px"{/if}>
+                <h3 {if $post->org}style="color: orange"{/if}>
+                    {if $post->org}{_'Organizátoři'}{else}{$post->getTeam()->name}{/if} <span
                             class="pull-right small">{$post['inserted']|time}</span>
                 </h3>
                 <div>{$post['content']}</div>

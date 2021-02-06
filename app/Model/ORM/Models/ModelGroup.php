@@ -28,17 +28,21 @@ final class ModelGroup extends AbstractModel {
         switch ($this->id_group) {
             default:
             case 1:
-                return '#00f';
+                return '#1f77b4';
             case 2:
-                return '#0f0';
+                return '#ff7f0e';
             case 3:
-                return '#f00';
+                return '#2ca02c';
             case 4:
-                return '#ff0';
+                return '#d62728';
             case 5:
-                return '#f0f';
+                return '#9467bd';
             case 6:
-                return '#0ff';
+                return '#8c564b';
+            case 7:
+                return '#e377c2';
+            case 8:
+                return '#cccccc';
         }
     }
 

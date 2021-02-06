@@ -1,8 +1,6 @@
-import { LocalizedString } from '@i18n/i18n';
-
 export interface Task {
     number: string;
-    name: LocalizedString;
+    name: string;
     groupId: number;
     taskId: number;
 }

@@ -57,10 +57,7 @@ final class ModelTask extends AbstractModel {
             'taskId' => $this->id_task,
             'group' => $this->id_group,
             'number' => $this->number,
-            'name' => [
-                'cs' => $this->getLabel('cs'),
-                'en' => $this->getLabel('en'),
-            ],
+            'name' => $this->getGroup()->code_name . $this->number,
         ];
     }
 

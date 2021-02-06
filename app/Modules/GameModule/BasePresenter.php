@@ -30,7 +30,10 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
         $navigation->addNavItem(new NavItem(':Game:Chat:default', [], _('Chat'), 'visible-sm-inline glyphicon glyphicon-pushpin'));
         if ($this->getCurrentYear()->isGameStarted()) {
             $navigation->addNavItem(new NavItem(':Game:Answer:history', [], _('Historie'), ''));
-            $navigation->addNavItem(new NavItem(':Game:Results:detail', [], _('Výsledky'), 'visible-sm-inline glyphicon glyphicon-stats'));
+            $navigation->addNavItem(new NavItem(':Game:Results:detail', [], _('Výsledky'), 'visible-sm-inline glyphicon glyphicon-stats', [
+                new NavItem(':Game:Results:default', [], _('Results'), 'visible-sm-inline glyphicon glyphicon-stats'),
+                new NavItem(':Game:Results:detail', [], _('Detail results'), 'visible-sm-inline glyphicon glyphicon-stats'),
+            ]));
         }
 
         if ($this->getCurrentYear()->isGameEnd()) {

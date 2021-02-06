@@ -32,7 +32,7 @@ class App extends React.Component<StateProps, {}> {
         }
 
         const headCools = tasks.map((task: Task, taskIndex) => {
-            return (<th key={taskIndex} data-task_label={task.number}>{task.number}</th>);
+            return (<th key={taskIndex} data-task_label={task.number}>{task.name}</th>);
         });
 
         return (
