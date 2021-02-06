@@ -27,6 +27,6 @@ final class ServiceNotification extends AbstractService {
     }
 
     public function getNew(int $timestamp, ?string $lang = null): TypedTableSelection {
-        return $this->getActive($lang)->where('created > ', $timestamp)->order('created');
+        return $this->getActive($lang)->where('UNIX_TIMESTAMP(created) > ?', $timestamp)->order('created');
     }
 }

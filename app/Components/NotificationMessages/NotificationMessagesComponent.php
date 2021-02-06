@@ -2,6 +2,7 @@
 
 namespace FOL\Components\NotificationMessages;
 
+use FOL\Model\ORM\Models\ModelNotification;
 use FOL\Model\ORM\Services\ServiceNotification;
 use FOL\Model\ORM\Services\ServiceYear;
 use FOL\Components\BaseComponent;
@@ -36,6 +37,7 @@ final class NotificationMessagesComponent extends BaseComponent {
     }
 
     public function render(): void {
+        $this->template->notifications = [];
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'notificationMessages.latte');
         parent::render();
     }
@@ -59,13 +61,14 @@ final class NotificationMessagesComponent extends BaseComponent {
         } else {
             $notifications = $this->serviceNotification->getNew($lastAsked, $lang);
         }
-
-        $this->template->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'notificationMessages.latte');
-        $this->template->notifications = $notifications;
-        $this->template->gameEnd = $this->serviceYear->getCurrent()->game_end->getTimestamp();
+        $data = [];
+        /** @var ModelNotification $notification */
+        foreach ($notifications as $notification) {
+            $data[] = $notification->__toArray();
+        }
 
         $payload = [
-            'html' => (string)$this->template,
+            'notifications' => $data,
             'lastAsked' => $now,
             'pollInterval' => $pollInterval,
         ];

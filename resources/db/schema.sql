@@ -78,8 +78,8 @@ CREATE TABLE `group`
     `to_show`      datetime                                   NOT NULL COMMENT 'cas. kdy ma byt skupina zverejnena',
     `type`         enum ('set','serie') COLLATE utf8_czech_ci NOT NULL COMMENT 'zpristupnovani uloh; set: vse najednou, serie: po vyreseni ukolu',
     `code_name`    varchar(5) COLLATE utf8_czech_ci           NOT NULL COMMENT 'kratky slovni identifikator skupiny uloh',
-    `text_cs`         text COLLATE utf8_czech_ci                 NOT NULL COMMENT 'komentar k serii, ktery muze napr. obsahovat odkaz ke stazeni pdf apod.',
-    `text_en`         text COLLATE utf8_czech_ci                 NOT NULL COMMENT 'komentar k serii, ktery muze napr. obsahovat odkaz ke stazeni pdf apod.',
+    `text_cs`      text COLLATE utf8_czech_ci                 NOT NULL COMMENT 'komentar k serii, ktery muze napr. obsahovat odkaz ke stazeni pdf apod.',
+    `text_en`      text COLLATE utf8_czech_ci                 NOT NULL COMMENT 'komentar k serii, ktery muze napr. obsahovat odkaz ke stazeni pdf apod.',
     `allow_zeroes` tinyint(1)                                 NOT NULL COMMENT 'davat nulu za mnozstvi pokusu',
     `inserted`     datetime                                   NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
     `updated`      timestamp                                  NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
@@ -126,10 +126,11 @@ CREATE TABLE `log`
 DROP TABLE IF EXISTS `notification`;
 CREATE TABLE `notification`
 (
-    `notification_id` int(25)                                NOT NULL AUTO_INCREMENT,
-    `message`         text COLLATE utf8_czech_ci             NOT NULL COMMENT 'text notifikace',
-    `lang`            enum ('cs','en') COLLATE utf8_czech_ci NOT NULL COMMENT 'jazyk notifikace',
-    `created`         timestamp                              NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka vlozena do systemu',
+    `notification_id` int(25)                                                  NOT NULL AUTO_INCREMENT,
+    `message`         text COLLATE utf8_czech_ci                               NOT NULL COMMENT 'text notifikace',
+    `level`           ENUM ('danger', 'warning', 'info', 'success', 'primary') NOT NULL DEFAULT 'info',
+    `lang`            enum ('cs','en') COLLATE utf8_czech_ci                   NOT NULL COMMENT 'jazyk notifikace',
+    `created`         timestamp                                                NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka vlozena do systemu',
     PRIMARY KEY (`notification_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8

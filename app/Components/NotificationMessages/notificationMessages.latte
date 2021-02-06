@@ -1,48 +1,5 @@
 {block content}
-    <div id="notifications"></div>
-
-    {capture $script}
-        <script>
-            const ajaxURL = {link ajax!};
-            const gameEnd = new Date({$gameEnd}* 1000
-            )
-            ;
-        </script>
-        <script n:syntax="off">
-            function pollNotifications(lastAsked) {
-                $.get(ajaxURL, {lastAsked : lastAsked}, function (data) {
-                    if (data.redirect) {
-                        return;
-                    }
-                    renderNotifications(data['html']);
-                    //var now = Date.now(); //TODO better take from server?
-                    const now = data['lastAsked'];
-                    document.cookie = "lastAsked=" + now + "; expires=" + gameEnd.toUTCString();
-                    window.setTimeout(function () {
-                        pollNotifications(now);
-                    }, data['pollInterval']);
-                }, 'json');
-            }
-
-            function getCookie(cname) {
-                var name = cname + "=";
-                var ca = document.cookie.split(';');
-                for (var i = 0; i < ca.length; i++) {
-                    var c = ca[i];
-                    while (c.charAt(0) == ' ') c = c.substring(1);
-                    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-                }
-                return "";
-            }
-
-            function renderNotifications(data) {
-                $('#notifications').append(data);
-            }
-
-            $(document).ready(function () {
-                pollNotifications(getCookie('lastAsked'));
-            });
-        </script>
-    {/capture}
-    {$presenter->addCustomScript($script)}
+    <div id="notifications"
+         data-link="{link ajax!}"
+         data-gameEnd="{$gameEnd}"/>
 {/block}
