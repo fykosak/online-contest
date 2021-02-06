@@ -5,7 +5,7 @@ namespace FOL\Components\LoginForm;
 use Exception;
 use FOL\Model\Authentication\AbstractAuthenticator;
 use FOL\Components\BaseForm;
-use FOL\Model\ORM\Services\ServiceYear;
+use FOL\Model\GameSetup;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\DI\Container;
@@ -18,7 +18,7 @@ final class LoginFormComponent extends BaseComponent {
 
     private AbstractAuthenticator $authenticator;
     private string $redirectDestination;
-    private ServiceYear $serviceYear;
+    private GameSetup $gameSetup;
 
     public function __construct(Container $container, AbstractAuthenticator $authenticator, string $redirectDestination) {
         parent::__construct($container);
@@ -26,8 +26,8 @@ final class LoginFormComponent extends BaseComponent {
         $this->redirectDestination = $redirectDestination;
     }
 
-    public function injectServiceYear(ServiceYear $serviceYear): void {
-        $this->serviceYear = $serviceYear;
+    public function injectGameSetup(GameSetup $gameSetup): void {
+        $this->gameSetup = $gameSetup;
     }
 
     /**
@@ -76,7 +76,7 @@ final class LoginFormComponent extends BaseComponent {
     }
 
     public function render(): void {
-        $this->template->isMigrated = $this->serviceYear->isGameMigrated();
+        $this->template->isMigrated = $this->gameSetup->isGameMigrated;
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'loginForm.latte');
         parent::render();
     }

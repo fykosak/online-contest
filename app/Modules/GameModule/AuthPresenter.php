@@ -5,15 +5,16 @@ namespace FOL\Modules\GameModule;
 use FOL\Model\Authentication\TeamAuthenticator;
 use FOL\Components\LoginForm\LoginFormComponent;
 use FOL\Components\RecoverForm\RecoverFormComponent;
+use FOL\Model\GameSetup;
 use Nette\Application\AbortException;
 
 /**
  * Class AuthPresenter
  * @note Take care thi presenter is not child of GameModule/BasePresenter
  */
-class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
+final class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
 
-    protected TeamAuthenticator $authenticator;
+    private TeamAuthenticator $authenticator;
 
     public function injectSecondary(TeamAuthenticator $authenticator): void {
         $this->authenticator = $authenticator;
@@ -38,7 +39,7 @@ class AuthPresenter extends \FOL\Modules\Core\BasePresenter {
      */
     public function renderRecover(): void {
         $this->setPageTitle(_('Obnova hesla'));
-        if (!$this->serviceYear->isGameMigrated()) {
+        if (!$this->gameSetup->isGameMigrated) {
             $this->flashMessage(_('Změnu hesla proveďte editací vaší přihlášky.'), 'danger');
             $this->redirect(':Public:Default:default');
         }

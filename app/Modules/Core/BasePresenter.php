@@ -2,10 +2,9 @@
 
 namespace FOL\Modules\Core;
 
+use FOL\Model\GameSetup;
 use FOL\Model\ORM\Models\ModelTeam;
-use FOL\Model\ORM\Models\ModelYear;
 use FOL\Model\ORM\Services\ServiceTeam;
-use FOL\Model\ORM\Services\ServiceYear;
 use Fykosak\Utils\Localization\GettextTranslator;
 use FOL\Components\NotificationMessages\NotificationMessagesComponent;
 use FOL\Tools\InterlosTemplate;
@@ -26,14 +25,12 @@ abstract class BasePresenter extends Presenter {
 
     protected GettextTranslator $translator;
     protected ServiceTeam $serviceTeam;
-    public ServiceYear $serviceYear;
+    public GameSetup $gameSetup;
 
-    private ModelYear $currentYear;
-
-    public function injectServices(GettextTranslator $translator, ServiceTeam $serviceTeam, ServiceYear $serviceYear): void {
+    public function injectServices(GettextTranslator $translator, ServiceTeam $serviceTeam, GameSetup $gameSetup): void {
         $this->translator = $translator;
         $this->serviceTeam = $serviceTeam;
-        $this->serviceYear = $serviceYear;
+        $this->gameSetup = $gameSetup;
     }
 
     public function setPageTitle(string $pageTitle): void {
@@ -54,8 +51,8 @@ abstract class BasePresenter extends Presenter {
         $template->lang = $this->lang;
         $template->customScript = '';
         $template->setTranslator($this->translator);
-        $template->isGameStarted = $this->getCurrentYear()->isGameStarted();
-        $template->isGameEnd = $this->getCurrentYear()->isGameEnd();
+        $template->isGameStarted = $this->gameSetup->isGameStarted();
+        $template->isGameEnd = $this->gameSetup->isGameEnd();
         $template->getLatte()->addFilter('i18n', GettextTranslator::class . '::i18nHelper');
 
         return InterlosTemplate::loadTemplate($template);
@@ -142,10 +139,7 @@ abstract class BasePresenter extends Presenter {
         return new Navigation($this->getContext());
     }
 
-    protected function getCurrentYear(): ModelYear {
-        if (!isset($this->currentYear)) {
-            $this->currentYear = $this->serviceYear->getCurrent();
-        }
-        return $this->currentYear;
+    protected function getCurrentYear(): GameSetup {
+        return $this->gameSetup;
     }
 }

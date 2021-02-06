@@ -5,12 +5,12 @@ namespace FOL\Components\AnswerForm;
 use Exception;
 use FOL\Model\Card\CardFactory;
 use FOL\Model\Card\DoublePointsCard;
+use FOL\Model\GameSetup;
 use FOL\Model\ORM\AnswersService;
 use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\ScoreService;
-use FOL\Model\ORM\Services\ServiceYear;
 use FOL\Model\ORM\TasksService;
 use FOL\Components\BaseForm;
 use FOL\Model\ScoreStrategy;
@@ -34,12 +34,12 @@ final class AnswerFormComponent extends BaseComponent {
     private TasksService $tasksService;
     private AnswersService $answersService;
     private ScoreService $scoreService;
-    private ServiceYear $serviceYear;
     private User $user;
     private ModelTeam $team;
     private DoublePointsCard $doublePointsCard;
     private ScoreStrategy $scoreStrategy;
     private ModelTask $task;
+    private GameSetup $gameSetup;
 
     public function __construct(Container $container, ModelTeam $team, ModelTask $task) {
         $this->team = $team;
@@ -51,27 +51,27 @@ final class AnswerFormComponent extends BaseComponent {
      * @param TasksService $tasksService
      * @param AnswersService $answersService
      * @param ScoreService $scoreService
-     * @param ServiceYear $serviceYear
      * @param User $user
      * @param CardFactory $cardFactory
      * @param ScoreStrategy $scoreStrategy
+     * @param GameSetup $gameSetup
      * @throws BadRequestException
      */
     public function injectSecondary(
         TasksService $tasksService,
         AnswersService $answersService,
         ScoreService $scoreService,
-        ServiceYear $serviceYear,
         User $user,
         CardFactory $cardFactory,
-        ScoreStrategy $scoreStrategy
+        ScoreStrategy $scoreStrategy,
+        GameSetup $gameSetup
     ): void {
         $this->tasksService = $tasksService;
         $this->answersService = $answersService;
         $this->scoreService = $scoreService;
-        $this->serviceYear = $serviceYear;
         $this->user = $user;
         $this->scoreStrategy = $scoreStrategy;
+        $this->gameSetup = $gameSetup;
         $this->doublePointsCard = $cardFactory->create($this->team, ModelCardUsage::TYPE_DOUBLE_POINTS);
     }
 
@@ -194,14 +194,13 @@ final class AnswerFormComponent extends BaseComponent {
         if (!$this->user->isLoggedIn()) {
             throw new InvalidStateException('There is no logged team.');
         }
-        if ($this->serviceYear->getCurrent()->isGameEnd()) {
+        if ($this->gameSetup->isGameEnd()) {
             $this->flashMessage(_('Čas vypršel.'), 'danger');
-        } elseif (!$this->serviceYear->getCurrent()->isGameStarted()) {
+        } elseif (!$this->gameSetup->isGameStarted()) {
             $this->flashMessage(_('Hra ještě nezačala.'), 'danger');
         }
         if (!$this->team->getSubmitAvailableTasks()->where('id_task', $this->task->id_task)->fetch()) {
             throw new ForbiddenRequestException();
-
         }
     }
 

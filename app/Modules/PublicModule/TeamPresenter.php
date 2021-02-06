@@ -28,10 +28,7 @@ class TeamPresenter extends BasePresenter {
      * @throws AbortException
      */
     public function actionRegistration(): void {
-        if (!$this->getCurrentYear()->isRegistrationActive()) {
-            $this->flashMessage(_('Registrace není aktivní.'), 'danger');
-            $this->redirect('Default:default');
-        } elseif ($url = $this->getRegistrationValue('url')) {
+        if ($url = $this->getRegistrationValue('url')) {
             $uri = new Url($url);
             $uri->appendQuery(['lang' => $this->lang]);
             $this->redirectUrl($uri, IResponse::S307_TEMPORARY_REDIRECT);

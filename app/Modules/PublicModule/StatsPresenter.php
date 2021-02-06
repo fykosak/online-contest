@@ -24,7 +24,7 @@ class StatsPresenter extends BasePresenter {
      */
     protected function beforeRender(): void {
         parent::beforeRender();
-        if (!$this->getCurrentYear()->isGameStarted()) {
+        if (!$this->gameSetup->isGameStarted()) {
             $this->error('Statistiky nejsou dostupné.');
         }
         $this->template->categories = $this->teamsService->getCategoryNames();

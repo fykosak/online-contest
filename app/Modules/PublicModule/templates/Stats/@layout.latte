@@ -1,7 +1,7 @@
 {extends '../../../GameModule/templates/@layout.latte'}
 
 {block #title}
-    {if $control->serviceYear->getCurrent()->isGameEnd() && false}
+    {if $control->gameSetup->isGameEnd() && false}
         <br>
         <div class="alert alert-info" role="alert">
             {if $lang == 'cs'}
@@ -15,7 +15,7 @@
         </div>
     {/if}
 
-    {if $control->serviceYear->getCurrent()->isGameEnd() && true}
+    {if $control->gameSetup->isGameEnd() && true}
 
         <div class="alert alert-success" role="alert">
             {if $lang == 'cs'}

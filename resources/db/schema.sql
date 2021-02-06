@@ -74,7 +74,6 @@ DROP TABLE IF EXISTS `group`;
 CREATE TABLE `group`
 (
     `id_group`     int(25) unsigned                           NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
-    `id_year`      int(25) unsigned                           NOT NULL,
     `to_show`      datetime                                   NOT NULL COMMENT 'cas. kdy ma byt skupina zverejnena',
     `type`         enum ('set','serie') COLLATE utf8_czech_ci NOT NULL COMMENT 'zpristupnovani uloh; set: vse najednou, serie: po vyreseni ukolu',
     `code_name`    varchar(5) COLLATE utf8_czech_ci           NOT NULL COMMENT 'kratky slovni identifikator skupiny uloh',
@@ -83,9 +82,7 @@ CREATE TABLE `group`
     `allow_zeroes` tinyint(1)                                 NOT NULL COMMENT 'davat nulu za mnozstvi pokusu',
     `inserted`     datetime                                   NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
     `updated`      timestamp                                  NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
-    PRIMARY KEY (`id_group`),
-    KEY `id_year` (`id_year`),
-    CONSTRAINT `group_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
+    PRIMARY KEY (`id_group`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_czech_ci COMMENT ='serie ukolu';
@@ -225,20 +222,17 @@ CREATE TABLE `task_state`
 DROP TABLE IF EXISTS `team`;
 CREATE TABLE `team`
 (
-    `id_team`      int(25) unsigned                                                                NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
-    `id_year`      int(25) unsigned                                                                NOT NULL,
-    `name`         varchar(150) COLLATE utf8_czech_ci                                              NOT NULL COMMENT 'prihlasovaci jmeno',
-    `password`     varchar(160) COLLATE utf8_czech_ci                                              NOT NULL COMMENT 'zahashovane heslo',
-    `category`     enum ('high_school','open','abroad','hs_a','hs_b','hs_c') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
-    `email`        varchar(150) COLLATE utf8_czech_ci                                              NOT NULL COMMENT 'e-mailova adresa',
-    `address`      text COLLATE utf8_czech_ci                                                      NOT NULL COMMENT 'kontaktni adresa',
-    `disqualified` tinyint(1)                                                                      NOT NULL COMMENT 'tym diskvalifikovan',
-    `inserted`     datetime                                                                        NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
-    `updated`      timestamp                                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
-    `score_exp`    int(25)                                                                         NOT NULL DEFAULT '0' COMMENT 'zive skore, experimental hotfix feature',
-    PRIMARY KEY (`id_team`),
-    UNIQUE KEY `id_year` (`id_year`, `name`),
-    CONSTRAINT `team_ibfk_1` FOREIGN KEY (`id_year`) REFERENCES `year` (`id_year`)
+    `id_team`      int(25) unsigned                                  NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
+    `name`         varchar(150) COLLATE utf8_czech_ci                NOT NULL COMMENT 'prihlasovaci jmeno',
+    `password`     varchar(160) COLLATE utf8_czech_ci                NOT NULL COMMENT 'zahashovane heslo',
+    `category`     enum ('hs_a','hs_b','hs_c') COLLATE utf8_czech_ci NOT NULL COMMENT 'soutezni kategorie',
+    `email`        varchar(150) COLLATE utf8_czech_ci                NOT NULL COMMENT 'e-mailova adresa',
+    `address`      text COLLATE utf8_czech_ci                        NOT NULL COMMENT 'kontaktni adresa',
+    `disqualified` tinyint(1)                                        NOT NULL COMMENT 'tym diskvalifikovan',
+    `inserted`     datetime                                          NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
+    `updated`      timestamp                                         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
+    `score_exp`    int(25)                                           NOT NULL DEFAULT '0' COMMENT 'zive skore, experimental hotfix feature',
+    PRIMARY KEY (`id_team`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_czech_ci COMMENT ='Soutezni tymy';
@@ -258,24 +252,6 @@ CREATE TABLE `token`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_czech_ci COMMENT ='Tokeny pro reset hesla';
 
-
-DROP TABLE IF EXISTS `year`;
-CREATE TABLE `year`
-(
-    `id_year`            int(25) unsigned                  NOT NULL AUTO_INCREMENT COMMENT 'identifikator',
-    `name`               varchar(50) COLLATE utf8_czech_ci NOT NULL,
-    `registration_start` datetime                          NOT NULL COMMENT 'cas, kdy zacina registrace do tohoto rocniku',
-    `registration_end`   datetime                          NOT NULL COMMENT 'cas, kdy konci registrace do tohoto rocniku',
-    `game_start`         datetime                          NOT NULL COMMENT 'cas, kdy zacina hra',
-    `game_end`           datetime                          NOT NULL COMMENT 'cas, kdy konci hra',
-    `inserted`           datetime                          NOT NULL COMMENT 'cas, kdy byla polozka vlozena do systemu',
-    `updated`            timestamp                         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'cas, kdy byla polozka naposledy zmenena',
-    PRIMARY KEY (`id_year`),
-    UNIQUE KEY `name` (`name`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  COLLATE = utf8_czech_ci COMMENT ='Rocniky';
-
 DROP TABLE IF EXISTS `rating`;
 CREATE TABLE `rating`
 (
@@ -286,7 +262,7 @@ CREATE TABLE `rating`
     # todo add more options
     CONSTRAINT `rating_team1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id_team`),
     CONSTRAINT `rating_task1` FOREIGN KEY (`task_id`) REFERENCES `task` (`id_task`),
-    UNIQUE KEY `id_year` (`team_id`, `task_id`)
+    UNIQUE KEY `uk_rating_team_task` (`team_id`, `task_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_czech_ci;

@@ -2,9 +2,11 @@
 
 namespace FOL\Components\NotificationMessages;
 
+use DateTime;
+use Exception;
+use FOL\Model\GameSetup;
 use FOL\Model\ORM\Models\ModelNotification;
 use FOL\Model\ORM\Services\ServiceNotification;
-use FOL\Model\ORM\Services\ServiceYear;
 use FOL\Components\BaseComponent;
 use Nette\Application\AbortException;
 use Nette\Application\Responses\JsonResponse;
@@ -14,9 +16,9 @@ use Nette\NotSupportedException;
 
 final class NotificationMessagesComponent extends BaseComponent {
 
-    private ServiceYear $serviceYear;
     private IRequest $httpRequest;
     private ServiceNotification $serviceNotification;
+    private GameSetup $gameSetup;
 
     private string $lang;
 
@@ -25,15 +27,18 @@ final class NotificationMessagesComponent extends BaseComponent {
         $this->lang = $lang;
     }
 
-    public function injectServiceYear(ServiceYear $serviceYear, IRequest $httpRequest, ServiceNotification $serviceNotification): void {
-        $this->serviceYear = $serviceYear;
+    public function injectServiceYear(IRequest $httpRequest, ServiceNotification $serviceNotification, GameSetup $gameSetup): void {
         $this->serviceNotification = $serviceNotification;
         $this->httpRequest = $httpRequest;
+        $this->gameSetup = $gameSetup;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function beforeRender(): void {
         parent::beforeRender();
-        $this->template->gameEnd = $this->serviceYear->getCurrent()->game_end->getTimestamp();
+        $this->template->gameEnd = (new DateTime($this->gameSetup->gameEnd))->getTimestamp();
     }
 
     public function render(): void {

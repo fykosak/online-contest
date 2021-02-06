@@ -76,7 +76,7 @@
                 {$flash->message}
             </div>
         {/foreach}
-    {if $control->serviceYear->getCurrent()->isGameActive()}
+    {if $control->gameSetup->isGameActive()}
             {control notificationMessages}
         {/if}
             <!-- CONTENT -->
