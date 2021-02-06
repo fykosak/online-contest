@@ -7,7 +7,7 @@ use Nette\Security\SimpleIdentity;
 use Nette\Security\AuthenticationException;
 use Nette\Security\User;
 
-class OrgAuthenticator extends AbstractAuthenticator {
+final class OrgAuthenticator extends AbstractAuthenticator {
 
     const ROLE = 'org';
 

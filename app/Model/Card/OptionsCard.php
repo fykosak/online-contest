@@ -2,6 +2,7 @@
 
 namespace FOL\Model\Card;
 
+use FOL\Model\Card\Exceptions\TaskNotAvailableException;
 use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Services\ServiceAnswerOptions;
@@ -18,7 +19,10 @@ final class OptionsCard extends SingleFormCard {
     }
 
     protected function innerHandle(Logger $logger, array $values): void {
-        // TODO: Implement innerHandle() method.
+        $taskId = $values['task'];
+        if (!isset($this->getTasks()[$taskId])) {
+            throw new TaskNotAvailableException();
+        }
     }
 
     public function getType(): string {
@@ -41,10 +45,5 @@ final class OptionsCard extends SingleFormCard {
             $items[$task->id_task] = $task->getLabel($lang);
         }
         $container->addSelect('task', _('Task'), $items);
-    }
-
-    public function checkRequirements(): void {
-        parent::checkRequirements();
-        // TODO: Implement isInnerAvailable() method.
     }
 }

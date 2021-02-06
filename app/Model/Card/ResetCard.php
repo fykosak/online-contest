@@ -17,11 +17,6 @@ final class ResetCard extends SingleFormCard {
         $this->scoreStrategy = $scoreStrategy;
     }
 
-    public function checkRequirements(): void {
-        parent::checkRequirements();
-        // TODO: Implement isInnerAvailable() method.
-    }
-
     public function decorateFormContainer(Container $container, string $lang): void {
         $unsolved = $this->team->getSubmitAvailableTasks();
         $items = [];
@@ -46,7 +41,6 @@ final class ResetCard extends SingleFormCard {
     }
 
     public function getDescription(): Html {
-        // TODO
         return Html::el('span')->addText('The marking scheme of the problem is reset, the team can get 5 points for a correct answer again.');
     }
 }

@@ -18,7 +18,7 @@ use Nette\Security\User;
 /**
  * @author Jan Papousek
  */
-class TeamAuthenticator extends AbstractAuthenticator {
+final class TeamAuthenticator extends AbstractAuthenticator {
 
     const TEAM = 'team';
     const TOKEN_LENGTH = 10;

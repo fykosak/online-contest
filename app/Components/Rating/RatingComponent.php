@@ -6,9 +6,9 @@ use FOL\Components\BaseComponent;
 use FOL\Components\BaseForm;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Services\ServiceRating;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
-use Nette\Database\Explorer;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\DI\Container;
 use Nette\Forms\Controls\SubmitButton;
@@ -18,7 +18,7 @@ final class RatingComponent extends BaseComponent {
 
     private ModelTask $task;
     private ModelTeam $team;
-    private Explorer $explorer;
+    private ServiceRating $serviceRating;
 
     public function __construct(Container $container, ModelTask $task, ModelTeam $team) {
         parent::__construct($container);
@@ -26,8 +26,8 @@ final class RatingComponent extends BaseComponent {
         $this->team = $team;
     }
 
-    public function injectPrimary(Explorer $explorer): void {
-        $this->explorer = $explorer;
+    public function injectPrimary(ServiceRating $serviceRating): void {
+        $this->serviceRating = $serviceRating;
     }
 
     protected function createComponentForm(): Form {
@@ -62,7 +62,7 @@ final class RatingComponent extends BaseComponent {
     private function handleForm(\Nette\Forms\Form $form) {
         $values = $form->getValues();
         try {
-            $this->explorer->table('rating')->insert([
+            $this->serviceRating->createNewModel([
                 'team_id' => $this->team->id_team,
                 'task_id' => $this->task->id_task,
                 'rating' => $values['rating'],

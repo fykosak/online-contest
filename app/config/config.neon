@@ -38,6 +38,7 @@ services:
     - FOL\Model\ORM\Services\ServicePeriod
     - FOL\Model\ORM\Services\ServiceToken
     - FOL\Model\ORM\Services\ServiceTaskState
+    - FOL\Model\ORM\Services\ServiceRating
 
     - FOL\Model\FOF2021ScoreStrategy
 
