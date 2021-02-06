@@ -10,6 +10,7 @@ use FOL\Components\NotificationMessages\NotificationMessagesComponent;
 use FOL\Tools\InterlosTemplate;
 use FOL\Components\Navigation\Navigation;
 use Fykosak\Utils\Localization\UnsupportedLanguageException;
+use Nette;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
@@ -26,11 +27,13 @@ abstract class BasePresenter extends Presenter {
     protected GettextTranslator $translator;
     protected ServiceTeam $serviceTeam;
     public GameSetup $gameSetup;
+    private Nette\DI\Container $diContainer;
 
-    public function injectServices(GettextTranslator $translator, ServiceTeam $serviceTeam, GameSetup $gameSetup): void {
+    public function injectServices(GettextTranslator $translator, ServiceTeam $serviceTeam, GameSetup $gameSetup, Nette\DI\Container $container): void {
         $this->translator = $translator;
         $this->serviceTeam = $serviceTeam;
         $this->gameSetup = $gameSetup;
+        $this->diContainer = $container;
     }
 
     public function setPageTitle(string $pageTitle): void {
@@ -141,5 +144,9 @@ abstract class BasePresenter extends Presenter {
 
     protected function getCurrentYear(): GameSetup {
         return $this->gameSetup;
+    }
+
+    public function getContext(): Nette\DI\Container {
+        return $this->diContainer;
     }
 }

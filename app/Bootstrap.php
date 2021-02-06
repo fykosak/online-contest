@@ -13,7 +13,7 @@ class Bootstrap {
 
 //$configurator->setDebugMode('23.75.345.200'); // enable for your remote IP
         $configurator->enableDebugger(__DIR__ . '/../log');
-        error_reporting(~E_USER_DEPRECATED);
+        //error_reporting(~E_USER_DEPRECATED);
 
         $configurator->setTempDirectory(__DIR__ . '/../temp');
 
