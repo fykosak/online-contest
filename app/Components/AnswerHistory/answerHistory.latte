@@ -12,7 +12,6 @@
         {varType Fykosak\Utils\ORM\TypedTableSelection $history}
         {varType string $lang}
         {foreach $history AS $answer}
-            {dump $answer}
             <tr class="{($answer->correct && ($answer->getTask()->cancelled == 0))?'bg-success':'bg-danger'}">
                 <td>{$answer->id_answer}</td>
                 <td>{$answer->getTask()->getLabel($lang)}</td>

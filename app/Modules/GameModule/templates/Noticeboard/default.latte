@@ -1,13 +1,10 @@
 {block content}
-<table class="table table-condensed table-striped small">
-    <thead>
-    <th>{_'oznámení'}</th>
-    <th>{_'čas vzniku'}</th>
-    </thead>
+    {varType FOL\Model\ORM\Models\ModelNotification $notification}
     {foreach $notifications as $notification}
-        <tr>
-            <td>{$notification['message']}</td>
-            <td>{$notification['created']|time}</td>
-        </tr>
+        {var $className = 'alert alert-' . $notification->level}
+        <p class="{$className}">
+            {$notification['message']}
+            <small class="pull-right">{$notification->created->format('H:m')}</small>
+        </p>
     {/foreach}
-</table>
+{/block}

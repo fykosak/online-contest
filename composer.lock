@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3389f940767434e8db79b397d31e277c",
+    "content-hash": "8abfb28b4f0cabb9587cb8f50a90746c",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -1124,16 +1124,16 @@
         },
         {
             "name": "nette/routing",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/routing.git",
-                "reference": "d989c52fa70708816253f2adab7f57ba039a4b4f"
+                "reference": "5532e7e3612e13def357f089c1a5c25793a16843"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/routing/zipball/d989c52fa70708816253f2adab7f57ba039a4b4f",
-                "reference": "d989c52fa70708816253f2adab7f57ba039a4b4f",
+                "url": "https://api.github.com/repos/nette/routing/zipball/5532e7e3612e13def357f089c1a5c25793a16843",
+                "reference": "5532e7e3612e13def357f089c1a5c25793a16843",
                 "shasum": ""
             },
             "require": {
@@ -1178,7 +1178,7 @@
             "keywords": [
                 "nette"
             ],
-            "time": "2020-11-02T15:13:26+00:00"
+            "time": "2021-02-06T04:08:30+00:00"
         },
         {
             "name": "nette/safe-stream",
@@ -1494,66 +1494,6 @@
                 "validation"
             ],
             "time": "2021-01-11T03:05:59+00:00"
-        },
-        {
-            "name": "texy/texy",
-            "version": "v2.9.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dg/texy.git",
-                "reference": "e35cd3e8c51aff8e2f08fd0e0113d9a0e07e5de9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dg/texy/zipball/e35cd3e8c51aff8e2f08fd0e0113d9a0e07e5de9",
-                "reference": "e35cd3e8c51aff8e2f08fd0e0113d9a0e07e5de9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.4"
-            },
-            "replace": {
-                "dg/texy": "*"
-            },
-            "require-dev": {
-                "nette/tester": "^1.7 || ^2.0",
-                "tracy/tracy": "^2.4"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ],
-                "files": [
-                    "src/texy.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause",
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "David Grudl",
-                    "homepage": "https://davidgrudl.com"
-                }
-            ],
-            "description": "Texy converts plain text in easy to read Texy syntax into structurally valid (X)HTML. It supports adding of images, links, nested lists, tables and has full support for CSS. Texy supports hyphenation of long words (which reflects language rules), clickable emails and URL (emails are obfuscated against spambots), national typographic single and double quotation marks, ellipses, em dashes, dimension sign, nonbreakable spaces (e.g. in phone numbers), acronyms, arrows and many others. Texy code can optionally contain HTML tags.",
-            "homepage": "https://texy.info",
-            "keywords": [
-                "html",
-                "markdown",
-                "markup language",
-                "plain text",
-                "text",
-                "textile",
-                "texy",
-                "wiki",
-                "xhtml"
-            ],
-            "time": "2019-11-19T19:25:16+00:00"
         },
         {
             "name": "tracy/tracy",
