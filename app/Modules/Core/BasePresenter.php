@@ -58,7 +58,7 @@ abstract class BasePresenter extends Presenter {
         $template->isGameEnd = $this->gameSetup->isGameEnd();
         $template->getLatte()->addFilter('i18n', GettextTranslator::class . '::i18nHelper');
 
-        return InterlosTemplate::loadTemplate($template);
+        return $template;
     }
 
     public function addCustomScript(string $script): void {
