@@ -77,8 +77,8 @@ abstract class Card {
     protected function getTasks(): array {
         if (!isset($this->tasks)) {
             $this->tasks = [];
-            foreach ($this->team->getSubmitAvailableTasks() as $task) {
-                $this->tasks[$task->id_task] = ModelTask::createFromActiveRow($task);
+            foreach ($this->team->getSubmitAvailableTasks()->select('group:task.id_task AS id_task') as $task) {
+                $this->tasks[$task->id_task] = $this->serviceTask->findByPrimary($task->id_task);
             }
         }
         return $this->tasks;

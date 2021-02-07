@@ -10,8 +10,10 @@ use FOL\Model\ORM\Models\ModelTaskState;
 use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceLog;
 use FOL\Model\ORM\Services\ServiceTaskState;
+use Fykosak\Utils\ORM\Exceptions\ModelException;
 use Nette\Database\Explorer;
 use Nette\InvalidStateException;
+use Tracy\Debugger;
 
 final class TasksService extends AbstractService {
 
@@ -24,27 +26,18 @@ final class TasksService extends AbstractService {
 
     public function skip(ModelTeam $team, ModelTask $task): ModelTaskState {
         // Check that skip is allowed for task
-
-        $answers = $team->getCorrect()->where('answer.id_task = ?', $task->id_task);
-        if ($answers->count('*') > 0) {
+        try {
+            $return = $this->serviceTaskState->createNewModel([
+                'id_team' => $team->id_team,
+                'id_task' => $task->id_task,
+                'inserted' => new DateTime(),
+                'skipped' => 1,
+                'points' => null,
+            ]);
+        } catch (ModelException$exception) {
             $this->log($team->id_team, 'skip_tried', sprintf('The team tried to skip the task [%i].', $task->id_task));
-            throw new InvalidStateException(sprintf('Skipping not allowed for the task %i.', $task->id_task), AnswersService::ERROR_SKIP_OF_ANSWERED);
+            throw new InvalidStateException(sprintf(sprintf('Skipping not allowed for the task %i.', $task->id_task)), AnswersService::ERROR_SKIP_OF_ANSWERED);
         }
-
-        // Check that skip is allowed in period
-        /* $skippAbleGroups = $this->serviceGroup->findAllSkippAble()->fetchPairs('id_group', 'id_group');
-        if (!array_key_exists($task->id_group, $skippAbleGroups)) {
-             $this->log($team->id_team, 'skip_tried', 'The team tried to skip the task [$task->id_task].');
-             throw new InvalidStateException('Skipping not allowed during this period.', AnswersService::ERROR_SKIP_OF_PERIOD);
-         }*/
-        // Insert a skip record
-        $return = $this->serviceTaskState->createNewModel([
-            'id_team' => $team->id_team,
-            'id_task' => $task->id_task,
-            'inserted' => new DateTime(),
-            'skipped' => 1,
-            'points' => null,
-        ]);
 
         // Increase counter
         $this->explorer->query('INSERT INTO group_state (id_group, id_team, task_counter)
