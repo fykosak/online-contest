@@ -6,25 +6,14 @@ use FOL\Model\ORM\Services\ServiceTeam;
 use FOL\Components\Results\ResultsComponent;
 use FOL\Components\ScoreList\ScoreListComponent;
 use FOL\Components\TaskStats\TaskStatsComponent;
-use Nette\Application\BadRequestException;
 
 class ResultsPresenter extends BasePresenter {
-
-    public const STATS_TAG = 'ctStats';
-
-    /**
-     * @return void
-     * @throws BadRequestException
-     */
-    protected function beforeRender(): void {
-        parent::beforeRender();
-        $this->template->categories = ServiceTeam::getCategoryNames();
-    }
 
     /**
      * @param string $display
      */
     public function renderDefault($display = 'all'): void {
+        $this->template->categories = ServiceTeam::getCategoryNames();
         $this->setPageTitle(_('Výsledky'));
         $this->template->display = $display;
     }

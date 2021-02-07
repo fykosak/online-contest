@@ -29,7 +29,7 @@
                                     {varType FOL\Components\Navigation\NavItem $children}
                                     {foreach $item->children as $children}
                                         <a class="dropdown-item"
-                                           href="{plink $item->destination,(expand)$item->linkParams}">
+                                           href="{plink $children->destination,(expand)$children->linkParams}">
                                             <span class="hidden-sm">{$children->title}</span>
                                             <span class="{$children->icon}" title="{$children->title}"/></a>
                                     {/foreach}
