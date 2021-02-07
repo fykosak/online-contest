@@ -51,8 +51,7 @@ final class HintCard extends SingleFormCard {
 
     public function decorateFormContainer(Container $container, string $lang): void {
         $items = [];
-        foreach ($this->team->getSubmitAvailableTasks() as $row) {
-            $task = ModelTask::createFromActiveRow($row);
+        foreach ($this->getTasks() as $taskId => $task){
             if ($this->serviceTaskHint->findByPrimary($task->id_task)) {
                 $items[$task->id_task] = $task->getLabel($lang);
             }

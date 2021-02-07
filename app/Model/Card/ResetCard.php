@@ -18,11 +18,10 @@ final class ResetCard extends SingleFormCard {
     }
 
     public function decorateFormContainer(Container $container, string $lang): void {
-        $unsolved = $this->team->getSubmitAvailableTasks();
         $items = [];
-        foreach ($unsolved as $row) {
+        foreach ($this->team->getSubmitAvailableTasks()->select('group:task.id_task AS id_task') as $row) {
             /** @var ModelTask $task */
-            $task = ModelTask::createFromActiveRow($row);
+            $task = $this->serviceTask->findByPrimary($row->id_task);
             $items[$task->id_task] = $task->getLabel($lang) . ' - ' . $this->scoreStrategy->getSingleTaskScore($this->team, $task) . _('b.');
         }
         $container->addSelect('task', _('Task'), $items);
