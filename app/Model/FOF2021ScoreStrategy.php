@@ -60,9 +60,10 @@ class FOF2021ScoreStrategy extends ScoreStrategy {
             ->fetch();
 
         $row = $team->related('card_usage')->where('card_type', ModelCardUsage::TYPE_RESET)->fetch();
-        /** @var ModelCardUsage $usage */
-        $usage = ModelCardUsage::createFromActiveRow($row);
-        if ($usage) {
+
+        if ($row) {
+            /** @var ModelCardUsage $usage */
+            $usage = ModelCardUsage::createFromActiveRow($row);
             if ($usage->getData() == $task->id_task) {
                 $query->where('inserted >= ?', $usage->created);
             }
