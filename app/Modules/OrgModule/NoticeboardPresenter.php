@@ -3,8 +3,6 @@
 namespace FOL\Modules\OrgModule;
 
 use FOL\Components\NotificationForm\NotificationFormComponent;
-use Nette\Application\BadRequestException;
-use Nette\Http\Response;
 
 class NoticeboardPresenter extends BasePresenter {
 

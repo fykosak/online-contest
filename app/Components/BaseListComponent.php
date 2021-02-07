@@ -16,8 +16,6 @@ abstract class BaseListComponent extends BaseComponent {
     /** @persistent */
     public ?string $sorting = null;
 
-    private ?Selection $source = null;
-
     public function getLimit(): int {
         return $this->limit;
     }
@@ -36,10 +34,6 @@ abstract class BaseListComponent extends BaseComponent {
 
     public function setLimit(int $limit): void {
         $this->limit = $limit;
-    }
-
-    public function setSource(?Selection $source): void {
-        $this->source = $source;
     }
 
     // ---- PROTECTED METHODS
@@ -61,9 +55,7 @@ abstract class BaseListComponent extends BaseComponent {
         return $this->getComponent('paginator')->getPaginator();
     }
 
-    protected function getSource(): ?Selection {
-        return $this->source;
-    }
+    abstract protected function getSource(): ?Selection;
 
     /**
      * This method sorts a source of the list.

@@ -5,7 +5,6 @@ namespace FOL\Modules\GameModule;
 use FOL\Model\Authentication\TeamAuthenticator;
 use FOL\Components\LoginForm\LoginFormComponent;
 use FOL\Components\RecoverForm\RecoverFormComponent;
-use FOL\Model\GameSetup;
 use Nette\Application\AbortException;
 
 /**

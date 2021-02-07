@@ -3,6 +3,15 @@ database:
     user:
     password:
 parameters:
+    gameSetup:
+        game:
+            start: '2021-02-06 00:00:00'
+            end: '2021-02-08 00:00:00'
+        results:
+            show: '2021-02-06 00:00:00'
+            hide: '2021-02-08 15:21:00'
+        hardVisible: false
+        refreshDelay: 60000
     # login:password pairs for organizers' login
     orgs:
         user: password
@@ -18,16 +27,6 @@ parameters:
         dir: %appDir%/i18n/locale
         # language used when no or unknown language is requested
         defaultLang: cs
-    machine:
-        # specify whether this is the machine dedicated for the game
-        game: true
-        # URL to which user is redirected when this is not a game machine (watch out for redirect loops!)
-        url: http://localhost/
-    registration:
-        # Specifying non-null URL, means registration will be redirected to FKSDB
-        url: null
-        # Specifies URL mask to team's application edit (only team ID will be substituted)
-        editUrl: "https://db.fykos.local/fykos28/application/default/%s?eventId=8"
     mail:
         # sender's e-mail address of confirmation e-mail
         info: "fyziklani@fykos.cz"
@@ -36,13 +35,6 @@ parameters:
     notifications:
         # interval for Ajax notification polling (in ms)
         pollInterval: 60000
-    reports:
-        # path to report images relative to wwwDir
-        imagePath: /images/report
-        thumbnailPath: /images/report/thumb
-        imageHeight: 1024
-        thumbnailHeight: 256
-        jpgQuality: 80
     competition:
         name:
             cs: FOL

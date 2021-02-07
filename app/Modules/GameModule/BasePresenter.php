@@ -6,7 +6,6 @@ use FOL\Components\Navigation\Navigation;
 use FOL\Components\Navigation\NavItem;
 use Fykosak\Utils\Localization\UnsupportedLanguageException;
 use Nette\Application\AbortException;
-use Nette\Application\BadRequestException;
 
 abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
 

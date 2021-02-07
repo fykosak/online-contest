@@ -7,7 +7,7 @@ use Nette\Application\AbortException;
 use Tracy\ILogger;
 use Nette\Application\BadRequestException;
 
-class ErrorPresenter extends BasePresenter {
+class ErrorPresenter extends \FOL\Modules\Core\BasePresenter {
 
     private ILogger $logger;
 

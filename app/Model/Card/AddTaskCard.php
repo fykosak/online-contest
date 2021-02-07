@@ -7,7 +7,6 @@ use FOL\Model\ORM\Models\ModelGroup;
 use FOL\Model\ORM\Models\ModelPeriod;
 use FOL\Model\ORM\Services\ServiceGroup;
 use FOL\Model\ORM\Services\ServicePeriod;
-use FOL\Model\ORM\TasksService;
 use Fykosak\Utils\Localization\GettextTranslator;
 use Fykosak\Utils\Logging\Logger;
 use Nette\Application\BadRequestException;
@@ -20,7 +19,7 @@ final class AddTaskCard extends SingleFormCard {
 
     public ServiceGroup $serviceGroup;
 
-    public function injectServicePeriod(ServicePeriod $servicePeriod, ServiceGroup $serviceGroup, TasksService $tasksService): void {
+    public function injectServicePeriod(ServicePeriod $servicePeriod, ServiceGroup $serviceGroup): void {
         $this->servicePeriod = $servicePeriod;
         $this->serviceGroup = $serviceGroup;
     }

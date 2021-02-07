@@ -7,13 +7,12 @@ use FOL\Model\ORM\Models\ModelTeam;
 use FOL\Model\ORM\Services\ServiceTeam;
 use Fykosak\Utils\Localization\GettextTranslator;
 use FOL\Components\NotificationMessages\NotificationMessagesComponent;
-use FOL\Tools\InterlosTemplate;
 use FOL\Components\Navigation\Navigation;
 use Fykosak\Utils\Localization\UnsupportedLanguageException;
-use Nette;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
+use Nette\DI\Container;
 
 abstract class BasePresenter extends Presenter {
 
@@ -27,9 +26,9 @@ abstract class BasePresenter extends Presenter {
     protected GettextTranslator $translator;
     protected ServiceTeam $serviceTeam;
     public GameSetup $gameSetup;
-    private Nette\DI\Container $diContainer;
+    private Container $diContainer;
 
-    public function injectServices(GettextTranslator $translator, ServiceTeam $serviceTeam, GameSetup $gameSetup, Nette\DI\Container $container): void {
+    public function injectServices(GettextTranslator $translator, ServiceTeam $serviceTeam, GameSetup $gameSetup, Container $container): void {
         $this->translator = $translator;
         $this->serviceTeam = $serviceTeam;
         $this->gameSetup = $gameSetup;
@@ -79,7 +78,6 @@ abstract class BasePresenter extends Presenter {
     protected function startUp(): void {
         $this->localize();
         parent::startup();
-        $this->machineRedirect();
     }
 
 // -------------- l12n ------------------
@@ -114,19 +112,6 @@ abstract class BasePresenter extends Presenter {
         $this->setView($this->getView() . '.' . $this->lang);
     }
 
-    // -------------- game server ------------------
-
-    /**
-     * @return void
-     * @throws AbortException
-     */
-    private function machineRedirect(): void {
-        $machine = $this->context->parameters['machine'];
-        if (!$machine['game']) {
-            $this->redirectUrl($machine['url']);
-        }
-    }
-
     public function getLoggedTeam(): ?ModelTeam {
         if (!isset($this->loggedTeam)) {
             if ($this->getUser()->isLoggedIn()) {
@@ -142,11 +127,7 @@ abstract class BasePresenter extends Presenter {
         return new Navigation($this->getContext());
     }
 
-    protected function getCurrentYear(): GameSetup {
-        return $this->gameSetup;
-    }
-
-    public function getContext(): Nette\DI\Container {
+    public function getContext(): Container {
         return $this->diContainer;
     }
 }

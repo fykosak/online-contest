@@ -55,7 +55,7 @@ final class RecoverFormComponent extends BaseComponent {
         $prefs = $this->getPresenter()->context->parameters['mail'];
 
         //this way it works behind reverse proxy, but is ugly
-        $recoveryUrl = $this->getPresenter()->link('//:Public:Team:changePassword', ['token' => $token]);
+        $recoveryUrl = $this->getPresenter()->link('//:Public:Team:changePassword', ['token' => $token->token]);
 
         $message->setFrom($prefs['info'], $prefs['name'])
             ->setSubject(_('[Fyziklání online] obnova hesla'))
