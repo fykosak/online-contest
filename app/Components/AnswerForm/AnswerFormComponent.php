@@ -191,14 +191,6 @@ final class AnswerFormComponent extends BaseComponent {
      */
     protected function startUp(): void {
         parent::startUp();
-        if (!$this->user->isLoggedIn()) {
-            throw new InvalidStateException('There is no logged team.');
-        }
-        if ($this->gameSetup->isGameEnd()) {
-            $this->flashMessage(_('Čas vypršel.'), 'danger');
-        } elseif (!$this->gameSetup->isGameStarted()) {
-            $this->flashMessage(_('Hra ještě nezačala.'), 'danger');
-        }
         if (!$this->team->getSubmitAvailableTasks()->where('id_task', $this->task->id_task)->fetch()) {
             throw new ForbiddenRequestException();
         }

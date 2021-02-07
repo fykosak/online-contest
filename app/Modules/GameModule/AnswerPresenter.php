@@ -7,6 +7,8 @@ use FOL\Components\AnswerForm\AnswerFormComponent;
 use FOL\Components\AnswerHistory\AnswerHistoryComponent;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Services\ServiceTask;
+use Nette\Application\AbortException;
+use Nette\InvalidStateException;
 
 class AnswerPresenter extends BasePresenter {
 
@@ -21,6 +23,19 @@ class AnswerPresenter extends BasePresenter {
 
     public function injectSecondary(ServiceTask $serviceTask): void {
         $this->serviceTask = $serviceTask;
+    }
+
+    /**
+     * @throws AbortException
+     */
+    public function actionDefault(): void {
+        if ($this->gameSetup->isGameEnd()) {
+            $this->flashMessage(_('Čas vypršel.'), 'danger');
+            $this->redirect(':Game:Task:default');
+        } elseif (!$this->gameSetup->isGameStarted()) {
+            $this->flashMessage(_('Hra ještě nezačala.'), 'danger');
+            $this->redirect(':Game:Task:default');
+        }
     }
 
     public function renderDefault(): void {
