@@ -12,6 +12,7 @@ use FOL\Components\BaseComponent;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
 use Nette\Security\User;
+use Throwable;
 
 final class ResultsComponent extends BaseComponent {
 
@@ -39,7 +40,7 @@ final class ResultsComponent extends BaseComponent {
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render(): void {
         $isOrg = $this->user->isInRole('org');

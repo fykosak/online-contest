@@ -32,7 +32,7 @@ class VisualPaginatorComponent extends BaseComponent {
     private Paginator $paginator;
 
     /** @persistent */
-    public $page = 1;
+    public ?int $page = 1;
 
     public function getPaginator(): Paginator {
         if (!isset($this->paginator)) {
@@ -47,7 +47,6 @@ class VisualPaginatorComponent extends BaseComponent {
         $page = $paginator->page;
         if ($paginator->pageCount < 2) {
             $steps = [$page];
-
         } else {
             $arr = range(max($paginator->firstPage, $page - 3), min($paginator->lastPage, $page + 3));
             $count = 4;

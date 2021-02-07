@@ -3,11 +3,12 @@
 namespace FOL\Modules\FrontendModule;
 
 use Exception;
+use FOL\Modules\Core\BasePresenter;
 use Nette\Application\AbortException;
 use Tracy\ILogger;
 use Nette\Application\BadRequestException;
 
-class ErrorPresenter extends \FOL\Modules\Core\BasePresenter {
+class ErrorPresenter extends BasePresenter {
 
     private ILogger $logger;
 

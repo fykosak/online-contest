@@ -1,5 +1,6 @@
 {layout '../@layout.latte'}
 {varType FOL\Modules\GameModule\ResultsPresenter $control}
+{varType string $lang}
 {block #title}
     {if $control->gameSetup->isGameEnd() && false}
         <br>

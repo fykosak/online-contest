@@ -1,5 +1,5 @@
 {extends '../../../GameModule/templates/@layout.latte'}
-
+{varType FOL\Modules\Core\BasePresenter $control}
 {block #title}
     {if $control->gameSetup->isGameEnd() && false}
         <br>

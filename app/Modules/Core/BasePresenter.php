@@ -72,7 +72,6 @@ abstract class BasePresenter extends Presenter {
 
     /**
      * @return void
-     * @throws AbortException
      * @throws UnsupportedLanguageException
      */
     protected function startUp(): void {

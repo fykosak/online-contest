@@ -77,6 +77,7 @@ final class AnswersService extends AbstractService {
                 break;
         }
         // Insert a new answer
+        /** @var ModelAnswer $modelAnswer */
         $modelAnswer = $this->serviceAnswer->createNewModel([
                 'id_team' => $team->id_team,
                 'id_task' => $task->id_task,
