@@ -18,9 +18,6 @@ class ResultsPresenter extends BasePresenter {
      */
     protected function beforeRender(): void {
         parent::beforeRender();
-        if (!$this->gameSetup->isGameStarted()) {
-            $this->error('Statistiky nejsou dostupné.');
-        }
         $this->template->categories = ServiceTeam::getCategoryNames();
     }
 
