@@ -60,7 +60,7 @@ final class AddTaskCard extends SingleFormCard {
     }
 
     public function getDescription(): Html {
-        return Html::el('span')->addText('the next problem from a chosen series is revealed, the team can therefore solve more problems from the series at once.');
+        return Html::el('span')->addText(_('The next problem from a chosen series is revealed, the team can therefore solve more problems from the series at once.'));
     }
 
     /**

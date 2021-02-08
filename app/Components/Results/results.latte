@@ -20,7 +20,7 @@
 
                     {*n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted"*}
                     <tr>
-                        <td>{if $teamRow['model']['disqualified'] == 0}{$i++}{else}DSQ{/if}</td>
+                        <td>{if $teamRow['model']['disqualified'] == 0}{++$i}{else}DSQ{/if}</td>
                         <td>
                             {$teamRow['model']['name']}
                         </td>

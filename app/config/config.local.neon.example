@@ -12,6 +12,7 @@ parameters:
             hide: '2021-02-08 15:21:00'
         hardVisible: false
         refreshDelay: 60000
+        streamURL: https://www.youtube.com/fykosak
     # login:password pairs for organizers' login
     orgs:
         user: password

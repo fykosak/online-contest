@@ -40,13 +40,13 @@
                             <div class="row">
                                 {foreach $mirrors as $mirror}
                                     <a class="col-12"
-                                       href="{$mirror}{$task|i18n:'filename',$lang}">Mirror {$iterator->getCounter()}</a>
+                                       href="{$mirror}{$task|i18n:'filename',$lang}">{_'PDF assignment'} <small>(server #{$iterator->getCounter()})</small></a>
                                 {/foreach}
                             </div>
                             {if $link}
                                 <hr/>
                                 <a class="btn btn-primary"
-                                   href="{plink :Game:Answer:default id=>$task->id_task}">{_'Odpovedať'}</a>
+                                   href="{plink :Game:Answer:default id=>$task->id_task}">{_'Odevzdat řešení'}</a>
                             {/if}
                         </div>
                     </div>
@@ -62,6 +62,7 @@
     {varType array $unsolvedTasks}
     {varType array $solvedTasks}
     {varType array $skippedTasks}
+    {varType string $streamURL}
 
     {*{cache "problems/$id_team", "problems"}*}
 
@@ -71,28 +72,24 @@
     <p><b>Please, spend a few moments filling a <a href="https://forms.gle/5uJHPEgpC6x4vBYW9">survey</a> about this year's competition.</b></p>
     {/if}*}
 
-    {if !$isGameStarted}
-        <div class="alert alert-secondary">
-            {if $lang == 'cs'}
-                Jakmile hra začne, na této stránce se objeví zadání úloh. Úlohy budete moci odevzdávat na stránce <b>Odevzdat
-                řešení</b>, která se objeví v menu po začátku hry.
-                <hr>
-                V mezičase, co takhle poslat nějakou fotku vašeho týmu na <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>?
-            {else}
-                Once the game starts, the task assignment will appear here. You will be able to submit the tasks on the
-                <b>Submit the solution</b> page, which will appear in the menu after the game starts.
-                <hr>
-                In the meantime, how about sending a photo of your team to <a href="mailto:online@fyziklani.cz">online@fyziklani.cz</a>?
-            {/if}
-        </div>
+    {if $isGameStarted}
+        {include tasks tasks=>$unsolvedTasks,link=>true}
+
+        <h3 class="mt-3">{_'Vyřešené'}</h3>
+        {include tasks tasks=>$solvedTasks,link=>false}
+
+        <h3 class="mt-3">{_'Přeskočené'}</h3>
+        {include tasks tasks=>$skippedTasks,link=>false}
+    {else}
+        {if $lang == 'cs'}
+            <p><strong>Jakmile hra začne, na této stránce se objeví zadání úloh. Jste zde správně.</strong> Během čekání můžete zavítat na náš stream, kde hru oficiálně spustíme a vysvětlíme její pravidla.
+                Po hře nezapomeňte opět navštívit stream, kde bude oficiální vyhlášení výsledků. Odkaz nezapomeňte poslat svým fyzikářům, ať vám můžou fandit.</p>
+            <p><a href="{$streamURL}" target="_blank" class="stream-link">{$streamURL}</a></p>
+        {else}
+            <p><strong>Once the game starts, the task assignment will appear here. You are in the right place.</strong> Please visit our YouTube stream during the waiting, where we officially start the game and explain the rules.
+                After the game, the result will be announced here as the following program. Do not forget to share the link among your physics teachers so they can be informed and see your progress.</p>
+            <p><a href="{$streamURL}" target="_blank" class="stream-link">{$streamURL}</a></p>
+        {/if}
     {/if}
-
-    {include tasks tasks=>$unsolvedTasks,link=>true}
-
-    <h3 class="mt-3">{_'Vyřešené'}</h3>
-    {include tasks tasks=>$solvedTasks,link=>false}
-
-    <h3 class="mt-3">{_'Přeskočené'}</h3>
-    {include tasks tasks=>$skippedTasks,link=>false}
 
 {/block}

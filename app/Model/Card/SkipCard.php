@@ -51,7 +51,7 @@ final class SkipCard extends SingleFormCard {
     }
 
     public function getDescription(): Html {
-        return Html::el('p')->addText('The team can skip an arbitrary number of problems they are currently solving.');
+        return Html::el('span')->addText(_('The team can skip an arbitrary number of problems they are currently solving.'));
     }
 
     public function decorateFormContainer(Container $container, string $lang): void {

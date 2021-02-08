@@ -46,7 +46,7 @@ final class HintCard extends SingleFormCard {
     }
 
     public function getDescription(): Html {
-        return Html::el('span')->addText('The team can read a hint to the solution (only some of the problems have hints).');
+        return Html::el('span')->addText(_('The team can read a hint to the solution.'));
     }
 
     public function decorateFormContainer(Container $container, string $lang): void {

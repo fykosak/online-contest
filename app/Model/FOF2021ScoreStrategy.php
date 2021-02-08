@@ -87,7 +87,8 @@ class FOF2021ScoreStrategy extends ScoreStrategy {
             $solved = $team->getAnswers()
                 ->where('task.cancelled', 0)
                 ->where('answer.correct', 1)
-                ->count('*');
+                ->where('id_group', $group)
+                ->count('task.id_task');
             $all = $group->related('task')
                 ->where('cancelled', 0)
                 ->count('*');

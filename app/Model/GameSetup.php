@@ -15,6 +15,8 @@ class GameSetup {
     public int $refreshDelay;
     public bool $isGameMigrated = true; // TODO
 
+    public string $streamURL;
+
     public function __construct(array $config) {
         $this->gameStart = $config['game']['start'];
         $this->gameEnd = $config['game']['end'];
@@ -24,6 +26,8 @@ class GameSetup {
 
         $this->hardVisible = $config['hardVisible'];
         $this->refreshDelay = $config['refreshDelay'];
+
+        $this->streamURL = $config['streamURL'];
     }
 
     public function isResultsVisible(): bool {

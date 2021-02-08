@@ -55,6 +55,7 @@ abstract class BasePresenter extends Presenter {
         $template->setTranslator($this->translator);
         $template->isGameStarted = $this->gameSetup->isGameStarted();
         $template->isGameEnd = $this->gameSetup->isGameEnd();
+        $template->streamURL = $this->gameSetup->streamURL;
         $template->getLatte()->addFilter('i18n', GettextTranslator::class . '::i18nHelper');
 
         return $template;

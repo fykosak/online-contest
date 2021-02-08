@@ -40,6 +40,6 @@ final class ResetCard extends SingleFormCard {
     }
 
     public function getDescription(): Html {
-        return Html::el('span')->addText('The marking scheme of the problem is reset, the team can get 5 points for a correct answer again.');
+        return Html::el('span')->addText(_('The marking scheme of the problem is reset, the team can get 5 points for a correct answer again.'));
     }
 }

@@ -34,7 +34,7 @@ final class OptionsCard extends SingleFormCard {
     }
 
     public function getDescription(): Html {
-        return Html::el('span')->addText('the team receives 4 possible answers to the question, one of them is correct.');
+        return Html::el('span')->addText(_('The team receives 4 possible answers to the question, one of them is correct.'));
     }
 
     public function decorateFormContainer(Container $container, string $lang): void {
