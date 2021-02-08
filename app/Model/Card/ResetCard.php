@@ -27,10 +27,6 @@ final class ResetCard extends SingleFormCard {
         $container->addSelect('task', _('Task'), $items);
     }
 
-    protected function innerHandle(Logger $logger, array $values): void {
-        // intentionally blank!
-    }
-
     public function getType(): string {
         return ModelCardUsage::TYPE_RESET;
     }

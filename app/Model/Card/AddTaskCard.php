@@ -45,7 +45,7 @@ final class AddTaskCard extends SingleFormCard {
         $container->addSelect('group', _('Line'), $items);
     }
 
-    protected function innerHandle(Logger $logger, array $values): void {
+    protected function afterHandle(ModelCardUsage $usage, Logger $logger, array $values): void {
         /** @var ModelGroup|null $group */
         $group = $this->serviceGroup->findByPrimary($values['group']);
         $this->tasksService->updateSingleCounter($this->team, $group);

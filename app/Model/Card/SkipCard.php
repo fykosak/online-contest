@@ -21,11 +21,12 @@ final class SkipCard extends SingleFormCard {
     }
 
     /**
+     * @param ModelCardUsage $usage
      * @param Logger $logger
      * @param array $values
      * @throws TaskNotAvailableException
      */
-    protected function innerHandle(Logger $logger, array $values): void {
+    protected function afterHandle(ModelCardUsage $usage, Logger $logger, array $values): void {
         foreach ($values as $taskId => $skip) {
             if (!$skip) {
                 continue;

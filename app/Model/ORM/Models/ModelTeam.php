@@ -33,21 +33,21 @@ final class ModelTeam extends AbstractModel {
         ];
     }
 
+    public function getCardUsageByType(string $type): ?ModelCardUsage {
+        $row = $this->related('card_usage')->where('card_type', $type)->fetch();
+        return $row ? ModelCardUsage::createFromActiveRow($row) : null;
+    }
+
     public function getCorrect(): GroupedSelection {
-        return $this->related('answer')
+        return $this->getAnswers()
             ->where('task.cancelled', 0)
             ->where('answer.correct', 1);
     }
 
     public function getCorrectOrSkipped(): GroupedSelection {
-        return $this->related('answer')
+        return $this->getAnswers()
             ->where('task.cancelled', 0)
             ->where('answer.correct ? OR answer.skipped ?', 1, 1);
-    }
-
-    public function getCorrectedInGroup(ModelGroup $group): GroupedSelection {
-        return $this->getCorrect()
-            ->where('task.id_group', $group->id_group);
     }
 
     public function getAnswers(): GroupedSelection {

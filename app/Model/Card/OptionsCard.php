@@ -18,7 +18,7 @@ final class OptionsCard extends SingleFormCard {
         $this->serviceAnswerOptions = $serviceAnswerOptions;
     }
 
-    protected function innerHandle(Logger $logger, array $values): void {
+    protected function beforeHandle(Logger $logger, array $values): void {
         $taskId = $values['task'];
         if (!isset($this->getTasks()[$taskId])) {
             throw new TaskNotAvailableException();

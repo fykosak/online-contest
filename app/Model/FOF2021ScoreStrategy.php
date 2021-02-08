@@ -58,12 +58,9 @@ class FOF2021ScoreStrategy extends ScoreStrategy {
             ->where('id_team', $team->id_team)
             ->where('correct', 1)
             ->fetch();
+        $usage = $team->getCardUsageByType(ModelCardUsage::TYPE_RESET);
 
-        $row = $team->related('card_usage')->where('card_type', ModelCardUsage::TYPE_RESET)->fetch();
-
-        if ($row) {
-            /** @var ModelCardUsage $usage */
-            $usage = ModelCardUsage::createFromActiveRow($row);
+        if ($usage) {
             if ($usage->getData() == $task->id_task) {
                 $query->where('inserted >= ?', $usage->created);
             }
@@ -84,10 +81,8 @@ class FOF2021ScoreStrategy extends ScoreStrategy {
         /** @var ModelGroup $group */
         $bonus = 0;
         foreach ($this->groups as $group) {
-            $solved = $team->getAnswers()
-                ->where('task.cancelled', 0)
-                ->where('answer.correct', 1)
-                ->where('id_group', $group)
+            $solved = $team->getCorrectOrSkipped()
+                ->where('id_group', $group->id_group)
                 ->count('task.id_task');
             $all = $group->related('task')
                 ->where('cancelled', 0)

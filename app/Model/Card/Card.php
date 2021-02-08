@@ -48,8 +48,8 @@ abstract class Card {
         return $row ? ModelCardUsage::createFromActiveRow($row) : null;
     }
 
-    public final function logUsage(array $values): void {
-        $this->serviceCardUsage->createNewModel([
+    public final function logUsage(array $values): ModelCardUsage {
+        return $this->serviceCardUsage->createNewModel([
             'team_id' => $this->team->id_team,
             'card_type' => $this->getType(),
             'data' => ModelCardUsage::serializeData($this->getType(), $values),
@@ -65,8 +65,9 @@ abstract class Card {
         $this->explorer->beginTransaction();
         try {
             $this->checkRequirements();
-            $this->innerHandle($logger, $values);
-            $this->logUsage($values);
+            $this->beforeHandle($logger, $values);
+            $usage = $this->logUsage($values);
+            $this->afterHandle($usage, $logger, $values);
             $this->explorer->commit();
         } catch (Throwable $exception) {
             $this->explorer->rollBack();
@@ -92,13 +93,12 @@ abstract class Card {
             throw new CardAlreadyUsedException();
         }
     }
+    
+    protected function beforeHandle(Logger $logger, array $values): void {
+    }
 
-    /**
-     * @param Logger $logger
-     * @param array $values
-     * @throws CardCannotBeUsedException
-     */
-    abstract protected function innerHandle(Logger $logger, array $values): void;
+    protected function afterHandle(ModelCardUsage $usage, Logger $logger, array $values): void {
+    }
 
     abstract public function getType(): string;
 

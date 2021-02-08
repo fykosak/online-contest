@@ -8,10 +8,6 @@ use Nette\Utils\Html;
 
 final class DoublePointsCard extends Card {
 
-    protected function innerHandle(Logger $logger, array $values): void {
-        // intentionally blank!
-    }
-
     public function getType(): string {
         return ModelCardUsage::TYPE_DOUBLE_POINTS;
     }
