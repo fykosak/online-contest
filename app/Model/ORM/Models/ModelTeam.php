@@ -39,19 +39,9 @@ final class ModelTeam extends AbstractModel {
     }
 
     public function getCorrect(): GroupedSelection {
-        return $this->getAnswers()
+        return $this->related('answer')
             ->where('task.cancelled', 0)
             ->where('answer.correct', 1);
-    }
-
-    public function getCorrectOrSkipped(): GroupedSelection {
-        return $this->getAnswers()
-            ->where('task.cancelled', 0)
-            ->where('answer.correct ? OR answer.skipped ?', 1, 1);
-    }
-
-    public function getAnswers(): GroupedSelection {
-        return $this->related('answer');
     }
 
     public function getAvailableTasks(): GroupedSelection {
@@ -77,5 +67,12 @@ final class ModelTeam extends AbstractModel {
 
     public function getSkipped(): GroupedSelection {
         return $this->getTaskState()->where('skipped = 1');
+    }
+
+    public function getSolvedOrSkipped(): GroupedSelection {
+        return $this->getTaskState()->where('task_state.points IS NOT NULL OR task_state.skipped = 1');
+    }
+    public function getSolvedOrSkippedOrCanceled(): GroupedSelection {
+        return $this->getTaskState()->where('task_state.points IS NOT NULL OR task_state.skipped = 1 OR task.cancelled = 1');
     }
 }

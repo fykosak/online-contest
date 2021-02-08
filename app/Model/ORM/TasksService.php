@@ -125,4 +125,24 @@ final class TasksService extends AbstractService {
                     gs.task_counter)
                 WHERE gs.id_group = ? AND gs.id_team = ?', ModelCardUsage::TYPE_ADD_TASK, $group->id_group, $team->id_team);
     }
+
+    public function updateSingleCounter2(ModelTeam $team, ModelGroup $group): void {
+        $period = $group->getActivePeriod();
+        $usage = $team->getCardUsageByType(ModelCardUsage::TYPE_ADD_TASK);
+        $this->explorer->query('UPDATE group_state AS gs
+                SET task_counter = GREATEST(?,gs.task_counter)
+                WHERE gs.id_group = ? AND gs.id_team = ?',
+            ModelCardUsage::TYPE_ADD_TASK,
+            $team->getSolvedOrSkippedOrCanceled()->count('id_task') + ($period ? $period->reserve_size : 0) + (($usage && $usage->getData() == $group->id_group) ? 1 : 0),
+            $group->id_group,
+            $team->id_team
+        );
+    }
+
+    public function increaseCounter(ModelTeam $team, ModelGroup $group): void {
+        $this->explorer->query('UPDATE group_state SET task_counter = task_counter + 1 WHERE group_state.id_group = ? AND group_state.id_team = ?',
+            $group->id_group,
+            $team->id_team
+        );
+    }
 }

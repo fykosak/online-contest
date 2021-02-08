@@ -81,8 +81,8 @@ class FOF2021ScoreStrategy extends ScoreStrategy {
         /** @var ModelGroup $group */
         $bonus = 0;
         foreach ($this->groups as $group) {
-            $solved = $team->getCorrectOrSkipped()
-                ->where('id_group', $group->id_group)
+            $solved = $team->getSolvedOrSkipped()
+                ->where('task.id_group', $group->id_group)
                 ->count('task.id_task');
             $all = $group->related('task')
                 ->where('cancelled', 0)

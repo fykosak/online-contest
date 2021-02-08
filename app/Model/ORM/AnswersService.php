@@ -44,7 +44,8 @@ final class AnswersService extends AbstractService {
         // Correct answers of the team
         $correctAnswers = $team->getCorrect()->fetchPairs('id_answer', 'id_answer');
         // Last answer from same group has to be older than XX seconds
-        $query = $this->serviceAnswer->getTable()->where('task.id_group', $task->id_group)
+        $query = $this->serviceAnswer->getTable()
+            ->where('task.id_group', $task->id_group)
             ->where('id_team', $team->id_team)
             ->where('answer.inserted > NOW() - INTERVAL ? SECOND', $period->time_penalty);
         if (!empty($correctAnswers)) {
