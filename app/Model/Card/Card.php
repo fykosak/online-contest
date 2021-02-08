@@ -4,6 +4,7 @@ namespace FOL\Model\Card;
 
 use FOL\Model\Card\Exceptions\CardAlreadyUsedException;
 use FOL\Model\Card\Exceptions\CardCannotBeUsedException;
+use FOL\Model\GameSetup;
 use FOL\Model\ORM\Models\ModelCardUsage;
 use FOL\Model\ORM\Models\ModelTask;
 use FOL\Model\ORM\Models\ModelTeam;
@@ -11,6 +12,7 @@ use FOL\Model\ORM\Services\ServiceCardUsage;
 use FOL\Model\ORM\Services\ServiceTask;
 use FOL\Model\ORM\TasksService;
 use Fykosak\Utils\Logging\Logger;
+use Nette\Application\ForbiddenRequestException;
 use Nette\Database\Explorer;
 use Nette\SmartObject;
 use Nette\Utils\Html;
@@ -24,7 +26,8 @@ abstract class Card {
     protected ServiceCardUsage $serviceCardUsage;
     protected ModelTeam $team;
     protected TasksService $tasksService;
-    public ServiceTask $serviceTask;
+    protected ServiceTask $serviceTask;
+    protected GameSetup $gameSetup;
     /* cache*/
     private array $tasks;
 
@@ -32,11 +35,12 @@ abstract class Card {
         $this->team = $team;
     }
 
-    public function injectBase(Explorer $explorer, ServiceCardUsage $serviceCardUsage, TasksService $tasksService, ServiceTask $serviceTask): void {
+    public function injectBase(Explorer $explorer, ServiceCardUsage $serviceCardUsage, TasksService $tasksService, ServiceTask $serviceTask, GameSetup $gameSetup): void {
         $this->explorer = $explorer;
         $this->serviceCardUsage = $serviceCardUsage;
         $this->tasksService = $tasksService;
         $this->serviceTask = $serviceTask;
+        $this->gameSetup = $gameSetup;
     }
 
     public final function wasUsed(): bool {
@@ -87,13 +91,17 @@ abstract class Card {
 
     /**
      * @throws CardCannotBeUsedException
+     * @throws ForbiddenRequestException
      */
     public function checkRequirements(): void {
         if ($this->wasUsed()) {
             throw new CardAlreadyUsedException();
         }
+        if (!$this->gameSetup->isGameActive()) {
+            throw new ForbiddenRequestException();
+        }
     }
-    
+
     protected function beforeHandle(Logger $logger, array $values): void {
     }
 
