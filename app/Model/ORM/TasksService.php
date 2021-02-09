@@ -132,7 +132,6 @@ final class TasksService extends AbstractService {
         $this->explorer->query('UPDATE group_state AS gs
                 SET task_counter = GREATEST(?,gs.task_counter)
                 WHERE gs.id_group = ? AND gs.id_team = ?',
-            ModelCardUsage::TYPE_ADD_TASK,
             $team->getSolvedOrSkippedOrCanceled()->count('id_task') + ($period ? $period->reserve_size : 0) + (($usage && $usage->getData() == $group->id_group) ? 1 : 0),
             $group->id_group,
             $team->id_team
