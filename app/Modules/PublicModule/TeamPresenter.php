@@ -24,28 +24,6 @@ class TeamPresenter extends BasePresenter {
     }
 
     /**
-     * @param string|null $token
-     * @return void
-     * @throws AbortException
-     * @throws BadRequestException
-     */
-    public function renderChangePassword(?string $token = null): void {
-        if (!is_null($token)) {
-            try {
-                $this->authenticator->authenticateByToken($token);
-            } catch (AuthenticationException $e) {
-                $this->error(_('Chybný token.'), IResponse::S401_UNAUTHORIZED);
-            }
-        }
-        if (!$this->user->isAllowed('team', 'edit')) {
-            $this->flashMessage(_('Nejprve se prosím přihlaste.'), 'danger');
-            $this->redirect('Default:login');
-        }
-
-        $this->setPageTitle(_('Změna hesla'));
-    }
-
-    /**
      * @return void
      * @throws AbortException
      */

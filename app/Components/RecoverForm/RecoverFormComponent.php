@@ -40,7 +40,7 @@ final class RecoverFormComponent extends BaseComponent {
         $competitor = $this->serviceCompetitors->findByEmail($values['email']);
         if (!$competitor) {
             $this->getPresenter()->flashMessage(_('Tým nenalezen.'), 'danger');
-            $this->getPresenter()->redirect('Default:default');
+            $this->getPresenter()->redirect(':Game:Auth:login');
         }
         $team = $competitor->getTeam();
         $competitors = $team->getCompetitors();
@@ -48,25 +48,25 @@ final class RecoverFormComponent extends BaseComponent {
 
         if (is_null($token)) {
             $this->getPresenter()->flashMessage(_('Tým se již pokouší o obnovu hesla.'), 'danger');
-            $this->getPresenter()->redirect('Default:default');
+            $this->getPresenter()->redirect(':Game:Auth:login');
         }
 
         $message = new Message();
         $prefs = $this->getPresenter()->context->parameters['mail'];
 
         //this way it works behind reverse proxy, but is ugly
-        $recoveryUrl = $this->getPresenter()->link('//:Public:Team:changePassword', ['token' => $token->token]);
+        $recoveryUrl = $this->getPresenter()->link('//:Game:Auth:changePassword', ['token' => $token->token]);
 
         $message->setFrom($prefs['info'], $prefs['name'])
-            ->setSubject(_('[Fyziklání online] obnova hesla'))
-            ->setBody(sprintf(_('Pro obnovu hesla přejděte na %s\nVaši organizátoři\n\nToto je automatická zpráva. Pokud jste o obnovu hesla nežádali, tento e-mail ignorujte.'), $recoveryUrl));
+            ->setSubject(_('Obnova hesla - Fyziklání 2021'))
+            ->setBody(sprintf(_('Člen vašeho týmu %2$s požádal o obnovu hesla. Pro jeho obnovu přejděte na %1$s'), $recoveryUrl, $team->name));
 
         foreach ($competitors as $competitor) {
             $message->addTo($competitor['email']);
         }
         $this->mailer->send($message);
-        $this->getPresenter()->flashMessage(_('E-mail pro obnovu byl odeslán.'));
-        $this->getPresenter()->redirect('Default:default');
+        $this->getPresenter()->flashMessage(_('Všem členům vašeho týmu byl odeslán email s odkazem na změnu hesla.'));
+        $this->getPresenter()->redirect(':Game:Auth:login');
     }
 
     // ---- PROTECTED METHODS

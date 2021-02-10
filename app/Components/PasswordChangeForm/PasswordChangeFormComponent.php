@@ -35,8 +35,8 @@ final class PasswordChangeFormComponent extends BaseComponent {
             'password' => TeamAuthenticator::passwordHash($values['password']),
         ]);
 
-        $this->getPresenter()->flashMessage(_('Heslo bylo změněno.'));
-        $this->getPresenter()->redirect('Team:default');
+        $this->getPresenter()->flashMessage(sprintf(_('Heslo pro tým %s bylo změněno. Nyní se prosím přihlašte s novým heslem.'), $this->team->name));
+        $this->getPresenter()->redirect(':Game:Auth:login');
     }
 
     // ---- PROTECTED METHODS
@@ -44,16 +44,16 @@ final class PasswordChangeFormComponent extends BaseComponent {
     protected function createComponentForm(): BaseForm {
         $form = new BaseForm($this->getContext());
 
-        $form->addPassword('password', 'Nové heslo')
+        $form->addPassword('password', _('Nové heslo'))
             ->setRequired(true)
-            ->addRule(Form::FILLED, 'Heslo musí být vyplněno.');
+            ->addRule(Form::FILLED, _('Heslo musí být vyplněno.'));
 
-        $form->addPassword('passwordCheck', 'Nové heslo (pro kontrolu)')
+        $form->addPassword('passwordCheck', _('Nové heslo (pro kontrolu)'))
             ->setRequired(true)
-            ->addRule(Form::EQUAL, 'Hesla se neshodují', $form['password'])
+            ->addRule(Form::EQUAL, _('Hesla se neshodují'), $form['password'])
             ->setOmitted();
 
-        $form->addSubmit('submit', 'Odeslat');
+        $form->addSubmit('submit', _('Odeslat'));
         $form->onSuccess[] = function (Form $form) {
             $this->formSubmitted($form);
         };
@@ -62,6 +62,7 @@ final class PasswordChangeFormComponent extends BaseComponent {
     }
 
     public function render(): void {
+        $this->template->teamName = $this->team->name;
         $this->getTemplate()->setFile(__DIR__ . DIRECTORY_SEPARATOR . 'passwordChangeForm.latte');
         parent::render();
     }

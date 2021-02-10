@@ -50,10 +50,6 @@ msgstr ""
 msgid "Chyba při práci s databází."
 msgstr "Database error."
 
-# TeamPresenter.php:32
-msgid "Chybný token."
-msgstr "Wrong token."
-
 # NotificationFormComponent.php:46
 msgid "Create"
 msgstr ""
@@ -98,10 +94,6 @@ msgstr "E-mail must be set."
 msgid "E-mail nemá správný formát."
 msgstr "Entered e-mail does not have a correct format."
 
-# RecoverFormComponent.php:53
-msgid "E-mail pro obnovu byl odeslán."
-msgstr "Recovery e-mail has been sent."
-
 # DefaultPresenter.php:44
 # menu.latte:14
 # menu.latte:14
@@ -134,13 +126,21 @@ msgstr "Passwords don't match"
 msgid "Heslo"
 msgstr "Password"
 
-# PasswordChangeFormComponent.php:17
-msgid "Heslo bylo změněno."
-msgstr "Password has been changed."
-
 # LoginFormComponent.php:37
 msgid "Heslo musí být vyplněno."
 msgstr "You must choose a password."
+
+# PasswordChangeFormComponent.php:38
+msgid "Heslo pro tým %s bylo změněno. Nyní se prosím přihlašte s novým heslem."
+msgstr ""
+"Password for team %s has been changed. Please log in with your new password "
+"now."
+
+# AuthPresenter.php:62
+msgid "Heslo pro tým již zřejmě bylo obnoveno jiným členem týmu."
+msgstr ""
+"Probably the other team member has already restored the password. Ask your "
+"co-members or request the password recovery again."
 
 # HintCard.php:45
 msgid "Hint (only some problems)"
@@ -269,6 +269,10 @@ msgstr "You must enter a team name."
 msgid "Obnova hesla"
 msgstr "Password recovery"
 
+# RecoverFormComponent.php:61
+msgid "Obnova hesla - Fyziklání 2021"
+msgstr "Password recovery - Fyziklani 2021"
+
 # ChatListComponent.php:37
 msgid "Obsah příspěvku není vyplněn."
 msgstr "Your entry is empty."
@@ -364,20 +368,6 @@ msgstr "You have used double points card."
 # DefaultPresenter.php:27
 msgid "Pravidla"
 msgstr "Rules"
-
-# RecoverFormComponent.php:47
-msgid ""
-"Pro obnovu hesla přejděte na %s\n"
-"Vaši organizátoři\n"
-"\n"
-"Toto je automatická zpráva. Pokud jste o obnovu hesla nežádali, tento e-mail "
-"ignorujte."
-msgstr ""
-"To complete the password recovery, go to %s\n"
-"Your organizers\n"
-"\n"
-"This is automatic message. If you are not trying to recover your password, "
-"ignore this e-mail."
 
 # default.phtml:39
 msgid "Přeskočené"
@@ -498,6 +488,10 @@ msgstr ""
 msgid "Task is not available"
 msgstr ""
 
+# passwordChangeForm.latte:2
+msgid "Team name:"
+msgstr ""
+
 # ResetCard.php:43
 msgid ""
 "The marking scheme of the problem is reset, the team can get 5 points for a "
@@ -594,6 +588,10 @@ msgstr "The answer must be a real number."
 msgid "Výsledky"
 msgstr "Results"
 
+# RecoverFormComponent.php:68
+msgid "Všem členům vašeho týmu byl odeslán email s odkazem na změnu hesla."
+msgstr "We sent an email with a link to a password recovery to all members of your team."
+
 msgid "You can not rate this task right now"
 msgstr ""
 
@@ -634,10 +632,6 @@ msgstr "Show all results"
 # scoreList.phtml:68
 msgid "Zrušená úloha"
 msgstr "Cancelled problem"
-
-# RecoverFormComponent.php:46
-msgid "[Fyziklání online] obnova hesla"
-msgstr "[Online physics brawl] password recovery"
 
 # default.phtml:15
 msgid "b."
@@ -715,6 +709,14 @@ msgstr "problem"
 # AnswerFormComponent.php:113
 msgid "Čas vypršel."
 msgstr "Time is up."
+
+# RecoverFormComponent.php:62
+msgid ""
+"Člen vašeho týmu %2$s požádal o obnovu hesla. Pro jeho obnovu přejděte na "
+"%1$s"
+msgstr ""
+"A member of your team %2$s has requested a password recovery. Please follow "
+"the link %1$s"
 
 # taskStats.latte:6
 msgid "řešilo týmů"

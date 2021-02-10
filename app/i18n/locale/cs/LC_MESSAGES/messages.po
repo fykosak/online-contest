@@ -39,10 +39,6 @@ msgstr "Chat"
 msgid "Chyba při práci s databází."
 msgstr "Chyba při práci s databází."
 
-# TeamPresenter.php:37
-msgid "Chybný token."
-msgstr "Chybný token."
-
 # NotificationFormComponent.php:46
 msgid "Create"
 msgstr "Vytvořit"
@@ -88,10 +84,6 @@ msgstr "E-mail musí být vyplněn."
 msgid "E-mail nemá správný formát."
 msgstr "E-mail nemá správný formát."
 
-# RecoverFormComponent.php:68
-msgid "E-mail pro obnovu byl odeslán."
-msgstr "E-mail pro obnovu byl odeslán."
-
 # DefaultPresenter.php:24
 msgid "FAQ"
 msgstr "FAQ"
@@ -112,14 +104,18 @@ msgstr "Hesla se neshodují"
 msgid "Heslo"
 msgstr "Heslo"
 
-# PasswordChangeFormComponent.php:38
-msgid "Heslo bylo změněno."
-msgstr "Heslo bylo změněno."
-
 # PasswordChangeFormComponent.php:49
 # LoginFormComponent.php:68
 msgid "Heslo musí být vyplněno."
 msgstr "Heslo musí být vyplněno."
+
+# PasswordChangeFormComponent.php:38
+msgid "Heslo pro tým %s bylo změněno. Nyní se prosím přihlašte s novým heslem."
+msgstr ""
+
+# AuthPresenter.php:62
+msgid "Heslo pro tým již zřejmě bylo obnoveno jiným členem týmu."
+msgstr ""
 
 # HintCard.php:45
 msgid "Hint (only some problems)"
@@ -245,6 +241,10 @@ msgstr "Název týmu musí být vyplněn."
 msgid "Obnova hesla"
 msgstr "Obnova hesla"
 
+# RecoverFormComponent.php:61
+msgid "Obnova hesla - Fyziklání 2021"
+msgstr ""
+
 # ChatListComponent.php:121
 msgid "Obsah příspěvku není vyplněn."
 msgstr "Obsah příspěvku není vyplněn."
@@ -331,20 +331,6 @@ msgstr "Použili jste kartičku za dvojnásobek bodů."
 # DefaultPresenter.php:19
 msgid "Pravidla"
 msgstr "Pravidla"
-
-# RecoverFormComponent.php:62
-msgid ""
-"Pro obnovu hesla přejděte na %s\n"
-"Vaši organizátoři\n"
-"\n"
-"Toto je automatická zpráva. Pokud jste o obnovu hesla nežádali, tento e-mail "
-"ignorujte."
-msgstr ""
-"Pro obnovu hesla přejděte na %s\n"
-"Vaši organizátoři\n"
-"\n"
-"Toto je automatická zpráva. Pokud jste o obnovu hesla nežádali, tento e-mail "
-"ignorujte."
 
 # default.latte:80
 msgid "Přeskočené"
@@ -464,6 +450,10 @@ msgstr "Úloha nemá nápovědu"
 msgid "Task is not available"
 msgstr "Úloha není k dispozici"
 
+# passwordChangeForm.latte:2
+msgid "Team name:"
+msgstr "Název týmu:"
+
 # ResetCard.php:43
 msgid ""
 "The marking scheme of the problem is reset, the team can get 5 points for a "
@@ -568,6 +558,10 @@ msgstr "Výsledek musí být reálné číslo."
 msgid "Výsledky"
 msgstr "Výsledky"
 
+# RecoverFormComponent.php:68
+msgid "Všem členům vašeho týmu byl odeslán email s odkazem na změnu hesla."
+msgstr ""
+
 # RatingComponent.php:74
 msgid "You can not rate this task right now"
 msgstr "Úlohu nyní nelze hodnotit"
@@ -608,10 +602,6 @@ msgstr "Zobrazit všechny výsledky"
 # taskStats.latte:14
 msgid "Zrušená úloha"
 msgstr "Zrušená úloha"
-
-# RecoverFormComponent.php:61
-msgid "[Fyziklání online] obnova hesla"
-msgstr "[Fyziklání online] obnova hesla"
 
 # ResetCard.php:25
 # default.latte:27
@@ -690,6 +680,12 @@ msgstr "úkol"
 # AnswerPresenter.php:33
 msgid "Čas vypršel."
 msgstr "Čas vypršel."
+
+# RecoverFormComponent.php:62
+msgid ""
+"Člen vašeho týmu %2$s požádal o obnovu hesla. Pro jeho obnovu přejděte na "
+"%1$s"
+msgstr ""
 
 # taskStats.latte:7
 msgid "řešilo týmů"

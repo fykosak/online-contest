@@ -16,7 +16,7 @@
                 </thead>
                 {var $i = 0}
             {foreach $teams AS $teamRow}
-                    {continueIf $teamRow['model']['category'] == $category}
+                    {continueIf $teamRow['model']['category'] != $category}
 
                     {*n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted"*}
                     <tr>
