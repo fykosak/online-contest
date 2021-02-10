@@ -63,19 +63,11 @@ final class TasksService extends AbstractService {
                     GREATEST(
                         IFNULL(
                             (
-                                SELECT COUNT(id_answer)
-                                FROM `answer`
-                                INNER JOIN `task` USING (`id_task`)          
-                                WHERE answer.id_team = gs.id_team 
-                                    AND task.id_group = gs.id_group
-                                    AND `task`.`cancelled` = 0
-                                    AND `answer`.`correct` = 1
-                            ) + (
                                 SELECT COUNT(id_task)
                                 FROM task_state AS ts
-                                LEFT JOIN task tsk2 USING (id_task)
-                                WHERE ts.id_team = gs.id_team AND tsk2.id_group = gs.id_group AND skipped = 1
-                            ) + (
+                                    LEFT JOIN task tsk2 USING (id_task)
+                                WHERE ts.id_team = gs.id_team AND tsk2.id_group = gs.id_group AND (skipped = 1 OR (tsk2.`cancelled` = 0 AND ts.points IS NOT NULL))
+                            )+ (
                                 SELECT reserve_size
                                 FROM period AS p 
                                 WHERE p.id_group = gs.id_group AND p.begin <= NOW() AND p.end > NOW()
@@ -97,19 +89,11 @@ final class TasksService extends AbstractService {
                     GREATEST(
                         IFNULL(
                             (
-                                SELECT COUNT(id_answer)
-                                FROM `answer`
-                                INNER JOIN `task` USING (`id_task`)          
-                                WHERE answer.id_team = gs.id_team 
-                                    AND task.id_group = gs.id_group
-                                    AND `task`.`cancelled` = 0
-                                    AND `answer`.`correct` = 1
-                             ) + (
                                 SELECT COUNT(id_task)
                                 FROM task_state AS ts
-                                LEFT JOIN task tsk2 USING (id_task)
-                                WHERE ts.id_team = gs.id_team AND tsk2.id_group = gs.id_group AND skipped = 1
-                             ) + (
+                                    LEFT JOIN task tsk2 USING (id_task)
+                                WHERE ts.id_team = gs.id_team AND tsk2.id_group = gs.id_group AND (skipped = 1 OR (tsk2.`cancelled` = 0 AND ts.points IS NOT NULL))
+                            ) + (
                                 SELECT reserve_size
                                 FROM period AS p
                                 WHERE p.id_group = gs.id_group AND p.begin <= NOW() AND p.end > NOW()
@@ -129,9 +113,9 @@ final class TasksService extends AbstractService {
     public function updateSingleCounter2(ModelTeam $team, ModelGroup $group): void {
         $period = $group->getActivePeriod();
         $usage = $team->getCardUsageByType(ModelCardUsage::TYPE_ADD_TASK);
-        $this->explorer->query('UPDATE group_state AS gs
-                SET task_counter = GREATEST(?,gs.task_counter)
-                WHERE gs.id_group = ? AND gs.id_team = ?',
+        $this->explorer->query('UPDATE group_state
+                SET task_counter = GREATEST(?,group_state.task_counter)
+                WHERE group_state.id_group = ? AND group_state.id_team = ?',
             $team->getSolvedOrSkippedOrCanceled()->count('id_task') + ($period ? $period->reserve_size : 0) + (($usage && $usage->getData() == $group->id_group) ? 1 : 0),
             $group->id_group,
             $team->id_team
