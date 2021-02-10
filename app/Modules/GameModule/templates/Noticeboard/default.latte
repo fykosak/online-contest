@@ -4,7 +4,7 @@
         {var $className = 'alert alert-' . $notification->level}
         <p class="{$className}">
             {$notification['message']}
-            <small class="pull-right">{$notification->created->format('H:m')}</small>
+            <small class="pull-right">{$notification->created->format('H:i')}</small>
         </p>
     {/foreach}
 {/block}

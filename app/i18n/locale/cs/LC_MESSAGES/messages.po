@@ -273,6 +273,17 @@ msgstr "Odhlásit se"
 msgid "Odpověď"
 msgstr "Odpověď"
 
+# list.latte:4
+msgid ""
+"Once the game starts, you will be able to use the following cards from this "
+"page."
+msgstr ""
+"Jakmile hra začne, z této stránky budete moci používat následující kartičky."
+
+# history.latte:4
+msgid "Once the game starts, your submits will appear here."
+msgstr "Jakmile hra začne, vaše pokusy o odpovědi se objeví zde."
+
 # chatList.latte:16
 msgid "Organizátoři"
 msgstr "Organizátoři"
@@ -461,6 +472,13 @@ msgstr ""
 "Hodnocení pro danou úlohu je resetováno. Tým může opět získat až 5 bodů za "
 "správnou odpověď."
 
+# AddTaskCard.php:63
+msgid ""
+"The next problem from a chosen series is revealed, the team can therefore "
+"solve more problems from the series at once."
+msgstr ""
+"Z vybrané linie zobrazí další úlohu, takže jich tým může řešit více najednou."
+
 # HintCard.php:49
 msgid "The team can read a hint to the solution."
 msgstr ""
@@ -644,13 +662,6 @@ msgstr "sekund."
 # taskStats.latte:8
 msgid "správných odpovědí"
 msgstr "správných odpovědí"
-
-# AddTaskCard.php:63
-msgid ""
-"The next problem from a chosen series is revealed, the team can therefore "
-"solve more problems from the series at once."
-msgstr ""
-"Z vybrané linie zobrazí další úlohu, takže jich tým může řešit více najednou."
 
 # use.latte:8
 msgid "this card cannot be used separatly."

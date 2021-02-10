@@ -2,8 +2,9 @@
 {block usage}
     {varType FOL\Model\Card\ResetCard $card}
     {varType string $lang}
+    {varType FOL\Model\ORM\Services\ServiceTask $serviceTask}
     {varType FOL\Model\ORM\Models\ModelTask $task}
-    {var $task = $card->serviceTask->findByPrimary($card->getUsage()->getData())}
+    {var $task = $serviceTask->findByPrimary($card->getUsage()->getData())}
     <strong>{$task->getGroup()->code_name}{$task->number}</strong>:
     <span>{Fykosak\Utils\Localization\GettextTranslator::i18nHelper($task, 'name', $lang)}</span>
 {/block}

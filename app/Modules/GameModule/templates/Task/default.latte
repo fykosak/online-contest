@@ -18,7 +18,7 @@
             {foreach $tasks as $task}
 
                 <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card">
+                    <div class="card task">
                         {var $color = $task->getGroup()->getColorByGroup()}
                         <h5 class="card-header text-white"
                             style="{('background-color:' . $color )|noescape}">{$task->getLabel($lang)}</h5>
@@ -44,8 +44,7 @@
                                 {/foreach}
                             </div>
                             {if $link}
-                                <hr/>
-                                <a class="btn btn-primary"
+                                <a class="btn btn-primary btn-block mt-3"
                                    href="{plink :Game:Answer:default id=>$task->id_task}">{_'Odevzdat řešení'}</a>
                             {/if}
                         </div>
@@ -87,7 +86,7 @@
             <p><a href="{$streamURL}" target="_blank" class="stream-link">{$streamURL}</a></p>
         {else}
             <p><strong>Once the game starts, the task assignment will appear here. You are in the right place.</strong> Please visit our YouTube stream during the waiting, where we officially start the game and explain the rules.
-                After the game, the result will be announced here as the following program. Do not forget to share the link among your physics teachers so they can be informed and see your progress.</p>
+                After the game, the result will be announced there as the following program. Do not forget to share the link among your physics teachers so they can be informed and see your progress.</p>
             <p><a href="{$streamURL}" target="_blank" class="stream-link">{$streamURL}</a></p>
         {/if}
     {/if}

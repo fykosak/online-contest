@@ -172,6 +172,8 @@ msgstr "Unit"
 # answerForm.latte:31
 msgid "Kupříkladu číslo Pí lze zapsat jako: 3.14; 3,14; 314e-2, nebo 0.314e1."
 msgstr ""
+"For example the number Pi may be submitted as: 3.14; 3,14; 314e-2, or as "
+"0.314e1"
 
 # NotificationFormComponent.php:43
 msgid "Lang"
@@ -191,7 +193,7 @@ msgstr ""
 
 # AnswerFormComponent.php:127
 msgid "Lze odpovídat až za"
-msgstr ""
+msgstr "You are not allowed to answer for"
 
 # AnswerFormComponent.php:167
 msgid "Maximum bodů"
@@ -235,7 +237,7 @@ msgstr ""
 
 # BasePresenter.php:19
 msgid "Notifikace"
-msgstr ""
+msgstr "Notification"
 
 # NotificationFormComponent.php:25
 msgid "Notifikace byla vložena"
@@ -287,7 +289,7 @@ msgstr "Submit the solution"
 
 # AnswerPresenter.php:42
 msgid "Odevzdat řešení \"%s\""
-msgstr ""
+msgstr "Submit solution to %s"
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:32
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:32
@@ -301,6 +303,16 @@ msgstr "Log out"
 # AnswerFormComponent.php:83
 msgid "Odpověď"
 msgstr "Answer"
+
+# list.latte:4
+msgid ""
+"Once the game starts, you will be able to use the following cards from this "
+"page."
+msgstr ""
+
+# history.latte:4
+msgid "Once the game starts, your submits will appear here."
+msgstr ""
 
 # chatList.latte:14
 msgid "Organizátoři"
@@ -341,7 +353,7 @@ msgstr ""
 
 # AnswerFormComponent.php:110
 msgid "Použili jste kartičku za dvojnásobek bodů."
-msgstr ""
+msgstr "You have used double points card."
 
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:37
 # _038c3ea3b052ed5131771c19c2674215.layout.phtml.php:37
@@ -492,6 +504,12 @@ msgid ""
 "correct answer again."
 msgstr ""
 
+# AddTaskCard.php:63
+msgid ""
+"The next problem from a chosen series is revealed, the team can therefore "
+"solve more problems from the series at once."
+msgstr ""
+
 # HintCard.php:49
 msgid "The team can read a hint to the solution."
 msgstr ""
@@ -538,7 +556,9 @@ msgstr ""
 msgid ""
 "V příspěvcích lze používat MathJax matematiku uvozenou pomocí dvou dolarů. "
 "Například "
-msgstr "You can use MathJax in the discussion using by two dollar symbols. For example "
+msgstr ""
+"You can use MathJax in the discussion using by two dollar symbols. For "
+"example "
 
 # chat.latte:6
 msgid "V příspěvcích lze používat MathJax."
@@ -661,17 +681,11 @@ msgstr ""
 
 # AnswerFormComponent.php:133
 msgid "sekund."
-msgstr ""
+msgstr "seconds."
 
 # taskStats.latte:7
 msgid "správných odpovědí"
 msgstr "correct answers"
-
-# AddTaskCard.php:63
-msgid ""
-"the next problem from a chosen series is revealed, the team can therefore "
-"solve more problems from the series at once."
-msgstr ""
 
 # use.latte:8
 msgid "this card cannot be used separatly."

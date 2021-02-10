@@ -52,9 +52,9 @@ class TaskPresenter extends BasePresenter {
             }
         }
         $this->template->scoreStrategy = $this->scoreStrategy;
-        $this->template->solvedTasks = $this->serviceTask->getTable()->where('id_task', $solvedTasks);
-        $this->template->skippedTasks = $this->serviceTask->getTable()->where('id_task', $skippedTasks);
-        $this->template->unsolvedTasks = $this->serviceTask->getTable()->where('id_task', $unsolvedTasks);
-        $this->template->missedTasks = $this->serviceTask->getTable()->where('id_task', $missedTasks);
+        $this->template->solvedTasks = $this->serviceTask->getTable()->where('id_task', $solvedTasks)->order('id_group, number');
+        $this->template->skippedTasks = $this->serviceTask->getTable()->where('id_task', $skippedTasks)->order('id_group, number');
+        $this->template->unsolvedTasks = $this->serviceTask->getTable()->where('id_task', $unsolvedTasks)->order('id_group, number');
+        $this->template->missedTasks = $this->serviceTask->getTable()->where('id_task', $missedTasks)->order('id_group, number');
     }
 }

@@ -6,6 +6,7 @@ use FOL\Components\CardForm\CardFormComponent;
 use FOL\Components\CardUsage\CardUsageComponent;
 use FOL\Model\Card\Card;
 use FOL\Model\Card\CardFactory;
+use FOL\Model\ORM\Services\ServiceTask;
 use Nette\Application\BadRequestException;
 
 class CardPresenter extends BasePresenter {
@@ -16,9 +17,14 @@ class CardPresenter extends BasePresenter {
     private CardFactory $cardFactory;
 
     private Card $card;
+    private ServiceTask $serviceTask;
 
     public function injectCardFactory(CardFactory $cardFactory): void {
         $this->cardFactory = $cardFactory;
+    }
+
+    public function injectServiceTask(ServiceTask $serviceTask): void {
+        $this->serviceTask = $serviceTask;
     }
 
     /**
@@ -62,6 +68,6 @@ class CardPresenter extends BasePresenter {
      * @throws BadRequestException
      */
     protected function createComponentCardUsage(): CardUsageComponent {
-        return new CardUsageComponent($this->getContext(), $this->getCard(), $this->lang);
+        return new CardUsageComponent($this->getContext(), $this->getCard(), $this->serviceTask, $this->lang);
     }
 }
