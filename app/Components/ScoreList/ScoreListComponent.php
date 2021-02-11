@@ -71,7 +71,7 @@ final class ScoreListComponent extends AjaxComponent {
             'isOrg' => $isOrg,
 
         ], $this->cache->load('resultsa2', function (&$dependencies) use ($isOrg): array {
-            $dependencies[Cache::EXPIRE] = '30 second';
+            $dependencies[Cache::EXPIRE] = '120 second';
             return [
                 'gameStart' => new \DateTime('2021-01-25 00:00:00'),
                 'gameEnd' => new \DateTime('2021-02-25 00:00:00'),

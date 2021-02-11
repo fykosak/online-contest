@@ -45,7 +45,7 @@ final class ResultsComponent extends BaseComponent {
     public function render(): void {
         $isOrg = $this->user->isInRole('org');
         $this->template->teams = $this->cache->load('data', function (&$dep) {
-            $dep[Cache::EXPIRATION] = '+30 second';
+            $dep[Cache::EXPIRATION] = '+120 second';
             $data = [];
             /** @var ModelTeam $team */
             foreach ($this->serviceTeam->getTable() as $team) {
