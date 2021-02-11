@@ -625,6 +625,10 @@ msgstr "celkem bodů"
 msgid "informace o členech týmu nejsou dostupné"
 msgstr "informace o členech týmu nejsou dostupné"
 
+# default.latte:30
+msgid "má nápovědu"
+msgstr ""
+
 # taskStats.latte:6
 msgid "nejlepší"
 msgstr "nejlepší"

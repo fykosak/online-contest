@@ -590,7 +590,9 @@ msgstr "Results"
 
 # RecoverFormComponent.php:68
 msgid "Všem členům vašeho týmu byl odeslán email s odkazem na změnu hesla."
-msgstr "We sent an email with a link to a password recovery to all members of your team."
+msgstr ""
+"We sent an email with a link to a password recovery to all members of your "
+"team."
 
 msgid "You can not rate this task right now"
 msgstr ""
@@ -652,6 +654,10 @@ msgstr "total amount of points"
 # teamList.phtml:13
 msgid "informace o členech týmu nejsou dostupné"
 msgstr "information about the team members are not available"
+
+# default.latte:30
+msgid "má nápovědu"
+msgstr "has hint"
 
 # taskStats.phtml:6
 msgid "nejlepší"
