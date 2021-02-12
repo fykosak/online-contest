@@ -39,7 +39,7 @@ final class AnswersService extends AbstractService {
             $this->log($team->id_team, 'solution_tried', sprintf('The team tried to insert the solution of task [%i] with solution [%s].', $task->id_task, $solution));
             throw new InvalidStateException('There is no active submit period.', AnswersService::ERROR_OUT_OF_PERIOD);
         }
-
+        $this->explorer->beginTransaction();
         // Correct answers of the team
         $correctAnswers = $team->getCorrect()->fetchPairs('id_answer', 'id_answer');
         // Last answer from same group has to be older than XX seconds
@@ -87,6 +87,7 @@ final class AnswersService extends AbstractService {
             ] + $answer);
         // Log the action
         $this->log($team->id_team, 'solution_inserted', 'The team successfully inserted the solution of task [$task->id_task] with code [$solution].');
+        $this->explorer->commit();
         return $modelAnswer;
     }
 }

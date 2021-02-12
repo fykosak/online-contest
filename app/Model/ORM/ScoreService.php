@@ -39,7 +39,7 @@ final class ScoreService extends AbstractService {
                 'points' => $score,
             ]);
             $counter = 0;
-            $answers = $team->related('task_state')->where('task.id_group', $task->id_group);
+            $answers = $team->getTaskState()->where('task.id_group', $task->id_group);
             $bonusScore = 0;
             foreach ($answers as $row) {
                 $counter++;

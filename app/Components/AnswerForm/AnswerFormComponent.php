@@ -95,7 +95,7 @@ final class AnswerFormComponent extends BaseComponent {
             $solution = trim($values['solution'], ' ');
             $solution = strtr($solution, ',', '.');
             $correct = $this->task->checkAnswer($solution);
-            $this->serviceLog->getContext()->beginTransaction();
+
             $answer = $this->answersService->insert($this->team, $this->task, $solution, $correct, $isDoublePoints);
 
             // Handle card usage
@@ -112,8 +112,9 @@ final class AnswerFormComponent extends BaseComponent {
 
             if ($correct) {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je správně.'), 'success');
+                $this->scoreService->updateAfterInsert($this->team, $this->task);
                 $this->tasksService->updateSingleCounter($this->team, $this->task->getGroup());
-                $this->scoreService->updateAfterInsert($this->team, $this->task); //musi byt az po updatu counteru
+                //musi byt az po updatu counteru
                 $this->serviceLog->getContext()->commit();
                 $this->getPresenter()->redirect('rating', ['id' => $this->task->id_task]);
             } else {
@@ -122,7 +123,6 @@ final class AnswerFormComponent extends BaseComponent {
         } catch (AbortException $exception) {
             throw $exception;
         } catch (InvalidStateException $e) {
-            $this->serviceLog->getContext()->rollBack();
             if ($e->getCode() == AnswersService::ERROR_TIME_LIMIT) {
                 $this->getPresenter()->flashMessage(
                     Html::el('span')
@@ -143,7 +143,6 @@ final class AnswerFormComponent extends BaseComponent {
                 return;
             }
         } catch (DriverException $e) {
-            $this->serviceLog->getContext()->rollBack();
             if ($e->getCode() == 1062) {
                 $this->getPresenter()->flashMessage(_('Na zadaný úkol jste již takto jednou odpovídali.'), 'danger');
             } else {
@@ -152,7 +151,6 @@ final class AnswerFormComponent extends BaseComponent {
             }
             return;
         } catch (Exception $e) {
-            $this->serviceLog->getContext()->rollBack();
             $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
             Debugger::log($e);
             return;
