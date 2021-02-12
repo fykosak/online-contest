@@ -18,11 +18,13 @@
         <script type="text/javascript" src="{$basePath}/js/flot/jquery.flot.time.min.js"></script>
         <script type="text/javascript" src="{$basePath}/js/flot/jquery.flot.axislabels.js"></script>
         <script type="text/javascript" src="{$basePath}/js/flot/jquery.flot.symbol.min.js"></script>
-        <script type="text/javascript">
-            var data = [{foreach $taskData['answers'] as $answer}[{$answer['trueValue']},{$answer['inserted']}],{/foreach}];
-            var correctValue = $task['correctValue'];
-            var tolerance = $task['tolerance'];
-        </script>
+        {ifset $taskData}
+            <script type="text/javascript">
+                var data = [{foreach $taskData['answers'] as $answer}[{$answer['trueValue']},{$answer['inserted']}],{/foreach}];
+                var correctValue = {$taskData['correctValue']};
+                var tolerance = {$taskData['tolerance']};
+            </script>
+        {/ifset}
         <script type="text/javascript" n:syntax="off">
             //var data = [[1, 130], [2, 40], [3, 80], [4, 160], [5, 159], [6, 370], [7, 330], [8, 350], [9, 370], [10, 400], [11, 330], [12, 350]];
 
@@ -30,16 +32,15 @@
             data.forEach(valueTime => {
                 let trueValue = valueTime[0];
                 let dateTime = valueTime[1];
-                let timestamp = Date.parse(dateTime)/1000
-                let oldValue = ((trueValue - correctValue > 0) ? 1 : -1) * Math.log10(1.0 + 9*Math.abs(trueValue - correctValue) / tolerance);
+                let timestamp = Date.parse(dateTime) / 1000
+                let oldValue = ((trueValue - correctValue > 0) ? 1 : -1) * Math.log10(1.0 + 9 * Math.abs(trueValue - correctValue) / tolerance);
                 transformedData.push([oldValue, timestamp]);
             });
 
             document.getElementById('correctValueSpan').innerText = correctValue;
             document.getElementById('toleranceSpan').innerText = tolerance;
 
-            function inverseValue (x)
-            {
+            function inverseValue(x) {
                 let y = Math.abs(x);
                 y = (Math.pow(10, y) - 1) / 9 * tolerance;
                 if (x > 0)
@@ -48,7 +49,7 @@
                     return correctValue - y;
             }
 
-            var dataset = [{data: transformedData}];
+            var dataset = [{data : transformedData}];
 
             var options = {
                 series: {
@@ -79,11 +80,11 @@
                     '#flot-placeholder',
                     dataset,
                     options
-                    );
-                
+                );
+
                 plot.getPlaceholder().on('plothover', function (event, pos) {
                     $('#coords').text(
-                    inverseValue(pos.x).toFixed(3)
+                        inverseValue(pos.x).toFixed(3)
                     );
                 });
             });

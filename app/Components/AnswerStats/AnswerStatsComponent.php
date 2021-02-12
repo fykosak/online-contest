@@ -29,6 +29,9 @@ class AnswerStatsComponent extends BaseComponent {
     }
 
     protected function beforeRender(): void {
+        if (!$this->task) {
+            return;
+        }
         $answers = $this->task->getAnswers();
         $tolerance = null;
         if ($this->task->answer_type == 'int') {
@@ -39,6 +42,9 @@ class AnswerStatsComponent extends BaseComponent {
         }
 
         $taskData = [];
+        $taskData['correctValue'] = $correctValue;
+        $taskData['tolerance'] = $tolerance;
+        $taskData['answers'] = [];
         /** @var ModelAnswer $answer */
         foreach ($answers as $row) {
             $answer = ModelAnswer::createFromActiveRow($row);
@@ -56,8 +62,6 @@ class AnswerStatsComponent extends BaseComponent {
                 'team' => $answer->getTeam()->name,
                 'inserted' => $answer->inserted->getTimestamp(),
             ];
-            $taskData['correctValue'] = $correctValue;
-            $taskData['tolerance'] = $tolerance;
         }
 
         $count = count($taskData['answers']);
@@ -66,16 +70,14 @@ class AnswerStatsComponent extends BaseComponent {
         foreach ($taskData['answers'] as $answer) {
             $sum += $answer['value'];
         }
-        $mu = $sum / $count;
+        $mu = $count ? ($sum / $count) : 0;
 
         $sum = 0;
         foreach ($taskData['answers'] as $answer) {
             $sum += ($answer['value'] - $mu) * ($answer['value'] - $mu);
         }
-        $sigma = sqrt($sum / ($count - 1));
 
         $taskData['mu'] = $mu;
-        $taskData['sigma'] = $sigma;
 
         $this->template->taskData = $taskData;
     }
