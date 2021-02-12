@@ -63,6 +63,9 @@ class AnswerStatsComponent extends BaseComponent {
                 'inserted' => $answer->inserted->getTimestamp(),
             ];
         }
+        
+        $taskData['correctValue'] = $correctValue;
+        $taskData['tolerance'] = $tolerance;
 
         $count = count($taskData['answers']);
 
