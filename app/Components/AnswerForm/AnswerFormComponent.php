@@ -115,7 +115,6 @@ final class AnswerFormComponent extends BaseComponent {
                 $this->scoreService->updateAfterInsert($this->team, $this->task);
                 $this->tasksService->updateSingleCounter($this->team, $this->task->getGroup());
                 //musi byt az po updatu counteru
-                $this->serviceLog->getContext()->commit();
                 $this->getPresenter()->redirect('rating', ['id' => $this->task->id_task]);
             } else {
                 $this->getPresenter()->flashMessage(_('Vaše odpověď je špatně.'), 'danger');
@@ -138,6 +137,7 @@ final class AnswerFormComponent extends BaseComponent {
                 $this->getPresenter()->flashMessage(_('Není aktuální žádné odpovídací období.'), 'danger');
                 return;
             } else {
+                Debugger::barDump($e);
                 $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
                 Debugger::log($e);
                 return;
@@ -146,11 +146,13 @@ final class AnswerFormComponent extends BaseComponent {
             if ($e->getCode() == 1062) {
                 $this->getPresenter()->flashMessage(_('Na zadaný úkol jste již takto jednou odpovídali.'), 'danger');
             } else {
+                Debugger::barDump($e);
                 $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
                 Debugger::log($e);
             }
             return;
         } catch (Exception $e) {
+            Debugger::barDump($e);
             $this->getPresenter()->flashMessage(_('Stala se neočekávaná chyba.'), 'danger');
             Debugger::log($e);
             return;
