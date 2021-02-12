@@ -31,8 +31,7 @@
             var transformedData = [];
             data.forEach(valueTime => {
                 let trueValue = valueTime[0];
-                let dateTime = valueTime[1];
-                let timestamp = Date.parse(dateTime) / 1000
+                let timestamp = valueTime[1];
                 let oldValue = ((trueValue - correctValue > 0) ? 1 : -1) * Math.log10(1.0 + 9 * Math.abs(trueValue - correctValue) / tolerance);
                 transformedData.push([oldValue, timestamp]);
             });

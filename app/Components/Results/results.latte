@@ -9,7 +9,6 @@
             <h2 id="{$category}">{$categoryName}</h2>
             <table class="table table-condensed table-striped small">
                 <thead>
-                <th>#</th>
                 <th>{_'tým'}</th>
                 <th>{_'celkem bodů'}</th>
                 <th>{_'bonusové body'}</th>
@@ -20,7 +19,6 @@
 
                     {*n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted"*}
                     <tr>
-                        <td>{if $teamRow['model']['disqualified'] == 0}{++$i}{else}DSQ{/if}</td>
                         <td>
                             {$teamRow['model']['name']}
                         </td>
