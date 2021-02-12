@@ -43,7 +43,14 @@
                                 </a>
                             </li>
                         {/if}
+
                     {/foreach}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{$basePath . '/const.' . $lang . '.pdf'}"
+                           title="{$item->title}">
+                            <span class="hidden-sm">{_'Constants'}</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav ml-auto">

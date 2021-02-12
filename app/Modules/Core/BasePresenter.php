@@ -9,7 +9,6 @@ use Fykosak\Utils\Localization\GettextTranslator;
 use FOL\Components\NotificationMessages\NotificationMessagesComponent;
 use FOL\Components\Navigation\Navigation;
 use Fykosak\Utils\Localization\UnsupportedLanguageException;
-use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
 use Nette\DI\Container;

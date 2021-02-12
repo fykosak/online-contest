@@ -33,7 +33,6 @@ abstract class BasePresenter extends \FOL\Modules\Core\BasePresenter {
             new NavItem(':Game:Results:default', [], _('Results'), 'visible-sm-inline glyphicon glyphicon-stats'),
             new NavItem(':Game:Results:detail', [], _('Detail results'), 'visible-sm-inline glyphicon glyphicon-stats'),
         ]));
-
         if ($this->gameSetup->isGameEnd()) {
             //  $navigation->addNavItem(new NavItem('{$basePath}/download/2019-1/ulohy/reseni.{$lang}.pdf', [], _('Historie'), ''));
         }
