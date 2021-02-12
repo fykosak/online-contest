@@ -82,6 +82,13 @@
             {if $control->gameSetup->isGameActive()}
                 {control notificationMessages}
             {/if}
+            {if $control->gameSetup->isGameEnd()}
+                {if $lang == 'cs'}
+                    <div class="alert alert-info">Soutěž skončila. Zavítejte opět na náš stream <a href="{$streamURL}" target="_blank" class="stream-link">{$streamURL}</a> kde oznámíme výsledky. Řešení úloh najdete na <a href="https://fyziklani.org/_media/2021/reseni.pdf" target="_blank" class="stream-link">na tomto odkaze</a>.</div>
+                {else}
+                    <div class="alert alert-info">The competition has ended. Please come back to our stream <a href="{$streamURL}" target="_blank" class="stream-link">{$streamURL}</a> where we announce the results. Task solution can be found <a href="https://fyziklani.org/_media/problems/solutions_2021.pdf" target="_blank" class="stream-link">here</a>.</div>
+                {/if}
+            {/if}
             {include content}
         {/block}
     </main>
