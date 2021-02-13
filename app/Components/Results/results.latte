@@ -1,0 +1,46 @@
+{block content}
+    {varType bool $visible}
+    {varType array $categories}
+    {varType array $teams}
+
+    {if $visible}
+        {foreach $categories AS $category => $categoryName}
+
+            <h2 id="{$category}">{$categoryName}</h2>
+            <table class="table table-condensed table-striped small">
+                <thead>
+                <th>{_'tým'}</th>
+                <th>{_'celkem bodů'}</th>
+                <th>{_'bonusové body'}</th>
+                </thead>
+                {var $i = 0}
+            {foreach $teams AS $teamRow}
+                    {continueIf $teamRow['model']['category'] != $category}
+
+                    {*n:class="$team->activity == 0 || $team->disqualified == 1 ? text-muted"*}
+                    <tr>
+                        <td>
+                            {$teamRow['model']['name']}
+                        </td>
+                        <td>
+                            {if $teamRow['model']['disqualified'] == 0}
+                                {$teamRow['score']}
+                            {else}
+                                0
+                            {/if}
+                        </td>
+                        <td>
+                            {if $teamRow['model']['disqualified'] == 0}
+                                {$teamRow['bonus']}
+                            {else}
+                                0
+                            {/if}
+                        </td>
+                    </tr>
+                {/foreach}
+            </table>
+        {/foreach}
+    {else}
+        <p class="alert alert-info">{_'Results are hidden'}</p>
+    {/if}
+{/block}

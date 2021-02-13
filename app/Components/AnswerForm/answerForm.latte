@@ -1,0 +1,36 @@
+{varType array $taskInfo}
+
+{block content}
+    {control form}
+    <div>
+        {if isset($taskInfo['sig_digits'])}
+            <div class="row">
+                <strong class="col-4"> {_"Očekávaný počet platných cifer"}:</strong>
+                <span>{$taskInfo['sig_digits']}</span>
+            </div>
+        {/if}
+            {if isset($taskInfo['unit'])}
+            <div class="row">
+                <strong class="col-4">{_'Jednotka'}:</strong>
+                <span class="unit">{$taskInfo['unit']|noescape}</span>
+            </div>
+        {/if}
+            {if isset($taskInfo['curPoints'])}
+            <div class="row">
+                <strong class="col-4">{_'Aktuálně bodů'}</strong>
+                <span>{$taskInfo['curPoints']}</span>
+            </div>
+        {/if}
+            {if isset($taskInfo['maxPoints'])}
+            <div class="row">
+                <strong class="col-4">{_'Maximum bodů'}:</strong>
+                <span>{$taskInfo['maxPoints']}</span>
+            </div>
+        {/if}
+            {if $taskInfo['type'] == 'real'}
+            <div class="row mt-3">
+                <i class="col-12">{_'Kupříkladu číslo Pí lze zapsat jako: 3.14; 3,14; 314e-2, nebo 0.314e1.'}</i>
+            </div>
+        {/if}
+    </div>
+{/block}

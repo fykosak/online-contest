@@ -1,0 +1,8 @@
+{block content}
+    {if $reason}
+        <p class="alert alert-warning">{_'Card can not be used'}</p>
+        <p class="alert alert-warning">{$reason}</p>
+    {else}
+        {control form}
+    {/if}
+{/block}

@@ -6,7 +6,7 @@
 use FOL\Bootstrap;
 use Nette\Application\Application;
 
-require __DIR__ . '/../app/bootstrap.php';
+require __DIR__ . '/../app/Bootstrap.php';
 
 // inicializace prostředí + získání objektu Nette\Configurator
 $configurator = Bootstrap::boot();

@@ -1,0 +1,12 @@
+{block content}
+    {varType FOL\Model\Card\Card $card}
+    {if $card->wasUsed()}
+        {control cardUsage}
+    {else}
+        {if $card instanceOf FOL\Model\Card\SingleFormCard}
+            {control cardForm}
+        {else}
+            <p class="alert alert-info">{_'this card cannot be used separatly.'}</p>
+        {/if}
+    {/if}
+{/block}

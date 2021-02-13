@@ -1,8 +1,6 @@
 {block #body}
-    {control flashMessages}
-    {if $available}
-        {cache "scoreList/" . $presenter->lang, tags => [$presenter::STATS_TAG]}
-            {control scoreList}
-        {/cache}
-    {/if}
+    <div class="container-fluid" style="padding-bottom: 5rem">
+        {control scoreList}
+        <script src="{$basePath}/js/bundle.min.js"></script>
+    </div>
 {/block}

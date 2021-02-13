@@ -1,0 +1,16 @@
+{layout ./@layout.latte}
+{block usage}
+    {varType FOL\Model\Card\OptionsCard $card}
+    {varType string $lang}
+    {varType FOL\Model\ORM\Services\ServiceTask $serviceTask}
+    {varType FOL\Model\ORM\Models\ModelTask $task}
+    {var $task = $serviceTask->findByPrimary($card->getUsage()->getData())}
+    {var $answerOptions = $task->getOptions()}
+    <strong>{$task->getGroup()->code_name}{$task->number}</strong>:
+    <span>{Fykosak\Utils\Localization\GettextTranslator::i18nHelper($task, 'name', $lang)}</span>
+    <ol>
+        {for $i = 1; $i <= 4; $i++}
+            <li>{\Fykosak\Utils\Localization\GettextTranslator::i18nHelper($answerOptions, 'option_' . $i, $lang)}</li>
+        {/for}
+    </ol>
+{/block}

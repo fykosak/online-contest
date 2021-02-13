@@ -1,0 +1,50 @@
+{varType FOL\Modules\PublicModule\TeamPresenter $presenter}
+{varType FOL\Components\TeamList\TeamListComponent $control}
+{varType Nette\Security\User $user}
+{varType string $baseUrl}
+{varType string $basePath}
+{varType array $flashes}
+{varType Fykosak\Utils\ORM\TypedTableSelection $teams}
+{varType array $competitors}
+{varType array $categories}
+
+{block content}
+    <div id="teams" class="list">
+        {foreach $categories AS $category => $categoryName}
+            {varType FOL\Model\ORM\Models\ModelTeam $team}
+            {foreach $teams AS $team}
+                {if $team->category === $category}
+                    <h2 id="{$category}">{$categoryName}</h2>
+                    <ol>
+                    <li>
+                    <strong>{$team->name}</strong>:
+                {var $prevSchool = null}
+                {var $prevSchoolCountry = null}
+                {var $inSchool = 0}
+                {var $competitors = $team->getCompetitors()}
+                    {foreach $competitors AS $row}
+                        {var $competitor = FOL\Model\ORM\Models\ModelCompetitor::createFromActiveRow($row)}
+                        {if $prevSchool !== null && $competitor->school->name != $prevSchool} <span
+                                class="text-muted">({if $inSchool > 1}{$inSchool}&times; {/if}{$prevSchool} <span
+                                    class="flag-icon flag-icon-{$prevSchoolCountry|lower}"></span>)</span>
+                            {var $inSchool = 1}
+                        {else}
+                            {var $inSchool = $inSchool + 1}
+                        {/if}
+                        {var $prevSchool = $competitor->school->name}
+                        {var $prevSchoolCountry = $competitor->school->country_iso}
+                        {if !$iterator->isFirst()}, {/if}
+                        {$competitor->name}
+                    {/foreach}
+                    {if $prevSchool !== null}<span
+                            class="text-muted">({if $inSchool > 1}{$inSchool}&times; {/if}{$prevSchool} <span
+                                class="flag-icon flag-icon-{$prevSchoolCountry|lower}"></span>)</span>{/if}
+                {else}
+                    {_'informace o členech týmu nejsou dostupné'}
+                {/if}
+                </li>
+                </ol>
+            {/foreach}
+        {/foreach}
+    </div>
+{/block}

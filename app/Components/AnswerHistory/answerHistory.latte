@@ -1,0 +1,30 @@
+{block content}
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>{_'úkol'}</th>
+            <th>{_'vloženo'}</th>
+            <th>{_'odpověď'}</th>
+        </tr>
+        </thead>
+        {varType FOL\Model\ORM\Models\ModelAnswer $answer}
+        {varType Fykosak\Utils\ORM\TypedTableSelection $history}
+        {varType string $lang}
+        {foreach $history AS $answer}
+            <tr class="{($answer->correct && ($answer->getTask()->cancelled == 0))?'bg-success':'bg-danger'}">
+                <td>{$answer->id_answer}</td>
+                <td>{$answer->getTask()->getLabel($lang)}</td>
+                <td>{$answer->inserted->format($timeFormat)}</td>
+                <td>{if $answer->getTask()->answer_type == FOL\Model\ORM\Models\ModelTask::TYPE_STR}
+                        {$answer->answer_str}
+                    {elseif $answer->getTask()->answer_type == FOL\Model\ORM\Models\ModelTask::TYPE_INT}
+                        {$answer->answer_int}
+                    {elseif $answer->getTask()->answer_type == FOL\Model\ORM\Models\ModelTask::TYPE_REAL}
+                        {$answer->answer_real}
+                    {/if}
+                </td>
+            </tr>
+        {/foreach}
+    </table>
+{/block}

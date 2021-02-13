@@ -1,0 +1,12 @@
+{layout ./@layout.latte}
+{block usage}
+    {varType FOL\Model\Card\HintCard $card}
+    {varType string $lang}
+    {varType FOL\Model\ORM\Services\ServiceTask $serviceTask}
+    {varType FOL\Model\ORM\Models\ModelTask $task}
+    {var $task = $serviceTask->findByPrimary($card->getUsage()->getData())}
+    {var $hint = $task->getHint()}
+    <strong>{$task->getGroup()->code_name}{$task->number}</strong>:
+    <span>{Fykosak\Utils\Localization\GettextTranslator::i18nHelper($task, 'name', $lang)}</span>
+    <p>{\Fykosak\Utils\Localization\GettextTranslator::i18nHelper($hint, 'hint', $lang)|noescape}</p>
+{/block}

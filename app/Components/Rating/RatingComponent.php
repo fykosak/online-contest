@@ -1,44 +1,50 @@
 <?php
 
-namespace FOL\Components;
+namespace FOL\Components\Rating;
 
+use FOL\Components\BaseComponent;
+use FOL\Components\BaseForm;
+use FOL\Model\ORM\Models\ModelTask;
+use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Services\ServiceRating;
+use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
-use Nette\Database\Context;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\DI\Container;
 use Nette\Forms\Controls\SubmitButton;
+use Throwable;
 
-class RatingComponent extends BaseComponent {
+final class RatingComponent extends BaseComponent {
 
-    private int $taskId;
-    private $team;
-    private Context $context;
+    private ModelTask $task;
+    private ModelTeam $team;
+    private ServiceRating $serviceRating;
 
-    public function __construct(Container $container, int $taskId, $team) {
+    public function __construct(Container $container, ModelTask $task, ModelTeam $team) {
         parent::__construct($container);
-        $this->taskId = $taskId;
+        $this->task = $task;
         $this->team = $team;
     }
 
-    public function injectPrimary(Context $context): void {
-        $this->context = $context;
+    public function injectPrimary(ServiceRating $serviceRating): void {
+        $this->serviceRating = $serviceRating;
     }
 
     protected function createComponentForm(): Form {
-        $control = new \BaseForm($this->getContext());
+        $control = new BaseForm($this->getContext());
         $control->addInteger('rating', _('Rating'))
-            ->setAttribute('class', 'form-control-range')
-            ->setAttribute('type', 'range')
-            ->setAttribute('min', 0)
-            ->setAttribute('max', 100)
-            ->setAttribute('step', 1)
+            ->setHtmlAttribute('class', 'form-control-range')
+            ->setHtmlAttribute('type', 'range')
+            ->setHtmlAttribute('min', 0)
+            ->setHtmlAttribute('max', 100)
+            ->setHtmlAttribute('step', 1)
             ->setOption('description', _('bad ⇔ good'))
-            ->setDefaultValue(50); // TODO copy paste this for new options
+            ->setDefaultValue(50);
 
         $control->addSubmit('submit', _('Send rating'))->onClick[] = function (SubmitButton $button) {
             $this->handleForm($button->getForm());
         };
-        $control->addSubmit('skip', _('Skip rating'))->setAttribute('class', 'btn btn-secondary')->onClick[] = function () {
+        $control->addSubmit('skip', _('Skip rating'))->setHtmlAttribute('class', 'btn btn-secondary')->onClick[] = function () {
             $this->getPresenter()->redirect(':Game:Task:default');
         };
         return $control;
@@ -49,18 +55,22 @@ class RatingComponent extends BaseComponent {
         parent::render();
     }
 
+    /**
+     * @param \Nette\Forms\Form $form
+     * @throws AbortException
+     */
     private function handleForm(\Nette\Forms\Form $form) {
         $values = $form->getValues();
         try {
-            $this->context->table('rating')->insert([
-                'team_id' => $this->team['id_team'],
-                'task_id' => $this->taskId,
+            $this->serviceRating->createNewModel([
+                'team_id' => $this->team->id_team,
+                'task_id' => $this->task->id_task,
                 'rating' => $values['rating'],
             ]);
             $this->getPresenter()->flashMessage(_('Your rating has been saved'), 'success');
         } catch (UniqueConstraintViolationException $exception) {
             $this->getPresenter()->flashMessage(_('You have already rated this task'), 'danger');
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             $this->getPresenter()->flashMessage(_('You can not rate this task right now'), 'danger');
         }
         $this->getPresenter()->redirect(':Game:Task:default');

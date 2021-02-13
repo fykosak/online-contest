@@ -1,6 +1,4 @@
 services:
-    skipAssertion: App\Model\Authorization\SkipAssertion
-
     acl:
         class: Nette\Security\Permission
         setup:
@@ -8,28 +6,20 @@ services:
             - addRole(guest)
             - addRole(team, guest)
             - addRole(org, guest)
-            - addRole(cron)
 
             #Resources
             - addResource(chat) #add
             - addResource(noticeboard) #add
-            - addResource(cron)
             - addResource(game)
             - addResource(task) #skip
             - addResource(report) #add
             - addResource(team) #edit
-#            - addResource(stats) #show
 
             #ACL
             - allow(team, chat, add)
             - allow(team, game)
-            - allow(team, task, skip, [@skipAssertion, 'canSkip'])
             - allow(team, team)
 
             - allow(org, chat, add)
             - allow(org, noticeboard, add)
             - allow(org, report, add)
-
-            - allow(cron, cron)
-
-#            - allow(admin, Nette\Security\Permission::ALL)

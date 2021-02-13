@@ -7,31 +7,43 @@ php:
 application:
     errorPresenter: Frontend:Error
     mapping:
-        *: FOL\Modules\*Module\Presenters\*Presenter
+        *: FOL\Modules\*Module\*Presenter
 
 session:
     expiration: 14 days
     #cookie_secure: true
 
 services:
-    - App\Model\Authentication\TeamAuthenticator
-    - App\Model\Authentication\OrgAuthenticator(%orgs%)
-    - App\Model\Authentication\CronAuthenticator(%cron.key%)
-    - App\Model\Translator\GettextTranslator
+    - FOL\Model\Authentication\TeamAuthenticator
+    - FOL\Model\Authentication\OrgAuthenticator(%orgs%)
+    - Fykosak\Utils\Localization\GettextTranslator(%i18n.locales%,%i18n.dir%)
 
-    router: FOL\Modules\FrontendModule\FrontendModule::createRouter
+    router: FOL\Model\Router\Router::createRouter
     - FOL\Model\ORM\AnswersService
-    - FOL\Model\ORM\ChatService
-    - FOL\Model\ORM\CompetitorsService
-    - FOL\Model\ORM\GroupsService
-    - FOL\Model\ORM\NotificationService
-    - FOL\Model\ORM\PeriodService
-    - FOL\Model\ORM\ReportService
-    - FOL\Model\ORM\SchoolsService
     - FOL\Model\ORM\ScoreService
     - FOL\Model\ORM\TasksService
-    - FOL\Model\ORM\TeamsService
-    - FOL\Model\ORM\YearsService
+    #new ORM
+    - FOL\Model\ORM\Services\ServiceCardUsage
+    - FOL\Model\ORM\Services\ServiceAnswerOptions
+    - FOL\Model\ORM\Services\ServiceTaskHint
+    - FOL\Model\ORM\Services\ServiceTeam
+    - FOL\Model\ORM\Services\ServiceTask
+    - FOL\Model\ORM\Services\ServiceGroup
+    - FOL\Model\ORM\Services\ServiceAnswer
+    - FOL\Model\ORM\Services\ServiceChat
+    - FOL\Model\ORM\Services\ServiceLog
+    - FOL\Model\ORM\Services\ServiceNotification
+    - FOL\Model\ORM\Services\ServiceCompetitor
+    - FOL\Model\ORM\Services\ServicePeriod
+    - FOL\Model\ORM\Services\ServiceToken
+    - FOL\Model\ORM\Services\ServiceTaskState
+    - FOL\Model\ORM\Services\ServiceRating
+
+    - FOL\Model\FOF2021ScoreStrategy
+
+    - FOL\Model\Card\CardFactory
+
+    - FOL\Model\GameSetup(%gameSetup%)
 
     nette.userStorage:
         setup:
@@ -39,8 +51,6 @@ services:
 
 database:
     conventions: 'discovered'
-extensions:
-    dibi: Dibi\Bridges\Nette\DibiExtension22
 
 includes:
         - acl.neon

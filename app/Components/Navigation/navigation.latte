@@ -1,4 +1,3 @@
-{varType string $basePath}
 {varType \FOL\Components\Navigation\Navigation $control}
 {varType array $items}
 {varType array $competition}
@@ -9,36 +8,67 @@
         <div class="container">
             <a class="navbar-brand"
                href="{$competition['link'][$lang]??$competition['link']['cs']}">{$competition['name'][$lang]??$competition['name']['cs']}</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse" id="navbarNavDropdown">
                 <ul class="nav navbar-nav">
+                    {varType FOL\Components\Navigation\NavItem $item}
                     {foreach $items as $item}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{plink $item->destination,(expand)$item->linkParams}"
-                               title="{$item->title}">
-                                <span class="hidden-sm">{$item->title}</span>
-                                <span class="{$item->icon}" title="{$item->title}"/>
-                            </a>
-                        </li>
+                        {if count($item->children)}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"
+                                   href="{plink $item->destination,(expand)$item->linkParams}" id="navbarDropdown"
+                                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="hidden-sm">{$item->title}</span>
+                                    <span class="{$item->icon}" title="{$item->title}"/>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {varType FOL\Components\Navigation\NavItem $children}
+                                    {foreach $item->children as $children}
+                                        <a class="dropdown-item"
+                                           href="{plink $children->destination,(expand)$children->linkParams}">
+                                            <span class="hidden-sm">{$children->title}</span>
+                                            <span class="{$children->icon}" title="{$children->title}"/></a>
+                                    {/foreach}
+                                </div>
+                            </li>
+                        {else}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{plink $item->destination,(expand)$item->linkParams}"
+                                   title="{$item->title}">
+                                    <span class="hidden-sm">{$item->title}</span>
+                                    <span class="{$item->icon}" title="{$item->title}"/>
+                                </a>
+                            </li>
+                        {/if}
+
                     {/foreach}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{$basePath . '/const.' . $lang . '.pdf'}">
+                            <span class="hidden-sm">{_'Constants'}</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item real-clock navbar-text" data-timestamp="{1000 * time()}" style="padding-top: .5rem; padding-bottom: .5rem;"></li>
+                    <li class="nav-item real-clock navbar-text" data-timestamp="{1000 * time()}"
+                        style="padding-top: .5rem; padding-bottom: .5rem;"></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span><i class="{$control::mapLangToIcon($lang)}"></i></span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {foreach $supportedLangs as $supportedLang}
-                            <a class="dropdown-item {$lang == $supportedLang?'active':''}" href="{plink this, lang => $supportedLang}">
-                            <i class="{$control::mapLangToIcon($supportedLang)}"></i>
-                            </a>
-                        {/foreach}
-        </div>
-      </li>
+                            {foreach $supportedLangs as $supportedLang}
+                                <a class="dropdown-item {$lang == $supportedLang?'active':''}"
+                                   href="{plink this, lang => $supportedLang}">
+                                    <i class="{$control::mapLangToIcon($supportedLang)}"></i>
+                                </a>
+                            {/foreach}
+                        </div>
+                    </li>
 
                 </ul>
             </div>

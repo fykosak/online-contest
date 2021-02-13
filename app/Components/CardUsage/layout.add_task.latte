@@ -1,0 +1,10 @@
+{layout ./@layout.latte}
+{block usage}
+    {varType FOL\Model\Card\AddTaskCard $card}
+    {varType string $lang}
+
+    {varType FOL\Model\ORM\Models\ModelGroup $group}
+    {var $group = $card->serviceGroup->findByPrimary($card->getUsage()->getData())}
+    <strong>{$group->code_name}</strong>:
+    <span>{\Fykosak\Utils\Localization\GettextTranslator::i18nHelper($group, 'text', $lang)}</span>
+{/block}

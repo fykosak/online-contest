@@ -1,3 +1,9 @@
 {block content}
+    {varType bool $isGameStarted}
+    {if !$isGameStarted}
+        <div class="alert alert-warning">
+            {_"Once the game starts, your submits will appear here."}
+        </div>
+    {/if}
     {control answerHistory}
 {/block}

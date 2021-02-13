@@ -2,73 +2,62 @@
 
 namespace FOL\Modules\Core;
 
-use DataNotFoundException;
-use Dibi\Exception;
-use Dibi\Row;
-use FlashMessagesComponent;
-use App\Model\Translator\GettextTranslator;
-use App\Tools\InterlosTemplate;
+use FOL\Model\GameSetup;
+use FOL\Model\ORM\Models\ModelTeam;
+use FOL\Model\ORM\Services\ServiceTeam;
+use Fykosak\Utils\Localization\GettextTranslator;
+use FOL\Components\NotificationMessages\NotificationMessagesComponent;
 use FOL\Components\Navigation\Navigation;
-use FOL\Model\ORM\TeamsService;
-use FOL\Model\ORM\YearsService;
-use Nette\Application\AbortException;
-use Nette\Application\UI\ITemplate;
+use Fykosak\Utils\Localization\UnsupportedLanguageException;
 use Nette\Application\UI\Presenter;
-use Nette\Localization\ITranslator;
-use NotificationMessagesComponent;
+use Nette\Application\UI\Template;
+use Nette\DI\Container;
 
 abstract class BasePresenter extends Presenter {
 
     /** @persistent */
-    public $lang; // = 'cs';
+    public ?string $lang = null;
 
     private string $customScript = '';
 
-    private ?Row $loggedTeam;
+    private ?ModelTeam $loggedTeam;
 
-    public YearsService $yearsService;
+    protected GettextTranslator $translator;
+    protected ServiceTeam $serviceTeam;
+    public GameSetup $gameSetup;
+    private Container $diContainer;
 
-    protected TeamsService $teamsService;
-
-    protected ITranslator $translator;
-
-    public function injectServices(YearsService $yearsService, TeamsService $teamsService, ITranslator $translator): void {
-        $this->yearsService = $yearsService;
-        $this->teamsService = $teamsService;
+    public function injectServices(GettextTranslator $translator, ServiceTeam $serviceTeam, GameSetup $gameSetup, Container $container): void {
         $this->translator = $translator;
+        $this->serviceTeam = $serviceTeam;
+        $this->gameSetup = $gameSetup;
+        $this->diContainer = $container;
     }
 
-    public function setPageTitle($pageTitle): void {
-        $this->getTemplate()->pageTitle = $pageTitle;
+    public function setPageTitle(string $pageTitle): void {
+        $this->template->pageTitle = $pageTitle;
     }
 
 // ----- PROTECTED METHODS
 
-    protected function createComponentFlashMessages(): FlashMessagesComponent {
-        return new FlashMessagesComponent($this->getContext());
-    }
-
     protected function createComponentNotificationMessages(): NotificationMessagesComponent {
-        return new NotificationMessagesComponent($this->getContext());
+        return new NotificationMessagesComponent($this->getContext(), $this->lang);
     }
 
-    /**
-     * @return ITemplate
-     * @throws DataNotFoundException
-     */
-    protected function createTemplate(): ITemplate {
+    protected function createTemplate(): Template {
         //$this->oldLayoutMode = false;
 
         $template = parent::createTemplate();
-        $template->today = date("Y-m-d H:i:s");
+        $template->today = date('Y-m-d H:i:s');
         $template->lang = $this->lang;
         $template->customScript = '';
         $template->setTranslator($this->translator);
-        $template->isGameStarted = $this->yearsService->isGameStarted();
-        $template->isGameEnd = $this->yearsService->isGameEnd();
-        $template->getLatte()->addFilter('i18n', '\App\Model\Translator\GettextTranslator::i18nHelper');
+        $template->isGameStarted = $this->gameSetup->isGameStarted();
+        $template->isGameEnd = $this->gameSetup->isGameEnd();
+        $template->streamURL = $this->gameSetup->streamURL;
+        $template->getLatte()->addFilter('i18n', GettextTranslator::class . '::i18nHelper');
 
-        return InterlosTemplate::loadTemplate($template);
+        return $template;
     }
 
     public function addCustomScript(string $script): void {
@@ -83,38 +72,33 @@ abstract class BasePresenter extends Presenter {
 
     /**
      * @return void
-     * @throws AbortException
+     * @throws UnsupportedLanguageException
      */
     protected function startUp(): void {
-        parent::startup();
-        $this->machineRedirect();
         $this->localize();
+        parent::startup();
     }
 
 // -------------- l12n ------------------
 
+    /**
+     * @throws UnsupportedLanguageException
+     */
     protected function localize(): void {
         $i18nConf = $this->context->parameters['i18n'];
         $this->detectLang($i18nConf);
-        $locale = isset(GettextTranslator::$locales[$this->lang]) ? GettextTranslator::$locales[$this->lang] : 'cs_CZ.utf-8';
-
-        putenv("LANGUAGE=$locale");
-        setlocale(LC_MESSAGES, $locale);
-        setlocale(LC_TIME, $locale);
-        bindtextdomain('messages', $i18nConf['dir']);
-        bind_textdomain_codeset('messages', "utf-8");
-        textdomain('messages');
+        $this->translator->setLang($this->lang);
     }
 
-    protected function detectLang($i18nConf): void {
+    protected function detectLang(array $i18nConf): void {
         if (!isset($this->lang)) {
             if (array_search($this->getHttpRequest()->getUrl()->host, explode(',', $i18nConf['en']['hosts'])) !== false) {
                 $this->lang = 'en';
             } else {
-                $this->lang = $this->getHttpRequest()->detectLanguage(GettextTranslator::getSupportedLangs());
+                $this->lang = $this->getHttpRequest()->detectLanguage($this->translator->getSupportedLanguages());
             }
         }
-        if (array_search($this->lang, GettextTranslator::getSupportedLangs()) === false) {
+        if (array_search($this->lang, $this->translator->getSupportedLanguages()) === false) {
             $this->lang = $i18nConf['defaultLang'];
         }
     }
@@ -127,27 +111,10 @@ abstract class BasePresenter extends Presenter {
         $this->setView($this->getView() . '.' . $this->lang);
     }
 
-    // -------------- game server ------------------
-
-    /**
-     * @return void
-     * @throws AbortException
-     */
-    private function machineRedirect(): void {
-        $machine = $this->context->parameters['machine'];
-        if (!$machine['game']) {
-            $this->redirectUrl($machine['url']);
-        }
-    }
-
-    /**
-     * @return Row|null
-     * @throws Exception
-     */
-    public function getLoggedTeam(): ?Row {
+    public function getLoggedTeam(): ?ModelTeam {
         if (!isset($this->loggedTeam)) {
             if ($this->getUser()->isLoggedIn()) {
-                $this->loggedTeam = $this->teamsService->find($this->getUser()->getIdentity()->id_team) ?: null;
+                $this->loggedTeam = $this->serviceTeam->findByPrimary($this->getUser()->getIdentity()->id_team);
             } else {
                 $this->loggedTeam = null;
             }
@@ -157,5 +124,9 @@ abstract class BasePresenter extends Presenter {
 
     protected function createComponentNavigation(): Navigation {
         return new Navigation($this->getContext());
+    }
+
+    public function getContext(): Container {
+        return $this->diContainer;
     }
 }
